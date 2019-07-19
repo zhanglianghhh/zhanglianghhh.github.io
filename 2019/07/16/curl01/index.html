@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,curl,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="命令概要该命令设计用于在没有用户交互的情况下工作。 curl 是一个工具，用于传输来自服务器或者到服务器的数据。「向服务器传输数据或者获取来自服务器的数据」 可支持的协议有（DICT、FILE、FTP、FTPS、GOPHER、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、POP3、POP3S、RTMP、RTSP、SCP、SFTP、SMTP、SMTPS、TELNET和TFTP）">
+<meta name="keywords" content="linux,curl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux curl 命令详解">
+<meta property="og:url" content="http://www.zhangblog.com/2019/07/16/curl01/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="命令概要该命令设计用于在没有用户交互的情况下工作。 curl 是一个工具，用于传输来自服务器或者到服务器的数据。「向服务器传输数据或者获取来自服务器的数据」 可支持的协议有（DICT、FILE、FTP、FTPS、GOPHER、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、POP3、POP3S、RTMP、RTSP、SCP、SFTP、SMTP、SMTPS、TELNET和TFTP）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/00.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl03.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl04.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl05.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl06.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl07.png">
+<meta property="og:updated_time" content="2019-07-19T03:04:45.577Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux curl 命令详解">
+<meta name="twitter:description" content="命令概要该命令设计用于在没有用户交互的情况下工作。 curl 是一个工具，用于传输来自服务器或者到服务器的数据。「向服务器传输数据或者获取来自服务器的数据」 可支持的协议有（DICT、FILE、FTP、FTPS、GOPHER、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、POP3、POP3S、RTMP、RTSP、SCP、SFTP、SMTP、SMTPS、TELNET和TFTP）">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/curl/00.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2019/07/16/curl01/">
+
+
+
+
+
+  <title>Linux curl 命令详解 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/07/16/curl01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux curl 命令详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-16T15:21:18+08:00">
+                2019-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/curl/" itemprop="url" rel="index">
+                    <span itemprop="name">curl</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/16/curl01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/16/curl01/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/07/16/curl01/" class="leancloud_visitors" data-flag-title="Linux curl 命令详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  8.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  36
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/curl/00.jpg" alt="image"></p>
+<h1 id="命令概要"><a href="#命令概要" class="headerlink" title="命令概要"></a>命令概要</h1><p>该命令设计用于在没有用户交互的情况下工作。</p>
+<p>curl 是一个工具，用于传输来自服务器或者到服务器的数据。「向服务器传输数据或者获取来自服务器的数据」</p>
+<p>可支持的协议有（DICT、FILE、FTP、FTPS、GOPHER、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、POP3、POP3S、RTMP、RTSP、SCP、SFTP、SMTP、SMTPS、TELNET和TFTP）。</p>
+<p>curl提供了大量有用的技巧，比如代理支持、用户身份验证、FTP上传、HTTP post、SSL连接、cookie、文件断点续传、Metalink等等。正如你将在下面看到的，这些特性的数量会让您头晕目眩！<br><br></p>
+<h1 id="访问的URL"><a href="#访问的URL" class="headerlink" title="访问的URL"></a>访问的URL</h1><p>你可以在命令行上指定任意数量的url。它们将按指定的顺序依次获取。</p>
+<p>你可以指定多个url，或url的部分通过在花括号内编写部分集，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://site.&#123;one,two,three&#125;.com</span><br><span class="line"># 参见</span><br><span class="line">curl http://www.zhangblog.com/2019/06/16/hexo&#123;04,05,06&#125;/ -I  # 查看信息</span><br></pre></td></tr></table></figure>
+
+<p>或者可以使用[]得到字母数字序列的序列，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ftp://ftp.numericals.com/file[1-100].txt</span><br><span class="line">ftp://ftp.numericals.com/file[001-100].txt   # 前导用零</span><br><span class="line">ftp://ftp.letters.com/file[a-z].txt </span><br><span class="line"># 参见</span><br><span class="line">curl http://www.zhangblog.com/2019/06/16/hexo[04-06]/ -I     # 查看信息</span><br></pre></td></tr></table></figure>
+
+<p>不支持嵌套序列，但可以使用几个相邻的序列：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://any.org/archive[1996-1999]/vol[1-4]/part&#123;a,b,c&#125;.html</span><br></pre></td></tr></table></figure>
+
+<p>你可以指定一个步长计数器的范围，以获得每第n个数字或字母：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://www.numericals.com/file[1-100:10].txt </span><br><span class="line">http://www.letters.com/file[a-z:2].txt</span><br></pre></td></tr></table></figure>
+
+<p>如果指定URL而没有protocol:// prefix，默认为HTTP。<br><br></p>
+<h1 id="常用选项一"><a href="#常用选项一" class="headerlink" title="常用选项一"></a>常用选项一</h1><p>curl通常在操作过程中显示一个进度表，显示传输的数据量、传输速度和估计的剩余时间等。</p>
+<h2 id="progress-bar"><a href="#progress-bar" class="headerlink" title="-#, --progress-bar"></a>-#, --progress-bar</h2><p>将curl进度显示为一个简单的进度条；而不是标准的、具有更多信息的进度表。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190702]# curl -O http://www.zhangblog.com/2019/06/16/hexo04/index.html  # 默认的进度表</span><br><span class="line">  %  Total    %  Received  % Xferd  Average  Speed   Time    Time     Time  Current</span><br><span class="line">                                    Dload   Upload   Total   Spent    Left  Speed</span><br><span class="line">100  97299  100  97299     0     0   186k       0 --:--:-- --:--:-- --:--:--  186k</span><br><span class="line">[root@iZ28xbsfvc4Z 20190702]# </span><br><span class="line">[root@iZ28xbsfvc4Z 20190702]# curl -# -O http://www.zhangblog.com/2019/06/16/hexo04/index.html  #简单的进度条</span><br><span class="line">######################################################################## 100.0%</span><br></pre></td></tr></table></figure>
+
+<h2 id="0-http1-0"><a href="#0-http1-0" class="headerlink" title="-0, --http1.0"></a>-0, --http1.0</h2><p>(HTTP)强制curl使用HTTP 1.0发出请求，而不是使用其内部首选的HTTP 1.1。</p>
+<h2 id="1-tlsv1"><a href="#1-tlsv1" class="headerlink" title="-1, --tlsv1"></a>-1, --tlsv1</h2><p>(SSL)强制curl使用TLS 1.x 版本，当与远程TLS服务进行协商时。<br>可以使用选项 --tlsv1.0、--tlsv1.1和 --tlsv1.2来更精确地控制TLS版本(如果使用的SSL后端支持这种级别的控制)。</p>
+<h2 id="2-sslv2"><a href="#2-sslv2" class="headerlink" title="-2, --sslv2"></a>-2, --sslv2</h2><p>(SSL)强制curl使用TLS 2 版本，当与远程TLS服务进行协商时。</p>
+<h2 id="3-sslv3"><a href="#3-sslv3" class="headerlink" title="-3, --sslv3"></a>-3, --sslv3</h2><p>(SSL)强制curl使用TLS 3 版本，当与远程TLS服务进行协商时。</p>
+<h2 id="4-ipv4"><a href="#4-ipv4" class="headerlink" title="-4, --ipv4"></a>-4, --ipv4</h2><p>如果curl能够将一个地址解析为多个IP版本(比如它支持ipv4和ipv6)，那么这个选项告诉curl只将名称解析为IPv4地址。</p>
+<h2 id="6-ipv6"><a href="#6-ipv6" class="headerlink" title="-6, --ipv6"></a>-6, --ipv6</h2><p>如果curl能够将一个地址解析为多个IP版本(比如它支持ipv4和ipv6)，那么这个选项告诉curl只将名称解析为IPv6地址。</p>
+<h2 id="a-append"><a href="#a-append" class="headerlink" title="-a, --append"></a>-a, --append</h2><p>(FTP/SFTP)当在上传中使用时，这将告诉curl追加到目标文件而不是覆盖它。如果文件不存在，将创建它。注意，一些SSH服务器(包括OpenSSH)会忽略此标志。</p>
+<h2 id="A-user-agent-lt-agent-string-gt"><a href="#A-user-agent-lt-agent-string-gt" class="headerlink" title="-A, --user-agent &lt;agent string&gt;"></a>-A, --user-agent &lt;agent string&gt;</h2><p>(HTTP)指定要发送到HTTP服务端的User-Agent字符串。当然也可以使用 -H, --header 选项来设置。<br>用于模拟客户端，如：谷歌浏览器、火狐浏览器、IE 浏览器等等。</p>
+<p>如果多次使用此选项，则将使用最后一个选项。</p>
+<p><strong>模仿浏览器访问</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -A &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/75.0.3770.999&quot; http://www.zhangblog.com/2019/06/24/domainexpire/</span><br></pre></td></tr></table></figure>
+
+<h2 id="basic"><a href="#basic" class="headerlink" title="--basic"></a>--basic</h2><p>(HTTP)告诉curl使用HTTP基本身份验证。这是默认的。<br><br></p>
+<h1 id="常用选项二"><a href="#常用选项二" class="headerlink" title="常用选项二"></a>常用选项二</h1><h2 id="b-cookie-lt-name-data-gt"><a href="#b-cookie-lt-name-data-gt" class="headerlink" title="-b, --cookie &lt;name=data&gt;"></a>-b, --cookie &lt;name=data&gt;</h2><p>(HTTP)将数据作为cookie传递给HTTP服务器。它应该是之前从服务端接收到的“Set-Cookie:”行中的数据。数据格式为“NAME1=VALUE1;NAME2 = VALUE2”。</p>
+<p>如果行中没有使用 ‘=’ 符号，则将其视为一个文件名，用于读取先前存储的cookie行，如果它们匹配，则应在此会话中使用。<br>要读取cookie文件的文件格式应该是纯HTTP头文件或Netscape/Mozilla cookie文件格式。</p>
+<p><strong>注意</strong>：使用 -b, --cookie 指定的文件仅用作输入。文件中不会存储cookies。要存储cookies，可以使用 -c, --cookie-jar 选项，或者您甚至可以使用 -D, --dump-header 将HTTP头保存到文件中。</p>
+<h2 id="c-cookie-jar-lt-file-name-gt"><a href="#c-cookie-jar-lt-file-name-gt" class="headerlink" title="-c, --cookie-jar &lt;file name&gt;"></a>-c, --cookie-jar &lt;file name&gt;</h2><p>(HTTP)指定希望curl在完成操作后将所有cookie写入哪个文件。<br>Curl写之前从指定文件读取的所有cookie，以及从远程服务端接收的所有cookie。<br>如果没有已知的cookie，则不会写入任何文件。该文件将使用Netscape cookie文件格式编写。如果你将文件名设置为单个破折号 “-” ，cookie将被标准输出。</p>
+<p>该命令行选项将激活cookie引擎，使curl记录并使用cookies。激活它的另一种方法是使用 -b, --cookie 选项。</p>
+<p>如果不能创建或写入cookie jar，那么整个curl操作就不会失败，甚至不能清楚地报告错误。使用 -v 会得到一个警告，但这是你得到的关于这种可能致命的情况的唯一可见反馈。</p>
+<p>如果多次使用此选项，将使用最后指定的文件名。</p>
+<h2 id="connect-timeout-lt-seconds-gt"><a href="#connect-timeout-lt-seconds-gt" class="headerlink" title="--connect-timeout &lt;seconds&gt;"></a>--connect-timeout &lt;seconds&gt;</h2><p>连接服务端的超时时间。这只限制了连接阶段，一旦curl连接了此选项就不再使用了。</p>
+<p>也可参见：-m, --max-time 选项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 当前 https://www.zhangXX.com 是国外服务器，访问受限</span><br><span class="line">[root@iZ28xbsfvc4Z ~]# curl --connect-timeout 10 https://www.zhangXX.com | head</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">  0     0    0     0    0     0      0      0 --:--:--  0:00:10 --:--:--     0</span><br><span class="line">curl: (28) Connection timed out after 10001 milliseconds</span><br></pre></td></tr></table></figure>
+
+<h2 id="create-dirs"><a href="#create-dirs" class="headerlink" title="--create-dirs"></a>--create-dirs</h2><p>当与 -o 选项一起使用时，curl将根据需要创建必要的本地目录层次结构。</p>
+<p>这个选项只创建与 -o 选项相关的dirs，没有其他内容。如果 -o 文件名没有使用dir，或者其中提到的dir已经存在，则不会创建dir。</p>
+<p><strong>示例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o ./hexo04/index.html --create-dirs http://www.zhangblog.com/2019/06/16/hexo04</span><br></pre></td></tr></table></figure>
+
+<h2 id="C-continue-at-lt-offset-gt"><a href="#C-continue-at-lt-offset-gt" class="headerlink" title="-C, --continue-at &lt;offset&gt;"></a>-C, --continue-at &lt;offset&gt;</h2><p>按给定偏移量继续/恢复以前的文件传输。给定的偏移量是将被跳过的确切字节数，从源文件的开头开始计算，然后再将其传输到目标文件。</p>
+<p>使用 “-C -“「注意有空格和无空格的情况」，告诉curl自动找出在哪里/如何恢复传输。然后，它使用给定的输出/输入文件来解决这个问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 下载一个 2G 的文件，可以反复测试，查看结果</span><br><span class="line">curl -C - -o tmp.data http://www.zhangblog.com/uploads/tmp/tmp.data</span><br></pre></td></tr></table></figure>
+
+<h2 id="d-data-lt-data-gt"><a href="#d-data-lt-data-gt" class="headerlink" title="-d, --data &lt;data&gt;"></a>-d, --data &lt;data&gt;</h2><p>使用该选项，那么默认请求方式为 POST。<br>(HTTP)在POST请求中向HTTP服务器发送指定的数据，与浏览器在用户填写HTML表单并按下submit按钮时所做的相同。这将导致curl使用content-type application/x-www-form-urlencoded将数据传递给服务器。也可参见：-F，-form 。</p>
+<p>如果这些命令在同一个命令行使用多次，这些数据片段将使用指定的分隔符 &amp; 合并。<br>因此，使用 ‘-d name=daniel -d skill=lousy’ 将生成一个类似 ‘name=daniel&amp;skill=lousy’ 的post块，也可以直接这样合并使用。</p>
+<p>-d, --data 与 --data-ascii 相同。post数据为纯粹的二进制数据时，那么使用 --data-binary 选项。要对表单字段的值进行url编码，可以使用 --data-urlencode。</p>
+<p>如果您以字母@开始数据，那么其余的应该是一个文件名，以便从其中读取数据。或者 - 如果您希望curl从stdin【标准输入】读取数据。文件的内容必须已经是url编码的。还可以指定多个文件。因此，Posting数据名为 “foobar” 的文件将使用 --data @foobar 完成。</p>
+<p><span style="font-size:17px"><b>示例</b></span></p>
+<p><strong>请求信息</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190712]# curl -sv --local-port 9000 -d &apos;user=zhang&amp;pwd=123456&apos; http://www.zhangblog.com/2019/06/24/domainexpire/ | head -n1 </span><br><span class="line">* About to connect() to www.zhangblog.com port 80 (#0)</span><br><span class="line">*   Trying 120.27.48.179...</span><br><span class="line">* Local port: 9000</span><br><span class="line">* Connected to www.zhangblog.com (120.27.48.179) port 80 (#0)</span><br><span class="line">&gt; POST /2019/06/24/domainexpire/ HTTP/1.1   # 可见请求方式为POST</span><br><span class="line">&gt; User-Agent: curl/7.29.0</span><br><span class="line">&gt; Host: www.zhangblog.com</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; Content-Length: 21</span><br><span class="line">&gt; Content-Type: application/x-www-form-urlencoded</span><br><span class="line">&gt; </span><br><span class="line">&#125; [data not shown]</span><br><span class="line">* upload completely sent off: 21 out of 21 bytes</span><br><span class="line">&lt; HTTP/1.1 405 Not Allowed</span><br><span class="line">&lt; Server: nginx/1.14.2</span><br><span class="line">&lt; Date: Fri, 12 Jul 2019 13:34:20 GMT</span><br><span class="line">&lt; Content-Type: text/html</span><br><span class="line">&lt; Content-Length: 173</span><br><span class="line">&lt; Connection: keep-alive</span><br><span class="line">&lt; </span><br><span class="line">&#123; [data not shown]</span><br><span class="line">* Connection #0 to host www.zhangblog.com left intact</span><br><span class="line">&lt;html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>抓包信息</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z tcpdump]# tcpdump -i any port 9000 -A -s 0</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/curl/curl01.png" alt="image"></p>
+<h2 id="data-ascii-lt-data-gt"><a href="#data-ascii-lt-data-gt" class="headerlink" title="--data-ascii &lt;data&gt;"></a>--data-ascii &lt;data&gt;</h2><p>参见 -d, --data</p>
+<h2 id="data-binary-lt-data-gt"><a href="#data-binary-lt-data-gt" class="headerlink" title="--data-binary &lt;data&gt;"></a>--data-binary &lt;data&gt;</h2><p>(HTTP) POST数据完全按照指定的方式，没有任何额外的处理。</p>
+<p>如果您以字母@开始数据，其余的应该是文件名。<br>数据是以类似于 --data-ascii 的方式发布的，只不过保留了换行，而且永远不会进行转换【数据不转换】。</p>
+<p>如果多次使用此选项，第一个选项后面的选项将按照 -d, --data 中的描述追加数据。</p>
+<h2 id="data-urlencode-lt-data-gt"><a href="#data-urlencode-lt-data-gt" class="headerlink" title="--data-urlencode &lt;data&gt;"></a>--data-urlencode &lt;data&gt;</h2><p>(HTTP)这个Post 数据，与另一个 --data 选项类似，除执行url编码以外。</p>
+<h2 id="D-dump-header-lt-file-gt"><a href="#D-dump-header-lt-file-gt" class="headerlink" title="-D, --dump-header &lt;file&gt;"></a>-D, --dump-header &lt;file&gt;</h2><p>将响应协议头写入指定的文件。</p>
+<p>如果多次使用此选项，则将使用最后一个选项。</p>
+<p>当你想要存储HTTP站点发送给你的头文件时，使用此选项非常方便。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190703]# curl -D baidu_header.info www.baidu.com </span><br><span class="line">………………</span><br><span class="line">[root@iZ28xbsfvc4Z 20190703]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 400 Jul  3 10:11 baidu_header.info  # 生成的头文件</span><br></pre></td></tr></table></figure>
+
+<p>之后第二次curl调用通过 -b, --cookie 选项，可以从头部读取 cookies 。然而 -c, --cookie-jar 选项是存储 cookies 更好的方法。<br><br></p>
+<h1 id="常用选项三"><a href="#常用选项三" class="headerlink" title="常用选项三"></a>常用选项三</h1><h2 id="digest"><a href="#digest" class="headerlink" title="--digest"></a>--digest</h2><p>(HTTP)启用HTTP摘要身份验证。这是一种身份验证方案，可以防止密码以明文通过网络发送。将此选项与普通的 -u, --user 选项组合使用，以设置用户名和密码。<br>相关选项请参见 --ntlm, --negotiate 和 --anyauth。</p>
+<p>如果多次使用此选项，则只使用第一个选项。</p>
+<h2 id="e-referer-lt-URL-gt"><a href="#e-referer-lt-URL-gt" class="headerlink" title="-e, --referer &lt;URL&gt;"></a>-e, --referer &lt;URL&gt;</h2><p>(HTTP)将 “Referer Page” 【从哪个页面跳转过来的】信息发送到HTTP服务器。当然也可以使用 -H, --header 标志来设置。</p>
+<p>如果多次使用此选项，则将使用最后一个选项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -e &apos;https:www.baidu.com&apos; http://www.zhangblog.com/2019/06/24/domainexpire/</span><br></pre></td></tr></table></figure>
+
+<h2 id="f-fail"><a href="#f-fail" class="headerlink" title="-f, --fail"></a>-f, --fail</h2><p>(HTTP)在服务器错误上静默失败(完全没有输出)。这主要是为了使脚本等更好地处理失败的尝试。</p>
+<p>在通常情况下，当HTTP服务器无法交付文档时，它会返回一个HTML文档，说明原因(通常还会描述原因)。此标志将阻止curl输出该值并返回错误22。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl http://www.zhangblog.com/201912312</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;</span><br><span class="line">&lt;body bgcolor=&quot;white&quot;&gt;</span><br><span class="line">&lt;center&gt;&lt;h1&gt;404 Not Found&lt;/h1&gt;&lt;/center&gt;</span><br><span class="line">&lt;hr&gt;&lt;center&gt;nginx/1.14.2&lt;/center&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl -f http://www.zhangblog.com/201912312</span><br><span class="line">curl: (22) The requested URL returned error: 404 Not Found</span><br></pre></td></tr></table></figure>
+
+<h2 id="F-form-lt-name-content-gt"><a href="#F-form-lt-name-content-gt" class="headerlink" title="-F, --form &lt;name=content&gt;"></a>-F, --form &lt;name=content&gt;</h2><p>(HTTP)这允许curl模拟用户按下submit按钮后填充的表单。</p>
+<p>该情况让curl 可使用Content-Type multipart/form-data   POST数据。也可以上传二进制文件等。</p>
+<p>@文件名：使一个文件作为文件上传附加在post中。<br>&lt;文件名：从文件中获取该文本字段的内容。</p>
+<p><strong>例如，要将密码文件发送到服务器，其中“password”是表单字段的名称，/etc/passwd将作为输入:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -F password=@/etc/passwd www.mypasswords.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>您还可以使用 ‘type=’ 告诉curl使用什么 Content-Type ，方法类似于：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -F &quot;web=@index.html;type=text/html&quot; url.com</span><br><span class="line">或</span><br><span class="line">curl -F &quot;name=daniel;type=text/foo&quot; url.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>可以通过设置 filename= 更改本地上传的文件名，如下：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -F &quot;file=@localfile;filename=nameinpost&quot; url.com</span><br></pre></td></tr></table></figure>
+
+<p>上传的文件名从改为了 nameinpost</p>
+<p><strong>如果文件名/路径包括 ‘,’ 或 ‘;’ ，必须用双引号括起来：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -F &quot;file=@\&quot;localfile\&quot;;filename=\&quot;nameinpost\&quot;&quot; url.com</span><br><span class="line">或</span><br><span class="line">curl -F &apos;file=@&quot;localfile&quot;;filename=&quot;nameinpost&quot;&apos; url.com</span><br></pre></td></tr></table></figure>
+
+<p>最外层可用单引号或双引号。</p>
+<p>这个选项可以多次使用。</p>
+<p><strong><em>请勿如下使用</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -F &apos;user=zhang&amp;password=pwd&apos; url.com   # 这种用法是错误的</span><br></pre></td></tr></table></figure>
+
+<h2 id="form-string-lt-name-string-gt"><a href="#form-string-lt-name-string-gt" class="headerlink" title="--form-string &lt;name=string&gt;"></a>--form-string &lt;name=string&gt;</h2><p>(HTTP)类似于 --form，只是命名参数的value字符串按字面意思使用。<br>在值中以 ‘@’ 和 ‘&lt;’ 开头的字符，以及 ‘;type=’ 字符串没有特殊的含义。</p>
+<p>如果字符串值有可能意外触发 --form 的 “@” 或 “&lt;” 特性，请优先使用此选项。</p>
+<h2 id="g-globoff"><a href="#g-globoff" class="headerlink" title="-g, --globoff"></a>-g, --globoff</h2><p>这个选项关闭了“URL全局解析器”。当您设置这个选项时，您可以指定包含字母 {}[] 的url，而不需要curl本身来解释它们。</p>
+<p>注意，这些字母不是正常的合法URL内容，但是它们应该按照URI标准进行编码。</p>
+<h2 id="G-get"><a href="#G-get" class="headerlink" title="-G, --get"></a>-G, --get</h2><p>使用此选项时，将使所有使用 -d, --data 或 --data-binary 指定的数据在HTTP GET请求中使用，而不是在POST请求中使用。<br>数据将被追加到URL的一个 ‘?’ 的分隔符后。</p>
+<p>如果与 -I 结合使用，POST数据将被替换追加到带有HEAD请求的URL中。</p>
+<p>如果多次使用此选项，则只使用第一个选项。</p>
+<p><strong>示例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190712]# curl -sv -G --local-port 9000 -d &apos;user=zhang&amp;pwd=123456&apos; http://www.zhangblog.com/2019/06/24/domainexpire/ | head -n1 </span><br><span class="line">或则</span><br><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl -sv --local-port 9000 &quot;http://www.zhangblog.com/2019/06/24/domainexpire/?user=zhang&amp;pwd=123456&quot; | head -n1</span><br><span class="line">* About to connect() to www.zhangblog.com port 80 (#0)</span><br><span class="line">*   Trying 120.27.48.179...</span><br><span class="line">* Local port: 9000</span><br><span class="line">* Connected to www.zhangblog.com (120.27.48.179) port 80 (#0)</span><br><span class="line">&gt; GET /2019/06/24/domainexpire/?user=zhang&amp;pwd=123456 HTTP/1.1  # 可见请求方式为 GET，且参数追加到了URI后</span><br><span class="line">&gt; User-Agent: curl/7.29.0</span><br><span class="line">&gt; Host: www.zhangblog.com</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; </span><br><span class="line">&lt; HTTP/1.1 200 OK</span><br><span class="line">&lt; Server: nginx/1.14.2</span><br><span class="line">&lt; Date: Fri, 12 Jul 2019 14:04:19 GMT</span><br><span class="line">&lt; Content-Type: text/html</span><br><span class="line">&lt; Content-Length: 51385</span><br><span class="line">&lt; Last-Modified: Tue, 09 Jul 2019 13:55:19 GMT</span><br><span class="line">&lt; Connection: keep-alive</span><br><span class="line">&lt; ETag: &quot;5d249cc7-c8b9&quot;</span><br><span class="line">&lt; Accept-Ranges: bytes</span><br><span class="line">&lt; </span><br><span class="line">&#123; [data not shown]</span><br><span class="line">* Connection #0 to host www.zhangblog.com left intact</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>抓包信息</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z tcpdump]# tcpdump -i any port 9000 -A -s 0</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/curl/curl02.png" alt="image"></p>
+<h2 id="H-header-lt-header-gt"><a href="#H-header-lt-header-gt" class="headerlink" title="-H, --header &lt;header&gt;"></a>-H, --header &lt;header&gt;</h2><p>(HTTP) 要发送到服务端的自定义请求头。</p>
+<p>此选项可多次用于添加/替换/删除多个headers。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H &apos;Connection: keep-alive&apos; -H &apos;Referer: https://sina.com.cn&apos; -H &apos;User-Agent: Mozilla/1.0&apos; http://www.zhangblog.com/2019/06/24/domainexpire/</span><br></pre></td></tr></table></figure>
+
+<h2 id="ignore-content-length"><a href="#ignore-content-length" class="headerlink" title="--ignore-content-length"></a>--ignore-content-length</h2><p>(HTTP)忽略Content-Length 头信息。</p>
+<h2 id="i-include"><a href="#i-include" class="headerlink" title="-i, --include"></a>-i, --include</h2><p>(HTTP)在输出的内容中包含HTTP 头信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i https://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="I-head"><a href="#I-head" class="headerlink" title="-I, --head"></a>-I, --head</h2><p>(HTTP/FTP/FILE)只获取HTTP头文件。<br>在FTP或FILE 文件上使用时，curl只显示文件大小和最后修改时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -I https://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="k-insecure"><a href="#k-insecure" class="headerlink" title="-k, --insecure"></a>-k, --insecure</h2><p>(SSL)允许curl执行不安全的SSL连接和传输。<br>所有SSL连接都尝试使用默认安装的CA证书包来确保安全。</p>
+<p><strong>示例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z ~]# curl https://140.205.16.113/  # 被拒绝</span><br><span class="line">curl: (51) Unable to communicate securely with peer: requested domain name does not match the server&apos;s certificate.</span><br><span class="line">[root@iZ28xbsfvc4Z ~]# </span><br><span class="line">[root@iZ28xbsfvc4Z ~]# curl -k https://140.205.16.113/  # 允许执行不安全的证书连接</span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;title&gt;403 Forbidden&lt;/title&gt;&lt;/head&gt;</span><br><span class="line">&lt;body bgcolor=&quot;white&quot;&gt;</span><br><span class="line">&lt;h1&gt;403 Forbidden&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;You don&apos;t have permission to access the URL on this server.&lt;hr/&gt;Powered by Tengine&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h1 id="常用选项四"><a href="#常用选项四" class="headerlink" title="常用选项四"></a>常用选项四</h1><h2 id="keepalive-time-lt-seconds-gt"><a href="#keepalive-time-lt-seconds-gt" class="headerlink" title="--keepalive-time &lt;seconds&gt;"></a>--keepalive-time &lt;seconds&gt;</h2><p>keepalive 时长。如果使用no-keepalive，则此选项无效。</p>
+<p>如果多次使用此选项，则将使用最后一个选项。如果未指定，该选项默认为60秒。</p>
+<h2 id="key-lt-key-gt"><a href="#key-lt-key-gt" class="headerlink" title="--key &lt;key&gt;"></a>--key &lt;key&gt;</h2><p>(SSL/SSH)私钥文件名。允许你在这个单独的文件中提供你的私钥。</p>
+<p>对于SSH，如果没有指定，curl尝试如下顺序：’<del>/.ssh/id_rsa’，’</del>/.ssh/id_dsa’，’./id_rsa’，’./id_dsa’。</p>
+<p>如果多次使用此选项，则将使用最后一个选项。</p>
+<h2 id="key-type-lt-type-gt"><a href="#key-type-lt-type-gt" class="headerlink" title="--key-type &lt;type&gt;"></a>--key-type &lt;type&gt;</h2><p>(SSL)私钥文件类型。指定 --key 提供的私钥的类型。支持DER、PEM和ENG。如果没有指定，则定为PEM。</p>
+<p>如果多次使用此选项，则将使用最后一个选项。</p>
+<h2 id="L-location"><a href="#L-location" class="headerlink" title="-L, --location"></a>-L, --location</h2><p>(HTTP/HTTPS) 跟踪重定向<br>如果服务器报告请求页面已移动到另一个位置(用location: header和3XX响应代码表示)，此选项将使curl在新位置上重做请求。</p>
+<p>如果与 -i, --include 或 -I, --head 一起使用，将显示所有请求页面的标题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z ~]# curl -I -L https://baidu.com/ </span><br><span class="line">HTTP/1.1 302 Moved Temporarily  # 302 重定向</span><br><span class="line">Server: bfe/1.0.8.18</span><br><span class="line">Date: Thu, 04 Jul 2019 03:07:15 GMT</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Content-Length: 161</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Location: http://www.baidu.com/</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform</span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">Content-Length: 277</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Date: Thu, 04 Jul 2019 03:07:15 GMT</span><br><span class="line">Etag: &quot;575e1f60-115&quot;</span><br><span class="line">Last-Modified: Mon, 13 Jun 2016 02:50:08 GMT</span><br><span class="line">Pragma: no-cache</span><br><span class="line">Server: bfe/1.0.8.18</span><br></pre></td></tr></table></figure>
+
+<h2 id="limit-rate-lt-speed-gt"><a href="#limit-rate-lt-speed-gt" class="headerlink" title="--limit-rate &lt;speed&gt;"></a>--limit-rate &lt;speed&gt;</h2><p>指定要使用curl的最大传输速率。</p>
+<p>如果有一个有限的管道，并且希望传输不要使用您的全部带宽，那么这个特性是非常有用的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl --limit-rate 500 http://www.baidu.com/</span><br><span class="line">curl --limit-rate 2k http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<p><strong>单位</strong>：默认字节，除非添加后缀。附加 “k” 或 “K” 表示千字节， “m” 或 “M” 表示兆字节，而 “g” 或 “G” 表示千兆字节。例如:200K, 3m和1G。</p>
+<p>给定的速率是整个传输过程中计算的平均速度。这意味着curl可能在短时间内使用更高的传输速度，但是随着时间的推移，它只使用给定的速率。</p>
+<p>如果多次使用此选项，则将使用最后一个选项。</p>
+<h2 id="local-port-lt-num-gt-num"><a href="#local-port-lt-num-gt-num" class="headerlink" title="--local-port &lt;num&gt;[-num]"></a>--local-port &lt;num&gt;[-num]</h2><p>指定本地的一个端口或端口范围去连接。</p>
+<p>请注意，端口号本质上是一种稀缺资源，有时会很忙，因此将此范围设置为太窄可能会导致不必要的连接失败。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl --local-port 9000 http://www.baidu.com/</span><br><span class="line">curl --local-port 9000-9999 http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h2 id="m-max-time-lt-seconds-gt"><a href="#m-max-time-lt-seconds-gt" class="headerlink" title="-m, --max-time &lt;seconds&gt;"></a>-m, --max-time &lt;seconds&gt;</h2><p>允许整个操作花费的最大时间(以秒为单位)。</p>
+<p>这对于防止由于网络或链接变慢而导致批处理作业挂起数小时非常有用。</p>
+<p>也可参见：--connect-timeout 选项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z ~]# curl -m 10 --limit-rate 5 http://www.baidu.com/ | head  # 超过10秒后，断开连接</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">  2  2381    2    50    0     0      4      0  0:09:55  0:00:10  0:09:45     4</span><br><span class="line">curl: (28) Operation timed out after 10103 milliseconds with 50 out of 2381 bytes received</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt;&lt;met</span><br><span class="line">### 或</span><br><span class="line">[root@iZ28xbsfvc4Z ~]# curl -m 10 https://www.zhangXX.com | head   # 超过10秒后，断开连接</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">  0     0    0     0    0     0      0      0 --:--:--  0:00:10 --:--:--     0</span><br><span class="line">curl: (28) Connection timed out after 10001 milliseconds</span><br></pre></td></tr></table></figure>
+
+<h2 id="max-filesize-lt-bytes-gt"><a href="#max-filesize-lt-bytes-gt" class="headerlink" title="--max-filesize &lt;bytes&gt;"></a>--max-filesize &lt;bytes&gt;</h2><p>指定要下载的文件的最大大小(以字节为单位)。<br>如果请求的文件大于这个值，那么传输将不会启动，curl将返回退出代码63。</p>
+<p><strong>示例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z ~]# curl -I http://www.zhangblog.com/uploads/hexo/00.jpg # 正常</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.14.2</span><br><span class="line">Date: Thu, 04 Jul 2019 07:24:24 GMT</span><br><span class="line">Content-Type: image/jpeg</span><br><span class="line">Content-Length: 18196</span><br><span class="line">Last-Modified: Mon, 24 Jun 2019 01:43:02 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line">ETag: &quot;5d102aa6-4714&quot;</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line"></span><br><span class="line">[root@iZ28xbsfvc4Z ~]# echo $?</span><br><span class="line">0</span><br><span class="line">[root@iZ28xbsfvc4Z ~]# </span><br><span class="line">[root@iZ28xbsfvc4Z ~]# </span><br><span class="line">[root@iZ28xbsfvc4Z ~]# curl --max-filesize 1000 -I http://www.zhangblog.com/uploads/hexo/00.jpg # 受限异常</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.14.2</span><br><span class="line">Date: Thu, 04 Jul 2019 07:24:54 GMT</span><br><span class="line">Content-Type: image/jpeg</span><br><span class="line">curl: (63) Maximum file size exceeded</span><br><span class="line">[root@iZ28xbsfvc4Z ~]# </span><br><span class="line">[root@iZ28xbsfvc4Z ~]# echo $?</span><br><span class="line">63</span><br></pre></td></tr></table></figure>
+
+<h2 id="max-redirs-lt-num-gt"><a href="#max-redirs-lt-num-gt" class="headerlink" title="--max-redirs &lt;num&gt;"></a>--max-redirs &lt;num&gt;</h2><p>设置允许的最大重定向跟踪数。</p>
+<p>如果也使用了 -L, --location，则此选项可用于防止curl在悖论中无限重定向。<br>默认情况下，限制为50重定向。将此选项设置为-1，使其无限。</p>
+<h2 id="no-keepalive"><a href="#no-keepalive" class="headerlink" title="--no-keepalive"></a>--no-keepalive</h2><p>禁用在TCP连接上使用keepalive消息，因为默认情况下curl启用了它们。</p>
+<p>注意，这是文档中已否定的选项名。因此，您可以使用 --keepalive 来强制keepalive。<br><br></p>
+<h1 id="常用选项五"><a href="#常用选项五" class="headerlink" title="常用选项五"></a>常用选项五</h1><h2 id="o-output-lt-file-gt"><a href="#o-output-lt-file-gt" class="headerlink" title="-o, --output &lt;file&gt;"></a>-o, --output &lt;file&gt;</h2><p>输出到一个文件，而不是标准输出。</p>
+<p>如果使用 {} 或 [] 来获取多个documents。可以使用 ‘#’ 后跟说明符中的一个数字。该变量将替换为正在获取URL的当前字符串。就像：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl http://&#123;one,two&#125;.site.com -o &quot;file_#1.txt&quot;</span><br><span class="line">curl http://&#123;site,host&#125;.host[1-5].com -o &quot;#1_#2&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190703]# curl &quot;http://www.zhangblog.com/2019/06/16/hexo&#123;04,05,06&#125;/&quot; -o &quot;file_#1.info&quot;   # 注意curl 的地址需要用引号括起来</span><br><span class="line">或</span><br><span class="line">[root@iZ28xbsfvc4Z 20190703]# curl &quot;http://www.zhangblog.com/2019/06/16/hexo[04-06]/&quot; -o &quot;file_#1.info&quot;   # 注意curl 的地址需要用引号括起来</span><br><span class="line">[1/3]: http://www.zhangblog.com/2019/06/16/hexo04/ --&gt; file_04.info</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100 97299  100 97299    0     0  1551k      0 --:--:-- --:--:-- --:--:-- 1557k</span><br><span class="line"></span><br><span class="line">[2/3]: http://www.zhangblog.com/2019/06/16/hexo05/ --&gt; file_05.info</span><br><span class="line">100 54409  100 54409    0     0   172M      0 --:--:-- --:--:-- --:--:--  172M</span><br><span class="line"></span><br><span class="line">[3/3]: http://www.zhangblog.com/2019/06/16/hexo06/ --&gt; file_06.info</span><br><span class="line">100 56608  100 56608    0     0   230M      0 --:--:-- --:--:-- --:--:--  230M</span><br><span class="line">[root@iZ28xbsfvc4Z 20190703]# </span><br><span class="line">[root@iZ28xbsfvc4Z 20190703]# ll</span><br><span class="line">total 212</span><br><span class="line">-rw-r--r-- 1 root root 97299 Jul  4 16:51 file_04.info</span><br><span class="line">-rw-r--r-- 1 root root 54409 Jul  4 16:51 file_05.info</span><br><span class="line">-rw-r--r-- 1 root root 56608 Jul  4 16:51 file_06.info</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190703]# curl &quot;http://www.&#123;baidu,douban&#125;.com&quot; -o &quot;site_#1.txt&quot;  # 注意curl 的地址需要用引号括起来</span><br><span class="line">[1/2]: http://www.baidu.com --&gt; site_baidu.txt</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100  2381  100  2381    0     0  46045      0 --:--:-- --:--:-- --:--:-- 46686</span><br><span class="line"></span><br><span class="line">[2/2]: http://www.douban.com --&gt; site_douban.txt</span><br><span class="line">100   162  100   162    0     0   3173      0 --:--:-- --:--:-- --:--:--  3173</span><br><span class="line">[root@iZ28xbsfvc4Z 20190703]# </span><br><span class="line">[root@iZ28xbsfvc4Z 20190703]# ll</span><br><span class="line">total 220</span><br><span class="line">-rw-r--r-- 1 root root  2381 Jul  4 16:53 site_baidu.txt</span><br><span class="line">-rw-r--r-- 1 root root   162 Jul  4 16:53 site_douban.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="O-remote-name"><a href="#O-remote-name" class="headerlink" title="-O, --remote-name"></a>-O, --remote-name</h2><p>写入到本地文件，名称与远程文件的名称相同。(只使用远程文件的文件部分，路径被切断。)</p>
+<p>用于保存的远程文件名是从给定的URL中提取的，没有其他内容。<br>因此，文件将保存在当前工作目录中。如果希望将文件保存在另一个目录中，请确保在curl调用 -O, --remote-name之前更改当前工作目录!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190712]# curl -O https://www.baidu.com   # 使用了 -O 选项，必须指定到具体的文件  错误使用</span><br><span class="line">curl: Remote file name has no length!</span><br><span class="line">curl: try &apos;curl --help&apos; or &apos;curl --manual&apos; for more information</span><br><span class="line">[root@iZ28xbsfvc4Z 20190712]# curl -O https://www.baidu.com/index.html   # 使用了 -O 选项，必须指定到具体的文件  正确使用</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100  2443  100  2443    0     0  13289      0 --:--:-- --:--:-- --:--:-- 13349</span><br></pre></td></tr></table></figure>
+
+<h2 id="pass-lt-phrase-gt"><a href="#pass-lt-phrase-gt" class="headerlink" title="--pass &lt;phrase&gt;"></a>--pass &lt;phrase&gt;</h2><p>(SSL/SSH)私钥密码</p>
+<p>如果多次使用此选项，则将使用最后一个选项。</p>
+<h2 id="post301"><a href="#post301" class="headerlink" title="--post301"></a>--post301</h2><p>告诉curl当301重定向时，不要将POST请求转换为GET请求。</p>
+<p>非rfc行为在web浏览器中无处不在，因此curl在缺省情况下进行转换以保持一致性。但是，服务器可能需要在重定向之后将POST保留为POST。</p>
+<p>这个选项只有在使用 -L, --location 时才有意义</p>
+<h2 id="–post302"><a href="#–post302" class="headerlink" title="–post302"></a>–post302</h2><p>告诉curl当302重定向时，不要将POST请求转换为GET请求。</p>
+<p>非rfc行为在web浏览器中无处不在，因此curl在缺省情况下进行转换以保持一致性。但是，服务器可能需要在重定向之后将POST保留为POST。</p>
+<p>这个选项只有在使用 -L, --location 时才有意义</p>
+<h2 id="post303"><a href="#post303" class="headerlink" title="--post303"></a>--post303</h2><p>告诉curl当303重定向时，不要将POST请求转换为GET请求。</p>
+<p>非rfc行为在web浏览器中无处不在，因此curl在缺省情况下进行转换以保持一致性。但是，服务器可能需要在重定向之后将POST保留为POST。</p>
+<p>这个选项只有在使用 -L, --location 时才有意义</p>
+<p><strong>说明：</strong><br>上述三个选项都是为了防止在重定向过程中，原来的 POST 请求，变为 GET请求。为了防止该情况，有两种处理方式。<br>1、使用上述选项可避免；<br>2、使用 -X POST 选项和命令。</p>
+<p><strong>示例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z ~]# curl -Lsv -d &apos;user=zhang&apos; https://baidu.com | head -n1</span><br></pre></td></tr></table></figure>
+
+<p>开始是POST请求，302 重定向后变为了 GET请求。<br><img src="/uploads/curl/curl03.png" alt="image"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z ~]# curl -Lsv -d &apos;user=zhang&apos; --post301 --post302 --post303 https://baidu.com | head -n1</span><br></pre></td></tr></table></figure>
+
+<p>前后都是 POST 请求。但是选项较多。<br><img src="/uploads/curl/curl04.png" alt="image"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z ~]# curl -Lsv -d &apos;user=zhang&apos; -X POST https://baidu.com | head -n1</span><br></pre></td></tr></table></figure>
+
+<p>前后都是 POST 请求。推荐使用此命令。<br><img src="/uploads/curl/curl05.png" alt="image"></p>
+<h2 id="pubkey-lt-key-gt"><a href="#pubkey-lt-key-gt" class="headerlink" title="--pubkey &lt;key&gt;"></a>--pubkey &lt;key&gt;</h2><p>(SSH)公钥文件名。允许在这个单独的文件中提供公钥。</p>
+<p>如果多次使用此选项，则将使用最后一个选项。</p>
+<h2 id="r-range-lt-range-gt"><a href="#r-range-lt-range-gt" class="headerlink" title="-r, --range &lt;range&gt;"></a>-r, --range &lt;range&gt;</h2><p>(HTTP/FTP/SFTP/FILE)从HTTP/1.1、FTP或SFTP服务器或本地文件检索字节范围。范围可以通过多种方式指定。用于分段下载。</p>
+<p>有时文件比较大，或者难以迅速传输，而利用分段传输，可以实现稳定、高效并且有保障的传输，更具有实用性，同时容易对差错文件进行更正。</p>
+<p>0-499：指定前500个字节<br>500-999：指定第二个500字节<br>-500：指定最后500个字节<br>9500-：指定9500字节及之后的字节<br>0-0,-1：指定第一个和最后一个字节<br>500-700,600-799：从偏移量500开始指定300字节<br>100-199,500-599：指定两个单独100字节的范围</p>
+<p><strong>分段下载</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190715]# curl -I http://www.zhangblog.com/uploads/hexo/00.jpg   # 查看文件大小</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.14.2</span><br><span class="line">Date: Mon, 15 Jul 2019 03:23:44 GMT</span><br><span class="line">Content-Type: image/jpeg</span><br><span class="line">Content-Length: 18196   # 文件大小</span><br><span class="line">Last-Modified: Fri, 05 Jul 2019 08:04:58 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line">ETag: &quot;5d1f04aa-4714&quot;</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">[root@iZ28xbsfvc4Z 20190715]# curl -r 0-499 -o 00-jpg.part1 http://www.zhangblog.com/uploads/hexo/00.jpg</span><br><span class="line">[root@iZ28xbsfvc4Z 20190715]# curl -r 500-999 -o 00-jpg.part2 http://www.zhangblog.com/uploads/hexo/00.jpg</span><br><span class="line">[root@iZ28xbsfvc4Z 20190715]# curl -r 1000- -o 00-jpg.part3 http://www.zhangblog.com/uploads/hexo/00.jpg</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看下载文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190715]# ll</span><br><span class="line">total 36</span><br><span class="line">-rw-r--r-- 1 root root   500 Jul 15 11:25 00-jpg.part1</span><br><span class="line">-rw-r--r-- 1 root root   500 Jul 15 11:25 00-jpg.part2</span><br><span class="line">-rw-r--r-- 1 root root 17196 Jul 15 11:26 00-jpg.part3</span><br></pre></td></tr></table></figure>
+
+<p><strong>文件合并</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190715]# cat 00-jpg.part1 00-jpg.part2 00-jpg.part3 &gt; 00.jpg</span><br><span class="line">[root@iZ28xbsfvc4Z 20190715]# ll</span><br><span class="line">total 56</span><br><span class="line">-rw-r--r-- 1 root root 18196 Jul 15 11:29 00.jpg</span><br></pre></td></tr></table></figure>
+
+<h2 id="R-remote-time"><a href="#R-remote-time" class="headerlink" title="-R, --remote-time"></a>-R, --remote-time</h2><p>使curl尝试获取远程文件的时间戳，如果可用，则使本地文件获得相同的时间戳【针对修改时间戳Modify】。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o nfs1.info -R http://www.zhangblog.com/2019/07/05/nfs1/</span><br></pre></td></tr></table></figure>
+
+<h2 id="retry-lt-num-gt"><a href="#retry-lt-num-gt" class="headerlink" title="--retry &lt;num&gt;"></a>--retry &lt;num&gt;</h2><p>传输出现问题时，重试的次数。数字设置为0将使curl不重试(这是缺省值)。</p>
+<p>出现的瞬时错误如：timeout、FTP 4xx响应状代码或HTTP 5xx响应状代码。</p>
+<p>当curl准备重试传输时，它将首先等待一秒钟，之后对于所有即将到来的重试，它将把等待时间延长一倍，直到达到10分钟，这将是其余重试之间的延迟。</p>
+<h2 id="retry-delay-lt-seconds-gt"><a href="#retry-delay-lt-seconds-gt" class="headerlink" title="--retry-delay &lt;seconds&gt;"></a>--retry-delay &lt;seconds&gt;</h2><p>传输出现问题时，设置重试间隔时间。将此延迟设置为零将使curl使用默认的延迟时间。</p>
+<h2 id="retry-max-time-lt-seconds-gt"><a href="#retry-max-time-lt-seconds-gt" class="headerlink" title="--retry-max-time &lt;seconds&gt;"></a>--retry-max-time &lt;seconds&gt;</h2><p>传输出现问题时，设置最大重试时间。将此选项设置为0则不超时重试。<br><br></p>
+<h1 id="常用选项六"><a href="#常用选项六" class="headerlink" title="常用选项六"></a>常用选项六</h1><h2 id="s-silent"><a href="#s-silent" class="headerlink" title="-s, --silent"></a>-s, --silent</h2><p>静默或静音模式。不显示进度表/条或错误消息。</p>
+<p><strong>示例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl https://www.baidu.com | head -n1  # 默认有进度表</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100  2443  100  2443    0     0  13346      0 --:--:-- --:--:-- --:--:-- 13349</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl -s https://www.baidu.com | head -n1</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="S-show-error"><a href="#S-show-error" class="headerlink" title="-S, --show-error"></a>-S, --show-error</h2><p>当与 -s 一起使用时，如果curl失败，curl将显示一条错误消息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl -s https://140.205.16.113/ </span><br><span class="line">[root@iZ28xbsfvc4Z 20190713]# </span><br><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl -sS https://140.205.16.113/ </span><br><span class="line">curl: (51) Unable to communicate securely with peer: requested domain name does not match the server&apos;s certificate.</span><br></pre></td></tr></table></figure>
+
+<h2 id="stderr-lt-file-gt"><a href="#stderr-lt-file-gt" class="headerlink" title="--stderr &lt;file&gt;"></a>--stderr &lt;file&gt;</h2><p>将错误信息重定向到一个文件。如果文件名是普通的 ‘-‘，则将其写入stdout。</p>
+<p>如果多次使用此选项，则将使用最后一个选项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl --stderr err.info https://140.205.16.113/ </span><br><span class="line">[root@iZ28xbsfvc4Z 20190713]# ll</span><br><span class="line">total 92</span><br><span class="line">-rw-r--r-- 1 root root   116 Jul 13 10:19 err.info</span><br><span class="line">[root@iZ28xbsfvc4Z 20190713]# cat err.info </span><br><span class="line">curl: (51) Unable to communicate securely with peer: requested domain name does not match the server&apos;s certificate.</span><br></pre></td></tr></table></figure>
+
+<h2 id="T-upload-file-lt-file-gt"><a href="#T-upload-file-lt-file-gt" class="headerlink" title="-T, --upload-file &lt;file&gt;"></a>-T, --upload-file &lt;file&gt;</h2><p>这将指定的本地文件传输到远程URL。如果指定的URL中没有文件部分，Curl将附加本地文件名。</p>
+<p>注意：必须在最后一个目录上使用尾随 / 来真正证明Curl没有文件名，否则Curl会认为您的最后一个目录名是要使用的远程文件名。这很可能导致上传操作失败。<br>如果在HTTP(S)服务器上使用此命令，则将使用PUT命令。</p>
+<p>同时也支持多个文件上传，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -T &quot;&#123;file1,file2&#125;&quot; http://www.uploadtothissite.com</span><br><span class="line">或则</span><br><span class="line">curl -T &quot;img[1-1000].png&quot; ftp://ftp.picturemania.com/upload/</span><br></pre></td></tr></table></figure>
+
+<h2 id="trace-lt-file-gt"><a href="#trace-lt-file-gt" class="headerlink" title="--trace &lt;file&gt;"></a>--trace &lt;file&gt;</h2><p>对指定文件进行debug。包括所有传入和传出数据。</p>
+<p>此选项会覆盖之前使用的 -v、-verbose或 --trace-ascii。</p>
+<p>如果多次使用此选项，则将使用最后一个选项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --trace trace.info https://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="trace-ascii-lt-file-gt"><a href="#trace-ascii-lt-file-gt" class="headerlink" title="--trace-ascii &lt;file&gt;"></a>--trace-ascii &lt;file&gt;</h2><p>对指定文件进行debug。包括所有传入和传出数据。</p>
+<p>这非常类似于 --trace，但是省略了十六进制部分，只显示转储的ASCII部分。使它输出更小，对于我们来说可能更容易阅读。</p>
+<p>此选项会覆盖之前使用的 -v、-verbose或 --trace。</p>
+<p>如果多次使用此选项，则将使用最后一个选项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --trace-ascii trace2.info https://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="trace-time"><a href="#trace-time" class="headerlink" title="--trace-time"></a>--trace-time</h2><p>为curl显示的每个跟踪或冗长的行添加时间戳。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --trace-ascii trace3.info --trace-time https://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="v-verbose"><a href="#v-verbose" class="headerlink" title="-v, --verbose"></a>-v, --verbose</h2><p>显示详细操作信息。主要用于调试。</p>
+<p>以 &gt; 开头的行表示curl发送的”header data”；&lt; 表示curl接收到的通常情况下隐藏的”header data”；而以 * 开头的行表示curl提供的附加信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190712]# curl -v https://www.baidu.com</span><br><span class="line">* About to connect() to www.baidu.com port 443 (#0)</span><br><span class="line">*   Trying 180.101.49.12...</span><br><span class="line">* Connected to www.baidu.com (180.101.49.12) port 443 (#0)</span><br><span class="line">* Initializing NSS with certpath: sql:/etc/pki/nssdb</span><br><span class="line">*   CAfile: /etc/pki/tls/certs/ca-bundle.crt</span><br><span class="line">  CApath: none</span><br><span class="line">* SSL connection using TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</span><br><span class="line">* Server certificate:</span><br><span class="line">* 	subject: CN=baidu.com,O=&quot;Beijing Baidu Netcom Science Technology Co., Ltd&quot;,OU=service operation department,L=beijing,ST=beijing,C=CN</span><br><span class="line">* 	start date: May 09 01:22:02 2019 GMT</span><br><span class="line">* 	expire date: Jun 25 05:31:02 2020 GMT</span><br><span class="line">* 	common name: baidu.com</span><br><span class="line">* 	issuer: CN=GlobalSign Organization Validation CA - SHA256 - G2,O=GlobalSign nv-sa,C=BE</span><br><span class="line">&gt; GET / HTTP/1.1</span><br><span class="line">&gt; User-Agent: curl/7.29.0</span><br><span class="line">&gt; Host: www.baidu.com</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; </span><br><span class="line">&lt; HTTP/1.1 200 OK</span><br><span class="line">&lt; Accept-Ranges: bytes</span><br><span class="line">&lt; Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform</span><br><span class="line">&lt; Connection: Keep-Alive</span><br><span class="line">&lt; Content-Length: 2443</span><br><span class="line">&lt; Content-Type: text/html</span><br><span class="line">&lt; Date: Fri, 12 Jul 2019 08:26:23 GMT</span><br><span class="line">&lt; Etag: &quot;588603eb-98b&quot;</span><br><span class="line">&lt; Last-Modified: Mon, 23 Jan 2017 13:23:55 GMT</span><br><span class="line">&lt; Pragma: no-cache</span><br><span class="line">&lt; Server: bfe/1.0.8.18</span><br><span class="line">&lt; Set-Cookie: BDORZ=27315; max-age=86400; domain=.baidu.com; path=/</span><br><span class="line">&lt; </span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">………………  # curl 网页的具体信息</span><br></pre></td></tr></table></figure>
+
+<h2 id="w-write-out-lt-format-gt"><a href="#w-write-out-lt-format-gt" class="headerlink" title="-w, --write-out &lt;format&gt;"></a>-w, --write-out &lt;format&gt;</h2><p>在完成和成功操作后要在stdout上显示什么。</p>
+<p>支持如下变量，具体含义请自行参见curl文档。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">content_type</span><br><span class="line">filename_effective</span><br><span class="line">ftp_entry_path</span><br><span class="line">http_code</span><br><span class="line">http_connect</span><br><span class="line">local_ip</span><br><span class="line">local_port</span><br><span class="line">num_connects</span><br><span class="line">num_redirects</span><br><span class="line">redirect_url</span><br><span class="line">remote_ip</span><br><span class="line">remote_port</span><br><span class="line">size_download</span><br><span class="line">size_header</span><br><span class="line">size_request</span><br><span class="line">size_upload</span><br><span class="line">speed_download</span><br><span class="line">speed_upload</span><br><span class="line">ssl_verify_result</span><br><span class="line">time_appconnect</span><br><span class="line">time_connect</span><br><span class="line">time_namelookup</span><br><span class="line">time_pretransfer</span><br><span class="line">time_redirect</span><br><span class="line">time_starttransfer</span><br><span class="line">time_total</span><br><span class="line">url_effective</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl -o /dev/null -s -w %&#123;content_type&#125; www.baidu.com  # 输出结果没有换行</span><br><span class="line">text/html[root@iZ28xbsfvc4Z 20190713]# </span><br><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl -o /dev/null -s -w %&#123;http_code&#125; www.baidu.com  # 输出结果没有换行</span><br><span class="line">200[root@iZ28xbsfvc4Z 20190713]# </span><br><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl -o /dev/null -s -w %&#123;local_port&#125; www.baidu.com  # 输出结果没有换行</span><br><span class="line">37346[root@iZ28xbsfvc4Z 20190713]# </span><br><span class="line">[root@iZ28xbsfvc4Z 20190713]#</span><br></pre></td></tr></table></figure>
+
+<h2 id="x-proxy-lt-protocol-user-password-proxyhost-port-gt"><a href="#x-proxy-lt-protocol-user-password-proxyhost-port-gt" class="headerlink" title="-x, --proxy &lt;[protocol://][user:password@]proxyhost[:port]&gt;"></a>-x, --proxy &lt;[protocol://][user:password@]proxyhost[:port]&gt;</h2><p>使用指定的HTTP代理。如果没有指定端口号，则假定它位于端口1080。</p>
+<h2 id="X-request-lt-command-gt"><a href="#X-request-lt-command-gt" class="headerlink" title="-X, --request &lt;command&gt;"></a>-X, --request &lt;command&gt;</h2><p>(HTTP)指定与HTTP服务器通信时的请求方式。默认GET</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -vs -X POST https://www.baidu.com | head -n1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/curl/curl06.png" alt="image"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -vs -X PUT https://www.baidu.com | head -n1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/curl/curl07.png" alt="image"></p>
+<br>
+
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p><a href="http://www.zhangblog.com/2019/07/16/curl01/">Linux curl 命令详解</a></p>
+<p><a href="http://www.zhangblog.com/2019/07/16/curl02/">Linux curl 常用示例</a></p>
+<p><a href="http://www.zhangblog.com/2019/07/16/curl03/">Linux curl 表单登录或提交与cookie使用</a></p>
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2019/07/16/curl01/" title="Linux curl 命令详解">http://www.zhangblog.com/2019/07/16/curl01/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/curl/" rel="tag"># curl</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/05/nfs1/" rel="next" title="NFS 服务搭建与配置">
+                <i class="fa fa-chevron-left"></i> NFS 服务搭建与配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/18/curl02/" rel="prev" title="Linux curl 常用示例">
+                Linux curl 常用示例 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#命令概要"><span class="nav-number">1.</span> <span class="nav-text">命令概要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#访问的URL"><span class="nav-number">2.</span> <span class="nav-text">访问的URL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用选项一"><span class="nav-number">3.</span> <span class="nav-text">常用选项一</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#progress-bar"><span class="nav-number">3.1.</span> <span class="nav-text">-#, --progress-bar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-http1-0"><span class="nav-number">3.2.</span> <span class="nav-text">-0, --http1.0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-tlsv1"><span class="nav-number">3.3.</span> <span class="nav-text">-1, --tlsv1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-sslv2"><span class="nav-number">3.4.</span> <span class="nav-text">-2, --sslv2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-sslv3"><span class="nav-number">3.5.</span> <span class="nav-text">-3, --sslv3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-ipv4"><span class="nav-number">3.6.</span> <span class="nav-text">-4, --ipv4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-ipv6"><span class="nav-number">3.7.</span> <span class="nav-text">-6, --ipv6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#a-append"><span class="nav-number">3.8.</span> <span class="nav-text">-a, --append</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-user-agent-lt-agent-string-gt"><span class="nav-number">3.9.</span> <span class="nav-text">-A, --user-agent &lt;agent string&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#basic"><span class="nav-number">3.10.</span> <span class="nav-text">--basic</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用选项二"><span class="nav-number">4.</span> <span class="nav-text">常用选项二</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#b-cookie-lt-name-data-gt"><span class="nav-number">4.1.</span> <span class="nav-text">-b, --cookie &lt;name=data&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-cookie-jar-lt-file-name-gt"><span class="nav-number">4.2.</span> <span class="nav-text">-c, --cookie-jar &lt;file name&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#connect-timeout-lt-seconds-gt"><span class="nav-number">4.3.</span> <span class="nav-text">--connect-timeout &lt;seconds&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#create-dirs"><span class="nav-number">4.4.</span> <span class="nav-text">--create-dirs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-continue-at-lt-offset-gt"><span class="nav-number">4.5.</span> <span class="nav-text">-C, --continue-at &lt;offset&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#d-data-lt-data-gt"><span class="nav-number">4.6.</span> <span class="nav-text">-d, --data &lt;data&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-ascii-lt-data-gt"><span class="nav-number">4.7.</span> <span class="nav-text">--data-ascii &lt;data&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-binary-lt-data-gt"><span class="nav-number">4.8.</span> <span class="nav-text">--data-binary &lt;data&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-urlencode-lt-data-gt"><span class="nav-number">4.9.</span> <span class="nav-text">--data-urlencode &lt;data&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-dump-header-lt-file-gt"><span class="nav-number">4.10.</span> <span class="nav-text">-D, --dump-header &lt;file&gt;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用选项三"><span class="nav-number">5.</span> <span class="nav-text">常用选项三</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#digest"><span class="nav-number">5.1.</span> <span class="nav-text">--digest</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#e-referer-lt-URL-gt"><span class="nav-number">5.2.</span> <span class="nav-text">-e, --referer &lt;URL&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#f-fail"><span class="nav-number">5.3.</span> <span class="nav-text">-f, --fail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#F-form-lt-name-content-gt"><span class="nav-number">5.4.</span> <span class="nav-text">-F, --form &lt;name=content&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#form-string-lt-name-string-gt"><span class="nav-number">5.5.</span> <span class="nav-text">--form-string &lt;name=string&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#g-globoff"><span class="nav-number">5.6.</span> <span class="nav-text">-g, --globoff</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G-get"><span class="nav-number">5.7.</span> <span class="nav-text">-G, --get</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#H-header-lt-header-gt"><span class="nav-number">5.8.</span> <span class="nav-text">-H, --header &lt;header&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ignore-content-length"><span class="nav-number">5.9.</span> <span class="nav-text">--ignore-content-length</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-include"><span class="nav-number">5.10.</span> <span class="nav-text">-i, --include</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-head"><span class="nav-number">5.11.</span> <span class="nav-text">-I, --head</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k-insecure"><span class="nav-number">5.12.</span> <span class="nav-text">-k, --insecure</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用选项四"><span class="nav-number">6.</span> <span class="nav-text">常用选项四</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#keepalive-time-lt-seconds-gt"><span class="nav-number">6.1.</span> <span class="nav-text">--keepalive-time &lt;seconds&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#key-lt-key-gt"><span class="nav-number">6.2.</span> <span class="nav-text">--key &lt;key&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#key-type-lt-type-gt"><span class="nav-number">6.3.</span> <span class="nav-text">--key-type &lt;type&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L-location"><span class="nav-number">6.4.</span> <span class="nav-text">-L, --location</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#limit-rate-lt-speed-gt"><span class="nav-number">6.5.</span> <span class="nav-text">--limit-rate &lt;speed&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#local-port-lt-num-gt-num"><span class="nav-number">6.6.</span> <span class="nav-text">--local-port &lt;num&gt;[-num]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#m-max-time-lt-seconds-gt"><span class="nav-number">6.7.</span> <span class="nav-text">-m, --max-time &lt;seconds&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#max-filesize-lt-bytes-gt"><span class="nav-number">6.8.</span> <span class="nav-text">--max-filesize &lt;bytes&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#max-redirs-lt-num-gt"><span class="nav-number">6.9.</span> <span class="nav-text">--max-redirs &lt;num&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#no-keepalive"><span class="nav-number">6.10.</span> <span class="nav-text">--no-keepalive</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用选项五"><span class="nav-number">7.</span> <span class="nav-text">常用选项五</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#o-output-lt-file-gt"><span class="nav-number">7.1.</span> <span class="nav-text">-o, --output &lt;file&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#O-remote-name"><span class="nav-number">7.2.</span> <span class="nav-text">-O, --remote-name</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pass-lt-phrase-gt"><span class="nav-number">7.3.</span> <span class="nav-text">--pass &lt;phrase&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#post301"><span class="nav-number">7.4.</span> <span class="nav-text">--post301</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#–post302"><span class="nav-number">7.5.</span> <span class="nav-text">–post302</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#post303"><span class="nav-number">7.6.</span> <span class="nav-text">--post303</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pubkey-lt-key-gt"><span class="nav-number">7.7.</span> <span class="nav-text">--pubkey &lt;key&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r-range-lt-range-gt"><span class="nav-number">7.8.</span> <span class="nav-text">-r, --range &lt;range&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R-remote-time"><span class="nav-number">7.9.</span> <span class="nav-text">-R, --remote-time</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#retry-lt-num-gt"><span class="nav-number">7.10.</span> <span class="nav-text">--retry &lt;num&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#retry-delay-lt-seconds-gt"><span class="nav-number">7.11.</span> <span class="nav-text">--retry-delay &lt;seconds&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#retry-max-time-lt-seconds-gt"><span class="nav-number">7.12.</span> <span class="nav-text">--retry-max-time &lt;seconds&gt;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用选项六"><span class="nav-number">8.</span> <span class="nav-text">常用选项六</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#s-silent"><span class="nav-number">8.1.</span> <span class="nav-text">-s, --silent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S-show-error"><span class="nav-number">8.2.</span> <span class="nav-text">-S, --show-error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stderr-lt-file-gt"><span class="nav-number">8.3.</span> <span class="nav-text">--stderr &lt;file&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#T-upload-file-lt-file-gt"><span class="nav-number">8.4.</span> <span class="nav-text">-T, --upload-file &lt;file&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trace-lt-file-gt"><span class="nav-number">8.5.</span> <span class="nav-text">--trace &lt;file&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trace-ascii-lt-file-gt"><span class="nav-number">8.6.</span> <span class="nav-text">--trace-ascii &lt;file&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trace-time"><span class="nav-number">8.7.</span> <span class="nav-text">--trace-time</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-verbose"><span class="nav-number">8.8.</span> <span class="nav-text">-v, --verbose</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#w-write-out-lt-format-gt"><span class="nav-number">8.9.</span> <span class="nav-text">-w, --write-out &lt;format&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x-proxy-lt-protocol-user-password-proxyhost-port-gt"><span class="nav-number">8.10.</span> <span class="nav-text">-x, --proxy &lt;[protocol://][user:password@]proxyhost[:port]&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#X-request-lt-command-gt"><span class="nav-number">8.11.</span> <span class="nav-text">-X, --request &lt;command&gt;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">9.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">28.2k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>lightzhang博客</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.zhangblog.com/"/>
+  <updated>2019-07-19T13:27:55.658Z</updated>
+  <id>http://www.zhangblog.com/</id>
+  
+  <author>
+    <name>lightzhang</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux curl 常用示例</title>
+    <link href="http://www.zhangblog.com/2019/07/18/curl02/"/>
+    <id>http://www.zhangblog.com/2019/07/18/curl02/</id>
+    <published>2019-07-18T09:00:01.000Z</published>
+    <updated>2019-07-19T13:27:55.658Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/curl/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="linux" scheme="http://www.zhangblog.com/categories/linux/"/>
+    
+      <category term="curl" scheme="http://www.zhangblog.com/categories/linux/curl/"/>
+    
+    
+      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
+    
+      <category term="curl" scheme="http://www.zhangblog.com/tags/curl/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux curl 命令详解</title>
+    <link href="http://www.zhangblog.com/2019/07/16/curl01/"/>
+    <id>http://www.zhangblog.com/2019/07/16/curl01/</id>
+    <published>2019-07-16T07:21:18.000Z</published>
+    <updated>2019-07-19T03:04:45.577Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/curl/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;命令概要&quot;&gt;&lt;a href=&quot;#命令概要&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="linux" scheme="http://www.zhangblog.com/categories/linux/"/>
+    
+      <category term="curl" scheme="http://www.zhangblog.com/categories/linux/curl/"/>
+    
+    
+      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
+    
+      <category term="curl" scheme="http://www.zhangblog.com/tags/curl/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NFS 服务搭建与配置</title>
+    <link href="http://www.zhangblog.com/2019/07/05/nfs1/"/>
+    <id>http://www.zhangblog.com/2019/07/05/nfs1/</id>
+    <published>2019-07-05T07:53:45.000Z</published>
+    <updated>2019-07-09T13:55:05.360Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/nfs/nfs00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;p&gt;本文讲解在 CentOS 5.x、CentOS 6.x 和 CentOS 7.x 环境下，如何安装与部署 NFS 服务。&lt;/p&gt;
+&lt;font
+        
+      
+    
+    </summary>
+    
+      <category term="NFS" scheme="http://www.zhangblog.com/categories/NFS/"/>
+    
+    
+      <category term="NFS" scheme="http://www.zhangblog.com/tags/NFS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>shell脚本：通过域名获取证书的过期时间</title>
+    <link href="http://www.zhangblog.com/2019/06/24/domainexpire/"/>
+    <id>http://www.zhangblog.com/2019/06/24/domainexpire/</id>
+    <published>2019-06-24T01:35:04.000Z</published>
+    <updated>2019-06-24T01:55:54.779Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;各位读者都是经常上网的人，当今社会我们可以暂时性没有很多东西，但是就是不能没有网络。否则的话可能会产生严重的焦虑，感觉自己突然就和社会脱节了。&lt;/p&gt;
+&lt;p&gt;那么在访问各网站的时候，不知道你有没有注意几乎所有网站网址的开头都是 https:// 打头的，而不是
+        
+      
+    
+    </summary>
+    
+      <category term="Shell" scheme="http://www.zhangblog.com/categories/Shell/"/>
+    
+    
+      <category term="Shell" scheme="http://www.zhangblog.com/tags/Shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下使用 github+hexo 搭建个人博客07-next主题接入搜索和站点管理</title>
+    <link href="http://www.zhangblog.com/2019/06/17/hexo07/"/>
+    <id>http://www.zhangblog.com/2019/06/17/hexo07/</id>
+    <published>2019-06-17T03:02:55.000Z</published>
+    <updated>2019-07-15T14:41:54.477Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/hexo/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/tags/Hexo/"/>
+    
+      <category term="Next" scheme="http://www.zhangblog.com/tags/Next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下使用 github+hexo 搭建个人博客06-next主题接入数据统计</title>
+    <link href="http://www.zhangblog.com/2019/06/16/hexo06/"/>
+    <id>http://www.zhangblog.com/2019/06/16/hexo06/</id>
+    <published>2019-06-16T05:56:39.000Z</published>
+    <updated>2019-06-17T02:07:14.782Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/hexo/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;之前说了 next
+        
+      
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/tags/Hexo/"/>
+    
+      <category term="Next" scheme="http://www.zhangblog.com/tags/Next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统</title>
+    <link href="http://www.zhangblog.com/2019/06/16/hexo05/"/>
+    <id>http://www.zhangblog.com/2019/06/16/hexo05/</id>
+    <published>2019-06-16T03:17:45.000Z</published>
+    <updated>2019-06-16T03:26:49.689Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/hexo/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/tags/Hexo/"/>
+    
+      <category term="Next" scheme="http://www.zhangblog.com/tags/Next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下使用 github+hexo 搭建个人博客04-next主题优化</title>
+    <link href="http://www.zhangblog.com/2019/06/16/hexo04/"/>
+    <id>http://www.zhangblog.com/2019/06/16/hexo04/</id>
+    <published>2019-06-16T01:41:33.000Z</published>
+    <updated>2019-06-16T02:51:06.617Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/hexo/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;上篇我们说了 hexo
+        
+      
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/tags/Hexo/"/>
+    
+      <category term="Next" scheme="http://www.zhangblog.com/tags/Next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下使用 github+hexo 搭建个人博客03-hexo配置优化</title>
+    <link href="http://www.zhangblog.com/2019/06/14/hexo03/"/>
+    <id>http://www.zhangblog.com/2019/06/14/hexo03/</id>
+    <published>2019-06-14T06:27:14.000Z</published>
+    <updated>2019-06-14T06:38:29.227Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/hexo/03.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;上两张文章，我们说了 hexo
+        
+      
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/tags/Hexo/"/>
+    
+      <category term="Next" scheme="http://www.zhangblog.com/tags/Next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下使用 github+hexo 搭建个人博客02-hexo部署到Github Pages</title>
+    <link href="http://www.zhangblog.com/2019/06/12/hexo02/"/>
+    <id>http://www.zhangblog.com/2019/06/12/hexo02/</id>
+    <published>2019-06-12T10:25:20.000Z</published>
+    <updated>2019-06-13T06:21:26.706Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/hexo/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;之前的这篇文章《&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/tags/Hexo/"/>
+    
+      <category term="Next" scheme="http://www.zhangblog.com/tags/Next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux下使用 github+hexo 搭建个人博客01-hexo搭建</title>
+    <link href="http://www.zhangblog.com/2019/06/11/hexo01/"/>
+    <id>http://www.zhangblog.com/2019/06/11/hexo01/</id>
+    <published>2019-06-11T08:12:48.000Z</published>
+    <updated>2019-06-12T10:03:39.795Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/hexo/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://www.zhangblog.com/tags/Hexo/"/>
+    
+      <category term="Next" scheme="http://www.zhangblog.com/tags/Next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MarkDown 新手指南</title>
+    <link href="http://www.zhangblog.com/2019/06/04/MarkDown_Use_Guide/"/>
+    <id>http://www.zhangblog.com/2019/06/04/MarkDown_Use_Guide/</id>
+    <published>2019-06-04T11:28:51.000Z</published>
+    <updated>2019-06-04T13:28:51.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;标题&quot;&gt;&lt;a href=&quot;#标题&quot; class=&quot;headerlink&quot; title=&quot;标题&quot;&gt;&lt;/a&gt;标题&lt;/h1&gt;&lt;h1 id=&quot;一级标题&quot;&gt;&lt;a href=&quot;#一级标题&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="MarkDown" scheme="http://www.zhangblog.com/categories/MarkDown/"/>
+    
+    
+      <category term="MarkDown" scheme="http://www.zhangblog.com/tags/MarkDown/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://www.zhangblog.com/2019/06/03/hello-world/"/>
+    <id>http://www.zhangblog.com/2019/06/03/hello-world/</id>
+    <published>2019-06-03T11:00:51.000Z</published>
+    <updated>2019-06-03T12:28:51.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>

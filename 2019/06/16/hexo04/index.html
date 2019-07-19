@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo,Next,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言上篇我们说了 hexo 的优化，针对的站点的优化。 本篇讲解 next 主题的优化，包括：使用语言、前端页面显示宽度、菜单、侧栏、头像、添加或取消动画效果、打赏功能等等。 让页面排版更符合我们所要的功能和所想的风格。 可参考网站  http://theme-next.iissnan.com/getting-started.html  主题设定选择 Scheme修改 next 主题配置文件。">
+<meta name="keywords" content="Hexo,Next">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下使用 github+hexo 搭建个人博客04-next主题优化">
+<meta property="og:url" content="http://www.zhangblog.com/2019/06/16/hexo04/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="前言上篇我们说了 hexo 的优化，针对的站点的优化。 本篇讲解 next 主题的优化，包括：使用语言、前端页面显示宽度、菜单、侧栏、头像、添加或取消动画效果、打赏功能等等。 让页面排版更符合我们所要的功能和所想的风格。 可参考网站  http://theme-next.iissnan.com/getting-started.html  主题设定选择 Scheme修改 next 主题配置文件。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/00.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-03.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-04.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-05.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-06.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-07.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-08.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-09.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-10.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-11.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-12.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-13.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-14.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-15.png">
+<meta property="og:updated_time" content="2019-06-16T02:51:06.617Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux下使用 github+hexo 搭建个人博客04-next主题优化">
+<meta name="twitter:description" content="前言上篇我们说了 hexo 的优化，针对的站点的优化。 本篇讲解 next 主题的优化，包括：使用语言、前端页面显示宽度、菜单、侧栏、头像、添加或取消动画效果、打赏功能等等。 让页面排版更符合我们所要的功能和所想的风格。 可参考网站  http://theme-next.iissnan.com/getting-started.html  主题设定选择 Scheme修改 next 主题配置文件。">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/hexo/00.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2019/06/16/hexo04/">
+
+
+
+
+
+  <title>Linux下使用 github+hexo 搭建个人博客04-next主题优化 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/06/16/hexo04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux下使用 github+hexo 搭建个人博客04-next主题优化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-16T09:41:33+08:00">
+                2019-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">Hexo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/16/hexo04/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/16/hexo04/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/06/16/hexo04/" class="leancloud_visitors" data-flag-title="Linux下使用 github+hexo 搭建个人博客04-next主题优化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/hexo/00.jpg" alt="image"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上篇我们说了 hexo 的优化，针对的站点的优化。</p>
+<p>本篇讲解 next 主题的优化，包括：使用语言、前端页面显示宽度、菜单、侧栏、头像、添加或取消动画效果、打赏功能等等。</p>
+<p>让页面排版更符合我们所要的功能和所想的风格。</p>
+<p><strong>可参考网站</strong></p>
+<blockquote>
+<p><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/getting-started.html</a></p>
+</blockquote>
+<h1 id="主题设定"><a href="#主题设定" class="headerlink" title="主题设定"></a>主题设定</h1><h2 id="选择-Scheme"><a href="#选择-Scheme" class="headerlink" title="选择 Scheme"></a>选择 Scheme</h2><p>修改 next <font color="Blue"><strong>主题配置文件</strong></font>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim _config.yml </span><br><span class="line"># Schemes</span><br><span class="line">#scheme: Muse</span><br><span class="line">#scheme: Mist</span><br><span class="line">scheme: Pisces</span><br><span class="line">#scheme: Gemini</span><br></pre></td></tr></table></figure>
+
+<p>可以自行更换，不用重启 hexo 服务。个人更喜欢 Pisces，将菜单栏放在左侧，而不是原来的顶部。<br>Muse   默认 Scheme，这是 NexT 最初的版本，黑白主调，大量留白<br>Mist    Muse 的紧凑版本，整洁有序的单栏外观<br>Pisces   双栏 Scheme，小家碧玉似的清新</p>
+<h2 id="页面宽度设置"><a href="#页面宽度设置" class="headerlink" title="页面宽度设置"></a>页面宽度设置</h2><p>默认情况下，该主题页面两边留白较多，所以如果需要可以把两边留白处减少些。</p>
+<p>当然，此步操作可略。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog css]# pwd</span><br><span class="line">/app/softinsall/hexo/themes/next/source/css</span><br><span class="line">[root@zhangblog css]# vim _variables/base.styl  # 修改处一</span><br><span class="line">$main-desktop                   = 1160px</span><br><span class="line">[root@zhangblog css]# vim _schemes/Pisces/_layout.styl  # 修改处二 </span><br><span class="line">.content-wrap &#123;</span><br><span class="line">  float: right;</span><br><span class="line">  box-sizing: border-box;</span><br><span class="line">  padding: $content-desktop-padding;</span><br><span class="line">  /* width: $content-desktop; 改为如下信息 */</span><br><span class="line">  width: calc(100% - 252px);</span><br><span class="line">  background: white;</span><br><span class="line">  min-height: 700px;</span><br><span class="line">  box-shadow: $box-shadow-inner;</span><br><span class="line">  border-radius: $border-radius-inner;</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h2><p>页面默认为英文，改为中文显示。</p>
+<p>首先确定该主题支持哪些语言。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog languages]# pwd  # 在主题目录，查看 next 主题支持哪些语言</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog languages]# ll languages/</span><br><span class="line">total 64</span><br><span class="line">-rw-r--r-- 1 root root 1669 Jun  7 20:13 default.yml</span><br><span class="line">-rw-r--r-- 1 root root 1601 Jun  7 20:13 de.yml</span><br><span class="line">-rw-r--r-- 1 root root 1712 Jun  7 20:13 en.yml</span><br><span class="line">-rw-r--r-- 1 root root 1553 Jun  7 20:13 fr-FR.yml</span><br><span class="line">-rw-r--r-- 1 root root 1507 Jun  7 20:13 id.yml</span><br><span class="line">-rw-r--r-- 1 root root 1688 Jun  7 20:13 it.yml</span><br><span class="line">-rw-r--r-- 1 root root 1573 Jun  7 20:13 ja.yml</span><br><span class="line">-rw-r--r-- 1 root root 1596 Jun  7 20:13 ko.yml</span><br><span class="line">-rw-r--r-- 1 root root 1729 Jun  7 20:13 nl-NL.yml</span><br><span class="line">-rw-r--r-- 1 root root 1545 Jun  7 20:13 pt-BR.yml</span><br><span class="line">-rw-r--r-- 1 root root 1583 Jun  7 20:13 pt.yml</span><br><span class="line">-rw-r--r-- 1 root root 2632 Jun  7 20:13 ru.yml</span><br><span class="line">-rw-r--r-- 1 root root 1997 Jun  7 20:13 vi.yml</span><br><span class="line">-rw-r--r-- 1 root root 1781 Jun  7 20:13 zh-Hans.yml  # 中文简体，使用该语言</span><br><span class="line">-rw-r--r-- 1 root root 1763 Jun  7 20:13 zh-hk.yml</span><br><span class="line">-rw-r--r-- 1 root root 1763 Jun  7 20:13 zh-tw.yml</span><br></pre></td></tr></table></figure>
+
+<p>在<font color="red"><strong>站点配置文件</strong></font>使用指定语言。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# pwd  # 站点目录</span><br><span class="line">/app/softinsall/hexo</span><br><span class="line">[root@zhangblog hexo]# vim _config.yml  </span><br><span class="line">………………</span><br><span class="line">language: zh-Hans</span><br><span class="line">timezone:</span><br></pre></td></tr></table></figure>
+
+<p>重新生成静态文件，然后重启 hexo 服务，再次访问可见是中文显示了。<br><img src="/uploads/hexo/24-01.png" alt="image"></p>
+<h2 id="设置菜单"><a href="#设置菜单" class="headerlink" title="设置菜单"></a>设置菜单</h2><p>菜单配置包括三个部分，第一是菜单项（名称和链接），第二是菜单项的显示文本，第三是菜单项对应的图标。</p>
+<p>修改<font color="Blue"><strong>主题配置文件</strong></font>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# vim _config.yml </span><br><span class="line">menu:</span><br><span class="line">  home: / || home</span><br><span class="line">  archives: /archives/ || archive</span><br><span class="line">  tags: /tags/ || tags</span><br><span class="line">  categories: /categories/ || th</span><br><span class="line">  about: /about/ || user</span><br><span class="line">  #schedule: /schedule/ || calendar</span><br><span class="line">  sitemap: /sitemap.xml || sitemap</span><br><span class="line">  commonweal: /404/ || heartbeat</span><br><span class="line"></span><br><span class="line"># Enable/Disable menu icons.</span><br><span class="line">menu_icons:</span><br><span class="line">  enable: true</span><br></pre></td></tr></table></figure>
+
+<p>home        主页<br>archives      归档类<br>tags         标签页<br>categories     分类页<br>about        关于页<br>schedule      时间表<br>sitemap      网站地图<br>commonweal 公益 404</p>
+<h2 id="设置侧栏"><a href="#设置侧栏" class="headerlink" title="设置侧栏"></a>设置侧栏</h2><p>修改<font color="Blue"><strong>主题配置文件</strong></font>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# vim _config.yml </span><br><span class="line">sidebar:</span><br><span class="line">  # Sidebar Position, available values: left | right (only for Pisces | Gemini).</span><br><span class="line">  position: left</span><br><span class="line">  #position: right</span><br></pre></td></tr></table></figure>
+
+<p>默认不用修改。<br>侧边栏位置，可用值:：left | right (仅适用于 Pisces | Gemini)。</p>
+<h2 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h2><p>修改<font color="Blue"><strong>主题配置文件</strong></font>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# vim _config.yml </span><br><span class="line"># Sidebar Avatar</span><br><span class="line">avatar:</span><br><span class="line">  # In theme directory (source/images): /images/avatar.gif</span><br><span class="line">  # In site directory (source/uploads): /uploads/avatar.gif</span><br><span class="line">  # You can also use other linking images.</span><br><span class="line">  url: /uploads/avatar.png</span><br></pre></td></tr></table></figure>
+
+<p>如果是站外，完整的互联网 URI    如：<a href="http://example.com/avatar.png" target="_blank" rel="noopener">http://example.com/avatar.png</a></p>
+<p>如果是站内：<br>1、将头像放置主题目录下的 source/uploads/ （新建 uploads 目录若不存在），配置为：avatar: /uploads/avatar.png<br>2、或者 放置在 source/images/ 目录下，配置为：avatar: /images/avatar.png</p>
+<p><strong>图片路径</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # next 主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# ll source/uploads/avatar.png </span><br><span class="line">-rw-r--r-- 1 root root 131807 Apr 30 14:39 source/uploads/avatar.png</span><br></pre></td></tr></table></figure>
+
+<h1 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h1><h2 id="设置「RSS」"><a href="#设置「RSS」" class="headerlink" title="设置「RSS」"></a>设置「RSS」</h2><p>false：禁用 RSS，不在页面上显示 RSS 连接。<br>留空：使用 Hexo 生成的 Feed 链接。 你可以需要先安装 hexo-generator-feed 插件。</p>
+<blockquote>
+<p>插件地址：<a href="https://github.com/hexojs/hexo-generator-feed" target="_blank" rel="noopener">https://github.com/hexojs/hexo-generator-feed</a></p>
+</blockquote>
+<p><strong>安装插件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z hexo]# pwd  # 站点目录</span><br><span class="line">/app/softinsall/hexo</span><br><span class="line">[root@iZ28xbsfvc4Z hexo]# npm install hexo-generator-feed --save</span><br></pre></td></tr></table></figure>
+
+<p><font color="red"><strong>站点配置文件</strong></font>修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# pwd</span><br><span class="line">/app/softinsall/hexo</span><br><span class="line">[root@zhangblog hexo]# vim _config.yml </span><br><span class="line">#Feed Atom</span><br><span class="line">feed:</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 20</span><br><span class="line">  hub:</span><br><span class="line">  content:</span><br><span class="line">  content_limit: 140</span><br><span class="line">  content_limit_delim: &apos; &apos;</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数讲解：</strong><br>type:  RSS 的类型(atom/rss2)<br>path:  文件路径，默认是 atom.xml/rss2.xml<br>limit:  展示文章的数量，使用 0 或则 false 代表展示全部<br>hub:<br>content:  在RSS文件中是否包含内容，有3个值 true/false 默认不填为 false<br>content_limit:  指定内容的长度作为摘要，仅仅在上面content设置为 false 和没有自定义的描述出现<br>content_limit_delim:  上面截取描述的分隔符，截取内容是以指定的这个分隔符作为截取结束的标志。在达到规定的内容长度之前最后出现的这个分隔符之前的内容，防止从中间截断。</p>
+<h2 id="添加「标签」页面"><a href="#添加「标签」页面" class="headerlink" title="添加「标签」页面"></a>添加「标签」页面</h2><p><strong>新建标签页面</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# pwd  # 定位到 Hexo 站点目录下</span><br><span class="line">/app/softinsall/hexo</span><br><span class="line">[root@zhangblog hexo]# hexo new page tags  </span><br><span class="line">INFO  Created: /app/softinsall/hexo/source/tags/index.md</span><br></pre></td></tr></table></figure>
+
+<p><strong>标签页面设置</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog tags]# pwd</span><br><span class="line">/app/softinsall/hexo/source/tags</span><br><span class="line">[root@zhangblog tags]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 79 Jun  7 10:48 index.md</span><br><span class="line">[root@zhangblog tags]# cat index.md </span><br><span class="line">---</span><br><span class="line">title: All Tags</span><br><span class="line">date: 2019-06-07 10:36:52</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>注意：如果有集成评论服务，页面也会带有评论。 若需要关闭的话，请添加字段 comments 并将值设置为 false。</p>
+<p><strong>使用标签</strong><br>在文章中使用标签。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# pwd</span><br><span class="line">/app/softinsall/hexo</span><br><span class="line">[root@zhangblog hexo]# head source/_posts/MarkDown-新手指南.md  # 相关信息如下</span><br><span class="line">---</span><br><span class="line">title: MarkDown 新手指南</span><br><span class="line">date: 2019-06-04 19:28:51</span><br><span class="line">tags:</span><br><span class="line">  - MarkDown</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p><strong>浏览器访问</strong><br><img src="/uploads/hexo/24-02.png" alt="image"></p>
+<h2 id="添加「分类」页面"><a href="#添加「分类」页面" class="headerlink" title="添加「分类」页面"></a>添加「分类」页面</h2><p><strong>新建分类页面</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# pwd  # 定位到 Hexo 站点目录下</span><br><span class="line">/app/softinsall/hexo</span><br><span class="line">[root@zhangblog hexo]# hexo new page categories </span><br><span class="line">INFO  Created: /app/softinsall/hexo/source/categories/index.md</span><br></pre></td></tr></table></figure>
+
+<p><strong>分类页面设置</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog categories]# pwd</span><br><span class="line">/app/softinsall/hexo/source/categories</span><br><span class="line">[root@zhangblog categories]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 89 Jun  7 11:04 index.md</span><br><span class="line">[root@zhangblog categories]# cat index.md  </span><br><span class="line">---</span><br><span class="line">title: 文章分类</span><br><span class="line">date: 2019-06-07 11:00:17</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>注意：如果有集成评论服务，页面也会带有评论。 若需要关闭的话，请添加字段 comments 并将值设置为 false。</p>
+<p><strong>使用分类</strong><br>在文章中使用分类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# pwd</span><br><span class="line">/app/softinsall/hexo</span><br><span class="line">[root@zhangblog hexo]# head source/_posts/MarkDown-新手指南.md # 相关信息如下</span><br><span class="line">---</span><br><span class="line">title: MarkDown 新手指南</span><br><span class="line">date: 2019-06-04 19:28:51</span><br><span class="line">tags:</span><br><span class="line">  - MarkDown</span><br><span class="line">categories:</span><br><span class="line">  - MarkDown</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p><strong>浏览器访问</strong><br><img src="/uploads/hexo/24-03.png" alt="image"></p>
+<h2 id="添加「关于」页面"><a href="#添加「关于」页面" class="headerlink" title="添加「关于」页面"></a>添加「关于」页面</h2><p><strong>新建关于页面</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# pwd  # 定位到 Hexo 站点目录下</span><br><span class="line">/app/softinsall/hexo</span><br><span class="line">[root@zhangblog hexo]# hexo new page about</span><br><span class="line">INFO  Created: /app/softinsall/hexo/source/about/index.md</span><br></pre></td></tr></table></figure>
+
+<p><strong>关于页面编辑</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog about]# pwd</span><br><span class="line">/app/softinsall/hexo/source/about</span><br><span class="line">[root@zhangblog about]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 47 Jun  7 16:07 index.md</span><br><span class="line">[root@zhangblog about]# cat index.md </span><br><span class="line">---</span><br><span class="line">title: 关于我</span><br><span class="line">date: 2019-06-07 16:07:36</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"># 关于本博客</span><br><span class="line">本博客诞生于 2019-06，虽然 2015-02 就开始在 CSDN 写博客，但是最开始都是作为自己的笔记记录，因此刚开始那段时间也不怎么重视排版。如果在 CSDN 看了我那些早期的博客，发现排版不好，体验性欠缺，还请多多包涵。</span><br><span class="line"></span><br><span class="line">后来该博客经过几次改版，自己发现不怎么适应。因此就转到了博客园。相比前者的经常改版，甚至有段时间广告频繁，博客园就好很多，页面也非常清爽。</span><br><span class="line"></span><br><span class="line">………………</span><br><span class="line"></span><br><span class="line">等等，后期可能还会有其他动作，敬请期待…………</span><br><span class="line"></span><br><span class="line"># 联系方式</span><br><span class="line">邮箱：zhanglianghhh@163.com</span><br><span class="line">QQ: 1369929127</span><br><span class="line"></span><br><span class="line">&lt;/br&gt;</span><br><span class="line"></span><br><span class="line">&lt;center&gt;</span><br><span class="line"></span><br><span class="line">**你对本站的捐赠，就是我最大的动力！**</span><br><span class="line"></span><br><span class="line">&lt;/center&gt;</span><br><span class="line"></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p><strong>浏览器访问</strong><br><img src="/uploads/hexo/24-04.png" alt="image"></p>
+<h2 id="添加「公益404」页面"><a href="#添加「公益404」页面" class="headerlink" title="添加「公益404」页面"></a>添加「公益404」页面</h2><p>腾讯公益404页面，寻找丢失儿童，让大家一起关注此项公益事业！</p>
+<p><strong>新建关于页面</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# pwd  # 定位到 Hexo 站点目录下</span><br><span class="line">/app/softinsall/hexo</span><br><span class="line">[root@zhangblog hexo]# hexo new page 404</span><br><span class="line">INFO  Created: /app/softinsall/hexo/source/404/index.md</span><br></pre></td></tr></table></figure>
+
+<p><strong>关于页面编辑</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog 404]# pwd</span><br><span class="line">/app/softinsall/hexo/source/404</span><br><span class="line">[root@zhangblog 404]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 758 Jun  7 23:19 index.md</span><br><span class="line">[root@zhangblog 404]# cat index.md </span><br><span class="line">---</span><br><span class="line">title: 404</span><br><span class="line">date: 2019-06-07 23:15:22</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE HTML&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8;&quot;/&gt;</span><br><span class="line">  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot; /&gt;</span><br><span class="line">  &lt;meta name=&quot;robots&quot; content=&quot;all&quot; /&gt;</span><br><span class="line">  &lt;meta name=&quot;robots&quot; content=&quot;index,follow&quot;/&gt;</span><br><span class="line">  &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://qzone.qq.com/gy/404/style/404style.css&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;script type=&quot;text/plain&quot; src=&quot;http://www.qq.com/404/search_children.js&quot;</span><br><span class="line">          charset=&quot;utf-8&quot; homePageUrl=&quot;/&quot;</span><br><span class="line">          homePageName=&quot;回到我的主页&quot;&gt;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">  &lt;script src=&quot;https://qzone.qq.com/gy/404/data.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script src=&quot;https://qzone.qq.com/gy/404/page.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>浏览器访问</strong><br><img src="/uploads/hexo/24-05.png" alt="image"></p>
+<p><img src="/uploads/hexo/24-06.png" alt="image"></p>
+<h2 id="侧边栏社交链接"><a href="#侧边栏社交链接" class="headerlink" title="侧边栏社交链接"></a>侧边栏社交链接</h2><p>侧栏社交链接的修改包含两个部分，第一是链接，第二是链接图标。两者配置均在<font color="Blue"><strong>主题配置文件</strong></font>中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim _config.yml</span><br><span class="line">social:</span><br><span class="line">  GitHub: https://github.com/zhanglianghhh || github</span><br><span class="line">  E-Mail: mailto:zhanglianghhh@163.com || envelope</span><br><span class="line">  知乎: https://www.zhihu.com/people/lightzhang-23-69/activities || globe</span><br><span class="line">  CSDN: https://blog.csdn.net/woshizhangliang999 || codiepie</span><br><span class="line">  博客园: https://www.cnblogs.com/zhanglianghhh/p/ || rss-square</span><br><span class="line"></span><br><span class="line">social_icons:</span><br><span class="line">  enable: true</span><br><span class="line">  icons_only: false</span><br><span class="line">  transition: false</span><br></pre></td></tr></table></figure>
+
+<p><strong>以如下配置说明：</strong></p>
+<blockquote>
+<p>GitHub: <a href="https://github.com/zhanglianghhh" target="_blank" rel="noopener">https://github.com/zhanglianghhh</a> || github</p>
+</blockquote>
+<p>GitHub：  表示页面显示的文字<br><a href="https://github.com/zhanglianghhh" target="_blank" rel="noopener">https://github.com/zhanglianghhh</a> ：  跳转URL<br>github：  使用的图标</p>
+<p><strong>更多图标参见如下网站：</strong></p>
+<blockquote>
+<p><a href="http://www.fontawesome.com.cn/faicons/" target="_blank" rel="noopener">http://www.fontawesome.com.cn/faicons/</a> </p>
+</blockquote>
+<p><strong>页面效果</strong><br><img src="/uploads/hexo/24-07.png" alt="image"></p>
+<h2 id="开启打赏功能"><a href="#开启打赏功能" class="headerlink" title="开启打赏功能"></a>开启打赏功能</h2><p>越来越多的平台（微信公众号、新浪博客、简书、百度打赏等）支持打赏功能，付费阅读时代越来越近，因此增加了打赏功能。</p>
+<p>支持微信打赏和支付宝打赏，只需在<font color="Blue"><strong>主题配置文件</strong></font>中填入微信和支付宝收款二维码图片地址，即可开启打赏功能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 在主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim _config.yml </span><br><span class="line"># Reward</span><br><span class="line">reward_comment: 坚持原创分享，你的支持就是我最大的动力！</span><br><span class="line">wechatpay: /uploads/weixin_cash_code.png</span><br><span class="line">alipay: /uploads/alipay_cash_code.png</span><br></pre></td></tr></table></figure>
+
+<p>图片所在位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 在主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# ll source/uploads/weixin_cash_code.png </span><br><span class="line">-rw-r--r-- 1 root root 27337 Jun  7 19:39 source/uploads/weixin_cash_code.png</span><br><span class="line">[root@zhangblog next]# ll source/uploads/alipay_cash_code.png </span><br><span class="line">-rw-r--r-- 1 root root 58235 Jun  7 19:37 source/uploads/alipay_cash_code.png</span><br></pre></td></tr></table></figure>
+
+<p><strong>页面效果</strong><br><img src="/uploads/hexo/24-08.png" alt="image"></p>
+<h2 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h2><p>在<font color="Blue"><strong>主题配置文件</strong></font>中修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim _config.yml</span><br><span class="line"># Blog rolls</span><br><span class="line">links_icon: link</span><br><span class="line">links_title: Links</span><br><span class="line">#links_layout: block</span><br><span class="line">links_layout: inline</span><br><span class="line">links:</span><br><span class="line">  OpenInfo: http://mp.weixin.qq.com/user1</span><br><span class="line">  stormzhang: http://mp.weixin.qq.com/user2</span><br></pre></td></tr></table></figure>
+
+<p><strong>页面效果</strong><br><img src="/uploads/hexo/24-09.png" alt="image"></p>
+<h2 id="站点建立时间"><a href="#站点建立时间" class="headerlink" title="站点建立时间"></a>站点建立时间</h2><p>这个时间将在站点的<strong>底部显示</strong>，例如 © 2015- 2019。 编辑<font color="Blue"><strong>主题配置文件</strong></font>，修改字段 since。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim _config.yml</span><br><span class="line">footer:</span><br><span class="line">  # Specify the date when the site was setup.</span><br><span class="line">  # If not defined, current year will be used.  修改处如下</span><br><span class="line">  since: 2015</span><br><span class="line"></span><br><span class="line">  # Icon between year and copyright info.</span><br><span class="line">  icon: user</span><br></pre></td></tr></table></figure>
+
+<p><strong>页面效果</strong><br><img src="/uploads/hexo/24-10.png" alt="image"></p>
+<h2 id="订阅微信公众号"><a href="#订阅微信公众号" class="headerlink" title="订阅微信公众号"></a>订阅微信公众号</h2><p>在每篇文章的末尾默认显示微信公众号二维码，扫一扫，轻松订阅。</p>
+<p>编辑<font color="Blue"><strong>主题配置文件</strong></font>，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 在主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim _config.yml</span><br><span class="line"># Wechat Subscriber</span><br><span class="line">wechat_subscriber:</span><br><span class="line">  enabled: true</span><br><span class="line">  qcode: /uploads/weixin_pulic_code.png</span><br><span class="line">  description: 欢迎扫一扫，订阅我的微信公众号！</span><br></pre></td></tr></table></figure>
+
+<p><strong>页面样式修改</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 在主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim layout/_macro/wechat-subscriber.swig </span><br><span class="line">&lt;div id=&quot;wechat_subscriber&quot; style=&quot;display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center&quot;&gt;</span><br><span class="line">&lt;!-- </span><br><span class="line">    &lt;img id=&quot;wechat_subscriber_qcode&quot; src=&quot;&#123;&#123; theme.wechat_subscriber.qcode &#125;&#125;&quot; alt=&quot;&#123;&#123; theme.author &#125;&#125; wechat&quot; style=&quot;width: 200px; max-width: 100%;&quot;/&gt;</span><br><span class="line">    去掉 style 中的 width: 200px;</span><br><span class="line">     --&gt;</span><br><span class="line">    &lt;img id=&quot;wechat_subscriber_qcode&quot; src=&quot;&#123;&#123; theme.wechat_subscriber.qcode &#125;&#125;&quot; alt=&quot;&#123;&#123; theme.author &#125;&#125; wechat&quot; style=&quot;max-width: 100%;&quot;/&gt;</span><br><span class="line">    &lt;div&gt;&#123;&#123; theme.wechat_subscriber.description &#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>页面效果</strong><br><img src="/uploads/hexo/24-11.png" alt="image"></p>
+<h2 id="设置「动画效果」"><a href="#设置「动画效果」" class="headerlink" title="设置「动画效果」"></a>设置「动画效果」</h2><p>Next 主题默认开启动画效果，由于该效果使用 JavaScript 编写，因此只有当 JavaScript 脚本加载完毕后，才会显示页面。<br>如果你对加载速度在乎的话，那么可以关闭动画效果。</p>
+<p>编辑<font color="Blue"><strong>主题配置文件</strong></font>，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 在主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim _config.yml</span><br><span class="line"># Use velocity to animate everything.</span><br><span class="line">motion:</span><br><span class="line">  # true 开启动画， false 关闭动画</span><br><span class="line">  enable: true</span><br><span class="line">  async: false</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置「背景动画」"><a href="#设置「背景动画」" class="headerlink" title="设置「背景动画」"></a>设置「背景动画」</h2><p>Next 主题自带四种背景动画效果，有兴趣自行体验，不过建议最好别开背景动画，因为会消耗额外的客户端资源。</p>
+<p>编辑<font color="Blue"><strong>主题配置文件</strong></font>，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 在主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim _config.yml</span><br><span class="line"># Canvas-nest</span><br><span class="line">canvas_nest: false</span><br><span class="line"></span><br><span class="line"># three_waves</span><br><span class="line">three_waves: false</span><br><span class="line"></span><br><span class="line"># canvas_lines</span><br><span class="line">canvas_lines: false</span><br><span class="line"></span><br><span class="line"># canvas_sphere</span><br><span class="line">canvas_sphere: false</span><br></pre></td></tr></table></figure>
+
+<h2 id="底部版权信息"><a href="#底部版权信息" class="headerlink" title="底部版权信息"></a>底部版权信息</h2><p>修改<font color="Blue"><strong>主题配置文件</strong></font>，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 在主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim _config.yml</span><br><span class="line"># Declare license on posts</span><br><span class="line">post_copyright:</span><br><span class="line">  enable: true</span><br><span class="line">  license: CC BY-NC-SA 3.0</span><br><span class="line">  license_url: https://creativecommons.org/licenses/by-nc-sa/3.0/</span><br></pre></td></tr></table></figure>
+
+<p><strong>页面效果</strong><br><img src="/uploads/hexo/24-12.png" alt="image"></p>
+<h2 id="添加文章更新时间"><a href="#添加文章更新时间" class="headerlink" title="添加文章更新时间"></a>添加文章更新时间</h2><p>在<font color="Blue"><strong>主题配置文件</strong></font>中进行修改配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z next]# pwd  # 主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@iZ28xbsfvc4Z next]# vim _config.yml </span><br><span class="line"># Post meta display settings</span><br><span class="line">post_meta:</span><br><span class="line">  item_text: true</span><br><span class="line">  created_at: true</span><br><span class="line">  updated_at: true   # 从 false 改为 true</span><br><span class="line">  categories: true</span><br></pre></td></tr></table></figure>
+
+<p><strong>浏览器访问</strong><br><img src="/uploads/hexo/24-13.png" alt="image"></p>
+<h2 id="首页不显示全文-只显示预览"><a href="#首页不显示全文-只显示预览" class="headerlink" title="首页不显示全文(只显示预览)"></a>首页不显示全文(只显示预览)</h2><p>在<font color="Blue"><strong>主题配置文件</strong></font>中进行修改配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z next]# pwd  # 主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@iZ28xbsfvc4Z next]# vim _config.yml </span><br><span class="line"># Automatically Excerpt. Not recommend.</span><br><span class="line"># Please use &lt;!-- more --&gt; in the post to control excerpt accurately.</span><br><span class="line">auto_excerpt:</span><br><span class="line">  # 从 false 改为 true</span><br><span class="line">  enable: true</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
+
+<p><strong>页面效果</strong><br><img src="/uploads/hexo/24-14.png" alt="image"></p>
+<h2 id="文章末尾统一添加“本文结束”标记"><a href="#文章末尾统一添加“本文结束”标记" class="headerlink" title="文章末尾统一添加“本文结束”标记"></a>文章末尾统一添加“本文结束”标记</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z next]# pwd  # 主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@iZ28xbsfvc4Z next]# vim layout/_macro/passage-end-tag.swig  # 增加该文件</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &#123;% if not is_index %&#125;</span><br><span class="line">        &lt;div style=&quot;text-align:center;color: #555;font-size:24px;&quot;&gt;&lt;-------------The End-------------&gt;&lt;/div&gt;</span><br><span class="line">    &#123;% endif %&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">[root@iZ28xbsfvc4Z next]# vim layout/_macro/post.swig  # 修改该文件，在 &lt;div class=&quot;post-body&gt;…………&lt;/div&gt; 标签后增加如下信息</span><br><span class="line">    &lt;!-- 文章末尾统一添加“本文结束”标记 --&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &#123;% if not is_index %&#125;</span><br><span class="line">        &#123;% include &apos;passage-end-tag.swig&apos; %&#125;</span><br><span class="line">      &#123;% endif %&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">[root@iZ28xbsfvc4Z next]# vim _config.yml  # 主题配置文件修改</span><br><span class="line"># 文章末尾添加“本文结束”标记</span><br><span class="line">passage_end_tag:</span><br><span class="line">  enabled: true</span><br></pre></td></tr></table></figure>
+
+<p><strong>页面效果</strong><br><img src="/uploads/hexo/24-15.png" alt="image"></p>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2019/06/16/hexo04/" title="Linux下使用 github+hexo 搭建个人博客04-next主题优化">http://www.zhangblog.com/2019/06/16/hexo04/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/tags/Next/" rel="tag"># Next</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/14/hexo03/" rel="next" title="Linux下使用 github+hexo 搭建个人博客03-hexo配置优化">
+                <i class="fa fa-chevron-left"></i> Linux下使用 github+hexo 搭建个人博客03-hexo配置优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/16/hexo05/" rel="prev" title="Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统">
+                Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主题设定"><span class="nav-number">2.</span> <span class="nav-text">主题设定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#选择-Scheme"><span class="nav-number">2.1.</span> <span class="nav-text">选择 Scheme</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面宽度设置"><span class="nav-number">2.2.</span> <span class="nav-text">页面宽度设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置语言"><span class="nav-number">2.3.</span> <span class="nav-text">设置语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置菜单"><span class="nav-number">2.4.</span> <span class="nav-text">设置菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置侧栏"><span class="nav-number">2.5.</span> <span class="nav-text">设置侧栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置头像"><span class="nav-number">2.6.</span> <span class="nav-text">设置头像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主题配置"><span class="nav-number">3.</span> <span class="nav-text">主题配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置「RSS」"><span class="nav-number">3.1.</span> <span class="nav-text">设置「RSS」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加「标签」页面"><span class="nav-number">3.2.</span> <span class="nav-text">添加「标签」页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加「分类」页面"><span class="nav-number">3.3.</span> <span class="nav-text">添加「分类」页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加「关于」页面"><span class="nav-number">3.4.</span> <span class="nav-text">添加「关于」页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加「公益404」页面"><span class="nav-number">3.5.</span> <span class="nav-text">添加「公益404」页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#侧边栏社交链接"><span class="nav-number">3.6.</span> <span class="nav-text">侧边栏社交链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启打赏功能"><span class="nav-number">3.7.</span> <span class="nav-text">开启打赏功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#友情链接"><span class="nav-number">3.8.</span> <span class="nav-text">友情链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#站点建立时间"><span class="nav-number">3.9.</span> <span class="nav-text">站点建立时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#订阅微信公众号"><span class="nav-number">3.10.</span> <span class="nav-text">订阅微信公众号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置「动画效果」"><span class="nav-number">3.11.</span> <span class="nav-text">设置「动画效果」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置「背景动画」"><span class="nav-number">3.12.</span> <span class="nav-text">设置「背景动画」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#底部版权信息"><span class="nav-number">3.13.</span> <span class="nav-text">底部版权信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加文章更新时间"><span class="nav-number">3.14.</span> <span class="nav-text">添加文章更新时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#首页不显示全文-只显示预览"><span class="nav-number">3.15.</span> <span class="nav-text">首页不显示全文(只显示预览)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章末尾统一添加“本文结束”标记"><span class="nav-number">3.16.</span> <span class="nav-text">文章末尾统一添加“本文结束”标记</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">28.2k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
