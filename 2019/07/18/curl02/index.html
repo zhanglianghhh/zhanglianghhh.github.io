@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl-02-01.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl-02-02.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl-02-03.png">
-<meta property="og:updated_time" content="2019-07-19T13:27:55.658Z">
+<meta property="og:updated_time" content="2019-07-20T08:44:26.085Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux curl 常用示例">
 <meta name="twitter:description" content="前言本篇文章包含了curl的常用案例使用。 如果想了解curl选项的详细说明，请参考前一篇文章「Linux curl 命令详解」。 常见网页访问示例基本用法访问一个网页 1curl https://www.baidu.com  执行后，相关的网页信息会打印出来 进度条展示有时候我们不需要进度表展示，而需要进度条展示。比如：下载文件时。 可以通过 -#, --progress-bar 选项实现。">
@@ -367,18 +367,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/curl/" itemprop="url" rel="index">
+                  <a href="/categories/curl/" itemprop="url" rel="index">
                     <span itemprop="name">curl</span>
                   </a>
                 </span>
@@ -545,7 +534,7 @@
 <p>如果我们不需要这个错误页面，只想得到简洁的错误信息。那么可以通过 -f, --fail 选项实现。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl http://www.zhangblog.com/201912312</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;</span><br><span class="line">&lt;body bgcolor=&quot;white&quot;&gt;</span><br><span class="line">&lt;center&gt;&lt;h1&gt;404 Not Found&lt;/h1&gt;&lt;/center&gt;</span><br><span class="line">&lt;hr&gt;&lt;center&gt;nginx/1.14.2&lt;/center&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">[root@iZ28xbsfvc4Z 20190713]# curl -f http://www.zhangblog.com/201912312  # 得到更简洁的错误信息</span><br><span class="line">curl: (22) The requested URL returned error: 404 Not Found</span><br></pre></td></tr></table></figure>
 
-<h2 id="表单登录与cookie使用"><a href="#表单登录与cookie使用" class="headerlink" title="表单登录与cookie使用"></a>表单登录与cookie使用</h2><p>参见：「<a href="http://www.zhangblog.com/2019/07/16/curl03/">Linux curl 表单登录或提交与cookie使用</a>」</p>
+<h2 id="表单登录与cookie使用"><a href="#表单登录与cookie使用" class="headerlink" title="表单登录与cookie使用"></a>表单登录与cookie使用</h2><p>参见：「<a href="http://www.zhangblog.com/2019/07/20/curl03/">Linux curl 表单登录或提交与cookie使用</a>」</p>
 <br>
 
 <h1 id="文件上传与下载"><a href="#文件上传与下载" class="headerlink" title="文件上传与下载"></a>文件上传与下载</h1><p>涉及 FTP 服务，简单快速搭建可参考：《CentOS7下安装FTP服务》「<a href="https://www.cnblogs.com/zhi-leaf/p/5983550.html」" target="_blank" rel="noopener">https://www.cnblogs.com/zhi-leaf/p/5983550.html」</a></p>
@@ -593,8 +582,8 @@
 <br>
 
 <h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p><a href="http://www.zhangblog.com/2019/07/16/curl01/">Linux curl 命令详解</a></p>
-<p><a href="http://www.zhangblog.com/2019/07/16/curl02/">Linux curl 常用示例</a></p>
-<p><a href="http://www.zhangblog.com/2019/07/16/curl03/">Linux curl 表单登录或提交与cookie使用</a></p>
+<p><a href="http://www.zhangblog.com/2019/07/18/curl02/">Linux curl 常用示例</a></p>
+<p><a href="http://www.zhangblog.com/2019/07/20/curl03/">Linux curl 表单登录或提交与cookie使用</a></p>
 <hr>
 
       
@@ -708,6 +697,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/07/20/curl03/" rel="prev" title="Linux curl 表单登录或提交与cookie使用">
+                Linux curl 表单登录或提交与cookie使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -788,7 +781,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -799,7 +792,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -918,7 +911,7 @@
     
       <span class="post-meta-item-text">本站总字数&#58;</span>
     
-    <span title="本站总字数">28.2k</span>
+    <span title="本站总字数">29.2k</span>
   
 </div>
 

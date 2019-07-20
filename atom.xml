@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2019-07-19T13:27:55.658Z</updated>
+  <updated>2019-07-20T08:41:39.752Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -17,11 +17,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Linux curl 表单登录或提交与cookie使用</title>
+    <link href="http://www.zhangblog.com/2019/07/20/curl03/"/>
+    <id>http://www.zhangblog.com/2019/07/20/curl03/</id>
+    <published>2019-07-20T08:29:13.000Z</published>
+    <updated>2019-07-20T08:41:39.752Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/curl/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;本文主要讲解通过curl
+        
+      
+    
+    </summary>
+    
+      <category term="curl" scheme="http://www.zhangblog.com/categories/curl/"/>
+    
+    
+      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
+    
+      <category term="curl" scheme="http://www.zhangblog.com/tags/curl/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Linux curl 常用示例</title>
     <link href="http://www.zhangblog.com/2019/07/18/curl02/"/>
     <id>http://www.zhangblog.com/2019/07/18/curl02/</id>
     <published>2019-07-18T09:00:01.000Z</published>
-    <updated>2019-07-19T13:27:55.658Z</updated>
+    <updated>2019-07-20T08:44:26.085Z</updated>
     
     <summary type="html">
     
@@ -36,9 +65,7 @@
     
     </summary>
     
-      <category term="linux" scheme="http://www.zhangblog.com/categories/linux/"/>
-    
-      <category term="curl" scheme="http://www.zhangblog.com/categories/linux/curl/"/>
+      <category term="curl" scheme="http://www.zhangblog.com/categories/curl/"/>
     
     
       <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
@@ -52,7 +79,7 @@
     <link href="http://www.zhangblog.com/2019/07/16/curl01/"/>
     <id>http://www.zhangblog.com/2019/07/16/curl01/</id>
     <published>2019-07-16T07:21:18.000Z</published>
-    <updated>2019-07-19T15:43:34.852Z</updated>
+    <updated>2019-07-20T08:41:05.275Z</updated>
     
     <summary type="html">
     
@@ -67,9 +94,7 @@
     
     </summary>
     
-      <category term="linux" scheme="http://www.zhangblog.com/categories/linux/"/>
-    
-      <category term="curl" scheme="http://www.zhangblog.com/categories/linux/curl/"/>
+      <category term="curl" scheme="http://www.zhangblog.com/categories/curl/"/>
     
     
       <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
