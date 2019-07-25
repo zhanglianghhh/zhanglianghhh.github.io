@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-08.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-09.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-10.png">
-<meta property="og:updated_time" content="2019-06-16T03:26:49.689Z">
+<meta property="og:updated_time" content="2019-07-25T08:27:53.215Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统">
 <meta name="twitter:description" content="前言静态站点拥有一定的局限性，因此我们需要借助于第三方服务来扩展我们站点的功能。 而评论系统是最常用于和网站用户交流的，因此本章讲解在 next 主题，如何接入评论系统。 参考网站：Next 使用文档，第三方服务集成  http://theme-next.iissnan.com/third-party-services.html      常用评论系统考虑到国内整体互联网环境，因此评论系统除了考">
@@ -426,7 +426,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  999
+                  1.1k
                 </span>
               
 
@@ -442,7 +442,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  4
                 </span>
               
             </div>
@@ -505,6 +505,16 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z next]# pwd  # 主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@iZ28xbsfvc4Z next]# vim _config.yml </span><br><span class="line"># Valine.</span><br><span class="line"># You can get your appid and appkey from https://leancloud.cn</span><br><span class="line"># more info please open https://valine.js.org</span><br><span class="line">valine:</span><br><span class="line">  enable: true</span><br><span class="line">  appid: h7YmXXXXXXXXXXXXXXXXXX</span><br><span class="line">  appkey: VhTXXXXXXXXXXXXXXX</span><br><span class="line">  notify: false # mail notifier , https://github.com/xCss/Valine/wiki</span><br><span class="line">  verify: false # Verification code</span><br><span class="line">  placeholder: 来了，就撩两句呗！ # comment box placeholder</span><br><span class="line">  avatar: mm # gravatar style</span><br><span class="line">  guest_info: nick,mail,link # custom comment header</span><br><span class="line">  pageSize: 20 # pagination size</span><br></pre></td></tr></table></figure>
 
 <h2 id="浏览器访问-1"><a href="#浏览器访问-1" class="headerlink" title="浏览器访问"></a>浏览器访问</h2><p><img src="/uploads/hexo/25-10.png" alt="image"></p>
+<br>
+
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p><b><a href="http://www.zhangblog.com/2019/06/11/hexo01/">Linux下使用 github+hexo 搭建个人博客01-hexo搭建</a></b></p>
+<p><b><a href="http://www.zhangblog.com/2019/06/12/hexo02/">Linux下使用 github+hexo 搭建个人博客02-hexo部署到Github Pages</a></b></p>
+<p><b><a href="http://www.zhangblog.com/2019/06/14/hexo03/">Linux下使用 github+hexo 搭建个人博客03-hexo配置优化</a></b></p>
+<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo04/">Linux下使用 github+hexo 搭建个人博客04-next主题优化</a></b></p>
+<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo05/">Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统</a></b></p>
+<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo06/">Linux下使用 github+hexo 搭建个人博客06-next主题接入数据统计</a></b></p>
+<p><b><a href="http://www.zhangblog.com/2019/06/17/hexo07/">Linux下使用 github+hexo 搭建个人博客07-next主题接入搜索和站点管理</a></b></p>
+<hr>
 
       
     </div>
@@ -797,7 +807,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用评论系统"><span class="nav-number">2.</span> <span class="nav-text">常用评论系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#来必力"><span class="nav-number">2.1.</span> <span class="nav-text">来必力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#畅言"><span class="nav-number">2.2.</span> <span class="nav-text">畅言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Valine"><span class="nav-number">2.3.</span> <span class="nav-text">Valine</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#来必力评论"><span class="nav-number">3.</span> <span class="nav-text">来必力评论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取-livere-uid"><span class="nav-number">3.1.</span> <span class="nav-text">获取 livere_uid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在Next主题配置"><span class="nav-number">3.2.</span> <span class="nav-text">在Next主题配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器访问"><span class="nav-number">3.3.</span> <span class="nav-text">浏览器访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分析页面"><span class="nav-number">3.4.</span> <span class="nav-text">数据分析页面</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Valine-评论系统"><span class="nav-number">4.</span> <span class="nav-text">Valine 评论系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeanCloud-账号注册"><span class="nav-number">4.1.</span> <span class="nav-text">LeanCloud 账号注册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建应用"><span class="nav-number">4.2.</span> <span class="nav-text">创建应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建Class"><span class="nav-number">4.3.</span> <span class="nav-text">创建Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取-App-ID-和-App-Key-如下："><span class="nav-number">4.4.</span> <span class="nav-text">获取 App ID 和 App Key 如下：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全加固"><span class="nav-number">4.5.</span> <span class="nav-text">安全加固</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改主题配置"><span class="nav-number">4.6.</span> <span class="nav-text">修改主题配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器访问-1"><span class="nav-number">4.7.</span> <span class="nav-text">浏览器访问</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用评论系统"><span class="nav-number">2.</span> <span class="nav-text">常用评论系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#来必力"><span class="nav-number">2.1.</span> <span class="nav-text">来必力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#畅言"><span class="nav-number">2.2.</span> <span class="nav-text">畅言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Valine"><span class="nav-number">2.3.</span> <span class="nav-text">Valine</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#来必力评论"><span class="nav-number">3.</span> <span class="nav-text">来必力评论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取-livere-uid"><span class="nav-number">3.1.</span> <span class="nav-text">获取 livere_uid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在Next主题配置"><span class="nav-number">3.2.</span> <span class="nav-text">在Next主题配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器访问"><span class="nav-number">3.3.</span> <span class="nav-text">浏览器访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分析页面"><span class="nav-number">3.4.</span> <span class="nav-text">数据分析页面</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Valine-评论系统"><span class="nav-number">4.</span> <span class="nav-text">Valine 评论系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeanCloud-账号注册"><span class="nav-number">4.1.</span> <span class="nav-text">LeanCloud 账号注册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建应用"><span class="nav-number">4.2.</span> <span class="nav-text">创建应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建Class"><span class="nav-number">4.3.</span> <span class="nav-text">创建Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取-App-ID-和-App-Key-如下："><span class="nav-number">4.4.</span> <span class="nav-text">获取 App ID 和 App Key 如下：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全加固"><span class="nav-number">4.5.</span> <span class="nav-text">安全加固</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改主题配置"><span class="nav-number">4.6.</span> <span class="nav-text">修改主题配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器访问-1"><span class="nav-number">4.7.</span> <span class="nav-text">浏览器访问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">5.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
             
 
           </div>
@@ -831,7 +841,7 @@
     
       <span class="post-meta-item-text">本站总字数&#58;</span>
     
-    <span title="本站总字数">33.5k</span>
+    <span title="本站总字数">34.5k</span>
   
 </div>
 
