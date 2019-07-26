@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2019/06/11/hexo01/</loc>
+    
+    <lastmod>2019-07-26T09:50:33.959Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2019/06/17/hexo07/</loc>
     
     <lastmod>2019-07-25T08:28:17.886Z</lastmod>
@@ -40,13 +47,6 @@
     <loc>http://www.zhangblog.com/2019/06/12/hexo02/</loc>
     
     <lastmod>2019-07-25T08:27:27.665Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.zhangblog.com/2019/06/11/hexo01/</loc>
-    
-    <lastmod>2019-07-25T08:25:32.312Z</lastmod>
     
   </url>
   
