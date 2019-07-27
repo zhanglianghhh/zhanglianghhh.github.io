@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.zhangblog.com/2019/07/16/curl01/</loc>
+    <lastmod>2019-07-27</lastmod>
+  </url>  <url>
     <loc>http://www.zhangblog.com/2019/06/11/hexo01/</loc>
     <lastmod>2019-07-26</lastmod>
   </url>  <url>
@@ -29,9 +32,6 @@
     <lastmod>2019-07-20</lastmod>
   </url>  <url>
     <loc>http://www.zhangblog.com/2019/07/20/curl03/</loc>
-    <lastmod>2019-07-20</lastmod>
-  </url>  <url>
-    <loc>http://www.zhangblog.com/2019/07/16/curl01/</loc>
     <lastmod>2019-07-20</lastmod>
   </url>  <url>
     <loc>http://www.zhangblog.com/2019/07/05/nfs1/</loc>
