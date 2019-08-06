@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2019-07-24T03:11:06.895Z</updated>
+  <updated>2019-08-06T09:45:07.559Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>安装指定版本的 Docker 服务</title>
+    <link href="http://www.zhangblog.com/2019/08/06/docker-deploy01/"/>
+    <id>http://www.zhangblog.com/2019/08/06/docker-deploy01/</id>
+    <published>2019-08-06T09:27:51.000Z</published>
+    <updated>2019-08-06T09:45:07.559Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/docker_deploy/docker.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/categories/Docker/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VMware 实现 iptables NAT及端口映射</title>
+    <link href="http://www.zhangblog.com/2019/08/06/iptables01/"/>
+    <id>http://www.zhangblog.com/2019/08/06/iptables01/</id>
+    <published>2019-08-06T08:20:04.000Z</published>
+    <updated>2019-08-06T09:10:32.424Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/iptables/iptables-01-01.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="iptables" scheme="http://www.zhangblog.com/categories/iptables/"/>
+    
+    
+      <category term="iptables" scheme="http://www.zhangblog.com/tags/iptables/"/>
+    
+  </entry>
   
   <entry>
     <title>从头到尾说一次 Java 垃圾回收</title>

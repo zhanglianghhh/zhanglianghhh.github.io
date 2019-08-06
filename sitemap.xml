@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2019/08/06/docker-deploy01/</loc>
+    
+    <lastmod>2019-08-06T09:45:07.559Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.zhangblog.com/2019/08/06/iptables01/</loc>
+    
+    <lastmod>2019-08-06T09:10:32.424Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2019/07/16/curl01/</loc>
     
     <lastmod>2019-07-27T02:38:36.066Z</lastmod>
