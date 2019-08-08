@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2019-08-06T09:45:07.559Z</updated>
+  <updated>2019-08-08T08:32:16.005Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker Swarm 常用操作</title>
+    <link href="http://www.zhangblog.com/2019/08/08/docker-swarm01/"/>
+    <id>http://www.zhangblog.com/2019/08/08/docker-swarm01/</id>
+    <published>2019-08-08T08:04:49.000Z</published>
+    <updated>2019-08-08T08:32:16.005Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/docker_deploy/docker-swarm.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Docker Swarm" scheme="http://www.zhangblog.com/categories/Docker-Swarm/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Docker Swarm" scheme="http://www.zhangblog.com/tags/Docker-Swarm/"/>
+    
+  </entry>
   
   <entry>
     <title>安装指定版本的 Docker 服务</title>
