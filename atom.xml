@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2019-08-08T08:32:16.005Z</updated>
+  <updated>2019-08-12T02:41:51.859Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于负载均衡的一切</title>
+    <link href="http://www.zhangblog.com/2019/08/12/slb01/"/>
+    <id>http://www.zhangblog.com/2019/08/12/slb01/</id>
+    <published>2019-08-12T02:38:59.000Z</published>
+    <updated>2019-08-12T02:41:51.859Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;p&gt;文章转载自微信公众号：「架构师之路」，作者： 58沈剑&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;什么是负载均衡？&quot;&gt;&lt;a href=&quot;#什么是负载均衡？&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="SLB" scheme="http://www.zhangblog.com/categories/SLB/"/>
+    
+    
+      <category term="SLB" scheme="http://www.zhangblog.com/tags/SLB/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker Swarm 常用操作</title>

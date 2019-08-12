@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="SLB,">
 
 
 
@@ -83,16 +83,25 @@
 
 
 
-<meta name="description" content="lightzhang博客，不止于技术，更记录人生点滴感悟。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="lightzhang博客">
-<meta property="og:url" content="http://www.zhangblog.com/archives/2019/index.html">
+<meta name="description" content="文章转载自微信公众号：「架构师之路」，作者： 58沈剑  什么是负载均衡？负载均衡（Load Balance）是分布式系统架构设计中必须考虑的因素之一，它通常是指，将请求/数据均匀分摊到多个操作单元上执行，负载均衡的关键在于均匀。 常见的负载均衡方案有哪些？ 常见互联网分布式架构如上，分为：  客户端层 反向代理层 站点层 服务层 数据层  可以看到，每一个下游都有多个上游调用，只需要做到，每一">
+<meta name="keywords" content="SLB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于负载均衡的一切">
+<meta property="og:url" content="http://www.zhangblog.com/2019/08/12/slb01/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="lightzhang博客，不止于技术，更记录人生点滴感悟。">
+<meta property="og:description" content="文章转载自微信公众号：「架构师之路」，作者： 58沈剑  什么是负载均衡？负载均衡（Load Balance）是分布式系统架构设计中必须考虑的因素之一，它通常是指，将请求/数据均匀分摊到多个操作单元上执行，负载均衡的关键在于均匀。 常见的负载均衡方案有哪些？ 常见互联网分布式架构如上，分为：  客户端层 反向代理层 站点层 服务层 数据层  可以看到，每一个下游都有多个上游调用，只需要做到，每一">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-03.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-04.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-05.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-06.png">
+<meta property="og:updated_time" content="2019-08-12T02:41:51.859Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lightzhang博客">
-<meta name="twitter:description" content="lightzhang博客，不止于技术，更记录人生点滴感悟。">
+<meta name="twitter:title" content="关于负载均衡的一切">
+<meta name="twitter:description" content="文章转载自微信公众号：「架构师之路」，作者： 58沈剑  什么是负载均衡？负载均衡（Load Balance）是分布式系统架构设计中必须考虑的因素之一，它通常是指，将请求/数据均匀分摊到多个操作单元上执行，负载均衡的关键在于均匀。 常见的负载均衡方案有哪些？ 常见互联网分布式架构如上，分为：  客户端层 反向代理层 站点层 服务层 数据层  可以看到，每一个下游都有多个上游调用，只需要做到，每一">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/SLB/slb-01.png">
 
 
 
@@ -122,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/archives/2019/">
+  <link rel="canonical" href="http://www.zhangblog.com/2019/08/12/slb01/">
 
 
 
 
 
-  <title>归档 | lightzhang博客</title>
+  <title>关于负载均衡的一切 | lightzhang博客</title>
   
 
 
@@ -157,7 +166,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -293,702 +302,374 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/08/12/slb01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">关于负载均衡的一切</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-12T10:38:59+08:00">
+                2019-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
           
-        
-        嗯..! 目前共计 19 篇日志。 继续努力。
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLB/" itemprop="url" rel="index">
+                    <span itemprop="name">SLB</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/12/slb01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/12/slb01/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2019/08/12/slb01/" class="leancloud_visitors" data-flag-title="关于负载均衡的一切">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/12/slb01/" itemprop="url">
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">关于负载均衡的一切</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-12T10:38:59+08:00" content="2019-08-12">
-          08-12
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/08/docker-swarm01/" itemprop="url">
-              
-                <span itemprop="name">Docker Swarm 常用操作</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-08T16:04:49+08:00" content="2019-08-08">
-          08-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <blockquote>
+<p>文章转载自微信公众号：「架构师之路」，作者： 58沈剑</p>
+</blockquote>
+<h1 id="什么是负载均衡？"><a href="#什么是负载均衡？" class="headerlink" title="什么是负载均衡？"></a>什么是负载均衡？</h1><p>负载均衡（Load Balance）是分布式系统架构设计中必须考虑的因素之一，它通常是指，将<font color="red">请求/数据均匀分摊</font>到多个操作单元上执行，负载均衡的关键在于<font color="red">均匀</font>。</p>
+<h2 id="常见的负载均衡方案有哪些？"><a href="#常见的负载均衡方案有哪些？" class="headerlink" title="常见的负载均衡方案有哪些？"></a>常见的负载均衡方案有哪些？</h2><p><img src="/uploads/SLB/slb-01.png" alt="image"></p>
+<p><b>常见互联网分布式架构如上，分为：</b></p>
+<ul>
+<li>客户端层</li>
+<li>反向代理层</li>
+<li>站点层</li>
+<li>服务层</li>
+<li>数据层</li>
+</ul>
+<p>可以看到，<font color="red">每一个下游都有多个上游调用</font>，只需要做到，<font color="red">每一个上游都均匀访问每一个下游</font>，就能实现整体的<font color="red">均匀分摊</font>。</p>
+<br>
 
-        
-        
+<h1 id="第一层：客户端层到反向代理层"><a href="#第一层：客户端层到反向代理层" class="headerlink" title="第一层：客户端层到反向代理层"></a>第一层：客户端层到反向代理层</h1><p><img src="/uploads/SLB/slb-02.png" alt="image"></p>
+<p>客户端层到反向代理层的负载均衡，是通过“<font color="red">DNS轮询</font>”实现的。</p>
+<p>DNS-server 对于一个域名配置了多个解析 ip，每次 DNS 解析请求来访问 DNS-server，会轮询返回这些 ip，保证每个 ip 的解析概率是相同的。这些 ip 就是 nginx 的外网 ip，以做到每台 nginx 的请求分配也是均衡的。</p>
+<br>
 
-        
+<h1 id="第二层：反向代理层到站点层"><a href="#第二层：反向代理层到站点层" class="headerlink" title="第二层：反向代理层到站点层"></a>第二层：反向代理层到站点层</h1><p><img src="/uploads/SLB/slb-03.png" alt="image"></p>
+<p>反向代理层到站点层的负载均衡，是通过“<font color="red">nginx</font>”实现的。</p>
+<p>PS：nginx 是反向代理的泛指。</p>
+<p><b>修改nginx.conf，可以实现多种均衡策略：</b></p>
+<p>(1) <b>请求轮询</b>：和DNS轮询类似，请求依次路由到各个 web-server；</p>
+<p>(2) <b>最少连接路由</b>：哪个web-server的连接少，路由到哪个 web-server；</p>
+<p>(3) <b>ip 哈希</b>：按照访问用户的ip哈希值来路由 web-server，只要用户的 ip 分布是均匀的，请求理论上也是均匀的，<font color="red">ip  哈希均衡方法</font>可以做到，<font color="red">同一个用户的请求固定落到同一台 web-server 上</font>，此策略适合有状态服务，例如 session；</p>
+<p><font color="grenn">PS：站点层可以存储 session，但强烈不建议这么做，站点层无状态是分布式架构设计的基本原则之一，session最好放到数据层存储。</font></p>
+<p>(4) …</p>
+<br>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<h1 id="第三层：站点层到服务层"><a href="#第三层：站点层到服务层" class="headerlink" title="第三层：站点层到服务层"></a>第三层：站点层到服务层</h1><p><img src="/uploads/SLB/slb-04.png" alt="image"></p>
+<p>站点层到服务层的负载均衡，是通过“<font color="red">服务连接池</font>”实现的。</p>
+<p>上游连接池会建立与下游服务多个连接，每次请求会“随机”选取连接来访问下游服务。除了<b>负载均衡</b>，服务连接池还能够实现<b>故障转移</b>、<b>超时处理</b>、<b>限流限速</b>、<b>ID串行化</b>等诸多功能。</p>
+<br>
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/06/docker-deploy01/" itemprop="url">
-              
-                <span itemprop="name">安装指定版本的 Docker 服务</span>
-              
-            </a>
-        
-      </h2>
+<h1 id="第四层：访问数据层"><a href="#第四层：访问数据层" class="headerlink" title="第四层：访问数据层"></a>第四层：访问数据层</h1><p>在数据量很大的情况下，由于数据层（db/cache）涉及数据的水平切分，所以数据层的负载均衡更为复杂一些，它分为“<font color="red">数据的均衡</font>”，与“<font color="red">请求的均衡</font>”。</p>
+<p><b>数据的均衡</b>是指：水平切分后的<font color="red">每个服务</font>（db/cache），<font color="red">数据量是均匀的</font>。</p>
+<p><b>请求的均衡</b>是指：水平切分后的<font color="red">每个服务</font>（db/cache），<font color="red">请求量是均匀的</font>。</p>
+<p>业内常见的<b>水平切分方式</b>有这么几种：</p>
+<h2 id="按照range水平切分"><a href="#按照range水平切分" class="headerlink" title="按照range水平切分"></a>按照range水平切分</h2><p><img src="/uploads/SLB/slb-05.png" alt="image"></p>
+<p><font color="red">每一个数据服务，存储一定范围的数据</font>：</p>
+<ul>
+<li>user0 服务：存储 uid 范围 1-1kw</li>
+<li>user1 服务：存储 uid 范围 1kw-2kw</li>
+</ul>
+<p>这个方案的<b>好处</b>是：</p>
+<ul>
+<li><font color="red">规则简单</font>，service只需判断一下uid范围就能路由到对应的存储服务</li>
+<li><font color="red">数据均衡</font>性较好</li>
+<li><font color="red">比较容易扩展</font>，可以随时加一个uid[2kw,3kw]的数据服务</li>
+</ul>
+<p><b>不足</b>是：</p>
+<ul>
+<li><font color="red">请求的负载不一定均衡</font>，一般来说，新注册的用户会比老用户更活跃，大range的服务请求压力会更大</li>
+</ul>
+<h2 id="按照-id-哈希水平切分"><a href="#按照-id-哈希水平切分" class="headerlink" title="按照 id 哈希水平切分"></a>按照 id 哈希水平切分</h2><p><img src="/uploads/SLB/slb-06.png" alt="image"></p>
+<p>每一个数据服务，存储某个key值hash后的部分数据：</p>
+<ul>
+<li>user0服务：存储偶数uid数据</li>
+<li>user1服务：存储奇数uid数据</li>
+</ul>
+<p>这个方案的<b>好处</b>是：</p>
+<ul>
+<li><font color="red">规则简单</font>，service只需对uid进行hash能路由到对应的存储服务</li>
+<li><font color="red">数据均衡</font>性较好</li>
+<li><font color="red">请求均匀</font>性较好</li>
+</ul>
+<p><b>不足</b>是：</p>
+<ul>
+<li><font color="red">不容易扩展</font>，扩展一个数据服务，hash方法改变时候，可能需要进行数据迁移</li>
+</ul>
+<br>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-06T17:27:51+08:00" content="2019-08-06">
-          08-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>负载均衡（Load Balance）是分布式系统架构设计中必须考虑的因素之一，它通常是指，将请求/数据<font color="red">均匀分摊</font>到多个操作单元上执行，其的关键在于均匀：</p>
+<ul>
+<li><b>反向代理层</b>的负载均衡，是通过“<font color="red">DNS轮询</font>”实现的</li>
+<li><b>站点层</b>的负载均衡，是通过“<font color="red">nginx</font>”实现的</li>
+<li><b>服务层</b>的负载均衡，是通过“<font color="red">服务连接池</font>”实现的</li>
+<li><b>数据层</b>的负载均衡，要考虑“<b>数据的均衡</b>”与“<b>请求的均衡</b>”两个点，常见的方式有“<font color="red">按照范围水平切分</font>”与“<font color="red">hash水平切分</font>”</li>
+</ul>
+<hr>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/06/iptables01/" itemprop="url">
-              
-                <span itemprop="name">VMware 实现 iptables NAT及端口映射</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-06T16:20:04+08:00" content="2019-08-06">
-          08-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/23/jvm01/" itemprop="url">
-              
-                <span itemprop="name">从头到尾说一次 Java 垃圾回收</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-23T22:38:10+08:00" content="2019-07-23">
-          07-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/20/curl03/" itemprop="url">
-              
-                <span itemprop="name">Linux curl 表单登录或提交与cookie使用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-20T16:29:13+08:00" content="2019-07-20">
-          07-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/18/curl02/" itemprop="url">
-              
-                <span itemprop="name">Linux curl 常用示例</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-18T17:00:01+08:00" content="2019-07-18">
-          07-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/16/curl01/" itemprop="url">
-              
-                <span itemprop="name">Linux curl 命令详解</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-16T15:21:18+08:00" content="2019-07-16">
-          07-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/05/nfs1/" itemprop="url">
-              
-                <span itemprop="name">NFS 服务搭建与配置</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-05T15:53:45+08:00" content="2019-07-05">
-          07-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/24/domainexpire/" itemprop="url">
-              
-                <span itemprop="name">shell脚本：通过域名获取证书的过期时间</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-24T09:35:04+08:00" content="2019-06-24">
-          06-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/17/hexo07/" itemprop="url">
-              
-                <span itemprop="name">Linux下使用 github+hexo 搭建个人博客07-next主题接入搜索和站点管理</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-17T11:02:55+08:00" content="2019-06-17">
-          06-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/16/hexo06/" itemprop="url">
-              
-                <span itemprop="name">Linux下使用 github+hexo 搭建个人博客06-next主题接入数据统计</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-16T13:56:39+08:00" content="2019-06-16">
-          06-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/16/hexo05/" itemprop="url">
-              
-                <span itemprop="name">Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-16T11:17:45+08:00" content="2019-06-16">
-          06-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/16/hexo04/" itemprop="url">
-              
-                <span itemprop="name">Linux下使用 github+hexo 搭建个人博客04-next主题优化</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-16T09:41:33+08:00" content="2019-06-16">
-          06-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/14/hexo03/" itemprop="url">
-              
-                <span itemprop="name">Linux下使用 github+hexo 搭建个人博客03-hexo配置优化</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-14T14:27:14+08:00" content="2019-06-14">
-          06-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/12/hexo02/" itemprop="url">
-              
-                <span itemprop="name">Linux下使用 github+hexo 搭建个人博客02-hexo部署到Github Pages</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-12T18:25:20+08:00" content="2019-06-12">
-          06-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/11/hexo01/" itemprop="url">
-              
-                <span itemprop="name">Linux下使用 github+hexo 搭建个人博客01-hexo搭建</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-11T16:12:48+08:00" content="2019-06-11">
-          06-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/04/MarkDown_Use_Guide/" itemprop="url">
-              
-                <span itemprop="name">MarkDown 新手指南</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-04T19:28:51+08:00" content="2019-06-04">
-          06-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/03/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-03T19:00:51+08:00" content="2019-06-03">
-          06-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2019/08/12/slb01/" title="关于负载均衡的一切">http://www.zhangblog.com/2019/08/12/slb01/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SLB/" rel="tag"># SLB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/08/docker-swarm01/" rel="next" title="Docker Swarm 常用操作">
+                <i class="fa fa-chevron-left"></i> Docker Swarm 常用操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -996,6 +677,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -1016,8 +704,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1120,6 +817,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是负载均衡？"><span class="nav-number">1.</span> <span class="nav-text">什么是负载均衡？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的负载均衡方案有哪些？"><span class="nav-number">1.1.</span> <span class="nav-text">常见的负载均衡方案有哪些？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一层：客户端层到反向代理层"><span class="nav-number">2.</span> <span class="nav-text">第一层：客户端层到反向代理层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二层：反向代理层到站点层"><span class="nav-number">3.</span> <span class="nav-text">第二层：反向代理层到站点层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三层：站点层到服务层"><span class="nav-number">4.</span> <span class="nav-text">第三层：站点层到服务层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四层：访问数据层"><span class="nav-number">5.</span> <span class="nav-text">第四层：访问数据层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#按照range水平切分"><span class="nav-number">5.1.</span> <span class="nav-text">按照range水平切分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#按照-id-哈希水平切分"><span class="nav-number">5.2.</span> <span class="nav-text">按照 id 哈希水平切分</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1305,6 +1018,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
