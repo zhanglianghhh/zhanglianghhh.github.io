@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2019/07/05/nfs1/</loc>
+    
+    <lastmod>2019-08-17T01:53:42.835Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2019/08/12/proxy_dns01/</loc>
     
     <lastmod>2019-08-12T09:57:22.756Z</lastmod>
@@ -110,13 +117,6 @@
     <loc>http://www.zhangblog.com/2019/07/20/curl03/</loc>
     
     <lastmod>2019-07-20T08:41:39.752Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.zhangblog.com/2019/07/05/nfs1/</loc>
-    
-    <lastmod>2019-07-09T13:55:05.360Z</lastmod>
     
   </url>
   
