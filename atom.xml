@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2019-08-12T09:57:22.756Z</updated>
+  <updated>2019-08-30T14:15:13.494Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>-bash：fork：Cannot allocate memory 问题的处理</title>
+    <link href="http://www.zhangblog.com/2019/08/30/linux-thread/"/>
+    <id>http://www.zhangblog.com/2019/08/30/linux-thread/</id>
+    <published>2019-08-30T14:11:39.000Z</published>
+    <updated>2019-08-30T14:15:13.494Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;b&gt;文章来源：&lt;a href=&quot;http://bbs.qcloud.com/thread-22637-1-1.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;fork:cannot allocate
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://www.zhangblog.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://www.zhangblog.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>“反向代理层”绝不能替代“DNS轮询”！</title>
@@ -555,28 +581,6 @@
     
     
       <category term="MarkDown" scheme="http://www.zhangblog.com/tags/MarkDown/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://www.zhangblog.com/2019/06/03/hello-world/"/>
-    <id>http://www.zhangblog.com/2019/06/03/hello-world/</id>
-    <published>2019-06-03T11:00:51.000Z</published>
-    <updated>2019-06-03T12:28:51.000Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a
-        
-      
-    
-    </summary>
-    
     
   </entry>
   
