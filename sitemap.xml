@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2019/07/05/nfs1/</loc>
+    
+    <lastmod>2019-09-15T06:44:52.506Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.zhangblog.com/2019/09/14/linux-load/</loc>
+    
+    <lastmod>2019-09-15T04:32:00.089Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2019/09/02/percona01/</loc>
     
     <lastmod>2019-09-02T03:19:56.402Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>http://www.zhangblog.com/2019/08/30/linux-thread/</loc>
     
     <lastmod>2019-08-30T14:15:13.494Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.zhangblog.com/2019/07/05/nfs1/</loc>
-    
-    <lastmod>2019-08-17T01:53:42.835Z</lastmod>
     
   </url>
   

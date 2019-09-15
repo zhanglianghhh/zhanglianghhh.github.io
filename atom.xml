@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2019-09-02T03:19:56.402Z</updated>
+  <updated>2019-09-15T04:32:00.089Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>linux 平均负载 load average 的含义</title>
+    <link href="http://www.zhangblog.com/2019/09/14/linux-load/"/>
+    <id>http://www.zhangblog.com/2019/09/14/linux-load/</id>
+    <published>2019-09-14T14:00:16.000Z</published>
+    <updated>2019-09-15T04:32:00.089Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;load-average-的含义&quot;&gt;&lt;a href=&quot;#load-average-的含义&quot; class=&quot;headerlink&quot; title=&quot;load average 的含义&quot;&gt;&lt;/a&gt;load average
+        
+      
+    
+    </summary>
+    
+      <category term="linux" scheme="http://www.zhangblog.com/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>percona-toolkit大表操作DDL使用</title>
@@ -334,7 +360,7 @@
     <link href="http://www.zhangblog.com/2019/07/05/nfs1/"/>
     <id>http://www.zhangblog.com/2019/07/05/nfs1/</id>
     <published>2019-07-05T07:53:45.000Z</published>
-    <updated>2019-08-17T01:53:42.835Z</updated>
+    <updated>2019-09-15T06:44:52.506Z</updated>
     
     <summary type="html">
     
@@ -544,35 +570,6 @@
         
           &lt;p&gt;&lt;img src=&quot;/uploads/hexo/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;之前的这篇文章《&lt;a
-        
-      
-    
-    </summary>
-    
-      <category term="Hexo" scheme="http://www.zhangblog.com/categories/Hexo/"/>
-    
-    
-      <category term="Hexo" scheme="http://www.zhangblog.com/tags/Hexo/"/>
-    
-      <category term="Next" scheme="http://www.zhangblog.com/tags/Next/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux下使用 github+hexo 搭建个人博客01-hexo搭建</title>
-    <link href="http://www.zhangblog.com/2019/06/11/hexo01/"/>
-    <id>http://www.zhangblog.com/2019/06/11/hexo01/</id>
-    <published>2019-06-11T08:12:48.000Z</published>
-    <updated>2019-07-26T09:50:33.959Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/hexo/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
         
       
     
