@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2019-09-15T04:32:00.089Z</updated>
+  <updated>2019-09-26T03:26:08.363Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Rsync 服务部署与参数详解</title>
+    <link href="http://www.zhangblog.com/2019/09/26/rsync01/"/>
+    <id>http://www.zhangblog.com/2019/09/26/rsync01/</id>
+    <published>2019-09-26T03:11:30.000Z</published>
+    <updated>2019-09-26T03:26:08.363Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/rsync/rsync-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Rsync-简介&quot;&gt;&lt;a href=&quot;#Rsync-简介&quot; class=&quot;headerlink&quot; title=&quot;Rsync
+        
+      
+    
+    </summary>
+    
+      <category term="Rsync" scheme="http://www.zhangblog.com/categories/Rsync/"/>
+    
+    
+      <category term="Rsync" scheme="http://www.zhangblog.com/tags/Rsync/"/>
+    
+  </entry>
   
   <entry>
     <title>linux 平均负载 load average 的含义</title>
@@ -541,35 +568,6 @@
         
           &lt;p&gt;&lt;img src=&quot;/uploads/hexo/03.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;上两张文章，我们说了 hexo
-        
-      
-    
-    </summary>
-    
-      <category term="Hexo" scheme="http://www.zhangblog.com/categories/Hexo/"/>
-    
-    
-      <category term="Hexo" scheme="http://www.zhangblog.com/tags/Hexo/"/>
-    
-      <category term="Next" scheme="http://www.zhangblog.com/tags/Next/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux下使用 github+hexo 搭建个人博客02-hexo部署到Github Pages</title>
-    <link href="http://www.zhangblog.com/2019/06/12/hexo02/"/>
-    <id>http://www.zhangblog.com/2019/06/12/hexo02/</id>
-    <published>2019-06-12T10:25:20.000Z</published>
-    <updated>2019-07-25T08:27:27.665Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/hexo/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;之前的这篇文章《&lt;a
         
       
     

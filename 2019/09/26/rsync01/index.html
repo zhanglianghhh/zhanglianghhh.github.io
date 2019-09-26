@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Rsync,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Rsync 简介rsync 是一款开源的、快速的、多功能的、可实现全量及增量的本地或远程数据同步备份的优秀工具。Rsync软件适用于unix/linux/windows等多种操作系统平台。 传统的 scp 和 cp 工具拷贝每次均为完整拷贝，而rsync除了可以完整拷贝外，还具备增量拷贝功能。因此，从同步数据的性能及效率上，Rsync工具更胜一筹。 官网地址： 123https://downlo">
+<meta name="keywords" content="Rsync">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rsync 服务部署与参数详解">
+<meta property="og:url" content="http://www.zhangblog.com/2019/09/26/rsync01/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="Rsync 简介rsync 是一款开源的、快速的、多功能的、可实现全量及增量的本地或远程数据同步备份的优秀工具。Rsync软件适用于unix/linux/windows等多种操作系统平台。 传统的 scp 和 cp 工具拷贝每次均为完整拷贝，而rsync除了可以完整拷贝外，还具备增量拷贝功能。因此，从同步数据的性能及效率上，Rsync工具更胜一筹。 官网地址： 123https://downlo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/rsync/rsync-00.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/rsync/rsync-01-01.png">
+<meta property="og:updated_time" content="2019-09-26T03:26:08.363Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rsync 服务部署与参数详解">
+<meta name="twitter:description" content="Rsync 简介rsync 是一款开源的、快速的、多功能的、可实现全量及增量的本地或远程数据同步备份的优秀工具。Rsync软件适用于unix/linux/windows等多种操作系统平台。 传统的 scp 和 cp 工具拷贝每次均为完整拷贝，而rsync除了可以完整拷贝外，还具备增量拷贝功能。因此，从同步数据的性能及效率上，Rsync工具更胜一筹。 官网地址： 123https://downlo">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/rsync/rsync-00.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2019/09/26/rsync01/">
+
+
+
+
+
+  <title>Rsync 服务部署与参数详解 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/09/26/rsync01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Rsync 服务部署与参数详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-26T11:11:30+08:00">
+                2019-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Rsync/" itemprop="url" rel="index">
+                    <span itemprop="name">Rsync</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/09/26/rsync01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/09/26/rsync01/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/09/26/rsync01/" class="leancloud_visitors" data-flag-title="Rsync 服务部署与参数详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  22
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/rsync/rsync-00.png" alt="image"></p>
+<h1 id="Rsync-简介"><a href="#Rsync-简介" class="headerlink" title="Rsync 简介"></a>Rsync 简介</h1><p>rsync 是一款开源的、快速的、多功能的、可实现<font color="Blue"><b>全量及增量</b></font>的<font color="Blue"><b>本地或远程数据同步备份</b></font>的优秀工具。Rsync软件适用于unix/linux/windows等多种操作系统平台。</p>
+<p>传统的 scp 和 cp 工具拷贝每次均为完整拷贝，而rsync除了可以完整拷贝外，还具备增量拷贝功能。因此，从同步数据的性能及效率上，Rsync工具更胜一筹。</p>
+<p><b>官网地址：</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://download.samba.org/pub/rsync/rsync.html</span><br><span class="line"># 或者</span><br><span class="line">https://www.samba.org/ftp/rsync/rsync.html</span><br></pre></td></tr></table></figure>
+
+<p><b>版本查看</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[yun@backup ~]$ rsync --version</span><br><span class="line">rsync  version 3.1.2  protocol version 31</span><br><span class="line">Copyright (C) 1996-2015 by Andrew Tridgell, Wayne Davison, and others.</span><br><span class="line">Web site: http://rsync.samba.org/</span><br><span class="line">Capabilities:</span><br><span class="line">    64-bit files, 64-bit inums, 64-bit timestamps, 64-bit long ints,</span><br><span class="line">    socketpairs, hardlinks, symlinks, IPv6, batchfiles, inplace,</span><br><span class="line">    append, ACLs, xattrs, iconv, symtimes, prealloc</span><br><span class="line"></span><br><span class="line">rsync comes with ABSOLUTELY NO WARRANTY.  This is free software, and you</span><br><span class="line">are welcome to redistribute it under certain conditions.  See the GNU</span><br><span class="line">General Public Licence for details.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Rsync-增量复制的原理"><a href="#Rsync-增量复制的原理" class="headerlink" title="Rsync 增量复制的原理"></a>Rsync 增量复制的原理</h2><p>Rsync 通过 “quick check” 算法 (默认情况) 找到要传输的文件，该算法会查找<font color="Blue"><b>大小已改变</b></font>或<font color="Blue"><b>最后修改时间已改变</b></font>的文件。</p>
+<p>当 “quick check” 指示不需要更新文件的数据 (即：文件的内容) 时，会直接在目标文件上更改其他属性（如权限信息、属主属组信息、时间戳信息）「根据相应的选项参数」。</p>
+<p>rsync2.x对比方法，把所有文件比对一遍，然后进行同步。</p>
+<p>rsync3.x对比方法，一边比对差异，一边对差异的部分进行同步。</p>
+<h2 id="Rsync-软件功能介绍"><a href="#Rsync-软件功能介绍" class="headerlink" title="Rsync 软件功能介绍"></a>Rsync 软件功能介绍</h2><p><b>rsync == cp</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 拷贝 /etc/rpm 目录</span><br><span class="line">[root@back ~]# cp -a /etc/rpm /tmp/</span><br><span class="line"># 等价于</span><br><span class="line">[root@back ~]# rsync -a /etc/rpm /tmp/</span><br></pre></td></tr></table></figure>
+
+<p>注意：cp -a 的参数意义和 rsync -a 的参数意义不一样。</p>
+<p><b>rsync == scp</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[yun@back tmp]$ scp -pr yun@172.16.1.182:/etc/xml /tmp/ </span><br><span class="line"># 等价于</span><br><span class="line">[yun@back tmp]$ rsync -pr yun@172.16.1.182:/etc/xml /tmp/</span><br></pre></td></tr></table></figure>
+
+<p><b>rsync == rm</b><br>删除 /tmp/yum/ 目录下的所有文件和目录。【千万不要搞错目录】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[yun@back tmp]$ rm -fr /tmp/yum/*</span><br><span class="line"># 等价于</span><br><span class="line">[yun@back tmp]$ rsync -r --delete /tmp/zhang/ /tmp/yum/</span><br></pre></td></tr></table></figure>
+
+<p>其中 /tmp/zhang/ 目录下无任何文件</p>
+<p><b>rsync == ls -l</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[yun@backup tmp]$ ls -l /tmp/xml/catalog </span><br><span class="line">-rw-r--r-- 1 yun yun 1171 Sep 18 16:08 /tmp/xml/catalog</span><br><span class="line"># 类似于</span><br><span class="line">[yun@backup tmp]$ rsync /tmp/xml/catalog </span><br><span class="line">-rw-r--r--          1,171 2019/09/18 16:08:41 catalog</span><br></pre></td></tr></table></figure>
+
+<h2 id="Rsync-特性介绍"><a href="#Rsync-特性介绍" class="headerlink" title="Rsync 特性介绍"></a>Rsync 特性介绍</h2><p>1、支持拷贝特殊文件。如链接文件、设备等。<br>2、可以排除指定文件或目录的同步功能，相当于打包tar的排除功能。<br>3、可以做到保持源文件或目录的权限、时间、软链接、属主、属组等所有属性均不改变。<br>4、可实现增量同步。既只同步发生变化的数据，因此传输效率很高，tar -N。<br>5、可以使用 rcp、rsh、ssh 等方式来配合传输文件（rsync本身不对数据加密）。<br>6、可以通过socket（进程方式）传输文件和数据（服务端和客户端）【重点掌握】。<br>7、支持匿名或认证（无需系统用户）的进程传输，可以实现方便安全的进行数据备份及镜像。</p>
+<h2 id="Rsync-运用场景"><a href="#Rsync-运用场景" class="headerlink" title="Rsync 运用场景"></a>Rsync 运用场景</h2><div style="font-size:17px"><b>数据备份</b></div>
+使用方式：cron + rsync
+比如数据库备份，除了本地需要备份外，还需要通过 rsync 在专门的备份服务器上备份一份。
+
+
+<div style="font-size:17px"><b>实时同步</b></div>
+使用方式：rsync + inotify 或 sersync
+比如为了缓解服务器压力，我们需要将用户上传的图片放在多台服务器上【如果没有上 CDN】，这样高并发访问的时候可以分发到多台机器，减轻服务器压力。
+
+<p>又比如敏感数据不能丢失，那必须做实时备份。</p>
+<br>
+
+<h1 id="Rsync-使用说明"><a href="#Rsync-使用说明" class="headerlink" title="Rsync 使用说明"></a>Rsync 使用说明</h1><h2 id="Rsync-传输方式分三种"><a href="#Rsync-传输方式分三种" class="headerlink" title="Rsync 传输方式分三种"></a>Rsync 传输方式分三种</h2><p>1、单个主机本地内部之间的数据传输（此时类似于 cp 的功能）</p>
+<p>2、借助rcp，ssh等通道来传输数据（此时类似于 scp 的功能）</p>
+<p>3、以守护进程方式传输数据（rsync 自身的重要功能）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 本地数据同步方式</span><br><span class="line">Local:  rsync [OPTION...] SRC... [DEST]</span><br><span class="line"></span><br><span class="line"># 远程数据同步方式</span><br><span class="line">Access via remote shell:</span><br><span class="line"> Pull: rsync [OPTION...] [USER@]HOST:SRC... [DEST]</span><br><span class="line"> Push: rsync [OPTION...] SRC... [USER@]HOST:DEST</span><br><span class="line"></span><br><span class="line"># 守护进程方式同步数据</span><br><span class="line">Access via rsync daemon:</span><br><span class="line"> Pull: rsync [OPTION...] [USER@]HOST::SRC... [DEST]</span><br><span class="line">	   rsync [OPTION...] rsync://[USER@]HOST[:PORT]/SRC... [DEST]</span><br><span class="line"> Push: rsync [OPTION...] SRC... [USER@]HOST::DEST</span><br><span class="line">	   rsync [OPTION...] SRC... rsync://[USER@]HOST[:PORT]/DEST</span><br></pre></td></tr></table></figure>
+
+<h2 id="源目录后面无-“-“-和有-“-“-的区别"><a href="#源目录后面无-“-“-和有-“-“-的区别" class="headerlink" title="源目录后面无 “/“ 和有 “/“ 的区别"></a>源目录后面无 “/“ 和有 “/“ 的区别</h2><p>将 /etc/yum 目录复制到 /tmp/zhang/ 目录下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 源目录后面无 &quot;/&quot;</span><br><span class="line">[yun@backup ~]$ rsync -avz /etc/yum  /tmp/zhang/</span><br><span class="line">[yun@backup ~]$ ll /tmp/zhang/</span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x 6 yun yun 100 Nov 14  2018 yum</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>将 /etc/yum/ 目录下的所有文件和目录，复制到 /tmp/zhang/ 目录下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 源目录后面有 &quot;/&quot;</span><br><span class="line">[yun@backup ~]$ rsync -avz /etc/yum/  /tmp/zhang/</span><br><span class="line">[yun@backup ~]$ ll /tmp/zhang/</span><br><span class="line">total 4</span><br><span class="line">drwxr-xr-x 2 yun yun   6 Apr 13  2018 fssnap.d</span><br><span class="line">drwxr-xr-x 2 yun yun  54 Nov 14  2018 pluginconf.d</span><br><span class="line">drwxr-xr-x 2 yun yun  26 Nov 14  2018 protected.d</span><br><span class="line">drwxr-xr-x 2 yun yun  37 Apr 13  2018 vars</span><br><span class="line">-rw-r--r-- 1 yun yun 444 Apr 13  2018 version-groups.conf</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用参数说明"><a href="#常用参数说明" class="headerlink" title="常用参数说明"></a>常用参数说明</h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-v, –verbose</td>
+<td>显示传输了哪些文件 ★★★★★</td>
+</tr>
+<tr>
+<td>-z, –compress</td>
+<td>传输时进行压缩以提高传输效率，–compress-level=NUM 指定加压缩级别。★★★★★</td>
+</tr>
+<tr>
+<td>-P, –progress</td>
+<td>显示同步的过程及传输时进度等信息 ★★★★★</td>
+</tr>
+<tr>
+<td>-a, –archive</td>
+<td>归档模式，表示以递归方式传输文件，并保持文件属性。等价于 -rlptgoD ★★★★★</td>
+</tr>
+<tr>
+<td>-r, –recursive</td>
+<td>对子目录以递归模式，即目录下的所有目录都同样传输【归档于-a】</td>
+</tr>
+<tr>
+<td>-t, –times</td>
+<td>保持文件时间信息【归档于-a】</td>
+</tr>
+<tr>
+<td>-o, –owner</td>
+<td>保持文件属主信息【归档于-a】</td>
+</tr>
+<tr>
+<td>-g, –group</td>
+<td>保持文件属组信息【归档于-a】</td>
+</tr>
+<tr>
+<td>-p, –perms</td>
+<td>保持文件权限信息【归档于-a】</td>
+</tr>
+<tr>
+<td>-D, –devieves</td>
+<td>保持设备文件信息【归档于-a】</td>
+</tr>
+<tr>
+<td>-l, –linkd</td>
+<td>保持软链接信息【归档于-a】</td>
+</tr>
+<tr>
+<td>-L, –copy-links</td>
+<td>如果是链接文件那么转为源文件复制【复制软连接的源文件】</td>
+</tr>
+<tr>
+<td>-e, –rsh=COMMAND</td>
+<td>使用信道协议，指定替代rsh的shell程序</td>
+</tr>
+<tr>
+<td>–exclude=PATTERN</td>
+<td>指出哪些文件或目录不需要传输，支持通配符</td>
+</tr>
+<tr>
+<td>–exclude-from=FILE</td>
+<td>在 FILE 文件中指定哪些文件或目录不需要传输</td>
+</tr>
+<tr>
+<td>–include=PATTERN</td>
+<td>指出哪些文件或目录不被排除要传输，支持通配符；通常配合 –exclude 或 –exclude-from 使用</td>
+</tr>
+<tr>
+<td>–include-from=FILE</td>
+<td>在 FILE 文件中指定哪些文件或目录不被排除需要传输；通常配合 –exclude 或 –exclude-from 使用</td>
+</tr>
+<tr>
+<td>–bwlimit=RATE</td>
+<td>限速    限制I / O带宽；K字节每秒</td>
+</tr>
+<tr>
+<td>–delete</td>
+<td>让目标DEST目录与SRC目录数据一致 【慎用】</td>
+</tr>
+</tbody></table>
+<div style="font-size:17px"><b>部分参数示例说明</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># --exclude=PATTERN 示例</span><br><span class="line">[yun@backup tmp]$ rsync -avz --exclude=systemd.conf /etc/yum  /tmp/zhang01</span><br><span class="line"># 或者</span><br><span class="line">[yun@backup tmp]$ rsync -avz --exclude=systemd.* /etc/yum  /tmp/zhang01</span><br><span class="line"># 或者  多个条件使用多个 --exclude=PATTERN</span><br><span class="line">[yun@backup tmp]$ rsync -avz --exclude=systemd.conf --exclude=fastestmirror.conf /etc/yum  /tmp/zhang05</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># --exclude-from=FILE 示例</span><br><span class="line">[yun@backup tmp]$ cat exclude.info </span><br><span class="line">fastestmirror.conf</span><br><span class="line">systemd.conf</span><br><span class="line">vars</span><br><span class="line"></span><br><span class="line"># 那么此时 fastestmirror.conf、systemd.conf 文件 和 vars 目录不会被拷贝</span><br><span class="line">[yun@backup tmp]$ rsync -avz --exclude-from=exclude.info /etc/yum  /tmp/zhang01</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># --include=PATTERN 示例</span><br><span class="line">## 注意参数顺序：--include 或 --include-from 必须要在 --exclude 或 --exclude-from 之前</span><br><span class="line">[yun@backup tmp]$ rsync -avz --include=systemd* --exclude=*.conf /etc/yum /tmp/zhang02</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h1 id="Rsync-本地模式实践"><a href="#Rsync-本地模式实践" class="headerlink" title="Rsync 本地模式实践"></a>Rsync 本地模式实践</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Local:  rsync [OPTION...] SRC... [DEST]</span><br></pre></td></tr></table></figure>
+
+<p><b>示例如下：</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avz /etc/yum  /tmp/zhang01</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h1 id="Rsync-使用远程-SSH-通道实践"><a href="#Rsync-使用远程-SSH-通道实践" class="headerlink" title="Rsync 使用远程 SSH 通道实践"></a>Rsync 使用远程 SSH 通道实践</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Access via remote shell:</span><br><span class="line"> Pull: rsync [OPTION...] [USER@]HOST:SRC... [DEST]</span><br><span class="line"> Push: rsync [OPTION...] SRC... [USER@]HOST:DEST</span><br></pre></td></tr></table></figure>
+
+<p><font color="red"><b>拉取数据：将远程机器的数据复制到本地</b></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[yun@backup ~]$ rsync -avzP -e &apos;ssh -p 22&apos; yun@172.16.1.182:/etc/yum /tmp/zhang01</span><br></pre></td></tr></table></figure>
+
+<p><font color="red"><b>推送数据：将本地的数据复制到远程机器</b></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[yun@backup ~]$ rsync -avzP -e &apos;ssh -p 22&apos; /etc/yum yun@172.16.1.182:/tmp/zhang</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h1 id="Rsync-daemon-服务模式实践"><a href="#Rsync-daemon-服务模式实践" class="headerlink" title="Rsync daemon 服务模式实践"></a>Rsync daemon 服务模式实践</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Access via rsync daemon:</span><br><span class="line"> Pull: rsync [OPTION...] [USER@]HOST::SRC... [DEST]</span><br><span class="line">	   rsync [OPTION...] rsync://[USER@]HOST[:PORT]/SRC... [DEST]</span><br><span class="line"> Push: rsync [OPTION...] SRC... [USER@]HOST::DEST</span><br><span class="line">	   rsync [OPTION...] SRC... rsync://[USER@]HOST[:PORT]/DEST</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>使用规划</b></div>
+1、backup 服务器作为 rsync 服务端
+
+<p>2、以 ansi-haproxy02 作为客户端，进行数据推拉。</p>
+<h2 id="rsync-服务端配置"><a href="#rsync-服务端配置" class="headerlink" title="rsync 服务端配置"></a>rsync 服务端配置</h2><h3 id="系统环境信息"><a href="#系统环境信息" class="headerlink" title="系统环境信息"></a>系统环境信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[yun@backup ~]$ cat /etc/redhat-release </span><br><span class="line">CentOS Linux release 7.5.1804 (Core) </span><br><span class="line">[yun@backup ~]$ uname -a</span><br><span class="line">Linux backup 3.10.0-862.el7.x86_64 #1 SMP Fri Apr 20 16:44:24 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux</span><br><span class="line">[root@backup ~]# rpm -qa | grep &apos;rsync&apos;</span><br><span class="line">rsync-3.1.2-4.el7.x86_64</span><br><span class="line">[yun@backup ~]$ rsync --version  # 系统已默认安装，如果没有那自行安装下</span><br><span class="line">rsync  version 3.1.2  protocol version 31</span><br><span class="line">Copyright (C) 1996-2015 by Andrew Tridgell, Wayne Davison, and others.</span><br><span class="line">Web site: http://rsync.samba.org/</span><br><span class="line">Capabilities:</span><br><span class="line">    64-bit files, 64-bit inums, 64-bit timestamps, 64-bit long ints,</span><br><span class="line">    socketpairs, hardlinks, symlinks, IPv6, batchfiles, inplace,</span><br><span class="line">    append, ACLs, xattrs, iconv, symtimes, prealloc</span><br><span class="line"></span><br><span class="line">rsync comes with ABSOLUTELY NO WARRANTY.  This is free software, and you</span><br><span class="line">are welcome to redistribute it under certain conditions.  See the GNU</span><br><span class="line">General Public Licence for details.</span><br></pre></td></tr></table></figure>
+
+<h3 id="服务配置文件"><a href="#服务配置文件" class="headerlink" title="服务配置文件"></a>服务配置文件</h3><p>注意：配置后面不要添加任何信息和空格，不然可能被解析，导致后续一系列问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@backup ~]# cat /etc/rsyncd.conf</span><br><span class="line"># 备注：更多参数与更多详解，参见  man rsyncd.conf</span><br><span class="line">#rsync_config---------------start</span><br><span class="line">uid = root</span><br><span class="line">gid = root</span><br><span class="line">use chroot = false</span><br><span class="line">max connections = 200</span><br><span class="line">timeout = 100</span><br><span class="line">pid file = /var/run/rsyncd.pid</span><br><span class="line">lock file = /var/run/rsync.lock</span><br><span class="line">log file = /var/log/rsyncd.log</span><br><span class="line">dont compress = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2</span><br><span class="line">ignore errors = true</span><br><span class="line">read only = false</span><br><span class="line">list = false</span><br><span class="line"></span><br><span class="line">## 注意为了避免困惑 hosts allow 和 hosts deny 请二选其一</span><br><span class="line">hosts allow = 172.16.1.0/24,10.9.0.0/16,120.27.48.179</span><br><span class="line"># hosts deny = 10.0.0.0/16</span><br><span class="line"># 支持多个认证账号</span><br><span class="line">auth users = rsync_backup,rsync_db_back</span><br><span class="line">secrets file = /etc/rsync.password</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 数据备份 注意 path 目录的权限信息</span><br><span class="line">[back_data_module]</span><br><span class="line">path = /backup/busi_data/</span><br><span class="line"></span><br><span class="line"># 数据库备份 注意 path 目录的权限信息</span><br><span class="line">[back_db_module]</span><br><span class="line">path = /backup/database/</span><br><span class="line"></span><br><span class="line">#rsync_config---------------end</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置文件详解"><a href="#配置文件详解" class="headerlink" title="配置文件详解"></a>配置文件详解</h3><p>更多参数与详解，参见 <font color="red"> man rsyncd.conf </font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"># 备注：更多参数与更多详解，参见  man rsyncd.conf</span><br><span class="line"># rsync_config---------------start</span><br><span class="line"># 可以是其他用户</span><br><span class="line"># 超级用户运行时的默认设置是切换到系统的“nobody”用户</span><br><span class="line"># 如果配置为 root 用户，这时可以同步属主信息</span><br><span class="line"># 非超级用户是不能同步属主信息的</span><br><span class="line">uid = root  # 其他主机通过 rsync 实现推拉时使用什么用户</span><br><span class="line"># 可以是其他用户组</span><br><span class="line"># 超级用户组运行时的默认设置是切换到系统的“nobody”用户组</span><br><span class="line"># 如果配置为 root 用户组，这时可以同步属组信息</span><br><span class="line"># 非超级用户组是不能同步属组信息的</span><br><span class="line">gid = root  # 其他主机通过 rsync 实现推拉时使用什么用户组</span><br><span class="line"># 如果为 true，安全性更高，但软连接文件「可能」同步不了</span><br><span class="line"># 这是 rsync 的一个安全配置，由于我们大多数都是内网使用，所以可以不配置。建议 false</span><br><span class="line">use chroot = false</span><br><span class="line">max connections = 200  # 最大连接数</span><br><span class="line">timeout = 100  # 超时时间</span><br><span class="line">pid file = /var/run/rsyncd.pid   # 进程号文件</span><br><span class="line">lock file = /var/run/rsync.lock  # 锁文件，防止文件不一致</span><br><span class="line">log file = /var/log/rsyncd.log   # 日志文件</span><br><span class="line">dont compress = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2  # 对哪些文件传输时不压缩【如果传输时我们指定了压缩参数】</span><br><span class="line">ignore errors = true # 忽略错误</span><br><span class="line">read only = false  # 在服务端可读写</span><br><span class="line">list = false  # 不让列表，安全考虑</span><br><span class="line"></span><br><span class="line">## 注意为了避免困惑 hosts allow 和 hosts deny 请二选其一</span><br><span class="line">hosts allow = 172.16.1.0/24,10.9.0.0/16,120.27.48.179  # 可访问的网段或IP，多个使用逗号分隔；其他的都不可访问</span><br><span class="line"># hosts deny = 10.0.0.0/16  # 不可访问的网段或IP，多个使用逗号分隔；其他的都可以访问</span><br><span class="line"># 支持多个认证账号</span><br><span class="line">auth users = rsync_backup,rsync_db_back  # 其他主机连接时，校验的用户【虚拟用户】</span><br><span class="line">secrets file = /etc/rsync.password       # 虚拟用户账号及密码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 数据备份 注意 path 目录的权限信息</span><br><span class="line">[back_data_module]</span><br><span class="line">path = /backup/busi_data/</span><br><span class="line"></span><br><span class="line"># 数据库备份 注意 path 目录的权限信息</span><br><span class="line">[back_db_module]</span><br><span class="line">path = /backup/database/</span><br><span class="line"></span><br><span class="line"># rsync_config---------------end</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>uid、gid 详解</b></div>
+
+<p>当 rsync 服务端的 uid、gid 用的是 rsync 用户和用户组【或其他非超级用户、用户组】时，客户端同步时只能同步数据信息、权限信息、时间戳信息，但不能同步属主、属组信息。此时客户端若要同步的数据属主、属组，那么客户端数据的属主、属组必须也是 rsync【即客户端与服务端的 uid、gid 相同】；或者不要同步属主、属组信息。</p>
+<p>如果需要把多个文件且属主、属组不同的属性信息也同步到 rsync 服务端，那么在 rsync 服务端的 uid、gid 配置都应该是 root。</p>
+<div style="font-size:17px"><b>use chroot 详解</b></div>
+
+<p><b>use chroot = true</b></p>
+<p>需要 root 权限，且 rsync 在传输文件之前首先 chroot 到 path 参数所指定的目录下，然后再开始与客户端进行文件传输。<br>优点：可以提供额外的保护，防止可能的出现的安全漏洞<br>缺点：如果同步的数据有软连接，那么软连接「可能」同步不了</p>
+<p><b>use chroot = false</b></p>
+<p>出于安全原因，默认情况下使用 munge 符号链接，即所有的软连接前面多会加 /rsyncd-munged/，如下：<br><img src="/uploads/rsync/rsync-01-01.png" alt="image"></p>
+<h3 id="其他必要设置与配置"><a href="#其他必要设置与配置" class="headerlink" title="其他必要设置与配置"></a>其他必要设置与配置</h3><p><b>1、创建对应的目录</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@backup ~]# mkdir -p /backup/&#123;busi_data,database&#125; </span><br><span class="line">[root@backup ~]# ll /backup/</span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x 2 root root 6 Sep 20 14:54 busi_data</span><br><span class="line">drwxr-xr-x 2 root root 6 Sep 20 14:54 database</span><br></pre></td></tr></table></figure>
+
+<p><b>2、rsync虚拟用户配置</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@backup ~]# ll /etc/rsync.password    # 注意文件的权限信息 600</span><br><span class="line">-rw------- 1 root root 63 Sep 20 15:03 /etc/rsync.password</span><br><span class="line">[root@backup ~]# </span><br><span class="line">[root@backup ~]# cat /etc/rsync.password </span><br><span class="line">rsync_backup:rsync_backup_pwd</span><br><span class="line">rsync_db_back:rsync_db_back_pwd</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动-停止-Rsync-守护进程服务"><a href="#启动-停止-Rsync-守护进程服务" class="headerlink" title="启动/停止 Rsync 守护进程服务"></a>启动/停止 Rsync 守护进程服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@backup ~]# systemctl start rsyncd.service</span><br><span class="line">[root@backup ~]# netstat -lntup | grep &apos;rsync&apos;</span><br><span class="line">tcp        0      0 0.0.0.0:873             0.0.0.0:*               LISTEN      2366/rsync</span><br><span class="line">tcp6       0      0 :::873                  :::*                    LISTEN      2366/rsync</span><br><span class="line">[root@backup ~]# lsof -i :873</span><br><span class="line">COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">rsync   2347 root    3u  IPv4  31366      0t0  TCP *:rsync (LISTEN)</span><br><span class="line">rsync   2347 root    5u  IPv6  31367      0t0  TCP *:rsync (LISTEN)</span><br><span class="line">[root@backup ~]# ps -ef | grep &apos;rsync&apos;</span><br><span class="line">root       2366      1  0 10:59 ?        00:00:00 /usr/bin/rsync --daemon --no-detach</span><br><span class="line">root       2571   1684  0 11:08 pts/0    00:00:00 grep --color=auto rsync</span><br></pre></td></tr></table></figure>
+
+<p><b>停止 rsync 服务</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@backup ~]# systemctl stop rsyncd.service</span><br></pre></td></tr></table></figure>
+
+<h3 id="加入开机自启动"><a href="#加入开机自启动" class="headerlink" title="加入开机自启动"></a>加入开机自启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@backup ~]# systemctl enable rsyncd.service   # 加入开机自启动</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/rsyncd.service to /usr/lib/systemd/system/rsyncd.service.</span><br><span class="line">[root@backup ~]# systemctl status rsyncd.service </span><br><span class="line">● rsyncd.service - fast remote file copy program daemon</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/rsyncd.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: inactive (dead)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Rsync-客户端配置"><a href="#Rsync-客户端配置" class="headerlink" title="Rsync 客户端配置"></a>Rsync 客户端配置</h2><h3 id="系统环境信息-1"><a href="#系统环境信息-1" class="headerlink" title="系统环境信息"></a>系统环境信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@ansi-haproxy02 ~]# cat /etc/redhat-release </span><br><span class="line">CentOS Linux release 7.5.1804 (Core) </span><br><span class="line">[root@ansi-haproxy02 ~]# uname -a</span><br><span class="line">Linux ansi-haproxy02 3.10.0-862.el7.x86_64 #1 SMP Fri Apr 20 16:44:24 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux</span><br><span class="line">[root@ansi-haproxy02 ~]# rpm -qa | grep &apos;rsync&apos;</span><br><span class="line">rsync-3.1.2-4.el7.x86_64</span><br><span class="line">[root@ansi-haproxy02 ~]# rsync --version</span><br><span class="line">rsync  version 3.1.2  protocol version 31</span><br><span class="line">Copyright (C) 1996-2015 by Andrew Tridgell, Wayne Davison, and others.</span><br><span class="line">Web site: http://rsync.samba.org/</span><br><span class="line">Capabilities:</span><br><span class="line">    64-bit files, 64-bit inums, 64-bit timestamps, 64-bit long ints,</span><br><span class="line">    socketpairs, hardlinks, symlinks, IPv6, batchfiles, inplace,</span><br><span class="line">    append, ACLs, xattrs, iconv, symtimes, prealloc</span><br><span class="line"></span><br><span class="line">rsync comes with ABSOLUTELY NO WARRANTY.  This is free software, and you</span><br><span class="line">are welcome to redistribute it under certain conditions.  See the GNU</span><br><span class="line">General Public Licence for details.</span><br></pre></td></tr></table></figure>
+
+<h3 id="密码文件"><a href="#密码文件" class="headerlink" title="密码文件"></a>密码文件</h3><p>注意密码文件只能填写对应密码信息，不要有其他多余的字符，rsync 在读取时仅读取该文件的第一行信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@ansi-haproxy02 ~]# ll /etc/rsync.password*    # 注意权限信息 600 或 400</span><br><span class="line">-rw------- 1 root root 36 Sep 20 16:28 /etc/rsync.password</span><br><span class="line">-rw------- 1 root root 19 Sep 24 11:30 /etc/rsync.password2</span><br><span class="line">[root@ansi-haproxy02 ~]# cat /etc/rsync.password</span><br><span class="line">rsync_backup_pwd</span><br><span class="line">[root@ansi-haproxy02 ~]# cat /etc/rsync.password2</span><br><span class="line">rsync_db_back_pwd</span><br></pre></td></tr></table></figure>
+
+<p>注意：客户端一个 password 文件不能存放多个密码，rsync 在读取文件的时候只会读取第一个密码。</p>
+<h2 id="客户端准备数据"><a href="#客户端准备数据" class="headerlink" title="客户端准备数据"></a>客户端准备数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@ansi-haproxy02 zhang]# pwd</span><br><span class="line">/tmp/zhang</span><br><span class="line">[root@ansi-haproxy02 zhang]# cp -a /etc/yum ./</span><br><span class="line">[root@ansi-haproxy02 zhang]# ll</span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x. 6 root root 100 Nov 14  2018 yum </span><br><span class="line">[root@ansi-haproxy02 zhang]# touch stu&#123;01..100&#125;</span><br><span class="line">[root@ansi-haproxy02 zhang]# ls</span><br><span class="line">stu001  stu008  stu015  stu022  stu029  stu036  stu043  stu050  stu057  stu064  stu071  stu078  stu085  stu092  stu099</span><br><span class="line">stu002  stu009  stu016  stu023  stu030  stu037  stu044  stu051  stu058  stu065  stu072  stu079  stu086  stu093  stu100</span><br><span class="line">stu003  stu010  stu017  stu024  stu031  stu038  stu045  stu052  stu059  stu066  stu073  stu080  stu087  stu094  yum</span><br><span class="line">stu004  stu011  stu018  stu025  stu032  stu039  stu046  stu053  stu060  stu067  stu074  stu081  stu088  stu095</span><br><span class="line">stu005  stu012  stu019  stu026  stu033  stu040  stu047  stu054  stu061  stu068  stu075  stu082  stu089  stu096</span><br><span class="line">stu006  stu013  stu020  stu027  stu034  stu041  stu048  stu055  stu062  stu069  stu076  stu083  stu090  stu097</span><br><span class="line">stu007  stu014  stu021  stu028  stu035  stu042  stu049  stu056  stu063  stu070  stu077  stu084  stu091  stu098</span><br></pre></td></tr></table></figure>
+
+<h2 id="推拉数据"><a href="#推拉数据" class="headerlink" title="推拉数据"></a>推拉数据</h2><h3 id="客户端向服务端推送数据"><a href="#客户端向服务端推送数据" class="headerlink" title="客户端向服务端推送数据"></a>客户端向服务端推送数据</h3><p>使用 rsync_backup 账号测试</p>
+<p><b>情况1、需要校验用户密码</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@ansi-haproxy02 zhang]# rsync -avz /tmp/zhang rsync_backup@172.16.1.181::back_data_module</span><br><span class="line">Password:</span><br><span class="line">sending incremental file list</span><br><span class="line">………………</span><br><span class="line">sent 6,202 bytes  received 2,070 bytes  1,504.00 bytes/sec</span><br><span class="line">total size is 1,117  speedup is 0.14</span><br></pre></td></tr></table></figure>
+
+<p><b>情况2、不要密码【密码文件】</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 方式一</span><br><span class="line"># 从本地推送到服务端 back_data_module 模块路径下</span><br><span class="line">[root@ansi-haproxy02 zhang]# rsync -avz --password-file=/etc/rsync.password /etc/yum rsync_backup@172.16.1.181::back_data_module </span><br><span class="line"># 方式二</span><br><span class="line"># 从本地推送到服务端 back_data_module 模块路径下的 zhang 目录下</span><br><span class="line">[root@ansi-haproxy02 zhang]# rsync -avz --password-file=/etc/rsync.password /etc/systemd rsync://rsync_backup@172.16.1.181/back_data_module/zhang/</span><br></pre></td></tr></table></figure>
+
+<p>其中：back_data_module 为 rsync 配置中的模块名</p>
+<h3 id="客户端向服务端拉取数据"><a href="#客户端向服务端拉取数据" class="headerlink" title="客户端向服务端拉取数据"></a>客户端向服务端拉取数据</h3><p>使用 rsync_db_back 账号测试</p>
+<p><b>情况1：需要校验用户密码</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@ansi-haproxy02 test]# rsync -avz rsync_db_back@172.16.1.181::back_data_module/zhang /tmp/test/</span><br><span class="line">Password: </span><br><span class="line">receiving incremental file list</span><br><span class="line">…………</span><br></pre></td></tr></table></figure>
+
+<p><b>情况2、不要密码【密码文件】</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 方式一</span><br><span class="line"># 从服务端 back_data_module 模块路径下的yum目录，拉取到本地 /tmp/test1/ 目录下</span><br><span class="line">[root@ansi-haproxy02 kkkk]# rsync -avz --password-file=/etc/rsync.password2 rsync_db_back@172.16.1.181::back_data_module/yum /tmp/test1/ </span><br><span class="line"># 方式二</span><br><span class="line"># 从服务端 back_data_module 模块路径下的yum目录，拉取到本地 /tmp/test2/ 目录下</span><br><span class="line">[root@ansi-haproxy02 tmp]# rsync -avz --password-file=/etc/rsync.password2 rsync://rsync_db_back@172.16.1.181/back_data_module/yum /tmp/test2/</span><br></pre></td></tr></table></figure>
+
+<p>其中：back_data_module 为 rsync 配置中的模块名</p>
+<h2 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a>注意点：</h2><h3 id="客户端路径末尾是否有"><a href="#客户端路径末尾是否有" class="headerlink" title="客户端路径末尾是否有 /"></a>客户端路径末尾是否有 /</h3><p> “/” 有：则表示推送该目录下的所有文件</p>
+<p> “/” 无：则表示推送该目录，与该目录下所有文件</p>
+<h3 id="目标一端可以加一个不存在的目录"><a href="#目标一端可以加一个不存在的目录" class="headerlink" title="目标一端可以加一个不存在的目录"></a>目标一端可以加一个不存在的目录</h3><p>类似 cp 命令一样，我们可以在目标一端指定一个目录</p>
+<p>推送时，目标一端有该目录则直接使用；没有则创建</p>
+<br>
+
+<h1 id="Rsync-常见问题"><a href="#Rsync-常见问题" class="headerlink" title="Rsync 常见问题"></a>Rsync 常见问题</h1><h2 id="故障点1：客户端密码文件属主不对"><a href="#故障点1：客户端密码文件属主不对" class="headerlink" title="故障点1：客户端密码文件属主不对"></a>故障点1：客户端密码文件属主不对</h2><p>客户端以哪个用户执行命令，那么 password-file 文件的属主就是哪个用户。<br>当然为了安全起见，客户端的 password-file 文件属主最好是 root ，这时我们执行命令也用 root 用户。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@ansi-haproxy02 ~]# rsync -avz --password-file=/etc/rsync.password2 /etc/yum rsync_db_back@172.16.1.181::back_db_module</span><br><span class="line">ERROR: password file must be owned by root when running as root</span><br><span class="line">rsync error: syntax or usage error (code 1) at authenticate.c(200) [sender=3.1.2]</span><br></pre></td></tr></table></figure>
+
+<h2 id="故障点2：客户端密码文件权限不对"><a href="#故障点2：客户端密码文件权限不对" class="headerlink" title="故障点2：客户端密码文件权限不对"></a>故障点2：客户端密码文件权限不对</h2><p>客户端的 password-file 文件权限是 600 或 400。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@ansi-haproxy02 ~]# rsync -avz --password-file=/etc/rsync.password2 /etc/yum rsync_db_back@172.16.1.181::back_db_module</span><br><span class="line">ERROR: password file must not be other-accessible</span><br><span class="line">rsync error: syntax or usage error (code 1) at authenticate.c(196) [sender=3.1.2]</span><br></pre></td></tr></table></figure>
+
+<h2 id="故障点3：客户端用户执行权限不足"><a href="#故障点3：客户端用户执行权限不足" class="headerlink" title="故障点3：客户端用户执行权限不足"></a>故障点3：客户端用户执行权限不足</h2><p>客户端用户执行权限不足，不能读取 password-file 文件信息。<br>当前使用 yun 用户，实际需要 root 用户。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-haproxy02 ~]$ rsync -avz --password-file=/etc/rsync.password2 /etc/yum rsync_db_back@172.16.1.181::back_db_module</span><br><span class="line">rsync: could not open password file /etc/rsync.password2: Permission denied (13)</span><br><span class="line">rsync error: syntax or usage error (code 1) at authenticate.c(187) [sender=3.1.2]</span><br></pre></td></tr></table></figure>
+
+<h2 id="故障点4：服务端没有对应的模块目录"><a href="#故障点4：服务端没有对应的模块目录" class="headerlink" title="故障点4：服务端没有对应的模块目录"></a>故障点4：服务端没有对应的模块目录</h2><p>服务端 back_db_module 模块的 path 路径不存在。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@ansi-haproxy02 ~]# rsync -avz --password-file=/etc/rsync.password2 /etc/yum rsync_db_back@172.16.1.181::back_db_module</span><br><span class="line">@ERROR: chdir failed</span><br><span class="line">rsync error: error starting client-server protocol (code 5) at main.c(1648) [sender=3.1.2]</span><br></pre></td></tr></table></figure>
+
+<h2 id="故障点5：客户端密码不正确"><a href="#故障点5：客户端密码不正确" class="headerlink" title="故障点5：客户端密码不正确"></a>故障点5：客户端密码不正确</h2><p>客户端 password-file 文件的密码信息与服务端的密码不匹配，不能通过验证。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@ansi-haproxy02 ~]# rsync -avz --password-file=/etc/rsync.password2 /etc/yum rsync_db_back@172.16.1.181::back_db_module</span><br><span class="line">@ERROR: auth failed on module back_db_module</span><br><span class="line">rsync error: error starting client-server protocol (code 5) at main.c(1648) [sender=3.1.2]</span><br></pre></td></tr></table></figure>
+
+<h2 id="故障点6：服务端目录不存在"><a href="#故障点6：服务端目录不存在" class="headerlink" title="故障点6：服务端目录不存在"></a>故障点6：服务端目录不存在</h2><p>服务端只能创建一级不存在的目录，不能创建二级及以上不存在的目录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@ansi-haproxy02 ~]# rsync -avz --password-file=/etc/rsync.password2 /etc/yum rsync_db_back@172.16.1.181::back_db_module/aaa/bbb</span><br><span class="line">sending incremental file list</span><br><span class="line">rsync: mkdir &quot;aaa/bbb&quot; (in back_db_module) failed: No such file or directory (2)</span><br><span class="line">rsync error: error in file IO (code 11) at main.c(657) [Receiver=3.1.2]</span><br></pre></td></tr></table></figure>
+
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2019/09/26/rsync01/" title="Rsync 服务部署与参数详解">http://www.zhangblog.com/2019/09/26/rsync01/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Rsync/" rel="tag"># Rsync</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/14/linux-load/" rel="next" title="linux 平均负载 load average 的含义">
+                <i class="fa fa-chevron-left"></i> linux 平均负载 load average 的含义
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Rsync-简介"><span class="nav-number">1.</span> <span class="nav-text">Rsync 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rsync-增量复制的原理"><span class="nav-number">1.1.</span> <span class="nav-text">Rsync 增量复制的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rsync-软件功能介绍"><span class="nav-number">1.2.</span> <span class="nav-text">Rsync 软件功能介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rsync-特性介绍"><span class="nav-number">1.3.</span> <span class="nav-text">Rsync 特性介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rsync-运用场景"><span class="nav-number">1.4.</span> <span class="nav-text">Rsync 运用场景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Rsync-使用说明"><span class="nav-number">2.</span> <span class="nav-text">Rsync 使用说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rsync-传输方式分三种"><span class="nav-number">2.1.</span> <span class="nav-text">Rsync 传输方式分三种</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源目录后面无-“-“-和有-“-“-的区别"><span class="nav-number">2.2.</span> <span class="nav-text">源目录后面无 “/“ 和有 “/“ 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用参数说明"><span class="nav-number">2.3.</span> <span class="nav-text">常用参数说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Rsync-本地模式实践"><span class="nav-number">3.</span> <span class="nav-text">Rsync 本地模式实践</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Rsync-使用远程-SSH-通道实践"><span class="nav-number">4.</span> <span class="nav-text">Rsync 使用远程 SSH 通道实践</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Rsync-daemon-服务模式实践"><span class="nav-number">5.</span> <span class="nav-text">Rsync daemon 服务模式实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rsync-服务端配置"><span class="nav-number">5.1.</span> <span class="nav-text">rsync 服务端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统环境信息"><span class="nav-number">5.1.1.</span> <span class="nav-text">系统环境信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务配置文件"><span class="nav-number">5.1.2.</span> <span class="nav-text">服务配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件详解"><span class="nav-number">5.1.3.</span> <span class="nav-text">配置文件详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他必要设置与配置"><span class="nav-number">5.1.4.</span> <span class="nav-text">其他必要设置与配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动-停止-Rsync-守护进程服务"><span class="nav-number">5.1.5.</span> <span class="nav-text">启动/停止 Rsync 守护进程服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加入开机自启动"><span class="nav-number">5.1.6.</span> <span class="nav-text">加入开机自启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rsync-客户端配置"><span class="nav-number">5.2.</span> <span class="nav-text">Rsync 客户端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统环境信息-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">系统环境信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密码文件"><span class="nav-number">5.2.2.</span> <span class="nav-text">密码文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端准备数据"><span class="nav-number">5.3.</span> <span class="nav-text">客户端准备数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推拉数据"><span class="nav-number">5.4.</span> <span class="nav-text">推拉数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端向服务端推送数据"><span class="nav-number">5.4.1.</span> <span class="nav-text">客户端向服务端推送数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端向服务端拉取数据"><span class="nav-number">5.4.2.</span> <span class="nav-text">客户端向服务端拉取数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意点："><span class="nav-number">5.5.</span> <span class="nav-text">注意点：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端路径末尾是否有"><span class="nav-number">5.5.1.</span> <span class="nav-text">客户端路径末尾是否有 /</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标一端可以加一个不存在的目录"><span class="nav-number">5.5.2.</span> <span class="nav-text">目标一端可以加一个不存在的目录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Rsync-常见问题"><span class="nav-number">6.</span> <span class="nav-text">Rsync 常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#故障点1：客户端密码文件属主不对"><span class="nav-number">6.1.</span> <span class="nav-text">故障点1：客户端密码文件属主不对</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#故障点2：客户端密码文件权限不对"><span class="nav-number">6.2.</span> <span class="nav-text">故障点2：客户端密码文件权限不对</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#故障点3：客户端用户执行权限不足"><span class="nav-number">6.3.</span> <span class="nav-text">故障点3：客户端用户执行权限不足</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#故障点4：服务端没有对应的模块目录"><span class="nav-number">6.4.</span> <span class="nav-text">故障点4：服务端没有对应的模块目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#故障点5：客户端密码不正确"><span class="nav-number">6.5.</span> <span class="nav-text">故障点5：客户端密码不正确</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#故障点6：服务端目录不存在"><span class="nav-number">6.6.</span> <span class="nav-text">故障点6：服务端目录不存在</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">54.4k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
