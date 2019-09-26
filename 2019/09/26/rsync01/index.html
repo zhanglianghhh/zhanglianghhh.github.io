@@ -93,7 +93,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/rsync/rsync-00.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/rsync/rsync-01-01.png">
-<meta property="og:updated_time" content="2019-09-26T03:26:08.363Z">
+<meta property="og:updated_time" content="2019-09-26T07:19:30.895Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Rsync 服务部署与参数详解">
 <meta name="twitter:description" content="Rsync 简介rsync 是一款开源的、快速的、多功能的、可实现全量及增量的本地或远程数据同步备份的优秀工具。Rsync软件适用于unix/linux/windows等多种操作系统平台。 传统的 scp 和 cp 工具拷贝每次均为完整拷贝，而rsync除了可以完整拷贝外，还具备增量拷贝功能。因此，从同步数据的性能及效率上，Rsync工具更胜一筹。 官网地址： 123https://downlo">
@@ -515,79 +515,79 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>-v, –verbose</td>
+<td>-v, --verbose</td>
 <td>显示传输了哪些文件 ★★★★★</td>
 </tr>
 <tr>
-<td>-z, –compress</td>
-<td>传输时进行压缩以提高传输效率，–compress-level=NUM 指定加压缩级别。★★★★★</td>
+<td>-z, --compress</td>
+<td>传输时进行压缩以提高传输效率，--compress-level=NUM 指定加压缩级别。★★★★★</td>
 </tr>
 <tr>
-<td>-P, –progress</td>
+<td>-P, --progress</td>
 <td>显示同步的过程及传输时进度等信息 ★★★★★</td>
 </tr>
 <tr>
-<td>-a, –archive</td>
+<td>-a, --archive</td>
 <td>归档模式，表示以递归方式传输文件，并保持文件属性。等价于 -rlptgoD ★★★★★</td>
 </tr>
 <tr>
-<td>-r, –recursive</td>
+<td>-r, --recursive</td>
 <td>对子目录以递归模式，即目录下的所有目录都同样传输【归档于-a】</td>
 </tr>
 <tr>
-<td>-t, –times</td>
+<td>-t, --times</td>
 <td>保持文件时间信息【归档于-a】</td>
 </tr>
 <tr>
-<td>-o, –owner</td>
+<td>-o, --owner</td>
 <td>保持文件属主信息【归档于-a】</td>
 </tr>
 <tr>
-<td>-g, –group</td>
+<td>-g, --group</td>
 <td>保持文件属组信息【归档于-a】</td>
 </tr>
 <tr>
-<td>-p, –perms</td>
+<td>-p, --perms</td>
 <td>保持文件权限信息【归档于-a】</td>
 </tr>
 <tr>
-<td>-D, –devieves</td>
+<td>-D, --devieves</td>
 <td>保持设备文件信息【归档于-a】</td>
 </tr>
 <tr>
-<td>-l, –linkd</td>
+<td>-l, --linkd</td>
 <td>保持软链接信息【归档于-a】</td>
 </tr>
 <tr>
-<td>-L, –copy-links</td>
+<td>-L, --copy-links</td>
 <td>如果是链接文件那么转为源文件复制【复制软连接的源文件】</td>
 </tr>
 <tr>
-<td>-e, –rsh=COMMAND</td>
+<td>-e, --rsh=COMMAND</td>
 <td>使用信道协议，指定替代rsh的shell程序</td>
 </tr>
 <tr>
-<td>–exclude=PATTERN</td>
+<td>--exclude=PATTERN</td>
 <td>指出哪些文件或目录不需要传输，支持通配符</td>
 </tr>
 <tr>
-<td>–exclude-from=FILE</td>
+<td>--exclude-from=FILE</td>
 <td>在 FILE 文件中指定哪些文件或目录不需要传输</td>
 </tr>
 <tr>
-<td>–include=PATTERN</td>
-<td>指出哪些文件或目录不被排除要传输，支持通配符；通常配合 –exclude 或 –exclude-from 使用</td>
+<td>--include=PATTERN</td>
+<td>指出哪些文件或目录不被排除要传输，支持通配符；通常配合 --exclude 或 --exclude-from 使用</td>
 </tr>
 <tr>
-<td>–include-from=FILE</td>
-<td>在 FILE 文件中指定哪些文件或目录不被排除需要传输；通常配合 –exclude 或 –exclude-from 使用</td>
+<td>--include-from=FILE</td>
+<td>在 FILE 文件中指定哪些文件或目录不被排除需要传输；通常配合 --exclude 或 --exclude-from 使用</td>
 </tr>
 <tr>
-<td>–bwlimit=RATE</td>
-<td>限速    限制I / O带宽；K字节每秒</td>
+<td>--bwlimit=RATE</td>
+<td>限速    限制 I/O 带宽；K字节每秒</td>
 </tr>
 <tr>
-<td>–delete</td>
+<td>--delete</td>
 <td>让目标DEST目录与SRC目录数据一致 【慎用】</td>
 </tr>
 </tbody></table>
