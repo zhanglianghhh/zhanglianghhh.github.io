@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2019-09-26T07:19:30.895Z</updated>
+  <updated>2019-12-15T12:37:52.168Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux 用户名、主机添加背景色</title>
+    <link href="http://www.zhangblog.com/2019/12/15/bg-color/"/>
+    <id>http://www.zhangblog.com/2019/12/15/bg-color/</id>
+    <published>2019-12-15T12:35:21.000Z</published>
+    <updated>2019-12-15T12:37:52.168Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Linux-用户名、主机添加背景色&quot;&gt;&lt;a href=&quot;#Linux-用户名、主机添加背景色&quot; class=&quot;headerlink&quot; title=&quot;Linux 用户名、主机添加背景色&quot;&gt;&lt;/a&gt;Linux 用户名、主机添加背景色&lt;/h1&gt;&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="Shell" scheme="http://www.zhangblog.com/categories/Shell/"/>
+    
+    
+      <category term="Shell" scheme="http://www.zhangblog.com/tags/Shell/"/>
+    
+  </entry>
   
   <entry>
     <title>Rsync 服务部署与参数详解</title>
@@ -539,35 +565,6 @@
         
           &lt;p&gt;&lt;img src=&quot;/uploads/hexo/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;上篇我们说了 hexo
-        
-      
-    
-    </summary>
-    
-      <category term="Hexo" scheme="http://www.zhangblog.com/categories/Hexo/"/>
-    
-    
-      <category term="Hexo" scheme="http://www.zhangblog.com/tags/Hexo/"/>
-    
-      <category term="Next" scheme="http://www.zhangblog.com/tags/Next/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux下使用 github+hexo 搭建个人博客03-hexo配置优化</title>
-    <link href="http://www.zhangblog.com/2019/06/14/hexo03/"/>
-    <id>http://www.zhangblog.com/2019/06/14/hexo03/</id>
-    <published>2019-06-14T06:27:14.000Z</published>
-    <updated>2019-07-25T08:27:38.662Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/hexo/03.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;上两张文章，我们说了 hexo
         
       
     
