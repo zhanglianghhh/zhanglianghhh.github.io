@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2019-12-15T12:37:52.168Z</updated>
+  <updated>2019-12-15T12:39:11.459Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.zhangblog.com/2019/12/15/bg-color/"/>
     <id>http://www.zhangblog.com/2019/12/15/bg-color/</id>
     <published>2019-12-15T12:35:21.000Z</published>
-    <updated>2019-12-15T12:37:52.168Z</updated>
+    <updated>2019-12-15T12:39:11.459Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,8 @@
       
         
         
-          &lt;h1 id=&quot;Linux-用户名、主机添加背景色&quot;&gt;&lt;a href=&quot;#Linux-用户名、主机添加背景色&quot; class=&quot;headerlink&quot; title=&quot;Linux 用户名、主机添加背景色&quot;&gt;&lt;/a&gt;Linux 用户名、主机添加背景色&lt;/h1&gt;&lt;h1
+          &lt;h1 id=&quot;背景色添加&quot;&gt;&lt;a href=&quot;#背景色添加&quot; class=&quot;headerlink&quot; title=&quot;背景色添加&quot;&gt;&lt;/a&gt;背景色添加&lt;/h1&gt;&lt;p&gt;Linux 用户名、主机添加背景色，用于生产环境，这样可以减少人为的误操作。&lt;/p&gt;
+&lt;figure
         
       
     
