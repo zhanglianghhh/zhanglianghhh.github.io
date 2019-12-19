@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://www.zhangblog.com/uploads/zookeeper/zk01-05.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/zookeeper/zk01-06.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/zookeeper/zk01-07.png">
-<meta property="og:updated_time" content="2019-12-19T15:51:15.983Z">
+<meta property="og:updated_time" content="2019-12-19T15:57:59.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper入门概述">
 <meta name="twitter:description" content="Zookeeper概念简介和应用场景概念简介Zookeeper是一个分布式协调服务；就是为用户的分布式应用程序提供协调服务。 A、zookeeper是为别的分布式程序服务的 B、Zookeeper本身就是一个分布式程序（只要有半数以上节点存活，zk就能正常服务） C、Zookeeper所提供的服务涵盖：主从协调、服务器节点动态上下线、统一配置管理、分布式共享锁、统一名称服务…… D、虽然说可以提">
@@ -480,7 +480,7 @@
 <p>5、数据更新原子性，一次数据更新要么成功，要么失败</p>
 <p>6、实时性，在一定时间范围内，client能读到最新数据</p>
 <h2 id="zookeeper数据结构"><a href="#zookeeper数据结构" class="headerlink" title="zookeeper数据结构"></a>zookeeper数据结构</h2><p>1、层次化的目录结构，命名符合常规文件系统规范(见下图)</p>
-<p>2、每个节点在zookeeper中叫做znode,并且其有一个唯一的路径标识</p>
+<p>2、每个节点在zookeeper中叫做znode,并且只有一个唯一的路径标识</p>
 <p>3、节点Znode可以包含数据和子节点（但是EPHEMERAL类型的节点不能有子节点）</p>
 <p>4、客户端应用可以在节点上设置监视器（后续详细讲解）   </p>
 <p><img src="/uploads/zookeeper/zk01-04.png" alt="image"></p>
