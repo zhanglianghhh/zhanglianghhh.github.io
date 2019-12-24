@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2019/12/24/zookeeper03/</loc>
+    
+    <lastmod>2019-12-24T14:15:48.245Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2019/06/16/hexo04/</loc>
     
-    <lastmod>2019-12-24T08:09:19.056Z</lastmod>
+    <lastmod>2019-12-24T08:10:28.696Z</lastmod>
     
   </url>
   

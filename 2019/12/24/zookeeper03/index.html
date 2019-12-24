@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="linux,curl,">
+  <meta name="keywords" content="ZooKeeper,Java,">
 
 
 
@@ -83,25 +83,20 @@
 
 
 
-<meta name="description" content="前言本文主要讲解通过curl 实现表单提交登录。单独的表单提交与表单登录都差不多，因此就不单独说了。 说明：针对curl表单提交实现登录，不是所有网站都适用，原因是有些网站后台做了限制或有其他校验。我们不知道这些网站后台的限制或校验机制具体是什么，因此直接curl表单登录可能是不行的。 当然，如下案例是可以用curl登录的。 案例：LeanCloud登录要求和结果要求：通过curl登录后，能正常">
-<meta name="keywords" content="linux,curl">
+<meta name="description" content="常见的zookeeper命令行操作。在3台机器分别部署了zookeeper-3.4.5【集群】，本文操作是在此基础上进行的。部署详情参见上一篇文章  客户端登录与帮助查看1234567891011121314151617181920212223242526272829303132333435363738394041# 由于是集群模式，所以可以在3台机器的其中任意一台进行登录，操作结果和数据也会">
+<meta name="keywords" content="ZooKeeper,Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux curl 表单登录或提交与cookie使用">
-<meta property="og:url" content="http://www.zhangblog.com/2019/07/20/curl03/index.html">
+<meta property="og:title" content="zookeeper常用命令行操作">
+<meta property="og:url" content="http://www.zhangblog.com/2019/12/24/zookeeper03/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="前言本文主要讲解通过curl 实现表单提交登录。单独的表单提交与表单登录都差不多，因此就不单独说了。 说明：针对curl表单提交实现登录，不是所有网站都适用，原因是有些网站后台做了限制或有其他校验。我们不知道这些网站后台的限制或校验机制具体是什么，因此直接curl表单登录可能是不行的。 当然，如下案例是可以用curl登录的。 案例：LeanCloud登录要求和结果要求：通过curl登录后，能正常">
+<meta property="og:description" content="常见的zookeeper命令行操作。在3台机器分别部署了zookeeper-3.4.5【集群】，本文操作是在此基础上进行的。部署详情参见上一篇文章  客户端登录与帮助查看1234567891011121314151617181920212223242526272829303132333435363738394041# 由于是集群模式，所以可以在3台机器的其中任意一台进行登录，操作结果和数据也会">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/00.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl-03-01.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl-03-02.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl-03-03.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl-03-04.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/curl/curl-03-05.png">
-<meta property="og:updated_time" content="2019-07-20T08:41:39.752Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/zookeeper/zk01-00.png">
+<meta property="og:updated_time" content="2019-12-24T14:15:48.245Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux curl 表单登录或提交与cookie使用">
-<meta name="twitter:description" content="前言本文主要讲解通过curl 实现表单提交登录。单独的表单提交与表单登录都差不多，因此就不单独说了。 说明：针对curl表单提交实现登录，不是所有网站都适用，原因是有些网站后台做了限制或有其他校验。我们不知道这些网站后台的限制或校验机制具体是什么，因此直接curl表单登录可能是不行的。 当然，如下案例是可以用curl登录的。 案例：LeanCloud登录要求和结果要求：通过curl登录后，能正常">
-<meta name="twitter:image" content="http://www.zhangblog.com/uploads/curl/00.jpg">
+<meta name="twitter:title" content="zookeeper常用命令行操作">
+<meta name="twitter:description" content="常见的zookeeper命令行操作。在3台机器分别部署了zookeeper-3.4.5【集群】，本文操作是在此基础上进行的。部署详情参见上一篇文章  客户端登录与帮助查看1234567891011121314151617181920212223242526272829303132333435363738394041# 由于是集群模式，所以可以在3台机器的其中任意一台进行登录，操作结果和数据也会">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/zookeeper/zk01-00.png">
 
 
 
@@ -131,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/2019/07/20/curl03/">
+  <link rel="canonical" href="http://www.zhangblog.com/2019/12/24/zookeeper03/">
 
 
 
 
 
-  <title>Linux curl 表单登录或提交与cookie使用 | lightzhang博客</title>
+  <title>zookeeper常用命令行操作 | lightzhang博客</title>
   
 
 
@@ -316,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/07/20/curl03/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/12/24/zookeeper03/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lightzhang">
@@ -333,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux curl 表单登录或提交与cookie使用</h1>
+          <h1 class="post-title" itemprop="name headline">zookeeper常用命令行操作</h1>
         
 
         <div class="post-meta">
@@ -345,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-20T16:29:13+08:00">
-                2019-07-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-24T22:10:52+08:00">
+                2019-12-24
               </time>
             
 
@@ -369,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/curl/" itemprop="url" rel="index">
-                    <span itemprop="name">curl</span>
+                  <a href="/categories/ZooKeeper/" itemprop="url" rel="index">
+                    <span itemprop="name">ZooKeeper</span>
                   </a>
                 </span>
 
@@ -387,8 +382,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/07/20/curl03/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/20/curl03/" itemprop="commentCount"></span>
+                <a href="/2019/12/24/zookeeper03/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/24/zookeeper03/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,7 +391,7 @@
 
           
           
-             <span id="/2019/07/20/curl03/" class="leancloud_visitors" data-flag-title="Linux curl 表单登录或提交与cookie使用">
+             <span id="/2019/12/24/zookeeper03/" class="leancloud_visitors" data-flag-title="zookeeper常用命令行操作">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -421,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1k
+                  1.8k
                 </span>
               
 
@@ -437,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  8
                 </span>
               
             </div>
@@ -458,46 +453,93 @@
       
 
       
-        <p><img src="/uploads/curl/00.jpg" alt="image"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文主要讲解通过curl 实现表单提交登录。单独的表单提交与表单登录都差不多，因此就不单独说了。</p>
-<p><strong>说明</strong>：针对curl表单提交实现登录，不是所有网站都适用，原因是有些网站后台做了限制或有其他校验。我们不知道这些网站后台的限制或校验机制具体是什么，因此直接curl表单登录可能是不行的。</p>
-<p>当然，如下案例是可以用curl登录的。<br><br></p>
-<h1 id="案例：LeanCloud登录"><a href="#案例：LeanCloud登录" class="headerlink" title="案例：LeanCloud登录"></a>案例：LeanCloud登录</h1><h2 id="要求和结果"><a href="#要求和结果" class="headerlink" title="要求和结果"></a>要求和结果</h2><p><strong>要求：通过curl登录后，能正常访问leancloud的应用页面。</strong></p>
-<p><strong>登录页面链接如下：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://leancloud.cn/dashboard/login.html#/signin</span><br></pre></td></tr></table></figure>
+        <p><img src="/uploads/zookeeper/zk01-00.png" alt="image"></p>
+<blockquote>
+<p>常见的zookeeper命令行操作。<br>在3台机器分别部署了zookeeper-3.4.5【集群】，本文操作是在此基础上进行的。部署详情参见上一篇文章</p>
+</blockquote>
+<h1 id="客户端登录与帮助查看"><a href="#客户端登录与帮助查看" class="headerlink" title="客户端登录与帮助查看"></a>客户端登录与帮助查看</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"># 由于是集群模式，所以可以在3台机器的其中任意一台进行登录，操作结果和数据也会同步到其他机器 </span><br><span class="line">[root@docker01 bin]# pwd</span><br><span class="line">/app/zookeeper-3.4.5/bin</span><br><span class="line">[root@docker01 bin]# ll</span><br><span class="line">total 64</span><br><span class="line">-rwxr-xr-x 1  501 games   238 Oct  1  2012 README.txt</span><br><span class="line">-rwxr-xr-x 1  501 games  1909 Oct  1  2012 zkCleanup.sh</span><br><span class="line">-rwxr-xr-x 1  501 games  1049 Oct  1  2012 zkCli.cmd</span><br><span class="line">-rwxr-xr-x 1  501 games  1512 Oct  1  2012 zkCli.sh</span><br><span class="line">-rwxr-xr-x 1  501 games  1333 Oct  1  2012 zkEnv.cmd</span><br><span class="line">-rwxr-xr-x 1  501 games  2599 Oct  1  2012 zkEnv.sh</span><br><span class="line">-rwxr-xr-x 1  501 games  1084 Oct  1  2012 zkServer.cmd</span><br><span class="line">-rwxr-xr-x 1  501 games  5467 Oct  1  2012 zkServer.sh</span><br><span class="line">-rw-r--r-- 1 root root  25108 May 26 14:51 zookeeper.out</span><br><span class="line">[root@docker01 bin]# ./zkCli.sh  # 客户端登录 </span><br><span class="line">………………  # 一些摘要信息</span><br><span class="line">[zk: localhost:2181(CONNECTED) 0] </span><br><span class="line">[zk: localhost:2181(CONNECTED) 0] help  # 客户端帮助信息 </span><br><span class="line">ZooKeeper -server host:port cmd args</span><br><span class="line">    stat path [watch]           # 查看路径【节点】属性信息  [watch] 观察模式，有改变则会被通知，watch一次有效一次</span><br><span class="line">    set path data [version]  # 设置/修改节点信息</span><br><span class="line">    ls path [watch]             # 查看路径【节点】  [watch] 观察模式，有改变则会被通知，watch一次有效一次</span><br><span class="line">    delquota [-n|-b] path</span><br><span class="line">    ls2 path [watch]</span><br><span class="line">    setAcl path acl</span><br><span class="line">    setquota -n|-b val path</span><br><span class="line">    history </span><br><span class="line">    redo cmdno</span><br><span class="line">    printwatches on|off</span><br><span class="line">    delete path [version]   # 删除节点</span><br><span class="line">    sync path</span><br><span class="line">    listquota path</span><br><span class="line">    rmr path           # 递归删除</span><br><span class="line">    get path [watch]   # 更具路径【节点】得到信息  [watch] 观察模式，有改变则会被通知，watch一次有效一次</span><br><span class="line">    create [-s] [-e] path data acl  # 创建节点和数据  -s 序列化【避免重复】 -e 临时数据【常用】 </span><br><span class="line">    addauth scheme auth</span><br><span class="line">    quit   # 退出客户端</span><br><span class="line">    getAcl path</span><br><span class="line">    close </span><br><span class="line">    connect host:port   # 可以连接到其他客户端，前提在一个集群内</span><br><span class="line">[zk: localhost:2181(CONNECTED) 1]</span><br></pre></td></tr></table></figure>
 
-<p><strong>能正常访问如下页面：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://leancloud.cn/dashboard/applist.html#/apps</span><br></pre></td></tr></table></figure>
+<h2 id="数据的属性说明"><a href="#数据的属性说明" class="headerlink" title="数据的属性说明"></a>数据的属性说明</h2><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>czxid</td>
+<td>节点被创建的Zxid值</td>
+</tr>
+<tr>
+<td>mzxid</td>
+<td>节点被修改的Zxid值</td>
+</tr>
+<tr>
+<td>ctime</td>
+<td>节点被创建的时间</td>
+</tr>
+<tr>
+<td>mtime</td>
+<td>节点最后一次被修改的时间</td>
+</tr>
+<tr>
+<td>versoin</td>
+<td>节点被修改的版本号</td>
+</tr>
+<tr>
+<td>cversion</td>
+<td>节点的所拥有子节点被修改的版本号</td>
+</tr>
+<tr>
+<td>aversion</td>
+<td>节点的ACL被修改的版本号</td>
+</tr>
+<tr>
+<td>emphemeralOwner</td>
+<td>如果此节点为临时节点，那么它的值为这个节点拥有者的会话ID；否则，它的值为0</td>
+</tr>
+<tr>
+<td>dataLength</td>
+<td>节点数据域的长度</td>
+</tr>
+<tr>
+<td>numChildren</td>
+<td>节点拥有的子节点个数</td>
+</tr>
+</tbody></table>
+<h1 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h1><h2 id="切换到其他客户端"><a href="#切换到其他客户端" class="headerlink" title="切换到其他客户端"></a>切换到其他客户端</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 1] connect 172.16.1.13:2181  </span><br><span class="line">……………… # 一些摘要信息</span><br><span class="line">WATCHER::</span><br><span class="line"></span><br><span class="line">WatchedEvent state:SyncConnected type:None path:null</span><br><span class="line"></span><br><span class="line">[zk: 172.16.1.13:2181(CONNECTED) 2]</span><br></pre></td></tr></table></figure>
 
-<p><strong>浏览器访问效果：</strong><br><img src="/uploads/curl/curl-03-01.png" alt="image"></p>
-<h2 id="无登录直接访问结果"><a href="#无登录直接访问结果" class="headerlink" title="无登录直接访问结果"></a>无登录直接访问结果</h2><h3 id="浏览器访问结果"><a href="#浏览器访问结果" class="headerlink" title="浏览器访问结果"></a>浏览器访问结果</h3><p><img src="/uploads/curl/curl-03-02.png" alt="image"></p>
-<p>上图红框 403 中的访问连接如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://leancloud.cn/1.1/clients/self/apps</span><br></pre></td></tr></table></figure>
+<h2 id="节点的增删改查"><a href="#节点的增删改查" class="headerlink" title="节点的增删改查"></a>节点的增删改查</h2><h3 id="增加节点"><a href="#增加节点" class="headerlink" title="增加节点"></a>增加节点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[zk: 172.16.1.13:2181(CONNECTED) 2] ls /</span><br><span class="line">[zookeeper]</span><br><span class="line">[zk: 172.16.1.13:2181(CONNECTED) 3] create /zhang01/yang01 test0001  # 保证父节点存在  </span><br><span class="line">Node does not exist: /zhang01/yang01</span><br><span class="line">[zk: 172.16.1.13:2181(CONNECTED) 4] </span><br><span class="line">[zk: 172.16.1.13:2181(CONNECTED) 4] create /zhang01 test01         </span><br><span class="line">Created /zhang01</span><br><span class="line">[zk: 172.16.1.13:2181(CONNECTED) 5] ls /</span><br><span class="line">[zookeeper, zhang01]</span><br></pre></td></tr></table></figure>
 
-<h3 id="通过curl-验证是否登录"><a href="#通过curl-验证是否登录" class="headerlink" title="通过curl 验证是否登录"></a>通过curl 验证是否登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z ~]# curl -i https://leancloud.cn/1.1/clients/self/apps</span><br><span class="line">HTTP/1.1 403 Forbidden</span><br><span class="line">Server: openresty</span><br><span class="line">Date: Sun, 14 Jul 2019 11:35:28 GMT</span><br><span class="line">Content-Type: application/json;charset=utf-8</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Vary: Accept-Encoding</span><br><span class="line">Cache-Control: no-cache,no-store</span><br><span class="line">Pragma: no-cache</span><br><span class="line"></span><br><span class="line">&#123;&quot;code&quot;:1,&quot;error&quot;:&quot;User doesn&apos;t sign in.&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="查询节点"><a href="#查询节点" class="headerlink" title="查询节点"></a>查询节点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[zk: 172.16.1.13:2181(CONNECTED) 7] ls /     </span><br><span class="line">[zookeeper, zhang01]</span><br><span class="line">[zk: 172.16.1.13:2181(CONNECTED) 8] get /zhang01  </span><br><span class="line">test01                                    # 内容</span><br><span class="line">cZxid = 0x100000007                        # 创建数据时的事物编号</span><br><span class="line">ctime = Sat May 26 15:11:40 CST 2018    # 创建时间</span><br><span class="line">mZxid = 0x100000007                        # 修改数据时的事物编号</span><br><span class="line">mtime = Sat May 26 15:11:40 CST 2018    # 修改时间</span><br><span class="line">pZxid = 0x100000007            # 持久化事物编号</span><br><span class="line">cversion = 0                # 创建版本号</span><br><span class="line">dataVersion = 0                # 数据版本</span><br><span class="line">aclVersion = 0                # 权限版本</span><br><span class="line">ephemeralOwner = 0x0        # 持久接待</span><br><span class="line">dataLength = 6                # 数据长度</span><br><span class="line">numChildren = 0                # 子节点数</span><br></pre></td></tr></table></figure>
 
-<h2 id="获取表单字段信息"><a href="#获取表单字段信息" class="headerlink" title="获取表单字段信息"></a>获取表单字段信息</h2><p><img src="/uploads/curl/curl-03-03.png" alt="image"></p>
-<h2 id="获取表单提交链接"><a href="#获取表单提交链接" class="headerlink" title="获取表单提交链接"></a>获取表单提交链接</h2><p>通过下图可得到表单提交的链接信息。具体如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://leancloud.cn/1.1/signin</span><br></pre></td></tr></table></figure>
+<h3 id="修改节点"><a href="#修改节点" class="headerlink" title="修改节点"></a>修改节点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[zk: 172.16.1.13:2181(CONNECTED) 9] ls /</span><br><span class="line">[zookeeper, zhang01]</span><br><span class="line">[zk: 172.16.1.13:2181(CONNECTED) 10] set /zhang01 1111111  # 修改节点信息 </span><br><span class="line">cZxid = 0x100000007</span><br><span class="line">ctime = Sat May 26 15:11:40 CST 2018</span><br><span class="line">mZxid = 0x100000009</span><br><span class="line">mtime = Sat May 26 15:15:38 CST 2018</span><br><span class="line">pZxid = 0x100000007</span><br><span class="line">cversion = 0</span><br><span class="line">dataVersion = 1</span><br><span class="line">aclVersion = 0</span><br><span class="line">ephemeralOwner = 0x0</span><br><span class="line">dataLength = 7</span><br><span class="line">numChildren = 0</span><br><span class="line">[zk: 172.16.1.13:2181(CONNECTED) 11] get /zhang01        </span><br><span class="line">1111111</span><br><span class="line">cZxid = 0x100000007</span><br><span class="line">ctime = Sat May 26 15:11:40 CST 2018</span><br><span class="line">mZxid = 0x100000009</span><br><span class="line">mtime = Sat May 26 15:15:38 CST 2018</span><br><span class="line">pZxid = 0x100000007</span><br><span class="line">cversion = 0</span><br><span class="line">dataVersion = 1</span><br><span class="line">aclVersion = 0</span><br><span class="line">ephemeralOwner = 0x0</span><br><span class="line">dataLength = 7</span><br><span class="line">numChildren = 0</span><br></pre></td></tr></table></figure>
 
-<p><img src="/uploads/curl/curl-03-04.png" alt="image"></p>
-<h2 id="curl-表单登录并保存cookie信息"><a href="#curl-表单登录并保存cookie信息" class="headerlink" title="curl 表单登录并保存cookie信息"></a>curl 表单登录并保存cookie信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -v -c leancloud1.info -X POST -F &apos;email=yourname&apos; -F &apos;password=yourpassword&apos; https://leancloud.cn/1.1/signin</span><br><span class="line"># 或则</span><br><span class="line">curl -v -c leancloud3.info -X POST -d &apos;email=yourname&amp;password=yourpassword&apos; https://leancloud.cn/1.1/signin</span><br></pre></td></tr></table></figure>
+<h3 id="节点常规删除"><a href="#节点常规删除" class="headerlink" title="节点常规删除"></a>节点常规删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 1] ls /zhang01</span><br><span class="line">[test04, test03, test02, test01]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 3] ls /zhang01/test04  # 没有子节点 </span><br><span class="line">[]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 4] get /zhang01/test04</span><br><span class="line">date_test04</span><br><span class="line">cZxid = 0x10000000d</span><br><span class="line">………………</span><br><span class="line">[zk: localhost:2181(CONNECTED) 5] delete /zhang01/test04  # 删除子节点</span><br><span class="line">[zk: localhost:2181(CONNECTED) 6] ls /zhang01   # 经查看删除成功        </span><br><span class="line">[test03, test02, test01]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 7] delete /zhang01  # 如果有子节点那么不能删除 </span><br><span class="line">Node not empty: /zhang01</span><br></pre></td></tr></table></figure>
 
-<h2 id="查看cookie信息"><a href="#查看cookie信息" class="headerlink" title="查看cookie信息"></a>查看cookie信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190714_02]# ll</span><br><span class="line">total 32</span><br><span class="line">-rw-r--r-- 1 root root  337 Jul 14 19:45 leancloud1.info</span><br><span class="line">-rw-r--r-- 1 root root  335 Jul 14 19:46 leancloud3.info</span><br><span class="line">[root@iZ28xbsfvc4Z 20190714_02]# cat leancloud1.info </span><br><span class="line"># Netscape HTTP Cookie File</span><br><span class="line"># http://curl.haxx.se/docs/http-cookies.html</span><br><span class="line"># This file was generated by libcurl! Edit at your own risk.</span><br><span class="line"></span><br><span class="line">#HttpOnly_leancloud.cn	FALSE	/	TRUE	1563709522	uluru_user	Ff1IPOiMX%2F6ipevuxy0OOg%3D%3D</span><br><span class="line">leancloud.cn	FALSE	/	TRUE	1563709522	XSRF-TOKEN	5647dc84bd6eaea37eca2d07ae0e401cca4ba76803989c8559XXXXX7283da</span><br><span class="line">[root@iZ28xbsfvc4Z 20190714_02]# cat leancloud3.info </span><br><span class="line"># Netscape HTTP Cookie File</span><br><span class="line"># http://curl.haxx.se/docs/http-cookies.html</span><br><span class="line"># This file was generated by libcurl! Edit at your own risk.</span><br><span class="line"></span><br><span class="line">#HttpOnly_leancloud.cn	FALSE	/	TRUE	1563709591	uluru_user	arTwQm6JylzLjBaQt7TpiQ%3D%3D</span><br><span class="line">leancloud.cn	FALSE	/	TRUE	1563709591	XSRF-TOKEN	751e12827c7c046408541bc1bf962b5912ac35b0d07f88120XXXXXX40704704</span><br></pre></td></tr></table></figure>
+<h3 id="递归删除节点"><a href="#递归删除节点" class="headerlink" title="递归删除节点"></a>递归删除节点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 8] ls /zhang01</span><br><span class="line">[test03, test02, test01]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 9] rmr /zhang01  # 递归删除 </span><br><span class="line">[zk: localhost:2181(CONNECTED) 10] ls /zhang01  # 删除成功 </span><br><span class="line">Node does not exist: /zhang01</span><br><span class="line">[zk: localhost:2181(CONNECTED) 11] ls /</span><br><span class="line">[zookeeper]</span><br></pre></td></tr></table></figure>
 
-<p><strong>每列字段说明：</strong><br>domain：创建并可以读取变量的域名。<br>flag：一个 TRUE/FALSE 值，表明给定域中的所有机器是否都可以访问该变量。此值由浏览器自动设置，具体取决于你为域设置的值。<br>path：变量在域中有效的路径。<br>secure：一个 TRUE/FALSE 值，表明是否需要与域的安全连接来访问变量。<br>expiration：该变量将过期的UNIX时间。UNIX时间定义为自1970年1月1日00:00:00 GMT开始的秒数。<br>name：变量名称<br>value：变量值</p>
-<h2 id="校验是否登录成功"><a href="#校验是否登录成功" class="headerlink" title="校验是否登录成功"></a>校验是否登录成功</h2><p>直接访问和带有cookie访问，这两种访问方式，请对比查看。</p>
-<h3 id="直接访问"><a href="#直接访问" class="headerlink" title="直接访问"></a>直接访问</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190714_02]# curl -i https://leancloud.cn/1.1/clients/self/apps</span><br><span class="line">HTTP/1.1 403 Forbidden</span><br><span class="line">Server: openresty</span><br><span class="line">Date: Sun, 14 Jul 2019 11:52:47 GMT</span><br><span class="line">Content-Type: application/json;charset=utf-8</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Vary: Accept-Encoding</span><br><span class="line">Cache-Control: no-cache,no-store</span><br><span class="line">Pragma: no-cache</span><br><span class="line"></span><br><span class="line">&#123;&quot;code&quot;:1,&quot;error&quot;:&quot;User doesn&apos;t sign in.&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="持久节点和临时节点"><a href="#持久节点和临时节点" class="headerlink" title="持久节点和临时节点"></a>持久节点和临时节点</h2><p><b>第一台客户端</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 14] ls /            </span><br><span class="line">[zookeeper]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 15] create /zhang01 yang01  # 默认持久节点 </span><br><span class="line">Created /zhang01</span><br><span class="line">[zk: localhost:2181(CONNECTED) 16] create -e /zhang02 yang02  # 创建临时节点 </span><br><span class="line">Created /zhang02</span><br><span class="line">[zk: localhost:2181(CONNECTED) 17] ls /</span><br><span class="line">[zookeeper, zhang02, zhang01]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 18] get /zhang01</span><br><span class="line">yang01</span><br><span class="line">cZxid = 0x100000018</span><br><span class="line">ctime = Sat May 26 15:33:47 CST 2018</span><br><span class="line">mZxid = 0x100000018</span><br><span class="line">mtime = Sat May 26 15:33:47 CST 2018</span><br><span class="line">pZxid = 0x100000018</span><br><span class="line">cversion = 0</span><br><span class="line">dataVersion = 0</span><br><span class="line">aclVersion = 0</span><br><span class="line">ephemeralOwner = 0x0   # 代表持久节点 </span><br><span class="line">dataLength = 6</span><br><span class="line">numChildren = 0</span><br><span class="line">[zk: localhost:2181(CONNECTED) 19] get /zhang02</span><br><span class="line">yang02</span><br><span class="line">cZxid = 0x100000019</span><br><span class="line">ctime = Sat May 26 15:33:55 CST 2018</span><br><span class="line">mZxid = 0x100000019</span><br><span class="line">mtime = Sat May 26 15:33:55 CST 2018</span><br><span class="line">pZxid = 0x100000019</span><br><span class="line">cversion = 0</span><br><span class="line">dataVersion = 0</span><br><span class="line">aclVersion = 0</span><br><span class="line">ephemeralOwner = 0x1639b3087ac0002  # 代表临时节点  </span><br><span class="line">dataLength = 6</span><br><span class="line">numChildren = 0</span><br><span class="line">[zk: localhost:2181(CONNECTED) 20] quit  # 退出当前客户端【那么当前这个客户端创建的临时节点会被自动删除】</span><br></pre></td></tr></table></figure>
 
-<h3 id="带有cookie文件的访问"><a href="#带有cookie文件的访问" class="headerlink" title="带有cookie文件的访问"></a>带有cookie文件的访问</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 使用cookie</span><br><span class="line">[root@iZ28xbsfvc4Z 20190714_02]# curl -i -b leancloud1.info https://leancloud.cn/1.1/clients/self/apps </span><br><span class="line">## 或者</span><br><span class="line">[root@iZ28xbsfvc4Z 20190714_02]# curl -i -b leancloud3.info https://leancloud.cn/1.1/clients/self/apps</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: openresty</span><br><span class="line">Date: Sun, 14 Jul 2019 11:53:29 GMT</span><br><span class="line">Content-Type: application/json;charset=utf-8</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Vary: Accept-Encoding</span><br><span class="line">Cache-Control: no-cache,no-store</span><br><span class="line">Pragma: no-cache</span><br><span class="line">Strict-Transport-Security: max-age=31536000</span><br><span class="line"></span><br><span class="line">[&#123;&quot;app_domain&quot;:null,&quot;description&quot;:null,&quot;archive_status&quot;:0,&quot;biz_type&quot;:&quot;dev&quot;,&quot;master_key&quot;: ………………</span><br></pre></td></tr></table></figure>
+<p><b>第二台客户端</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 之前可以正常查到，但是当上面的客户端退出后，节点/zhang02 被自动删除了  </span><br><span class="line">[zk: localhost:2181(CONNECTED) 4] ls /</span><br><span class="line">[zookeeper, zhang01]</span><br></pre></td></tr></table></figure>
 
-<h3 id="复制浏览器的cookie访问"><a href="#复制浏览器的cookie访问" class="headerlink" title="复制浏览器的cookie访问"></a>复制浏览器的cookie访问</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z 20190720]# curl -i -H &apos;cookie: _ga=GA1.2.2055706705.1560005524; …………&apos; https://leancloud.cn/1.1/clients/self/apps</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: openresty</span><br><span class="line">Date: Sat, 20 Jul 2019 08:11:37 GMT</span><br><span class="line">Content-Type: application/json;charset=utf-8</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Vary: Accept-Encoding</span><br><span class="line">Cache-Control: no-cache,no-store</span><br><span class="line">Pragma: no-cache</span><br><span class="line">Strict-Transport-Security: max-age=31536000</span><br><span class="line"></span><br><span class="line">[&#123;&quot;app_domain&quot;:null,&quot;description&quot;:null,&quot;archive_status&quot;:0,&quot;biz_type&quot;:&quot;dev&quot;,&quot;master_key&quot;: ………………</span><br></pre></td></tr></table></figure>
+<h2 id="节点序列化"><a href="#节点序列化" class="headerlink" title="节点序列化"></a>节点序列化</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 14] ls /</span><br><span class="line">[zookeeper, zhang01]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 15] ls /zhang01</span><br><span class="line">[]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 16] </span><br><span class="line">[zk: localhost:2181(CONNECTED) 16] create -s /zhang01/test01 test01  </span><br><span class="line">Created /zhang01/test010000000002</span><br><span class="line">[zk: localhost:2181(CONNECTED) 17] create -s -e /zhang01/test02 test02   </span><br><span class="line">Created /zhang01/test020000000003</span><br><span class="line">[zk: localhost:2181(CONNECTED) 18] </span><br><span class="line">[zk: localhost:2181(CONNECTED) 18] ls /zhang01</span><br><span class="line">[test020000000003, test010000000002]</span><br></pre></td></tr></table></figure>
 
-<p><img src="/uploads/curl/curl-03-05.png" alt="image"></p>
-<p>由上可知curl登录成功。<br><br></p>
-<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p><a href="http://www.zhangblog.com/2019/07/16/curl01/">Linux curl 命令详解</a></p>
-<p><a href="http://www.zhangblog.com/2019/07/18/curl02/">Linux curl 常用示例</a></p>
-<p><a href="http://www.zhangblog.com/2019/07/20/curl03/">Linux curl 表单登录或提交与cookie使用</a></p>
+<h2 id="watch模式节点操作"><a href="#watch模式节点操作" class="headerlink" title="watch模式节点操作"></a>watch模式节点操作</h2><p>watch监听有不同的类型，有监听状态的stat ，内容的get，目录结构的ls。</p>
+<h3 id="watch节点属性"><a href="#watch节点属性" class="headerlink" title="watch节点属性"></a>watch节点属性</h3><p>监听到自身属性改变则被通知</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 第一台客户端监听</span><br><span class="line">[zk: localhost:2181(CONNECTED) 4] ls /               </span><br><span class="line">[zookeeper, zhang01]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 5] stat /zhang01 watch</span><br><span class="line">cZxid = 0x100000018</span><br><span class="line">ctime = Sat May 26 15:33:47 CST 2018</span><br><span class="line">mZxid = 0x10000001e</span><br><span class="line">mtime = Sat May 26 15:44:20 CST 2018</span><br><span class="line">pZxid = 0x100000018</span><br><span class="line">cversion = 0</span><br><span class="line">dataVersion = 2</span><br><span class="line">aclVersion = 0</span><br><span class="line">ephemeralOwner = 0x0</span><br><span class="line">dataLength = 8</span><br><span class="line">numChildren = 0</span><br><span class="line"></span><br><span class="line"># 第二台客户端操作</span><br><span class="line">[zk: localhost:2181(CONNECTED) 10] set /zhang01 yyyywwwww  # 修改节点信息，节点属性被改变</span><br><span class="line">……………………</span><br><span class="line"></span><br><span class="line"># 第一台客户端自动响应</span><br><span class="line">[zk: localhost:2181(CONNECTED) 6] </span><br><span class="line">WATCHER::</span><br><span class="line"></span><br><span class="line">WatchedEvent state:SyncConnected type:NodeDataChanged path:/zhang01</span><br></pre></td></tr></table></figure>
+
+<h3 id="watch路径"><a href="#watch路径" class="headerlink" title="watch路径"></a>watch路径</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 第一台客户端</span><br><span class="line">[zk: localhost:2181(CONNECTED) 6] ls /zhang01 watch </span><br><span class="line">[]</span><br><span class="line"></span><br><span class="line"># 第二台客户端操作</span><br><span class="line">[zk: localhost:2181(CONNECTED) 11] create -e /zhang01/test01 test01</span><br><span class="line">Created /zhang01/test01</span><br><span class="line"></span><br><span class="line"># 第一台客户端自动响应</span><br><span class="line">[zk: localhost:2181(CONNECTED) 7] </span><br><span class="line">WATCHER::</span><br><span class="line"></span><br><span class="line">WatchedEvent state:SyncConnected type:NodeChildrenChanged path:/zhang01</span><br><span class="line"></span><br><span class="line">[zk: localhost:2181(CONNECTED) 7]</span><br></pre></td></tr></table></figure>
+
+<h3 id="watch节点内容"><a href="#watch节点内容" class="headerlink" title="watch节点内容"></a>watch节点内容</h3><p>节点自身内容改变和节点被删除都会被通知</p>
+<p>自身属性改变</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 第一台客户端</span><br><span class="line">[zk: localhost:2181(CONNECTED) 7] ls /</span><br><span class="line">[zookeeper, zhang01]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 8] ls /zhang01</span><br><span class="line">[test01]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 9] </span><br><span class="line">[zk: localhost:2181(CONNECTED) 9] get /zhang01/test01 watch</span><br><span class="line">test01</span><br><span class="line">cZxid = 0x100000020</span><br><span class="line">………………</span><br><span class="line"></span><br><span class="line"># 第二台客户端操作</span><br><span class="line">[zk: localhost:2181(CONNECTED) 12] set /zhang01/test01  kkkk</span><br><span class="line">cZxid = 0x100000020</span><br><span class="line">ctime = Sat May 26 15:49:30 CST 2018</span><br><span class="line">………………</span><br><span class="line"></span><br><span class="line"># 第一台客户端自动响应</span><br><span class="line">[zk: localhost:2181(CONNECTED) 10] </span><br><span class="line">WATCHER::</span><br><span class="line"></span><br><span class="line">WatchedEvent state:SyncConnected type:NodeDataChanged path:/zhang01/test01</span><br><span class="line"></span><br><span class="line">[zk: localhost:2181(CONNECTED) 10]</span><br></pre></td></tr></table></figure>
+
+<p>节点删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 第一台客户端</span><br><span class="line">[zk: localhost:2181(CONNECTED) 10] get /zhang01/test01 watch</span><br><span class="line">kkkk</span><br><span class="line">cZxid = 0x100000020</span><br><span class="line">………………</span><br><span class="line"></span><br><span class="line"># 第二台客户端操作</span><br><span class="line">[zk: localhost:2181(CONNECTED) 14] delete /zhang01/test01 </span><br><span class="line"></span><br><span class="line"># 第一台客户端自动响应</span><br><span class="line">[zk: localhost:2181(CONNECTED) 11] </span><br><span class="line">WATCHER::</span><br><span class="line"></span><br><span class="line">WatchedEvent state:SyncConnected type:NodeDeleted path:/zhang01/test01</span><br><span class="line"></span><br><span class="line">[zk: localhost:2181(CONNECTED) 11]</span><br></pre></td></tr></table></figure>
+
 <hr>
 
       
@@ -571,7 +613,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangblog.com/2019/07/20/curl03/" title="Linux curl 表单登录或提交与cookie使用">http://www.zhangblog.com/2019/07/20/curl03/</a>
+    <a href="http://www.zhangblog.com/2019/12/24/zookeeper03/" title="zookeeper常用命令行操作">http://www.zhangblog.com/2019/12/24/zookeeper03/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -586,9 +628,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
+            <a href="/tags/ZooKeeper/" rel="tag"># ZooKeeper</a>
           
-            <a href="/tags/curl/" rel="tag"># curl</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -601,8 +643,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/18/curl02/" rel="next" title="Linux curl 常用示例">
-                <i class="fa fa-chevron-left"></i> Linux curl 常用示例
+              <a href="/2019/12/24/zookeeper02/" rel="next" title="zookeeper部署">
+                <i class="fa fa-chevron-left"></i> zookeeper部署
               </a>
             
           </div>
@@ -610,10 +652,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/23/jvm01/" rel="prev" title="从头到尾说一次 Java 垃圾回收">
-                从头到尾说一次 Java 垃圾回收 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -791,7 +829,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#案例：LeanCloud登录"><span class="nav-number">2.</span> <span class="nav-text">案例：LeanCloud登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#要求和结果"><span class="nav-number">2.1.</span> <span class="nav-text">要求和结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#无登录直接访问结果"><span class="nav-number">2.2.</span> <span class="nav-text">无登录直接访问结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器访问结果"><span class="nav-number">2.2.1.</span> <span class="nav-text">浏览器访问结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过curl-验证是否登录"><span class="nav-number">2.2.2.</span> <span class="nav-text">通过curl 验证是否登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取表单字段信息"><span class="nav-number">2.3.</span> <span class="nav-text">获取表单字段信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取表单提交链接"><span class="nav-number">2.4.</span> <span class="nav-text">获取表单提交链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#curl-表单登录并保存cookie信息"><span class="nav-number">2.5.</span> <span class="nav-text">curl 表单登录并保存cookie信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看cookie信息"><span class="nav-number">2.6.</span> <span class="nav-text">查看cookie信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#校验是否登录成功"><span class="nav-number">2.7.</span> <span class="nav-text">校验是否登录成功</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接访问"><span class="nav-number">2.7.1.</span> <span class="nav-text">直接访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带有cookie文件的访问"><span class="nav-number">2.7.2.</span> <span class="nav-text">带有cookie文件的访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制浏览器的cookie访问"><span class="nav-number">2.7.3.</span> <span class="nav-text">复制浏览器的cookie访问</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">3.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端登录与帮助查看"><span class="nav-number">1.</span> <span class="nav-text">客户端登录与帮助查看</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据的属性说明"><span class="nav-number">1.1.</span> <span class="nav-text">数据的属性说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用操作"><span class="nav-number">2.</span> <span class="nav-text">常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#切换到其他客户端"><span class="nav-number">2.1.</span> <span class="nav-text">切换到其他客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#节点的增删改查"><span class="nav-number">2.2.</span> <span class="nav-text">节点的增删改查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增加节点"><span class="nav-number">2.2.1.</span> <span class="nav-text">增加节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询节点"><span class="nav-number">2.2.2.</span> <span class="nav-text">查询节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改节点"><span class="nav-number">2.2.3.</span> <span class="nav-text">修改节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节点常规删除"><span class="nav-number">2.2.4.</span> <span class="nav-text">节点常规删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#递归删除节点"><span class="nav-number">2.2.5.</span> <span class="nav-text">递归删除节点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持久节点和临时节点"><span class="nav-number">2.3.</span> <span class="nav-text">持久节点和临时节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#节点序列化"><span class="nav-number">2.4.</span> <span class="nav-text">节点序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#watch模式节点操作"><span class="nav-number">2.5.</span> <span class="nav-text">watch模式节点操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#watch节点属性"><span class="nav-number">2.5.1.</span> <span class="nav-text">watch节点属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch路径"><span class="nav-number">2.5.2.</span> <span class="nav-text">watch路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch节点内容"><span class="nav-number">2.5.3.</span> <span class="nav-text">watch节点内容</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
