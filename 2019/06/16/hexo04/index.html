@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-13.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-14.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/24-15.png">
-<meta property="og:updated_time" content="2019-07-25T08:27:45.342Z">
+<meta property="og:updated_time" content="2019-12-24T08:09:19.056Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下使用 github+hexo 搭建个人博客04-next主题优化">
 <meta name="twitter:description" content="前言上篇我们说了 hexo 的优化，针对的站点的优化。 本篇讲解 next 主题的优化，包括：使用语言、前端页面显示宽度、菜单、侧栏、头像、添加或取消动画效果、打赏功能等等。 让页面排版更符合我们所要的功能和所想的风格。 可参考网站  http://theme-next.iissnan.com/getting-started.html  主题设定选择 Scheme修改 next 主题配置文件。">
@@ -431,7 +431,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.8k
+                  3.9k
                 </span>
               
 
@@ -597,7 +597,7 @@
 <p><strong>页面效果</strong><br><img src="/uploads/hexo/24-11.png" alt="image"></p>
 <h2 id="设置「动画效果」"><a href="#设置「动画效果」" class="headerlink" title="设置「动画效果」"></a>设置「动画效果」</h2><p>Next 主题默认开启动画效果，由于该效果使用 JavaScript 编写，因此只有当 JavaScript 脚本加载完毕后，才会显示页面。<br>如果你对加载速度在乎的话，那么可以关闭动画效果。</p>
 <p>编辑<font color="Blue"><strong>主题配置文件</strong></font>，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 在主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim _config.yml</span><br><span class="line"># Use velocity to animate everything.</span><br><span class="line">motion:</span><br><span class="line">  # true 开启动画， false 关闭动画</span><br><span class="line">  enable: true</span><br><span class="line">  async: false</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog next]# pwd  # 在主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@zhangblog next]# vim _config.yml</span><br><span class="line"># Use velocity to animate everything.</span><br><span class="line">motion:</span><br><span class="line">  # true 开启动画， false 关闭动画</span><br><span class="line">  enable: true</span><br><span class="line">  # true 异步  false 同步</span><br><span class="line">  async: false</span><br></pre></td></tr></table></figure>
 
 <h2 id="设置「背景动画」"><a href="#设置「背景动画」" class="headerlink" title="设置「背景动画」"></a>设置「背景动画」</h2><p>Next 主题自带四种背景动画效果，有兴趣自行体验，不过建议最好别开背景动画，因为会消耗额外的客户端资源。</p>
 <p>编辑<font color="Blue"><strong>主题配置文件</strong></font>，如下：</p>
