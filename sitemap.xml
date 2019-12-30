@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2019/12/30/db-switch/</loc>
+    
+    <lastmod>2019-12-30T15:50:31.788Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2019/12/24/zookeeper03/</loc>
     
     <lastmod>2019-12-24T14:15:48.245Z</lastmod>
