@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,Next,">
+  <meta name="keywords" content="总结,">
 
 
 
@@ -83,30 +83,20 @@
 
 
 
-<meta name="description" content="前言静态站点拥有一定的局限性，因此我们需要借助于第三方服务来扩展我们站点的功能。 而评论系统是最常用于和网站用户交流的，因此本章讲解在 next 主题，如何接入评论系统。 参考网站：Next 使用文档，第三方服务集成  http://theme-next.iissnan.com/third-party-services.html      常用评论系统考虑到国内整体互联网环境，因此评论系统除了考">
-<meta name="keywords" content="Hexo,Next">
+<meta name="description" content="第一次写总结，相信以后每年的总结都少不了我。 不管是忙碌还是闲散，不管是淡如止水还是心有瑟瑟，2019年都已经过去，双腿都已迈进了2020。 过去一年，互联网行业里，有太多听过的或是认识的人或公司，或倒下，或进去，或饱受嘲讽。没出事的，也正遭遇到巨大的压力。 太多的困难，太多的艰难，太多的难过，太多的困境，也有太多的冲突…… 「以上两句摘自别处，强烈共鸣」 今年的行情我相信大伙儿无论怎样都嗨不起">
+<meta name="keywords" content="总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统">
-<meta property="og:url" content="http://www.zhangblog.com/2019/06/16/hexo05/index.html">
+<meta property="og:title" content="2019年总结">
+<meta property="og:url" content="http://www.zhangblog.com/2019/12/31/summary-2019/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="前言静态站点拥有一定的局限性，因此我们需要借助于第三方服务来扩展我们站点的功能。 而评论系统是最常用于和网站用户交流的，因此本章讲解在 next 主题，如何接入评论系统。 参考网站：Next 使用文档，第三方服务集成  http://theme-next.iissnan.com/third-party-services.html      常用评论系统考虑到国内整体互联网环境，因此评论系统除了考">
+<meta property="og:description" content="第一次写总结，相信以后每年的总结都少不了我。 不管是忙碌还是闲散，不管是淡如止水还是心有瑟瑟，2019年都已经过去，双腿都已迈进了2020。 过去一年，互联网行业里，有太多听过的或是认识的人或公司，或倒下，或进去，或饱受嘲讽。没出事的，也正遭遇到巨大的压力。 太多的困难，太多的艰难，太多的难过，太多的困境，也有太多的冲突…… 「以上两句摘自别处，强烈共鸣」 今年的行情我相信大伙儿无论怎样都嗨不起">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/00.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-01.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-02.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-03.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-04.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-05.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-06.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-07.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-08.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-09.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/25-10.png">
-<meta property="og:updated_time" content="2019-07-25T08:27:53.215Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/summary/2019.jpg">
+<meta property="og:updated_time" content="2019-12-31T13:02:17.208Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统">
-<meta name="twitter:description" content="前言静态站点拥有一定的局限性，因此我们需要借助于第三方服务来扩展我们站点的功能。 而评论系统是最常用于和网站用户交流的，因此本章讲解在 next 主题，如何接入评论系统。 参考网站：Next 使用文档，第三方服务集成  http://theme-next.iissnan.com/third-party-services.html      常用评论系统考虑到国内整体互联网环境，因此评论系统除了考">
-<meta name="twitter:image" content="http://www.zhangblog.com/uploads/hexo/00.jpg">
+<meta name="twitter:title" content="2019年总结">
+<meta name="twitter:description" content="第一次写总结，相信以后每年的总结都少不了我。 不管是忙碌还是闲散，不管是淡如止水还是心有瑟瑟，2019年都已经过去，双腿都已迈进了2020。 过去一年，互联网行业里，有太多听过的或是认识的人或公司，或倒下，或进去，或饱受嘲讽。没出事的，也正遭遇到巨大的压力。 太多的困难，太多的艰难，太多的难过，太多的困境，也有太多的冲突…… 「以上两句摘自别处，强烈共鸣」 今年的行情我相信大伙儿无论怎样都嗨不起">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/summary/2019.jpg">
 
 
 
@@ -136,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/2019/06/16/hexo05/">
+  <link rel="canonical" href="http://www.zhangblog.com/2019/12/31/summary-2019/">
 
 
 
 
 
-  <title>Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统 | lightzhang博客</title>
+  <title>2019年总结 | lightzhang博客</title>
   
 
 
@@ -321,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/06/16/hexo05/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/12/31/summary-2019/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lightzhang">
@@ -338,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统</h1>
+          <h1 class="post-title" itemprop="name headline">2019年总结</h1>
         
 
         <div class="post-meta">
@@ -350,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-16T11:17:45+08:00">
-                2019-06-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-31T20:57:21+08:00">
+                2019-12-31
               </time>
             
 
@@ -374,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
+                  <a href="/categories/总结/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
                   </a>
                 </span>
 
@@ -392,8 +382,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/06/16/hexo05/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/16/hexo05/" itemprop="commentCount"></span>
+                <a href="/2019/12/31/summary-2019/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/31/summary-2019/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -401,7 +391,7 @@
 
           
           
-             <span id="/2019/06/16/hexo05/" class="leancloud_visitors" data-flag-title="Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统">
+             <span id="/2019/12/31/summary-2019/" class="leancloud_visitors" data-flag-title="2019年总结">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -426,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  1.5k
                 </span>
               
 
@@ -442,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  5
                 </span>
               
             </div>
@@ -463,58 +453,39 @@
       
 
       
-        <p><img src="/uploads/hexo/00.jpg" alt="image"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>静态站点拥有一定的局限性，因此我们需要借助于第三方服务来扩展我们站点的功能。</p>
-<p>而评论系统是最常用于和网站用户交流的，因此本章讲解在 next 主题，如何接入评论系统。</p>
-<p>参考网站：Next 使用文档，第三方服务集成</p>
-<blockquote>
-<p><a href="http://theme-next.iissnan.com/third-party-services.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/third-party-services.html</a>    </p>
-</blockquote>
-<h1 id="常用评论系统"><a href="#常用评论系统" class="headerlink" title="常用评论系统"></a>常用评论系统</h1><p>考虑到国内整体互联网环境，因此评论系统除了考虑到长期可用外，还需要考虑不会被屏蔽。<br>因此在这里推荐三款评论系统。</p>
-<h2 id="来必力"><a href="#来必力" class="headerlink" title="来必力"></a>来必力</h2><p>虽然是韩国的「撇开政治因素」，但是UI设计和后台管理也比较不错，数据可视化用到了图标来展示，所以有付费和免费两个版本，博客只需要用免费的就行了。<br>当然付费的效果主要体现在数据分析上，还可以取消掉免费版未来所带来的广告。<br>当然由于网站在国外，因此登录该网站有些慢，这个你要理解。</p>
-<p><strong>登录后可评论。</strong></p>
-<h2 id="畅言"><a href="#畅言" class="headerlink" title="畅言"></a>畅言</h2><p>随着国内其他家评论系统的停服，畅言的地位比之前更加壮大，也正因此听说广告越来越多，饱受诟病。如果想去掉广告，很简单氪金充钱就行。<br>还有就是该评论系统注册时需要填写备案信息，这点请大家务必知晓。</p>
-<p><strong>登录后可评论。</strong></p>
-<h2 id="Valine"><a href="#Valine" class="headerlink" title="Valine"></a>Valine</h2><p>由于我们使用的是Next 5.1.3版本，本身就已经集成了valine，因此正常情况下是按照官方文档走就可以了，5分钟开启你的评论系统。<br>因为我们的评论系统其实是放在 LeanCloud 上的，因此首先需要去 LeanCloud 注册一个账号。</p>
-<p><strong>可匿名评论。</strong></p>
-<p><strong>综上所述，优先选择来必力或 Valine。</strong></p>
-<h1 id="来必力评论"><a href="#来必力评论" class="headerlink" title="来必力评论"></a>来必力评论</h1><h2 id="获取-livere-uid"><a href="#获取-livere-uid" class="headerlink" title="获取 livere_uid"></a>获取 livere_uid</h2><p>当然怎么在来必力网站注册之类的我就不多说了。说一点：注册完毕提交信息后，可能会等两三分钟才会成功。</p>
-<p>如果遇见韩文，那么可以用有道翻译或百度翻译。</p>
-<p><strong>如下页面可获取你的ID</strong><br><img src="/uploads/hexo/25-01.png" alt="image"></p>
-<h2 id="在Next主题配置"><a href="#在Next主题配置" class="headerlink" title="在Next主题配置"></a>在Next主题配置</h2><p>当前版本的 Next 主题已经集成来必力评论系统，因此只需在<font color="Blue"><strong>主题配置文件</strong></font>中配置 livere_uid 即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z next]# pwd  # 主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@iZ28xbsfvc4Z next]# vim _config.yml </span><br><span class="line"># Support for LiveRe comments system.</span><br><span class="line"># You can get your uid from https://livere.com/insight/myCode (General web site)</span><br><span class="line">livere_uid: MTAyMC8XXXXXXXXXXNw==</span><br></pre></td></tr></table></figure>
+        <p><img src="/uploads/summary/2019.jpg" alt="image"></p>
+<p>第一次写总结，相信以后每年的总结都少不了我。</p>
+<p>不管是忙碌还是闲散，不管是淡如止水还是心有瑟瑟，2019年都已经过去，双腿都已迈进了2020。</p>
+<p>过去一年，互联网行业里，有太多听过的或是认识的人或公司，或倒下，或进去，或饱受嘲讽。没出事的，也正遭遇到巨大的压力。</p>
+<p>太多的困难，太多的艰难，太多的难过，太多的困境，也有太多的冲突……</p>
+<p>「以上两句摘自别处，强烈共鸣」</p>
+<p>今年的行情我相信大伙儿无论怎样都嗨不起来。对于很多公司活着就是万幸，对于打工者来说有一份稳定的工作就是最大的幸福。</p>
+<p>不知道2020年情况如何，但是有太多的人不想继续停留在2019年。</p>
+<h1 id="那今年的我干了些什么呢？"><a href="#那今年的我干了些什么呢？" class="headerlink" title="那今年的我干了些什么呢？"></a>那今年的我干了些什么呢？</h1><h2 id="生活上："><a href="#生活上：" class="headerlink" title="生活上："></a>生活上：</h2><p>1）结婚了：虽然不到三十而立但也不小了，成了家结了婚，同时感谢另一半的相互陪伴。</p>
+<p>2）房子装修好了：跟绝大多数人一样第一次装修没什么经验，踩了一些坑，装出来总是差那么点意思，没那么满意。不过想想整体还行吧，就这么招吧，不能哪里不满意就拆哪里，然后重装。一来没精力折腾「人在外地，老妈带我侄儿，老爸在老家挣钱」；二来也没这个经济实力。</p>
+<p>3）新房入住：入住之前陆陆续续买了家具家电，十月份入住的新房，今年的团年也在新房团年。所有东西都买了就差空调没买，由于自身经济状态，预计在2020年的三四月份买吧。一个客厅三间卧室估摸着要1.5W左右。</p>
+<h2 id="事业上："><a href="#事业上：" class="headerlink" title="事业上："></a>事业上：</h2><p>这个标题有点大，应该是工作上而不是事业上，但是人嘛总得有追求，即使当前还是小虾米一个。</p>
+<p>说句心里话，事业上我也想蒸蒸日上，挣大钱，过上富足的生活。但是现实我就是一个打工仔、技术者，每月的薪酬就是我全部的经济来源。没有任何多余的管道流入我的池子里。呜呜呜…………</p>
+<p>今年最大的感慨就是幸好我是在一家金融公司上班，虽然受国家政策某些业务进行了调整，但整体上公司业务还很稳定，因此自己的工作也算稳定。</p>
+<p>印象最深刻的就是今年年后回来那一两个月，晚上系统升级每次到很晚，但第二天就是有问题然后回滚版本。卧槽，白白熬了个长夜，第二天还有故障，最后还背事件。连续这样搞得我都快怀疑人生了，反正结果并不好。还好后来版本又稳定了，心中松了口气。</p>
+<p>除了这个不好的事儿当然还有好事儿啦，但由于都是公司层面的我就不说了。</p>
+<h2 id="成长上："><a href="#成长上：" class="headerlink" title="成长上："></a>成长上：</h2><p>从我的博客或公众号文章可知，本人是一个技术者。因此会持续不断地学习必要的技术。</p>
+<p>这里得说明一下，我写的博客分两种：一是新学的的技术然后记录下来，方便以后用到能够极速上手；二是以前学过的，但是当时没有做笔记，现在温习后记录的。俗话说的好：好记性不如烂笔头。</p>
+<p>如果看到了同一技术有多篇博文，那么就是我系统性研究学习后记录的，如果你恰好也在学习该技术，可以把相关博文从头篇看到尾篇，相信对你很有帮助。</p>
+<p>如果想要知道我今年学了哪些技术请自行去看我的博客或者公众号。相关地址如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CSDN博客：https://blog.csdn.net/woshizhangliang999</span><br><span class="line">个人博客：http://zhangblog.com/</span><br><span class="line">博客园：https://www.cnblogs.com/zhanglianghhh/</span><br><span class="line">GitHub：https://github.com/zhanglianghhh</span><br></pre></td></tr></table></figure>
 
-<h2 id="浏览器访问"><a href="#浏览器访问" class="headerlink" title="浏览器访问"></a>浏览器访问</h2><p><img src="/uploads/hexo/25-02.png" alt="image"></p>
-<h2 id="数据分析页面"><a href="#数据分析页面" class="headerlink" title="数据分析页面"></a>数据分析页面</h2><p><img src="/uploads/hexo/25-03.png" alt="image"></p>
-<h1 id="Valine-评论系统"><a href="#Valine-评论系统" class="headerlink" title="Valine 评论系统"></a>Valine 评论系统</h1><h2 id="LeanCloud-账号注册"><a href="#LeanCloud-账号注册" class="headerlink" title="LeanCloud 账号注册"></a>LeanCloud 账号注册</h2><p><strong>LeanCloud 官网地址</strong></p>
-<blockquote>
-<p><a href="https://leancloud.cn" target="_blank" rel="noopener">https://leancloud.cn</a></p>
-</blockquote>
-<p>请自行注册</p>
-<h2 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h2><p>注册完毕后，创建应用，我这创建的的是 zhangblog。<br><img src="/uploads/hexo/25-04.png" alt="image"></p>
-<p><img src="/uploads/hexo/25-05.png" alt="image"></p>
-<h2 id="创建Class"><a href="#创建Class" class="headerlink" title="创建Class"></a>创建Class</h2><p><img src="/uploads/hexo/25-06.png" alt="image"></p>
-<p>数据栏中，_开头的都是系统预定义好的表。</p>
-<p>为了区分，新建一张表来保存数据。为了保证对NexT主题的修改兼容，新建Class名字必须为<strong>Comment</strong>。</p>
-<p>为了避免权限问题导致 次数统计显示不正常，选择<strong>无限制</strong>，创建Class。<br><img src="/uploads/hexo/25-07.png" alt="image"></p>
-<h2 id="获取-App-ID-和-App-Key-如下："><a href="#获取-App-ID-和-App-Key-如下：" class="headerlink" title="获取 App ID 和 App Key 如下："></a>获取 App ID 和 App Key 如下：</h2><p>Class创建完成后，选择界面最左侧的设置 → 应用Key，复制<strong>App ID</strong>和<strong>App Key</strong>。
-<img src="/uploads/hexo/25-08.png" alt="image"></p>
-<h2 id="安全加固"><a href="#安全加固" class="headerlink" title="安全加固"></a>安全加固</h2><p>因为AppID以及AppKey是暴露在外的，为了确保只用于我们自己的博客，<strong>可设置Web安全域名，填入自己的博客域名</strong>。
-<img src="/uploads/hexo/25-09.png" alt="image"></p>
-<h2 id="修改主题配置"><a href="#修改主题配置" class="headerlink" title="修改主题配置"></a>修改主题配置</h2><p>上文说过，Next 5.1.3版本已经集成 Valine，因此我们只需在<font color="Blue"><strong>主题配置文件</strong></font>中修改即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@iZ28xbsfvc4Z next]# pwd  # 主题目录</span><br><span class="line">/app/softinsall/hexo/themes/next</span><br><span class="line">[root@iZ28xbsfvc4Z next]# vim _config.yml </span><br><span class="line"># Valine.</span><br><span class="line"># You can get your appid and appkey from https://leancloud.cn</span><br><span class="line"># more info please open https://valine.js.org</span><br><span class="line">valine:</span><br><span class="line">  enable: true</span><br><span class="line">  appid: h7YmXXXXXXXXXXXXXXXXXX</span><br><span class="line">  appkey: VhTXXXXXXXXXXXXXXX</span><br><span class="line">  notify: false # mail notifier , https://github.com/xCss/Valine/wiki</span><br><span class="line">  verify: false # Verification code</span><br><span class="line">  placeholder: 来了，就撩两句呗！ # comment box placeholder</span><br><span class="line">  avatar: mm # gravatar style</span><br><span class="line">  guest_info: nick,mail,link # custom comment header</span><br><span class="line">  pageSize: 20 # pagination size</span><br></pre></td></tr></table></figure>
-
-<h2 id="浏览器访问-1"><a href="#浏览器访问-1" class="headerlink" title="浏览器访问"></a>浏览器访问</h2><p><img src="/uploads/hexo/25-10.png" alt="image"></p>
-<br>
-
-<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p><b><a href="http://www.zhangblog.com/2019/06/11/hexo01/">Linux下使用 github+hexo 搭建个人博客01-hexo搭建</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/12/hexo02/">Linux下使用 github+hexo 搭建个人博客02-hexo部署到Github Pages</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/14/hexo03/">Linux下使用 github+hexo 搭建个人博客03-hexo配置优化</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo04/">Linux下使用 github+hexo 搭建个人博客04-next主题优化</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo05/">Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo06/">Linux下使用 github+hexo 搭建个人博客06-next主题接入数据统计</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/17/hexo07/">Linux下使用 github+hexo 搭建个人博客07-next主题接入搜索和站点管理</a></b></p>
-<hr>
+<p>现在CSDN上总访问量近65W，争取2020年末能到90W+甚至突破100W+。个人博客访问量争取2020年末突破10W+。</p>
+<p>争取在2020年能写出更好的文章，帮助到更多的人。</p>
+<p>再说明一下：虽然之前有写博客的习惯，但还是比较零散，也没有什么统一。2019年下半年才开始重视这个问题。原有的文章尽量在各个平台同步，当然新的文章都会在各个平台发布。</p>
+<p>上面都是说的好听的，那么下面开始说不好的。</p>
+<p>自己对时间的有效利用还是比较低，虽然2019年有成长，但是也有大量的时间浪费。已经下定决心在2020年花更多的时间在自身成长上，而不是在娱乐上。</p>
+<h1 id="2020年规划："><a href="#2020年规划：" class="headerlink" title="2020年规划："></a>2020年规划：</h1><p>1）自己就是吃技术饭的，因此必要的技术该学就学并记录下来，以前的知识也要梳理总结出来。主职工作要做好。</p>
+<p>2）考虑到自己的社交能力、书写能力、口头表达能力比较弱，这方面也会加强。下半年可能会录制些学习视频，相信能够帮助所需之人，也可加强自己口头表达能力。</p>
+<p>3）加强身体锻炼，一副好的身体能活的更好，活的更久。</p>
+<p>4）扩展自己的知识面；群里也不要总是潜水，要多活跃下让更多人知道自己；最后就是多交流多分享。</p>
+<p>5）平时多出去走走，太宅也不好，多认识点朋友多点人生精彩。</p>
+<p>写在最后：往昔的2019已经过去历史不可更改，迎来的2020未来共同展望。祝大家在新的一年硕果累累。</p>
 
       
     </div>
@@ -587,7 +558,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangblog.com/2019/06/16/hexo05/" title="Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统">http://www.zhangblog.com/2019/06/16/hexo05/</a>
+    <a href="http://www.zhangblog.com/2019/12/31/summary-2019/" title="2019年总结">http://www.zhangblog.com/2019/12/31/summary-2019/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -602,9 +573,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
-          
-            <a href="/tags/Next/" rel="tag"># Next</a>
+            <a href="/tags/总结/" rel="tag"># 总结</a>
           
         </div>
       
@@ -617,8 +586,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/16/hexo04/" rel="next" title="Linux下使用 github+hexo 搭建个人博客04-next主题优化">
-                <i class="fa fa-chevron-left"></i> Linux下使用 github+hexo 搭建个人博客04-next主题优化
+              <a href="/2019/12/30/db-switch/" rel="next" title="亿级数据DB秒级平滑扩容！！！">
+                <i class="fa fa-chevron-left"></i> 亿级数据DB秒级平滑扩容！！！
               </a>
             
           </div>
@@ -626,10 +595,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/16/hexo06/" rel="prev" title="Linux下使用 github+hexo 搭建个人博客06-next主题接入数据统计">
-                Linux下使用 github+hexo 搭建个人博客06-next主题接入数据统计 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -807,7 +772,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用评论系统"><span class="nav-number">2.</span> <span class="nav-text">常用评论系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#来必力"><span class="nav-number">2.1.</span> <span class="nav-text">来必力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#畅言"><span class="nav-number">2.2.</span> <span class="nav-text">畅言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Valine"><span class="nav-number">2.3.</span> <span class="nav-text">Valine</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#来必力评论"><span class="nav-number">3.</span> <span class="nav-text">来必力评论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取-livere-uid"><span class="nav-number">3.1.</span> <span class="nav-text">获取 livere_uid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在Next主题配置"><span class="nav-number">3.2.</span> <span class="nav-text">在Next主题配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器访问"><span class="nav-number">3.3.</span> <span class="nav-text">浏览器访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分析页面"><span class="nav-number">3.4.</span> <span class="nav-text">数据分析页面</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Valine-评论系统"><span class="nav-number">4.</span> <span class="nav-text">Valine 评论系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeanCloud-账号注册"><span class="nav-number">4.1.</span> <span class="nav-text">LeanCloud 账号注册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建应用"><span class="nav-number">4.2.</span> <span class="nav-text">创建应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建Class"><span class="nav-number">4.3.</span> <span class="nav-text">创建Class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取-App-ID-和-App-Key-如下："><span class="nav-number">4.4.</span> <span class="nav-text">获取 App ID 和 App Key 如下：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全加固"><span class="nav-number">4.5.</span> <span class="nav-text">安全加固</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改主题配置"><span class="nav-number">4.6.</span> <span class="nav-text">修改主题配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器访问-1"><span class="nav-number">4.7.</span> <span class="nav-text">浏览器访问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">5.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#那今年的我干了些什么呢？"><span class="nav-number">1.</span> <span class="nav-text">那今年的我干了些什么呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#生活上："><span class="nav-number">1.1.</span> <span class="nav-text">生活上：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事业上："><span class="nav-number">1.2.</span> <span class="nav-text">事业上：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成长上："><span class="nav-number">1.3.</span> <span class="nav-text">成长上：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2020年规划："><span class="nav-number">2.</span> <span class="nav-text">2020年规划：</span></a></li></ol></div>
             
 
           </div>
