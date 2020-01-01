@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-01-01T03:02:06.438Z</updated>
+  <updated>2020-01-01T03:40:30.802Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ansible-免密登录与主机清单Inventory</title>
+    <link href="http://www.zhangblog.com/2020/01/01/ansible-03/"/>
+    <id>http://www.zhangblog.com/2020/01/01/ansible-03/</id>
+    <published>2020-01-01T03:39:29.000Z</published>
+    <updated>2020-01-01T03:40:30.802Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
+    
+    
+      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
+    
+  </entry>
   
   <entry>
     <title>Ansible-安装配置</title>
@@ -533,35 +560,6 @@
         
           &lt;p&gt;&lt;img src=&quot;/uploads/curl/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;本文主要讲解通过curl
-        
-      
-    
-    </summary>
-    
-      <category term="curl" scheme="http://www.zhangblog.com/categories/curl/"/>
-    
-    
-      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
-    
-      <category term="curl" scheme="http://www.zhangblog.com/tags/curl/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux curl 常用示例</title>
-    <link href="http://www.zhangblog.com/2019/07/18/curl02/"/>
-    <id>http://www.zhangblog.com/2019/07/18/curl02/</id>
-    <published>2019-07-18T09:00:01.000Z</published>
-    <updated>2019-07-20T08:44:26.085Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/curl/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
         
       
     
