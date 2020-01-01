@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2019-12-31T13:03:33.938Z</updated>
+  <updated>2020-01-01T03:02:06.438Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ansible-安装配置</title>
+    <link href="http://www.zhangblog.com/2020/01/01/ansible-02/"/>
+    <id>http://www.zhangblog.com/2020/01/01/ansible-02/</id>
+    <published>2020-01-01T02:58:22.000Z</published>
+    <updated>2020-01-01T03:02:06.438Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
+    
+    
+      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ansible-基本概述</title>
+    <link href="http://www.zhangblog.com/2020/01/01/ansible-01/"/>
+    <id>http://www.zhangblog.com/2020/01/01/ansible-01/</id>
+    <published>2020-01-01T02:28:42.000Z</published>
+    <updated>2020-01-01T02:35:16.787Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;为什么要自动化运维&quot;&gt;&lt;a href=&quot;#为什么要自动化运维&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
+    
+    
+      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
+    
+  </entry>
   
   <entry>
     <title>2019年总结</title>
@@ -519,63 +573,6 @@
       <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
     
       <category term="curl" scheme="http://www.zhangblog.com/tags/curl/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux curl 命令详解</title>
-    <link href="http://www.zhangblog.com/2019/07/16/curl01/"/>
-    <id>http://www.zhangblog.com/2019/07/16/curl01/</id>
-    <published>2019-07-16T07:21:18.000Z</published>
-    <updated>2019-07-27T02:38:36.066Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/curl/00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;命令概要&quot;&gt;&lt;a href=&quot;#命令概要&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="curl" scheme="http://www.zhangblog.com/categories/curl/"/>
-    
-    
-      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
-    
-      <category term="curl" scheme="http://www.zhangblog.com/tags/curl/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NFS 服务搭建与配置</title>
-    <link href="http://www.zhangblog.com/2019/07/05/nfs1/"/>
-    <id>http://www.zhangblog.com/2019/07/05/nfs1/</id>
-    <published>2019-07-05T07:53:45.000Z</published>
-    <updated>2019-11-01T07:49:50.336Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/nfs/nfs00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;p&gt;本文讲解在 CentOS 5.x、CentOS 6.x 和 CentOS 7.x 环境下，如何安装与部署 NFS 服务。&lt;/p&gt;
-&lt;font
-        
-      
-    
-    </summary>
-    
-      <category term="NFS" scheme="http://www.zhangblog.com/categories/NFS/"/>
-    
-    
-      <category term="NFS" scheme="http://www.zhangblog.com/tags/NFS/"/>
     
   </entry>
   
