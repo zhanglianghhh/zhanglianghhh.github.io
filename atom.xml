@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-01-04T05:27:14.262Z</updated>
+  <updated>2020-01-06T03:27:05.590Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ansible Playbook 初识</title>
+    <link href="http://www.zhangblog.com/2020/01/06/ansible-05/"/>
+    <id>http://www.zhangblog.com/2020/01/06/ansible-05/</id>
+    <published>2020-01-06T02:37:57.000Z</published>
+    <updated>2020-01-06T03:27:05.590Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
+    
+    
+      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
+    
+  </entry>
   
   <entry>
     <title>Ansible Ad-Hoc与常用模块</title>
@@ -541,34 +568,6 @@
     
     
       <category term="iptables" scheme="http://www.zhangblog.com/tags/iptables/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>从头到尾说一次 Java 垃圾回收</title>
-    <link href="http://www.zhangblog.com/2019/07/23/jvm01/"/>
-    <id>http://www.zhangblog.com/2019/07/23/jvm01/</id>
-    <published>2019-07-23T14:38:10.000Z</published>
-    <updated>2019-07-24T03:11:06.895Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/jvm/00.jpg&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="JVM" scheme="http://www.zhangblog.com/categories/JVM/"/>
-    
-    
-      <category term="java" scheme="http://www.zhangblog.com/tags/java/"/>
-    
-      <category term="JVM" scheme="http://www.zhangblog.com/tags/JVM/"/>
     
   </entry>
   
