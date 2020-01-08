@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-01-08T07:15:55.515Z</updated>
+  <updated>2020-01-08T09:49:17.730Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ansible Jinja2 模板使用</title>
+    <link href="http://www.zhangblog.com/2020/01/08/ansible-10/"/>
+    <id>http://www.zhangblog.com/2020/01/08/ansible-10/</id>
+    <published>2020-01-08T09:40:21.000Z</published>
+    <updated>2020-01-08T09:49:17.730Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
+    
+    
+      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
+    
+  </entry>
   
   <entry>
     <title>Ansible playbook Vault 加密</title>
@@ -533,37 +560,6 @@
     
     
       <category term="Linux" scheme="http://www.zhangblog.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>“反向代理层”绝不能替代“DNS轮询”！</title>
-    <link href="http://www.zhangblog.com/2019/08/12/proxy_dns01/"/>
-    <id>http://www.zhangblog.com/2019/08/12/proxy_dns01/</id>
-    <published>2019-08-12T09:52:01.000Z</published>
-    <updated>2019-08-12T09:57:22.756Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;blockquote&gt;
-&lt;p&gt;文章转载自微信公众号：「架构师之路」，作者：
-        
-      
-    
-    </summary>
-    
-      <category term="DNS" scheme="http://www.zhangblog.com/categories/DNS/"/>
-    
-      <category term="proxy" scheme="http://www.zhangblog.com/categories/DNS/proxy/"/>
-    
-    
-      <category term="DNS" scheme="http://www.zhangblog.com/tags/DNS/"/>
-    
-      <category term="proxy" scheme="http://www.zhangblog.com/tags/proxy/"/>
     
   </entry>
   
