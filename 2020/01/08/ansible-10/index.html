@@ -92,7 +92,7 @@
 <meta property="og:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
-<meta property="og:updated_time" content="2020-01-08T13:33:14.776Z">
+<meta property="og:updated_time" content="2020-01-08T13:46:17.039Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ansible Jinja2 模板使用">
 <meta name="twitter:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5k
+                  5.1k
                 </span>
               
 
@@ -614,13 +614,8 @@
 <p><span style="font-size:16px"><b>算术</b></span></p>
 <p>Jinja 允许用计算值。这在模板中很少用到，但是为了完整性允许其存在。</p>
 <p>支持如下运算符：</p>
-<p>+：把两个对象加到一起。如：2 等于 2。但是如果两者是字符串或列表，你可以用这种方式来衔接它们【连接字符串推荐使用 ~ 运算符】。</p>
-<p>-：用第一个数减去第二个数。如：1 等于 1 。</p>
-<p>/：对两个数做除法。返回值会是一个<font color="red"><b>浮点数</b></font>。如：0.5 等于 0.5 。</p>
-<p>//：对两个数做除法，返回<font color="red"><b>整数商</b></font>。如：2 等于 2 。</p>
-<p>%：计算整数除法的<font color="red"><b>余数</b></font>。如：4 等于 4 。</p>
-<p>*：用右边的数乘左边的操作数。如：4 会返回 4。也可以用于重复一个字符串多次。如：NaN 会打印 80 个等号的横条。</p>
-<p>**：取左操作数的右操作数次幂。如：8 会返回 8。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">+：把两个对象加到一起。如：&#123;&#123; 1 + 1 &#125;&#125; 等于 2。但是如果两者是字符串或列表，你可以用这种方式来衔接它们【连接字符串推荐使用 ~ 运算符】。</span><br><span class="line"></span><br><span class="line">-：用第一个数减去第二个数。如：&#123;&#123; 3 - 2 &#125;&#125; 等于 1 。</span><br><span class="line"></span><br><span class="line">/：对两个数做除法。返回值会是一个浮点数。如：&#123;&#123; 1 / 2 &#125;&#125; 等于 &#123;&#123; 0.5 &#125;&#125; 。</span><br><span class="line"></span><br><span class="line">//：对两个数做除法，返回整数商。如：&#123;&#123; 20 // 7 &#125;&#125; 等于 2 。</span><br><span class="line"></span><br><span class="line">%：计算整数除法的余数。如：&#123;&#123; 11 % 7 &#125;&#125; 等于 4 。</span><br><span class="line"></span><br><span class="line">*：用右边的数乘左边的操作数。如：&#123;&#123; 2 * 2 &#125;&#125; 会返回 4。也可以用于重复一个字符串多次。如：&#123;&#123; &apos;=&apos; * 80 &#125;&#125; 会打印 80 个等号的横条。</span><br><span class="line"></span><br><span class="line">**：取左操作数的右操作数次幂。如：&#123;&#123; 2 ** 3 &#125;&#125; 会返回 8。</span><br></pre></td></tr></table></figure>
+
 <p><span style="font-size:16px"><b>比较</b></span></p>
 <p>==：比较两个对象是否相等。</p>
 <p>!=：比较两个对象是否不等。</p>
@@ -636,10 +631,8 @@
 <p>(expr)：表达式组。</p>
 <p>提示：is 和 in 运算符同样支持使用中缀记法：foo is not bar 和 foo not in bar。所有的其它表达式需要前缀记法：not (foo and bar) 。</p>
 <p><span style="font-size:16px"><b>其它运算符</b></span></p>
-<p>in：运行序列/映射包含检查。如果左操作数<font color="red">包含于</font>右操作数，返回 true 。比如 true 会返回 true。</p>
-<p>is：运行一个 测验。参见上述</p>
-<p>|：应用一个 过滤器。参见上述</p>
-<p>~：把所有的操作数转换为字符串，并且连接它们。 Hello undefined! 会返回（假设 name 值为 ‘John’ ） Hello John!。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">in：运行序列/映射包含检查。如果左操作数 包含于 右操作数，返回 true 。比如 &#123;&#123; 1 in [1,2,3] &#125;&#125; 会返回 true。</span><br><span class="line"></span><br><span class="line">is：运行一个 测验。参见上述</span><br><span class="line"></span><br><span class="line">|：应用一个 过滤器。参见上述</span><br><span class="line"></span><br><span class="line">~：把所有的操作数转换为字符串，并且连接它们。 &#123;&#123; &quot;Hello &quot; ~ name ~ &quot;!&quot; &#125;&#125; 会返回（假设 name 值为 &apos;John&apos; ） Hello John!。</span><br></pre></td></tr></table></figure>
+
 <p><span style="font-size:16px"><b>全局函数</b></span></p>
 <p>range([start], stop[, step])：返回一个包含整等差级数的列表。</p>
 <h1 id="Ansible-Jinja2-使用案例-常见功能"><a href="#Ansible-Jinja2-使用案例-常见功能" class="headerlink" title="Ansible Jinja2 使用案例-常见功能"></a>Ansible Jinja2 使用案例-常见功能</h1><p>本例包含：注释、赋值、变量、条件判断、循环、空白控制、转义。</p>
@@ -1033,7 +1026,7 @@
     
       <span class="post-meta-item-text">本站总字数&#58;</span>
     
-    <span title="本站总字数">99.1k</span>
+    <span title="本站总字数">99.2k</span>
   
 </div>
 
