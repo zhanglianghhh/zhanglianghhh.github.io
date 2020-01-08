@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ansible,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
+<meta name="keywords" content="ansible">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible playbook 编程">
+<meta property="og:url" content="http://www.zhangblog.com/2020/01/08/ansible-08/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-08-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-08-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-08-03.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-08-04.png">
+<meta property="og:updated_time" content="2020-01-08T03:09:54.809Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ansible playbook 编程">
+<meta name="twitter:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2020/01/08/ansible-08/">
+
+
+
+
+
+  <title>Ansible playbook 编程 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/01/08/ansible-08/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Ansible playbook 编程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-08T11:08:00+08:00">
+                2020-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ansbile/" itemprop="url" rel="index">
+                    <span itemprop="name">ansbile</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/01/08/ansible-08/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/01/08/ansible-08/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/01/08/ansible-08/" class="leancloud_visitors" data-flag-title="Ansible playbook 编程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  30
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/ansible/ansible-00-00.png" alt="image"></p>
+<h1 id="主机规划"><a href="#主机规划" class="headerlink" title="主机规划"></a>主机规划</h1><table>
+<thead>
+<tr>
+<th>主机名称</th>
+<th>操作系统版本</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+<th>安装软件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ansi-manager</td>
+<td>CentOS7.5</td>
+<td>172.16.1.180</td>
+<td>10.0.0.180</td>
+<td>ansible</td>
+</tr>
+<tr>
+<td>ansi-haproxy01</td>
+<td>CentOS7.5</td>
+<td>172.16.1.181</td>
+<td>10.0.0.181</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-haproxy02</td>
+<td>CentOS7.5</td>
+<td>172.16.1.182</td>
+<td>10.0.0.182</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web01</td>
+<td>CentOS7.5</td>
+<td>172.16.1.183</td>
+<td>10.0.0.183</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web02</td>
+<td>CentOS7.5</td>
+<td>172.16.1.184</td>
+<td>10.0.0.184</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web03</td>
+<td>CentOS7.5</td>
+<td>172.16.1.185</td>
+<td>10.0.0.185</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="添加用户账号"><a href="#添加用户账号" class="headerlink" title="添加用户账号"></a>添加用户账号</h2><p><b>说明：</b></p>
+<p>1、    运维人员使用的登录账号；</p>
+<p>2、    所有的业务都放在 /app/ 下「yun用户的家目录」，避免业务数据乱放；</p>
+<p>3、    该用户也被 ansible 使用，因为几乎所有的生产环境都是禁止 root 远程登录的（因此该 yun 用户也进行了 sudo 提权）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 使用一个专门的用户，避免直接使用root用户</span><br><span class="line"># 添加用户、指定家目录并指定用户密码</span><br><span class="line"># sudo提权</span><br><span class="line"># 让其它普通用户可以进入该目录查看信息</span><br><span class="line">useradd -u 1050 -d /app yun &amp;&amp; echo &apos;123456&apos; | /usr/bin/passwd --stdin yun</span><br><span class="line">echo &quot;yun  ALL=(ALL)       NOPASSWD: ALL&quot; &gt;&gt;  /etc/sudoers</span><br><span class="line">chmod 755 /app/</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ansible-配置清单Inventory"><a href="#Ansible-配置清单Inventory" class="headerlink" title="Ansible 配置清单Inventory"></a>Ansible 配置清单Inventory</h2><p>之后文章都是如下主机配置清单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_info]$ pwd</span><br><span class="line">/app/ansible_info</span><br><span class="line">[yun@ansi-manager ansible_info]$ cat hosts_key </span><br><span class="line"># 方式1、主机 + 端口 + 密钥</span><br><span class="line">[manageservers]</span><br><span class="line">172.16.1.180:22</span><br><span class="line"></span><br><span class="line">[proxyservers]</span><br><span class="line">172.16.1.18[1:2]:22</span><br><span class="line"></span><br><span class="line"># 方式2：别名 + 主机 + 端口 + 密码</span><br><span class="line">[webservers]</span><br><span class="line">web01 ansible_ssh_host=172.16.1.183 ansible_ssh_port=22</span><br><span class="line">web02 ansible_ssh_host=172.16.1.184 ansible_ssh_port=22</span><br><span class="line">web03 ansible_ssh_host=172.16.1.185 ansible_ssh_port=22</span><br></pre></td></tr></table></figure>
+
+<h1 id="条件判断-when"><a href="#条件判断-when" class="headerlink" title="条件判断-when"></a>条件判断-when</h1><p>when 判断在 ansible 任务中的使用频率非常高。</p>
+<p>例如判断主机是否已经安装指定的软件包；对机器的操作系统进行判断然后再根据不同的方法「yum或apt等」进行软件包安装；根据操作系统的版本判断进行软件包的安装「是安装MySQL还是Mariadb」等。</p>
+<p><b>示例：根据主机名的不同，下载不同的文件</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object04]$ pwd</span><br><span class="line">/app/ansible_info/object04</span><br><span class="line">[yun@ansi-manager object04]$ ll</span><br><span class="line">total 4</span><br><span class="line">-rw-rw-r-- 1 yun yun 950 Oct 26 10:22 test_when.yml</span><br><span class="line">[yun@ansi-manager object04]$ cat test_when.yml </span><br><span class="line">---</span><br><span class="line"># 根据 hostname 的不同下载不同的图片</span><br><span class="line"># 特殊组 all，对所有机器有效</span><br><span class="line">- hosts: all</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;download picture jvm-01-01.png&quot;</span><br><span class="line">      get_url:</span><br><span class="line">        url: http://www.zhangblog.com/uploads/jvm/jvm-01-01.png</span><br><span class="line">        dest: /tmp/</span><br><span class="line">      when: ansible_hostname == &quot;ansi-haproxy01&quot;</span><br><span class="line"></span><br><span class="line">    - name: &quot;download picture jvm-01-02.png&quot;</span><br><span class="line">      get_url:</span><br><span class="line">        url: http://www.zhangblog.com/uploads/jvm/jvm-01-02.png</span><br><span class="line">        dest: /tmp/</span><br><span class="line">      when: ansible_hostname == &quot;ansi-haproxy02&quot;</span><br><span class="line"></span><br><span class="line">    - name: &quot;other download picture jvm-01-03.png&quot;</span><br><span class="line">      get_url:</span><br><span class="line">        url: http://www.zhangblog.com/uploads/jvm/jvm-01-03.png</span><br><span class="line">        dest: /tmp/</span><br><span class="line">      # 从 facts 中获取的变量，ansible_facts[&apos;ansible_hostname&apos;] != &quot;ansi-haproxy01&quot; 错误写法；ansible_hostname != &quot;ansi-haproxy01&quot; 正确写法</span><br><span class="line">      #when: (ansible_hostname != &quot;ansi-haproxy01&quot;) and (ansible_hostname != &quot;ansi-haproxy02&quot;)  # 写法一</span><br><span class="line">      #或者如下3行  列表之间关系是 (and 与)  等同于上一行</span><br><span class="line">      #when:</span><br><span class="line">      #  - ansible_hostname != &quot;ansi-haproxy01&quot;</span><br><span class="line">      #  - ansible_hostname != &quot;ansi-haproxy02&quot;</span><br><span class="line">      #when: ansible_hostname is not match &quot;ansi-haproxy0*&quot;   # 写法二</span><br><span class="line">      when: (ansible_hostname is match &quot;ansi-manager&quot;) or (ansible_hostname is match &quot;ansi-web*&quot;)  # 写法三</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key --syntax-check test_when.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key -C test_when.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key test_when.yml  # 执行</span><br><span class="line"></span><br><span class="line">PLAY [all] *******************************************************************************************************</span><br><span class="line"></span><br><span class="line">TASK [Gathering Facts] *******************************************************************************************</span><br><span class="line">ok: [web01]</span><br><span class="line">ok: [web02]</span><br><span class="line">ok: [web03]</span><br><span class="line">ok: [172.16.1.180]</span><br><span class="line">ok: [172.16.1.181]</span><br><span class="line">ok: [172.16.1.182]</span><br><span class="line"></span><br><span class="line">TASK [download picture jvm-01-01.png] ****************************************************************************</span><br><span class="line">skipping: [172.16.1.180]</span><br><span class="line">skipping: [web01]</span><br><span class="line">skipping: [web02]</span><br><span class="line">skipping: [web03]</span><br><span class="line">skipping: [172.16.1.182]</span><br><span class="line">changed: [172.16.1.181]</span><br><span class="line"></span><br><span class="line">TASK [download picture jvm-01-02.png] ****************************************************************************</span><br><span class="line">skipping: [172.16.1.180]</span><br><span class="line">skipping: [web01]</span><br><span class="line">skipping: [web02]</span><br><span class="line">skipping: [web03]</span><br><span class="line">skipping: [172.16.1.181]</span><br><span class="line">changed: [172.16.1.182]</span><br><span class="line"></span><br><span class="line">TASK [other download picture jvm-01-03.png] **********************************************************************</span><br><span class="line">skipping: [172.16.1.181]</span><br><span class="line">skipping: [172.16.1.182]</span><br><span class="line">changed: [web02]</span><br><span class="line">changed: [web01]</span><br><span class="line">changed: [172.16.1.180]</span><br><span class="line">changed: [web03]</span><br><span class="line"></span><br><span class="line">PLAY RECAP *******************************************************************************************************</span><br><span class="line">172.16.1.180               : ok=2    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0</span><br><span class="line">172.16.1.181               : ok=2    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0</span><br><span class="line">172.16.1.182               : ok=2    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0</span><br><span class="line">web01                      : ok=2    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0</span><br><span class="line">web02                      : ok=2    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0</span><br><span class="line">web03                      : ok=2    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0</span><br></pre></td></tr></table></figure>
+
+<h1 id="标准循环"><a href="#标准循环" class="headerlink" title="标准循环"></a>标准循环</h1><p><b>注意：</b></p>
+<p>1、循环语法有两种：loop 和 with_<lookup>。</lookup></p>
+<p>2、loop 是在ansible 2.5 添加的，with_<lookup> 是一直存在的，推荐使用 loop。在未来 with_<lookup> 可能被弃用。</lookup></lookup></p>
+<h2 id="简单列表循环"><a href="#简单列表循环" class="headerlink" title="简单列表循环"></a>简单列表循环</h2><p>如果我们需要在 playbook 中启动多个服务，或者下载多个文件；按照之前所学的，那么我们需要写多个 task。但这样会使得 playbook 变得臃肿，因此这时我们就需要引进循环了。</p>
+<p><b>示例：一次启动多个服务，下载多个文件</b></p>
+<p><b>使用 loop 方式【推荐】</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object04]$ pwd</span><br><span class="line">/app/ansible_info/object04</span><br><span class="line">[yun@ansi-manager object04]$ ll</span><br><span class="line">total 20</span><br><span class="line">-rw-rw-r-- 1 yun yun 594 Aug 23 22:10 test_loop.yml</span><br><span class="line">[yun@ansi-manager object04]$ cat test_loop.yml </span><br><span class="line">---</span><br><span class="line"># 启动多个服务 和下载多个文件</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;start httpd, rpcbind, network server&quot;</span><br><span class="line">      service:</span><br><span class="line">        name: &quot;&#123;&#123; item &#125;&#125;&quot;  # 需要用引号引起来</span><br><span class="line">        state: started</span><br><span class="line">      loop:</span><br><span class="line">        - httpd</span><br><span class="line">        - rpcbind</span><br><span class="line">        - network</span><br><span class="line"></span><br><span class="line">    - name: &quot;download multiple file&quot;</span><br><span class="line">      get_url:</span><br><span class="line">        url: &quot;&#123;&#123; item &#125;&#125;&quot;  # 需要用引号引起来</span><br><span class="line">        dest: /tmp/</span><br><span class="line">      loop:</span><br><span class="line">        - http://www.zhangblog.com/uploads/jvm/jvm-01-01.png</span><br><span class="line">        - http://www.zhangblog.com/uploads/jvm/jvm-01-02.png</span><br><span class="line">        - http://www.zhangblog.com/uploads/jvm/jvm-01-03.png</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key --syntax-check test_loop.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key -C test_loop.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key test_loop.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<p>备注：以上方法可用在 yum 模块中。</p>
+<p><b>使用 with_items 方式</b></p>
+<p>其中 playbook 文件中仅把 loop 变为了 with_items。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object04]$ pwd</span><br><span class="line">/app/ansible_info/object04</span><br><span class="line">[yun@ansi-manager object04]$ ll</span><br><span class="line">total 20</span><br><span class="line">-rw-rw-r-- 1 yun yun 594 Aug 23 22:10 test_with_items.yml</span><br><span class="line">[yun@ansi-manager object04]$ cat test_with_items.yml </span><br><span class="line">---</span><br><span class="line"># 启动多个服务 和下载多个文件</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;start httpd, rpcbind, network server&quot;</span><br><span class="line">      service:</span><br><span class="line">        name: &quot;&#123;&#123; item &#125;&#125;&quot;  # 需要用引号引起来</span><br><span class="line">        state: started</span><br><span class="line">      with_items:</span><br><span class="line">        - httpd</span><br><span class="line">        - rpcbind</span><br><span class="line">        - network</span><br><span class="line"></span><br><span class="line">    - name: &quot;download multiple file&quot;</span><br><span class="line">      get_url:</span><br><span class="line">        url: &quot;&#123;&#123; item &#125;&#125;&quot;  # 需要用引号引起来</span><br><span class="line">        dest: /tmp/</span><br><span class="line">      with_items:</span><br><span class="line">        - http://www.zhangblog.com/uploads/jvm/jvm-01-01.png</span><br><span class="line">        - http://www.zhangblog.com/uploads/jvm/jvm-01-02.png</span><br><span class="line">        - http://www.zhangblog.com/uploads/jvm/jvm-01-03.png</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key --syntax-check test_with_items.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key -C test_with_items.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key test_with_items.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<p>如果用在 yum 模块中则会报如下弃用告警，因此该方法不适用于 yum 模块。</p>
+<p><img src="/uploads/ansible/ansible-08-01.png" alt="image"></p>
+<h2 id="遍历哈希列表"><a href="#遍历哈希列表" class="headerlink" title="遍历哈希列表"></a>遍历哈希列表</h2><p>如果我们需要创建多个用户并且每个用户都有指定的附加组；或者要创建多个文件，每个文件属主、属组、权限不一样；或者需要拷贝文件，但是每个文件的位置不一样，且属主、属组、权限不一样等等；那之前所学的简单循环就不能满足我们的需求了。这时「哈希列表循环」就闪亮登场了。</p>
+<p><span style="font-size:16px"><b>示例：</b></span></p>
+<p><b>使用 loop 方式【推荐】</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object04]$ pwd</span><br><span class="line">/app/ansible_info/object04</span><br><span class="line">[yun@ansi-manager object04]$ ll</span><br><span class="line">total 16</span><br><span class="line">drwxrwxr-x 2 yun yun   56 Oct 26 16:03 file</span><br><span class="line">-rw-rw-r-- 1 yun yun 1205 Oct 26 16:02 test_loop_hash.yml</span><br><span class="line">[yun@ansi-manager object04]$ cat file/config_test.conf.j2 </span><br><span class="line">111</span><br><span class="line">[yun@ansi-manager object04]$ cat file/yml_test_j2.yml </span><br><span class="line">222</span><br><span class="line">[yun@ansi-manager object04]$ cat test_loop_hash.yml </span><br><span class="line">---</span><br><span class="line"># 使用循环字典创建多个用户，创建多个文件，拷贝多个文件</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;Create multiple user&quot;</span><br><span class="line">      user:</span><br><span class="line">        name: &quot;&#123;&#123; item.user &#125;&#125;&quot;</span><br><span class="line">        groups: &quot;&#123;&#123; item.groups &#125;&#125;&quot;</span><br><span class="line">      loop:</span><br><span class="line">        - &#123; user: &quot;testuser1&quot;, groups: &quot;root&quot; &#125;</span><br><span class="line">        - &#123; user: &quot;testuser2&quot;, groups: &quot;root,yun&quot; &#125;</span><br><span class="line"></span><br><span class="line">    - name: &quot;Create multiple file or dir&quot;</span><br><span class="line">      file:</span><br><span class="line">        path: &quot;&#123;&#123; item.path &#125;&#125;&quot;</span><br><span class="line">        owner: &quot;&#123;&#123; item.owner &#125;&#125;&quot;</span><br><span class="line">        group: &quot;&#123;&#123; item.group &#125;&#125;&quot;</span><br><span class="line">        mode: &quot;&#123;&#123; item.mode &#125;&#125;&quot;</span><br><span class="line">        state: &quot;&#123;&#123; item.state &#125;&#125;&quot;</span><br><span class="line">      loop:</span><br><span class="line">        - &#123; path: &quot;/tmp/with_items_testdir&quot;, owner: &quot;yun&quot;, group: &quot;root&quot;, mode: &quot;755&quot;, state: &quot;directory&quot; &#125;</span><br><span class="line">        - &#123; path: &quot;/tmp/with_items_testfile&quot;, owner: &quot;bin&quot;, group: &quot;bin&quot;, mode: &quot;644&quot;, state: &quot;touch&quot; &#125;</span><br><span class="line"></span><br><span class="line">    - name: &quot;copy multiple file&quot;</span><br><span class="line">      copy:</span><br><span class="line">        src: &quot;&#123;&#123; item.src &#125;&#125;&quot;</span><br><span class="line">        dest: &quot;&#123;&#123; item.dest &#125;&#125;&quot;</span><br><span class="line">        owner: &quot;&#123;&#123; item.owner &#125;&#125;&quot;</span><br><span class="line">        group: &quot;&#123;&#123; item.group &#125;&#125;&quot;</span><br><span class="line">      loop:</span><br><span class="line">        - &#123; src: &quot;./file/config_test.conf.j2&quot;, dest: &quot;/tmp/with_items_testdir/&quot;, owner: &quot;yun&quot;, group: &quot;root&quot; &#125;</span><br><span class="line">        - &#123; src: &quot;./file/yml_test_j2.yml&quot;, dest: &quot;/tmp/yml_test.yml&quot;, owner: &quot;yun&quot;, group: &quot;yun&quot; &#125;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key --syntax-check test_loop_hash.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key -C test_loop_hash.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key test_loop_hash.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<p><b>使用 with_items 方式</b></p>
+<p>其中 playbook 文件中仅把 loop 变为了 with_items。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object04]$ pwd</span><br><span class="line">/app/ansible_info/object04</span><br><span class="line">[yun@ansi-manager object04]$ ll</span><br><span class="line">total 16</span><br><span class="line">drwxrwxr-x 2 yun yun   56 Oct 26 16:03 file</span><br><span class="line">-rw-rw-r-- 1 yun yun 1205 Oct 26 16:02 test_with_items_hash.yml</span><br><span class="line">[yun@ansi-manager object04]$ cat file/config_test.conf.j2 </span><br><span class="line">111</span><br><span class="line">[yun@ansi-manager object04]$ cat file/yml_test_j2.yml </span><br><span class="line">222</span><br><span class="line">[yun@ansi-manager object04]$ cat test_with_items_hash.yml </span><br><span class="line">---</span><br><span class="line"># 使用循环字典创建多个用户，创建多个文件，拷贝多个文件</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;Create multiple user&quot;</span><br><span class="line">      user:</span><br><span class="line">        name: &quot;&#123;&#123; item.user &#125;&#125;&quot;</span><br><span class="line">        groups: &quot;&#123;&#123; item.groups &#125;&#125;&quot;</span><br><span class="line">      with_items:</span><br><span class="line">        - &#123; user: &quot;testuser1&quot;, groups: &quot;root&quot; &#125;</span><br><span class="line">        - &#123; user: &quot;testuser2&quot;, groups: &quot;root,yun&quot; &#125;</span><br><span class="line"></span><br><span class="line">    - name: &quot;Create multiple file or dir&quot;</span><br><span class="line">      file:</span><br><span class="line">        path: &quot;&#123;&#123; item.path &#125;&#125;&quot;</span><br><span class="line">        owner: &quot;&#123;&#123; item.owner &#125;&#125;&quot;</span><br><span class="line">        group: &quot;&#123;&#123; item.group &#125;&#125;&quot;</span><br><span class="line">        mode: &quot;&#123;&#123; item.mode &#125;&#125;&quot;</span><br><span class="line">        state: &quot;&#123;&#123; item.state &#125;&#125;&quot;</span><br><span class="line">      with_items:</span><br><span class="line">        - &#123; path: &quot;/tmp/with_items_testdir&quot;, owner: &quot;yun&quot;, group: &quot;root&quot;, mode: &quot;755&quot;, state: &quot;directory&quot; &#125;</span><br><span class="line">        - &#123; path: &quot;/tmp/with_items_testfile&quot;, owner: &quot;bin&quot;, group: &quot;bin&quot;, mode: &quot;644&quot;, state: &quot;touch&quot; &#125;</span><br><span class="line"></span><br><span class="line">    - name: &quot;copy multiple file&quot;</span><br><span class="line">      copy:</span><br><span class="line">        src: &quot;&#123;&#123; item.src &#125;&#125;&quot;</span><br><span class="line">        dest: &quot;&#123;&#123; item.dest &#125;&#125;&quot;</span><br><span class="line">        owner: &quot;&#123;&#123; item.owner &#125;&#125;&quot;</span><br><span class="line">        group: &quot;&#123;&#123; item.group &#125;&#125;&quot;</span><br><span class="line">      with_items:</span><br><span class="line">        - &#123; src: &quot;./file/config_test.conf.j2&quot;, dest: &quot;/tmp/with_items_testdir/&quot;, owner: &quot;yun&quot;, group: &quot;root&quot; &#125;</span><br><span class="line">        - &#123; src: &quot;./file/yml_test_j2.yml&quot;, dest: &quot;/tmp/yml_test.yml&quot;, owner: &quot;yun&quot;, group: &quot;yun&quot; &#125;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key --syntax-check test_with_items_hash.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key -C test_with_items_hash.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key test_with_items_hash.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<h2 id="遍历字典"><a href="#遍历字典" class="headerlink" title="遍历字典"></a>遍历字典</h2><p><span style="font-size:16px"><b>示例：</b></span></p>
+<p><b>使用 loop 方式【推荐】</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object04]$ pwd</span><br><span class="line">/app/ansible_info/object04</span><br><span class="line">[yun@ansi-manager object04]$ ll</span><br><span class="line">total 28</span><br><span class="line">-rw-rw-r-- 1 yun yun  452 Oct 26 16:46 test_loop_dict.yml</span><br><span class="line">[yun@ansi-manager object04]$ cat test_loop_dict.yml </span><br><span class="line">---</span><br><span class="line"># 打印信息</span><br><span class="line">- hosts: manageservers</span><br><span class="line">  vars:</span><br><span class="line">    users:</span><br><span class="line">      alice:</span><br><span class="line">        name: Alice Appleworth</span><br><span class="line">        telephone: 123-456-7890</span><br><span class="line">      bob:</span><br><span class="line">        name: Bob Bananarama</span><br><span class="line">        telephone: 987-654-3210</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;print user info&quot;</span><br><span class="line">      debug:</span><br><span class="line">        msg: &quot;User &#123;&#123; item.key &#125;&#125;, userfullname: &#123;&#123; item.value.name &#125;&#125; (&#123;&#123; item.value.telephone &#125;&#125;)&quot;</span><br><span class="line">      # 将字典转换为适合循环的项表  第一种方式推荐</span><br><span class="line">      loop: &quot;&#123;&#123; users|dict2items &#125;&#125;&quot;</span><br><span class="line">      #loop: &quot;&#123;&#123; lookup(&apos;dict&apos;, users) &#125;&#125;&quot;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key --syntax-check test_loop_dict.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key -C test_loop_dict.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key test_loop_dict.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<p><b>使用 with_items 方式</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object04]$ pwd</span><br><span class="line">/app/ansible_info/object04</span><br><span class="line">[yun@ansi-manager object04]$ ll</span><br><span class="line">total 28</span><br><span class="line">-rw-rw-r-- 1 yun yun  458 Oct 26 16:47 test_with_items_dict.yml</span><br><span class="line">[yun@ansi-manager object04]$ cat test_with_items_dict.yml </span><br><span class="line">---</span><br><span class="line"># 打印信息</span><br><span class="line">- hosts: manageservers</span><br><span class="line">  vars:</span><br><span class="line">    users:</span><br><span class="line">      alice:</span><br><span class="line">        name: Alice Appleworth</span><br><span class="line">        telephone: 123-456-7890</span><br><span class="line">      bob:</span><br><span class="line">        name: Bob Bananarama</span><br><span class="line">        telephone: 987-654-3210</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;print user info&quot;</span><br><span class="line">      debug:</span><br><span class="line">        msg: &quot;User &#123;&#123; item.key &#125;&#125;, userfullname: &#123;&#123; item.value.name &#125;&#125; (&#123;&#123; item.value.telephone &#125;&#125;)&quot;</span><br><span class="line">      # with_dict 会直接解析字典</span><br><span class="line">      with_dict: &quot;&#123;&#123; users &#125;&#125;&quot;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key --syntax-check test_with_items_dict.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key -C test_with_items_dict.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key test_with_items_dict.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<h1 id="变量循环-vars"><a href="#变量循环-vars" class="headerlink" title="变量循环-vars"></a>变量循环-vars</h1><p>针对yum 安装多个包很有用，其他则会报出警告。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object04]$ pwd</span><br><span class="line">/app/ansible_info/object04</span><br><span class="line">[yun@ansi-manager object04]$ ll</span><br><span class="line">total 36</span><br><span class="line">-rw-rw-r-- 1 yun yun  252 Oct 26 17:46 test_cycle_vars.yml</span><br><span class="line">[yun@ansi-manager object04]$ cat test_cycle_vars.yml </span><br><span class="line">---</span><br><span class="line"># 批量包安装</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;Install multiple packages&quot;</span><br><span class="line">      yum:</span><br><span class="line">        name: &quot;&#123;&#123; multi_package &#125;&#125;&quot;</span><br><span class="line">        state: present</span><br><span class="line">      vars:</span><br><span class="line">        multi_package:</span><br><span class="line">          - tree</span><br><span class="line">          - nc</span><br><span class="line">          - tcpdump</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key --syntax-check test_cycle_vars.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key -C test_cycle_vars.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object04]$ ansible-playbook -b -i ../hosts_key test_cycle_vars.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<p>该方法不一定适用于其他模块</p>
+<p><img src="/uploads/ansible/ansible-08-02.png" alt="image"></p>
+<h1 id="触发器-handlers"><a href="#触发器-handlers" class="headerlink" title="触发器-handlers"></a>触发器-handlers</h1><p>当我们修改了服务的配置文件时，这是我们需要去重启服务，那么 handlers 就可以派上用场了。</p>
+<p><b>注意事项：</b></p>
+<p>1、无论多少个 task 通知了相同的 handlers，handlers 仅会在所有 tasks 结束后运行一次。</p>
+<p>2、只有 task 发生改变了才会通知 handlers，没有改变则不会通知和触发 handlers。</p>
+<p>3、不能用 handlers 替代 task 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object05]$ pwd</span><br><span class="line">/app/ansible_info/object05</span><br><span class="line">[yun@ansi-manager object05]$ ll</span><br><span class="line">total 24</span><br><span class="line">drwxrwxr-x 2 yun yun  129 Aug 24 11:41 file</span><br><span class="line">-rw-rw-r-- 1 yun yun 1029 Aug 24 11:57 test_handlers.yml</span><br><span class="line">[yun@ansi-manager object05]$ ll file/  # 涉及配置文件</span><br><span class="line">total 20</span><br><span class="line">-rw-r--r-- 1 yun yun 11767 Aug 24 11:41 httpd.conf.j2</span><br><span class="line">[yun@ansi-manager object05]$ vim file/httpd.conf.j2   # 配置文件修改的地方</span><br><span class="line">…………</span><br><span class="line"># Change this to Listen on specific IP addresses as shown below to </span><br><span class="line"># prevent Apache from glomming onto all bound IP addresses.</span><br><span class="line">#</span><br><span class="line">#Listen 12.34.56.78:80</span><br><span class="line">###### 端口改为变量</span><br><span class="line">Listen &#123;&#123; httpd_port &#125;&#125;</span><br><span class="line"></span><br><span class="line">…………</span><br><span class="line">[yun@ansi-manager object05]$ cat test_handlers.yml  # yml 文件</span><br><span class="line">---</span><br><span class="line"># 比如安装配置启动 httpd。当我们修改配置文件，重启 httpd 服务</span><br><span class="line"># 要求：修改配置，重启一个或多个服务</span><br><span class="line">- hosts: proxyservers</span><br><span class="line">  # 这里为了演示方便，因此变量直接就写在了该文件中</span><br><span class="line">  vars:</span><br><span class="line">    - httpd_port: 8081</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;Install httpd&quot;</span><br><span class="line">      yum:</span><br><span class="line">        name: &quot;&#123;&#123; packages &#125;&#125;&quot;</span><br><span class="line">        state: present</span><br><span class="line">      vars:</span><br><span class="line">        packages:</span><br><span class="line">          - httpd</span><br><span class="line">          - httpd-tools</span><br><span class="line"></span><br><span class="line">    - name: &quot;Httpd config&quot;</span><br><span class="line">      template:</span><br><span class="line">        src: ./file/httpd.conf.j2</span><br><span class="line">        dest: /etc/httpd/conf/httpd.conf</span><br><span class="line">      # 一个通知</span><br><span class="line">      # notify: &quot;Restart httpd server&quot;</span><br><span class="line">      # 多个通知</span><br><span class="line">      notify:</span><br><span class="line">        - &quot;Restart httpd server&quot;</span><br><span class="line">        - &quot;Restart crond server&quot;</span><br><span class="line"></span><br><span class="line">    - name: &quot;Start httpd server&quot;</span><br><span class="line">      systemd:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: started</span><br><span class="line">        enabled: yes</span><br><span class="line"></span><br><span class="line">  handlers:</span><br><span class="line">    - name: &quot;Restart httpd server&quot;</span><br><span class="line">      systemd:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: restarted</span><br><span class="line"></span><br><span class="line">    - name: &quot;Restart crond server&quot;</span><br><span class="line">      systemd:</span><br><span class="line">        name: crond</span><br><span class="line">        state: restarted</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key --syntax-check test_handlers.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key -C test_handlers.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_handlers.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<h1 id="任务标签-tags"><a href="#任务标签-tags" class="headerlink" title="任务标签-tags"></a>任务标签-tags</h1><p>默认情况下，当我们执行一个 playbook 时，会执行该 playbook 中所有的任务。如果只想执行一个 task 或者部分 task 用于调试或者需求就是执行部分 task。那么可以使用 ansible 的标签（tags）功能给单独 task 或者全部 task 打上标签。之后利用这些标签来指定要运行哪些 playbook 任务，或不运行哪些 playbook 任务。</p>
+<p><b>打标签方式</b></p>
+<p>对一个 task 打一个标签；</p>
+<p>对一个 task 打多个标签；</p>
+<p>对多个 task 打一个标签</p>
+<p><b>标签如何运用</b></p>
+<p>-t TAGS, --tags=TAGS：执行指定的 tag 标签任务；多个标签使用逗号分开</p>
+<p>--skip-tags=SKIP_TAGS：跳过指定标签不执行，执行指定外的 task「标签作用于 task 上，即使该task还有其他标签，这个 task 也不会被执行」；多个标签使用逗号分开</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object05]$ pwd</span><br><span class="line">/app/ansible_info/object05</span><br><span class="line">[yun@ansi-manager object05]$ ll</span><br><span class="line">total 8</span><br><span class="line">drwxrwxr-x 2 yun yun   27 Oct 26 18:07 file</span><br><span class="line">-rw-rw-r-- 1 yun yun 1004 Oct 26 19:21 test_tags.yml</span><br><span class="line">[yun@ansi-manager object05]$ cat test_tags.yml </span><br><span class="line">---</span><br><span class="line"># tags 标签测试</span><br><span class="line">- hosts: proxyservers</span><br><span class="line">  # 这里为了演示方便，因此变量直接就写在了该文件中</span><br><span class="line">  vars:</span><br><span class="line">    - httpd_port: 8081</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;Install httpd&quot;</span><br><span class="line">      yum:</span><br><span class="line">        name: &quot;&#123;&#123; packages &#125;&#125;&quot;</span><br><span class="line">        state: present</span><br><span class="line">      vars:</span><br><span class="line">        packages:</span><br><span class="line">          - httpd</span><br><span class="line">          - httpd-tools</span><br><span class="line">      tags: </span><br><span class="line">        - httpd_server</span><br><span class="line">        - httpd_install</span><br><span class="line"></span><br><span class="line">    - name: &quot;Httpd config&quot;</span><br><span class="line">      template:</span><br><span class="line">        src: ./file/httpd.conf.j2</span><br><span class="line">        dest: /etc/httpd/conf/httpd.conf</span><br><span class="line">      notify: &quot;Restart httpd server&quot;</span><br><span class="line">      tags:</span><br><span class="line">        - httpd_server</span><br><span class="line">        - httpd_config</span><br><span class="line"></span><br><span class="line">    - name: &quot;Start httpd server&quot;</span><br><span class="line">      systemd:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: started</span><br><span class="line">        enabled: yes</span><br><span class="line">      tags: </span><br><span class="line">        - httpd_server</span><br><span class="line">        - httpd_start</span><br><span class="line"></span><br><span class="line">    - name: &quot;Create dir&quot;</span><br><span class="line">      file:</span><br><span class="line">        path: /tmp/with_items_testdir</span><br><span class="line">        state: directory</span><br><span class="line">      tags: create_dir</span><br><span class="line"></span><br><span class="line">  handlers:</span><br><span class="line">    - name: &quot;Restart httpd server&quot;</span><br><span class="line">      systemd:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: restarted</span><br></pre></td></tr></table></figure>
+
+<p><b>playbook 标签查看</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key --syntax-check test_tags.yml  # 语法检测</span><br><span class="line">## 查看 playbook 中的任务和标签</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_tags.yml --list-tasks </span><br><span class="line"></span><br><span class="line">playbook: test_tags.yml</span><br><span class="line"></span><br><span class="line">  play #1 (proxyservers): proxyservers	TAGS: []</span><br><span class="line">    tasks:</span><br><span class="line">      Install httpd	TAGS: [httpd_install, httpd_server]</span><br><span class="line">      Httpd config	TAGS: [httpd_config, httpd_server]</span><br><span class="line">      Start httpd server	TAGS: [httpd_server, httpd_start]</span><br><span class="line">      Create dir	TAGS: [create_dir]</span><br><span class="line">## 查看 playbook 中的标签</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_tags.yml --list-tags</span><br><span class="line"></span><br><span class="line">playbook: test_tags.yml</span><br><span class="line"></span><br><span class="line">  play #1 (proxyservers): proxyservers	TAGS: []</span><br><span class="line">      TASK TAGS: [create_dir, httpd_config, httpd_install, httpd_server, httpd_start]</span><br></pre></td></tr></table></figure>
+
+<p><b>playbook 执行</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">## 单个标签执行</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_tags.yml -t httpd_install </span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_tags.yml -t httpd_server</span><br><span class="line">## 多个标签执行</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_tags.yml -t httpd_install,httpd_config,httpd_start</span><br><span class="line">## 跳过哪些标签不执行「标签作用于 task 上，即使该 task 还有其他标签，这个 task 也不会被执行」</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_tags.yml --skip-tags httpd_server</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_tags.yml --skip-tags httpd_install,create_dir</span><br><span class="line">## 执行整个 playbook </span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_tags.yml</span><br></pre></td></tr></table></figure>
+
+<h1 id="文件引用-复用-include与import"><a href="#文件引用-复用-include与import" class="headerlink" title="文件引用/复用-include与import"></a>文件引用/复用-include与import</h1><p>在实际应用中，是不可能将所有 task 写在一个 playbook 中的，需要进行拆分，方便后期重复使用。这样后面写其他 playbook 的时候，如果有重复的，那么直接引用之前写的即可。</p>
+<p><b>Includes 与 Imports</b></p>
+<p>1、include 和 import 虽然功能相近，但是 ansible 执行引擎对他们的处理却截然不同。</p>
+<p>2、所有 <font color="red">import*</font> 语句都会在解析 playbook 时进行<font color="red">预处理</font>。「提前准备好工具」</p>
+<p>3、所有 <font color="red">include*</font> 语句都是在执行 playbook 时<font color="red">遇到再处理</font>。「需要什么工具，再拿什么工具」</p>
+<p>PS：<font color="red">include 模块</font>：这个模块还将支持一段时间，但在不久的将来可能会弃用「最好不要使用这个模块」。</p>
+<p><b>示例</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object05]$ pwd</span><br><span class="line">/app/ansible_info/object05</span><br><span class="line">[yun@ansi-manager object05]$ ll</span><br><span class="line">total 32</span><br><span class="line">drwxrwxr-x 2 yun yun  103 Aug 24 19:51 file_yml</span><br><span class="line">-rw-rw-r-- 1 yun yun  518 Aug 24 19:56 test_include.yml</span><br><span class="line">[yun@ansi-manager object05]$ ll file_yml/</span><br><span class="line">total 16</span><br><span class="line">-rw-rw-r-- 1 yun yun 136 Aug 24 19:51 httpd_config.yml</span><br><span class="line">-rw-rw-r-- 1 yun yun 133 Aug 24 19:41 httpd_install.yml</span><br><span class="line">-rw-rw-r-- 1 yun yun  80 Aug 24 19:42 httpd_restart.yml</span><br><span class="line">-rw-rw-r-- 1 yun yun  93 Aug 24 19:41 httpd_start.yml</span><br><span class="line">## 每个小 yml 文件的具体内容</span><br><span class="line">[yun@ansi-manager object05]$ cat file_yml/httpd_install.yml </span><br><span class="line">- name: &quot;Install httpd&quot;</span><br><span class="line">  yum:</span><br><span class="line">    name: &quot;&#123;&#123; packages &#125;&#125;&quot;</span><br><span class="line">    state: present</span><br><span class="line">  vars:</span><br><span class="line">    packages:</span><br><span class="line">      - httpd</span><br><span class="line">      - httpd-tools</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object05]$ cat file_yml/httpd_config.yml </span><br><span class="line">- name: &quot;Httpd config&quot;</span><br><span class="line">  template:</span><br><span class="line">    src: ./file/httpd.conf.j2</span><br><span class="line">    dest: /etc/httpd/conf/httpd.conf</span><br><span class="line">  notify: &quot;Restart httpd server&quot;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object05]$ cat file_yml/httpd_start.yml </span><br><span class="line">- name: &quot;Start httpd server&quot;</span><br><span class="line">  systemd:</span><br><span class="line">    name: httpd</span><br><span class="line">    state: started</span><br><span class="line">    enabled: yes</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object05]$ cat file_yml/httpd_restart.yml </span><br><span class="line">- name: &quot;Restart httpd server&quot;</span><br><span class="line">  systemd:</span><br><span class="line">    name: httpd</span><br><span class="line">    state: restarted</span><br><span class="line"></span><br><span class="line">###### 主调用 yml 文件内容 ######</span><br><span class="line">[yun@ansi-manager object05]$ cat test_include.yml </span><br><span class="line">---</span><br><span class="line"># 调用其他 yml 文件</span><br><span class="line">- hosts: proxyservers</span><br><span class="line">  # 这里为了演示方便，因此变量直接就写在了该文件中</span><br><span class="line">  vars:</span><br><span class="line">    - httpd_port: 8083</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - include_tasks: ./file_yml/httpd_install.yml</span><br><span class="line">    - include_tasks: ./file_yml/httpd_config.yml</span><br><span class="line">    - include_tasks: ./file_yml/httpd_start.yml</span><br><span class="line"></span><br><span class="line">  handlers:</span><br><span class="line">    # 使用 import 进行预处理，这样防止 notify 时，在 handlers 找不到对应的信息</span><br><span class="line">    - import_tasks: ./file_yml/httpd_restart.yml</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key --syntax-check test_include.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key -C test_include.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_include.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<h1 id="忽略错误-ignore-errors"><a href="#忽略错误-ignore-errors" class="headerlink" title="忽略错误-ignore_errors"></a>忽略错误-ignore_errors</h1><p>在 playbook 执行过程中，默认情况下如果有错误发生，那么后面的 task 就不执行，并且退出当前的 playbook。</p>
+<p>如果我们对某些 task 执行结果不关心，不管执行是否成功，后面的 task 也要继续执行。那就需要通过 ignore_errors 来忽略当前 task 的错误结果，让后面的 task 继续往下执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object05]$ pwd</span><br><span class="line">/app/ansible_info/object05</span><br><span class="line">[yun@ansi-manager object05]$ ll</span><br><span class="line">total 36</span><br><span class="line">-rw-rw-r-- 1 yun yun  479 Aug 26 09:24 test_ignore_errors.yml</span><br><span class="line">[yun@ansi-manager object05]$ cat test_ignore_errors.yml </span><br><span class="line">---</span><br><span class="line"># ignore_errors 测试</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;Install httpd&quot;</span><br><span class="line">      yum:</span><br><span class="line">        name: &quot;&#123;&#123; packages &#125;&#125;&quot;</span><br><span class="line">        state: present</span><br><span class="line">      vars:</span><br><span class="line">        packages:</span><br><span class="line">          - httpd</span><br><span class="line">          - httpd-tools</span><br><span class="line"></span><br><span class="line">    - name: &quot;Shell false&quot;</span><br><span class="line">      shell: /bin/false</span><br><span class="line">      # 是否忽略该 task 的错误 「打开或关闭注释，对比」</span><br><span class="line">      ignore_errors: True</span><br><span class="line"></span><br><span class="line">    - name: &quot;Create dir&quot;</span><br><span class="line">      file:</span><br><span class="line">        path: /tmp/with_items_testdir</span><br><span class="line">        state: directory</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key --syntax-check test_ignore_errors.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key -C test_ignore_errors.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_ignore_errors.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<p><b>默认情况</b></p>
+<p><img src="/uploads/ansible/ansible-08-03.png" alt="image"></p>
+<p><b>使用了 ignore_errors 的情况</b></p>
+<p><img src="/uploads/ansible/ansible-08-04.png" alt="image"></p>
+<h1 id="自定义错误判定条件-failed-when"><a href="#自定义错误判定条件-failed-when" class="headerlink" title="自定义错误判定条件-failed_when"></a>自定义错误判定条件-failed_when</h1><p>命令不依赖返回状态码来判定是否执行失败，而是要查看命令返回内容来决定，比如返回内容中包括 command not found 字符串，则判定为失败。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object05]$ pwd</span><br><span class="line">/app/ansible_info/object05</span><br><span class="line">[yun@ansi-manager object05]$ ll</span><br><span class="line">total 48</span><br><span class="line">-rw-rw-r-- 1 yun yun  369 Aug 29 16:12 test_custom_error.yml</span><br><span class="line">[yun@ansi-manager object05]$ cat test_custom_error.yml </span><br><span class="line">---</span><br><span class="line"># 自定义错误条件</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;this command prints &apos;command not found&apos; if not find&quot;</span><br><span class="line">      shell: &quot;kkk -x&quot;  # 测试一</span><br><span class="line">      #shell: &quot;/bin/kkk -x&quot;  # 测试二</span><br><span class="line">      register: shell_result</span><br><span class="line">      failed_when: &quot;&apos;command not found&apos; in shell_result[&apos;stderr&apos;]&quot;</span><br><span class="line"></span><br><span class="line">    - name: &quot;print shell_result info&quot;</span><br><span class="line">      debug:</span><br><span class="line">        msg: &quot;&#123;&#123; shell_result[&apos;stderr&apos;] &#125;&#125;&quot;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key --syntax-check test_custom_error.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key -C test_custom_error.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_custom_error.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<h1 id="强制调用触发器-force-handlers"><a href="#强制调用触发器-force-handlers" class="headerlink" title="强制调用触发器-force_handlers"></a>强制调用触发器-force_handlers</h1><p>通常情况下，当 task 执行失败后，playbook 会终止。任何在此之前已经被 task notify 的 handlers 都不会被执行。</p>
+<p>此时，如果你在 playbook 中设置了 force_handlers: yes 参数，则被通知的 handlers 就会被强制执行（有些特殊场景可能会使用到）。</p>
+<p>如示例，在一个 playbook 中，如果配置文件的 task 已经被执行成功，并且 notify 了 handlers，之后必须重启服务。那么我们会强制要求：即使后续的 task 执行失败，之前被通知的 handlers 也必须执行。</p>
+<p>如果不强制执行就变成了，第一次执行时：配置文件修改成功，但由于之后有 task 执行失败，导致 playbook 终止，后续 handlers 没有被调用，对应服务没有重启；第二次执行时：配置文件没发生改变「因此第一次已经更新了配置文件」，因此不会通知 handlers。最终结果就是配置改变了，但是就是没有重启服务。显然不符合我们的初衷。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object05]$ pwd</span><br><span class="line">/app/ansible_info/object05</span><br><span class="line">[yun@ansi-manager object05]$ ll</span><br><span class="line">total 40</span><br><span class="line">drwxrwxr-x 2 yun yun  129 Aug 24 14:28 file</span><br><span class="line">-rw-rw-r-- 1 yun yun  909 Aug 29 12:23 test_error_deal.yml</span><br><span class="line">[yun@ansi-manager object05]$ cat test_error_deal.yml </span><br><span class="line">---</span><br><span class="line"># 即使 task 执行错误，之前已 notify 的 handlers 必须被执行</span><br><span class="line">- hosts: proxyservers</span><br><span class="line">  # 这里为了演示方便，因此变量直接就写在了该文件中</span><br><span class="line">  vars:</span><br><span class="line">    - httpd_port: 8087</span><br><span class="line">  # 即使 task 执行错误，之前已 notify 的 handlers 必须被执行</span><br><span class="line">  force_handlers: yes</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;Install httpd&quot;</span><br><span class="line">      yum:</span><br><span class="line">        name: &quot;&#123;&#123; packages &#125;&#125;&quot;</span><br><span class="line">        state: present</span><br><span class="line">      vars:</span><br><span class="line">        packages:</span><br><span class="line">          - httpd</span><br><span class="line">          - httpd-tools</span><br><span class="line"></span><br><span class="line">    - name: &quot;Httpd config&quot;</span><br><span class="line">      template:</span><br><span class="line">        src: ./file/httpd.conf.j2</span><br><span class="line">        dest: /etc/httpd/conf/httpd.conf</span><br><span class="line">      notify: &quot;Restart httpd server&quot;</span><br><span class="line"></span><br><span class="line">    - name: &quot;Start httpd server&quot;</span><br><span class="line">      systemd:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: started</span><br><span class="line">        enabled: yes</span><br><span class="line"></span><br><span class="line">    # /bin/false  返回状态码为1，不为0</span><br><span class="line">    - name: &quot;Shell task&quot;</span><br><span class="line">      shell: /bin/false</span><br><span class="line"></span><br><span class="line">    - name: &quot;Create dir&quot;</span><br><span class="line">      file:</span><br><span class="line">        path: /tmp/with_items_testdir</span><br><span class="line">        state: directory</span><br><span class="line"></span><br><span class="line">  handlers:</span><br><span class="line">    - name: &quot;Restart httpd server&quot;</span><br><span class="line">      systemd:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: restarted</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key --syntax-check test_error_deal.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key -C test_error_deal.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_error_deal.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<h1 id="抑制changed状态-changed-when"><a href="#抑制changed状态-changed-when" class="headerlink" title="抑制changed状态-changed_when"></a>抑制changed状态-changed_when</h1><p>ansible 会自动判断模块执行状态，command、shell 及其它模块如果修改了远程主机状态则被判定为 changed 状态，不过也可以自己决定达到 changed 状态的条件。</p>
+<p>当我们在 playbook 中使用 shell 或者 command 模块时，每次 task 执行状态都是 changed。原因是因为每次我们都去执行获取当前数据，而不是一个固化的状态。</p>
+<p>但在实际应用中，我们可能不需要 shell 或者 command 模块执行后的 changed 状态，这时我们就需要通过 changed_when: false 来抑制这个改变。</p>
+<p>当然上述的 changed_when: false 可以在任何模块中使用，不局限于 shell 和 command 模块，只是我们常用于这两个模块而已。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object05]$ pwd</span><br><span class="line">/app/ansible_info/object05</span><br><span class="line">[yun@ansi-manager object05]$ ll</span><br><span class="line">total 44</span><br><span class="line">-rw-rw-r-- 1 yun yun  299 Aug 29 14:47 test_changed_when.yml</span><br><span class="line">[yun@ansi-manager object05]$ cat test_changed_when.yml </span><br><span class="line">---</span><br><span class="line"># 使用 changed_when: false 抑制 changed 状态</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;Shell task&quot;</span><br><span class="line">      shell: netstat -lntp | grep &apos;httpd&apos;</span><br><span class="line">      register: check_httpd</span><br><span class="line">      # changed_when: false  # 任何时候，都不为 changed 状态</span><br><span class="line">      #### check_httpd[&apos;stdout&apos;] 不包含 httpd 为 true，否则 false</span><br><span class="line">      changed_when: &quot;&apos;httpd&apos; not in check_httpd[&apos;stdout&apos;]&quot; # 结果为 false </span><br><span class="line"></span><br><span class="line">    - name: &quot;Debug output&quot;</span><br><span class="line">      debug:</span><br><span class="line">        msg: &quot;&#123;&#123; check_httpd.stdout &#125;&#125;&quot;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key --syntax-check test_changed_when.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key -C test_changed_when.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object05]$ ansible-playbook -b -i ../hosts_key test_changed_when.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/01/08/ansible-08/" title="Ansible playbook 编程">http://www.zhangblog.com/2020/01/08/ansible-08/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ansible/" rel="tag"># ansible</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/06/ansible-07/" rel="next" title="Ansible Facts 变量详解">
+                <i class="fa fa-chevron-left"></i> Ansible Facts 变量详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机规划"><span class="nav-number">1.</span> <span class="nav-text">主机规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户账号"><span class="nav-number">1.1.</span> <span class="nav-text">添加用户账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-配置清单Inventory"><span class="nav-number">1.2.</span> <span class="nav-text">Ansible 配置清单Inventory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#条件判断-when"><span class="nav-number">2.</span> <span class="nav-text">条件判断-when</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标准循环"><span class="nav-number">3.</span> <span class="nav-text">标准循环</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单列表循环"><span class="nav-number">3.1.</span> <span class="nav-text">简单列表循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历哈希列表"><span class="nav-number">3.2.</span> <span class="nav-text">遍历哈希列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历字典"><span class="nav-number">3.3.</span> <span class="nav-text">遍历字典</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量循环-vars"><span class="nav-number">4.</span> <span class="nav-text">变量循环-vars</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#触发器-handlers"><span class="nav-number">5.</span> <span class="nav-text">触发器-handlers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#任务标签-tags"><span class="nav-number">6.</span> <span class="nav-text">任务标签-tags</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件引用-复用-include与import"><span class="nav-number">7.</span> <span class="nav-text">文件引用/复用-include与import</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#忽略错误-ignore-errors"><span class="nav-number">8.</span> <span class="nav-text">忽略错误-ignore_errors</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义错误判定条件-failed-when"><span class="nav-number">9.</span> <span class="nav-text">自定义错误判定条件-failed_when</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#强制调用触发器-force-handlers"><span class="nav-number">10.</span> <span class="nav-text">强制调用触发器-force_handlers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#抑制changed状态-changed-when"><span class="nav-number">11.</span> <span class="nav-text">抑制changed状态-changed_when</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  蜀ICP备16019247号</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">92.7k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
