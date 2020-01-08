@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,Next,">
+  <meta name="keywords" content="ansible,">
 
 
 
@@ -83,20 +83,20 @@
 
 
 
-<meta name="description" content="前言上两张文章，我们说了 hexo 部署、主题的切换、博文的创建、MarkDown 简单使用和 hexo 部署到 GitHub Pages。 也说了我们会使用 next 主题做为我们后期博客的使用和维护。但是该主题的原生态，可能或多或少不满足我们当前的需求，因此需要我们对其进行优化，达到我们想要的效果。 因此这篇文章和下篇文章主要就是针对主题的优化进行书写的。 注意事项 1、优化完毕或者新建博客">
-<meta name="keywords" content="Hexo,Next">
+<meta name="description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
+<meta name="keywords" content="ansible">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux下使用 github+hexo 搭建个人博客03-hexo配置优化">
-<meta property="og:url" content="http://www.zhangblog.com/2019/06/14/hexo03/index.html">
+<meta property="og:title" content="Ansible playbook Vault 加密">
+<meta property="og:url" content="http://www.zhangblog.com/2020/01/08/ansible-09/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="前言上两张文章，我们说了 hexo 部署、主题的切换、博文的创建、MarkDown 简单使用和 hexo 部署到 GitHub Pages。 也说了我们会使用 next 主题做为我们后期博客的使用和维护。但是该主题的原生态，可能或多或少不满足我们当前的需求，因此需要我们对其进行优化，达到我们想要的效果。 因此这篇文章和下篇文章主要就是针对主题的优化进行书写的。 注意事项 1、优化完毕或者新建博客">
+<meta property="og:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/03.jpg">
-<meta property="og:updated_time" content="2019-07-25T08:27:38.662Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
+<meta property="og:updated_time" content="2020-01-08T07:15:55.515Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux下使用 github+hexo 搭建个人博客03-hexo配置优化">
-<meta name="twitter:description" content="前言上两张文章，我们说了 hexo 部署、主题的切换、博文的创建、MarkDown 简单使用和 hexo 部署到 GitHub Pages。 也说了我们会使用 next 主题做为我们后期博客的使用和维护。但是该主题的原生态，可能或多或少不满足我们当前的需求，因此需要我们对其进行优化，达到我们想要的效果。 因此这篇文章和下篇文章主要就是针对主题的优化进行书写的。 注意事项 1、优化完毕或者新建博客">
-<meta name="twitter:image" content="http://www.zhangblog.com/uploads/hexo/03.jpg">
+<meta name="twitter:title" content="Ansible playbook Vault 加密">
+<meta name="twitter:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
 
 
 
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/2019/06/14/hexo03/">
+  <link rel="canonical" href="http://www.zhangblog.com/2020/01/08/ansible-09/">
 
 
 
 
 
-  <title>Linux下使用 github+hexo 搭建个人博客03-hexo配置优化 | lightzhang博客</title>
+  <title>Ansible playbook Vault 加密 | lightzhang博客</title>
   
 
 
@@ -311,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/06/14/hexo03/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/01/08/ansible-09/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lightzhang">
@@ -328,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux下使用 github+hexo 搭建个人博客03-hexo配置优化</h1>
+          <h1 class="post-title" itemprop="name headline">Ansible playbook Vault 加密</h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-14T14:27:14+08:00">
-                2019-06-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-08T15:14:50+08:00">
+                2020-01-08
               </time>
             
 
@@ -364,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
+                  <a href="/categories/ansbile/" itemprop="url" rel="index">
+                    <span itemprop="name">ansbile</span>
                   </a>
                 </span>
 
@@ -382,8 +382,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/06/14/hexo03/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/14/hexo03/" itemprop="commentCount"></span>
+                <a href="/2020/01/08/ansible-09/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/01/08/ansible-09/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -391,7 +391,7 @@
 
           
           
-             <span id="/2019/06/14/hexo03/" class="leancloud_visitors" data-flag-title="Linux下使用 github+hexo 搭建个人博客03-hexo配置优化">
+             <span id="/2020/01/08/ansible-09/" class="leancloud_visitors" data-flag-title="Ansible playbook Vault 加密">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  1.4k
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  7
                 </span>
               
             </div>
@@ -453,50 +453,113 @@
       
 
       
-        <p><img src="/uploads/hexo/03.jpg" alt="image"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上两张文章，我们说了 hexo 部署、主题的切换、博文的创建、MarkDown 简单使用和 hexo 部署到 GitHub Pages。</p>
-<p>也说了我们会使用 next 主题做为我们后期博客的使用和维护。但是该主题的原生态，可能或多或少不满足我们当前的需求，因此需要我们对其进行优化，达到我们想要的效果。</p>
-<p>因此这篇文章和下篇文章主要就是针对主题的优化进行书写的。</p>
-<p><strong>注意事项</strong></p>
-<p>1、优化完毕或者新建博客后需要 hexo g 生成静态文件；</p>
-<p>2、然后重新启动服务，使用命令 hexo s -p 80 </p>
-<p>3、浏览器查看没有问题后，部署到 GitHub，使用命令：hexo d</p>
-<h1 id="hexo-的-config-yml优化"><a href="#hexo-的-config-yml优化" class="headerlink" title="hexo 的 _config.yml优化"></a>hexo 的 _config.yml优化</h1><p><strong>官网地址</strong></p>
-<blockquote>
-<p><a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/configuration.html</a></p>
-</blockquote>
-<h2 id="网站设置部分"><a href="#网站设置部分" class="headerlink" title="网站设置部分"></a>网站设置部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml </span><br><span class="line"># Site</span><br><span class="line">title: lightzhang博客</span><br><span class="line">subtitle:</span><br><span class="line">description: lightzhang博客，不止于技术，更记录人生点滴感悟。</span><br><span class="line">keywords:</span><br><span class="line">author: lightzhang</span><br><span class="line">language:</span><br><span class="line">timezone:</span><br></pre></td></tr></table></figure>
+        <p><img src="/uploads/ansible/ansible-00-00.png" alt="image"></p>
+<h1 id="主机规划"><a href="#主机规划" class="headerlink" title="主机规划"></a>主机规划</h1><table>
+<thead>
+<tr>
+<th>主机名称</th>
+<th>操作系统版本</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+<th>安装软件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ansi-manager</td>
+<td>CentOS7.5</td>
+<td>172.16.1.180</td>
+<td>10.0.0.180</td>
+<td>ansible</td>
+</tr>
+<tr>
+<td>ansi-haproxy01</td>
+<td>CentOS7.5</td>
+<td>172.16.1.181</td>
+<td>10.0.0.181</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-haproxy02</td>
+<td>CentOS7.5</td>
+<td>172.16.1.182</td>
+<td>10.0.0.182</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web01</td>
+<td>CentOS7.5</td>
+<td>172.16.1.183</td>
+<td>10.0.0.183</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web02</td>
+<td>CentOS7.5</td>
+<td>172.16.1.184</td>
+<td>10.0.0.184</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web03</td>
+<td>CentOS7.5</td>
+<td>172.16.1.185</td>
+<td>10.0.0.185</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="添加用户账号"><a href="#添加用户账号" class="headerlink" title="添加用户账号"></a>添加用户账号</h2><p><b>说明：</b></p>
+<p>1、    运维人员使用的登录账号；</p>
+<p>2、    所有的业务都放在 /app/ 下「yun用户的家目录」，避免业务数据乱放；</p>
+<p>3、    该用户也被 ansible 使用，因为几乎所有的生产环境都是禁止 root 远程登录的（因此该 yun 用户也进行了 sudo 提权）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 使用一个专门的用户，避免直接使用root用户</span><br><span class="line"># 添加用户、指定家目录并指定用户密码</span><br><span class="line"># sudo提权</span><br><span class="line"># 让其它普通用户可以进入该目录查看信息</span><br><span class="line">useradd -u 1050 -d /app yun &amp;&amp; echo &apos;123456&apos; | /usr/bin/passwd --stdin yun</span><br><span class="line">echo &quot;yun  ALL=(ALL)       NOPASSWD: ALL&quot; &gt;&gt;  /etc/sudoers</span><br><span class="line">chmod 755 /app/</span><br></pre></td></tr></table></figure>
 
-<p>title     网站标题，需要填写<br>subtitle    网站副标题<br>description    网站描述，主要用于SEO，告诉搜索引擎一个关于您站点的简单描述，通常建议在其中包含您网站的关键词。<br>author    您的名字，用于主题显示文章的作者。<br>language     网站使用的语言<br>timezone     网站时区。Hexo 默认使用您电脑的时区。</p>
-<h2 id="网址设置部分"><a href="#网址设置部分" class="headerlink" title="网址设置部分"></a>网址设置部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml </span><br><span class="line"># URL</span><br><span class="line">## If your site is put in a subdirectory, set url as &apos;http://yoursite.com/child&apos; and root as &apos;/child/&apos;</span><br><span class="line">url: http://www.zhangblog.com</span><br><span class="line">root: /</span><br><span class="line">permalink: :year/:month/:day/:title/</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure>
+<h2 id="Ansible-配置清单Inventory"><a href="#Ansible-配置清单Inventory" class="headerlink" title="Ansible 配置清单Inventory"></a>Ansible 配置清单Inventory</h2><p>之后文章都是如下主机配置清单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_info]$ pwd</span><br><span class="line">/app/ansible_info</span><br><span class="line">[yun@ansi-manager ansible_info]$ cat hosts_key </span><br><span class="line"># 方式1、主机 + 端口 + 密钥</span><br><span class="line">[manageservers]</span><br><span class="line">172.16.1.180:22</span><br><span class="line"></span><br><span class="line">[proxyservers]</span><br><span class="line">172.16.1.18[1:2]:22</span><br><span class="line"></span><br><span class="line"># 方式2：别名 + 主机 + 端口 + 密码</span><br><span class="line">[webservers]</span><br><span class="line">web01 ansible_ssh_host=172.16.1.183 ansible_ssh_port=22</span><br><span class="line">web02 ansible_ssh_host=172.16.1.184 ansible_ssh_port=22</span><br><span class="line">web03 ansible_ssh_host=172.16.1.185 ansible_ssh_port=22</span><br></pre></td></tr></table></figure>
 
-<p>url       网址<br>root       网站根目录<br>permalink    文章的永久链接格式    默认格式 :year/:month/:day/:title/<br>permalink_defaults    永久链接中各部分的默认值</p>
-<p><strong>网站存放在子目录</strong><br>如果您的网站存放在子目录中，例如 <a href="http://yoursite.com/blog，则请将您的" target="_blank" rel="noopener">http://yoursite.com/blog，则请将您的</a> url 设为 <a href="http://yoursite.com/blog" target="_blank" rel="noopener">http://yoursite.com/blog</a> 并把 root 设为 /blog/。</p>
-<h2 id="目录设置部分"><a href="#目录设置部分" class="headerlink" title="目录设置部分"></a>目录设置部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml</span><br><span class="line"># Directory</span><br><span class="line">source_dir: source</span><br><span class="line">public_dir: public</span><br><span class="line">tag_dir: tags</span><br><span class="line">archive_dir: archives</span><br><span class="line">category_dir: categories</span><br><span class="line">code_dir: downloads/code</span><br><span class="line">i18n_dir: :lang</span><br><span class="line">skip_render:</span><br></pre></td></tr></table></figure>
+<h1 id="Ansible-Vault-概述"><a href="#Ansible-Vault-概述" class="headerlink" title="Ansible Vault 概述"></a>Ansible Vault 概述</h1><p>当我们写的 playbook 中涉及敏感信息，如：数据库账号密码；MQ账号密码；主机账号密码。这时为了防止这些敏感信息泄露，就可以使用 vault 进行加密。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ~]$ ansible-vault -h</span><br><span class="line">Usage: ansible-vault [create|decrypt|edit|encrypt|encrypt_string|rekey|view] [options] [vaultfile.yml]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  --ask-vault-pass      ask for vault password</span><br><span class="line">  -h, --help            show this help message and exit</span><br><span class="line">  --new-vault-id=NEW_VAULT_ID</span><br><span class="line">                        the new vault identity to use for rekey</span><br><span class="line">  --new-vault-password-file=NEW_VAULT_PASSWORD_FILE</span><br><span class="line">                        new vault password file for rekey</span><br><span class="line">  --vault-id=VAULT_IDS  the vault identity to use</span><br><span class="line">  --vault-password-file=VAULT_PASSWORD_FILES</span><br><span class="line">                        vault password file</span><br><span class="line">  -v, --verbose         verbose mode (-vvv for more, -vvvv to enable</span><br><span class="line">                        connection debugging)</span><br><span class="line">  --version             show program&apos;s version number, config file location,</span><br><span class="line">                        configured module search path, module location,</span><br><span class="line">                        executable location and exit</span><br><span class="line"></span><br><span class="line"> See &apos;ansible-vault &lt;command&gt; --help&apos; for more information on a specific</span><br><span class="line">command.</span><br></pre></td></tr></table></figure>
 
-<p>目录一般不需要修改。<br>source_dir   资源文件夹，这个文件夹用来存放内容。默认：source<br>public_dir   公共文件夹，这个文件夹用于存放生成的站点文件。默认：public<br>tag_dir      标签文件夹。默认：tags<br>archive_dir   归档文件夹。默认：archives<br>category_dir  分类文件夹。默认：categories<br>code_dir     Include code 文件夹    downloads/code<br>i18n_dir     国际化（i18n）文件夹。默认  :lang<br>skip_render  跳过指定文件的渲染</p>
-<h2 id="文章设置部分"><a href="#文章设置部分" class="headerlink" title="文章设置部分"></a>文章设置部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml</span><br><span class="line"># Writing</span><br><span class="line">new_post_name: :title.md # File name of new posts</span><br><span class="line">default_layout: post</span><br><span class="line">titlecase: false # Transform title into titlecase</span><br><span class="line">external_link: true # Open external links in new tab</span><br><span class="line">filename_case: 0</span><br><span class="line">render_drafts: false</span><br><span class="line">post_asset_folder: false</span><br><span class="line">relative_link: false</span><br><span class="line">future: true</span><br><span class="line">highlight:</span><br><span class="line">  enable: true</span><br><span class="line">  line_number: true</span><br><span class="line">  auto_detect: false</span><br><span class="line">  tab_replace:</span><br></pre></td></tr></table></figure>
+<p><b>参数说明</b></p>
+<p>create：创建一个加密文件，在创建时会首先要求输入 Vault 密码，之后才能进入文件中编辑。</p>
+<p>decrypt：对 vault 加密的文件进行解密。</p>
+<p>edit：对 vault 加密文件进行编辑。</p>
+<p>encrypt：对提供的文件，进行 vault 加密。</p>
+<p>encrypt_string：对提供的字符串进行 vault 加密。</p>
+<p>rekey：对已 vault 加密的文件进行免密更改，需要提供之前的密码。</p>
+<p>view：查看已加密的文件，需要提供密码。</p>
+<h1 id="Ansible-Vault-交互式"><a href="#Ansible-Vault-交互式" class="headerlink" title="Ansible Vault 交互式"></a>Ansible Vault 交互式</h1><h2 id="创建加密文件"><a href="#创建加密文件" class="headerlink" title="创建加密文件"></a>创建加密文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ pwd</span><br><span class="line">/app/ansible_info/object06</span><br><span class="line">[yun@ansi-manager object06]$ ansible-vault create test_vault.yml</span><br><span class="line">New Vault password: # 输入密码</span><br><span class="line">Confirm New Vault password: # 确认密码</span><br><span class="line">---</span><br><span class="line"># vault test</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;touch file&quot;</span><br><span class="line">      file:</span><br><span class="line">        path: /tmp/with_itemstestfile</span><br><span class="line">        state: touch</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object06]$ cat test_vault.yml   # 加密后查看</span><br><span class="line">$ANSIBLE_VAULT;1.1;AES256</span><br><span class="line">33663239636530353564393731363161623462386266613165326235353762343465653235396639</span><br><span class="line">6138353833366637383066366662666236666338333237610a303263336234303866623834663361</span><br><span class="line">39343633646434353334396162643063613964333337343336373232653266613264626564346566</span><br><span class="line">6262633334353036620a633136313364383536323531373164346436663739663631353166663434</span><br><span class="line">38663962363032643163333266633662376538383134333862373961313166656536353734363537</span><br><span class="line">30626261366138383864653834336637393230363466336662306138323032373361656566663231</span><br><span class="line">65363039393736326266316261383065363739633861646464373733643966333233343436303731</span><br><span class="line">37366130363064366337393837396664356335363738663130333436656238666233396466393137</span><br><span class="line">33306434343262313961393661313536386338383233303230613962663732323630663638313531</span><br><span class="line">3236636438646166643937613761396564373033623637636166</span><br></pre></td></tr></table></figure>
 
-<p>一般不用修改<br>new_post_name  新文章的文件名称。默认  :title.md<br>default_layout   预设布局，默认  post<br>auto_spacing    在中文和英文之间加入空格，默认  false<br>titlecase        把标题转换为 title case，默认  false<br>external_link    在新标签中打开链接，默认  true<br>filename_case   把文件名称转换为 (1) 小写或 (2) 大写，默认  0<br>render_drafts    显示草稿，默认  false<br>post_asset_folder 启动 Asset 文件夹，默认  false<br>relative_link     把链接改为与根目录的相对位址，默认  false<br>future          显示未来的文章，默认  true<br>highlight       代码块的设置</p>
-<h2 id="分页设置部分"><a href="#分页设置部分" class="headerlink" title="分页设置部分"></a>分页设置部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml </span><br><span class="line"># Pagination</span><br><span class="line">## Set per_page to 0 to disable pagination</span><br><span class="line">per_page: 10</span><br><span class="line">pagination_dir: page</span><br></pre></td></tr></table></figure>
+<h2 id="对已加密的文件进行解密"><a href="#对已加密的文件进行解密" class="headerlink" title="对已加密的文件进行解密"></a>对已加密的文件进行解密</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault decrypt test_vault.yml</span><br><span class="line">Vault password: </span><br><span class="line">Decryption successful</span><br><span class="line">[yun@ansi-manager object06]$ </span><br><span class="line">[yun@ansi-manager object06]$ cat test_vault.yml  # 解密后查看</span><br><span class="line">---</span><br><span class="line"># vault test</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;touch file&quot;</span><br><span class="line">      file:</span><br><span class="line">        path: /tmp/with_itemstestfile</span><br><span class="line">        state: touch</span><br></pre></td></tr></table></figure>
 
-<p>per_page    每页显示的文章量 (0 = 关闭分页功能)，默认  10<br>pagination_dir  分页目录，默认  page</p>
-<h2 id="扩展部分设置"><a href="#扩展部分设置" class="headerlink" title="扩展部分设置"></a>扩展部分设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml </span><br><span class="line"># Extensions</span><br><span class="line"># 使用主题</span><br><span class="line">theme: next</span><br></pre></td></tr></table></figure>
+<h2 id="对已存在文件进行加密"><a href="#对已存在文件进行加密" class="headerlink" title="对已存在文件进行加密"></a>对已存在文件进行加密</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault encrypt test_vault.yml</span><br><span class="line">New Vault password: </span><br><span class="line">Confirm New Vault password: </span><br><span class="line">Encryption successful</span><br><span class="line">[yun@ansi-manager object06]$ cat test_vault.yml </span><br><span class="line">$ANSIBLE_VAULT;1.1;AES256</span><br><span class="line">37313964663164613434656666323265376465303433633438613032303733363136316235623066</span><br><span class="line">3930343836396537343333336432363732343936323937370a363239356233333634303464633539</span><br><span class="line">61613264363037313833363738623866643762666662646165646561343631646434383864373338</span><br><span class="line">6334333162616332320a353033323538643566666562646334623630343938646264663561316566</span><br><span class="line">35633939653166326631303635363533613338326561666663623238396464383363613738323464</span><br><span class="line">37306163663933323836316165666532336664353038303036383564346436633235373166663834</span><br><span class="line">62383464373632373839323562306163666366313738663234656139346130373031626265613830</span><br><span class="line">38373135616261616137326337633566306633343338306264646139396230613665356264353134</span><br><span class="line">37376636646266626236323663376230313964323034623133333539393131333065323964303030</span><br><span class="line">3139366661353732333961323764613332316535323334343939</span><br></pre></td></tr></table></figure>
 
-<p>theme  当前使用主题名称。值为false时禁用主题</p>
-<h2 id="部署部分设置"><a href="#部署部分设置" class="headerlink" title="部署部分设置"></a>部署部分设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml</span><br><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:zhanglianghhh/zhanglianghhh.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+<h2 id="对已加密的文件进行编辑"><a href="#对已加密的文件进行编辑" class="headerlink" title="对已加密的文件进行编辑"></a>对已加密的文件进行编辑</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault edit test_vault.yml</span><br><span class="line">Vault password: </span><br><span class="line">---</span><br><span class="line"># vault test  ==</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;touch file&quot;</span><br><span class="line">      file:</span><br><span class="line">        path: /tmp/with_itemstestfile</span><br><span class="line">        state: touch</span><br></pre></td></tr></table></figure>
 
-<p>deploy    部署部分的设置</p>
-<br>
+<h2 id="对已加密文件更改密码"><a href="#对已加密文件更改密码" class="headerlink" title="对已加密文件更改密码"></a>对已加密文件更改密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault rekey test_vault.yml</span><br><span class="line">Vault password: </span><br><span class="line">New Vault password: </span><br><span class="line">Confirm New Vault password: </span><br><span class="line">Rekey successful</span><br></pre></td></tr></table></figure>
 
-<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p><b><a href="http://www.zhangblog.com/2019/06/11/hexo01/">Linux下使用 github+hexo 搭建个人博客01-hexo搭建</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/12/hexo02/">Linux下使用 github+hexo 搭建个人博客02-hexo部署到Github Pages</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/14/hexo03/">Linux下使用 github+hexo 搭建个人博客03-hexo配置优化</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo04/">Linux下使用 github+hexo 搭建个人博客04-next主题优化</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo05/">Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo06/">Linux下使用 github+hexo 搭建个人博客06-next主题接入数据统计</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/17/hexo07/">Linux下使用 github+hexo 搭建个人博客07-next主题接入搜索和站点管理</a></b></p>
-<hr>
+<h2 id="对已加密文件进行查看"><a href="#对已加密文件进行查看" class="headerlink" title="对已加密文件进行查看"></a>对已加密文件进行查看</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault view test_vault.yml</span><br><span class="line">Vault password: </span><br><span class="line">---</span><br><span class="line"># vault test  ==</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;touch file&quot;</span><br><span class="line">      file:</span><br><span class="line">        path: /tmp/with_itemstestfile</span><br><span class="line">        state: touch</span><br></pre></td></tr></table></figure>
+
+<h2 id="对提供的字符串进行加密"><a href="#对提供的字符串进行加密" class="headerlink" title="对提供的字符串进行加密"></a>对提供的字符串进行加密</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault encrypt_string &quot;111 222 333&quot;</span><br><span class="line">New Vault password: </span><br><span class="line">Confirm New Vault password: </span><br><span class="line">!vault |</span><br><span class="line">          $ANSIBLE_VAULT;1.1;AES256</span><br><span class="line">          61343332386237363437623939633334626231613539353566313336306562373538633937363566</span><br><span class="line">          6537336166356466666431663037623835643964366137340a336439313066356265666636383430</span><br><span class="line">          36613661393232613134333961643936646164396130613663656237393837366566356631353061</span><br><span class="line">          3034326337303932610a303232643464633239383563393836306565353835666431363132303835</span><br><span class="line">          3635</span><br><span class="line">Encryption successful</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ansible-Vault-非交互式"><a href="#Ansible-Vault-非交互式" class="headerlink" title="Ansible Vault 非交互式"></a>Ansible Vault 非交互式</h1><h2 id="创建密码文件"><a href="#创建密码文件" class="headerlink" title="创建密码文件"></a>创建密码文件</h2><p>安全使用，记得使用 400 或 600 权限。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ echo &quot;111111&quot; &gt; vault_pwd</span><br><span class="line">[yun@ansi-manager object06]$ echo &quot;123456&quot; &gt; vault_pwd2</span><br><span class="line">[yun@ansi-manager object06]$ ll vault_pwd*  # 权限 400</span><br><span class="line">-r-------- 1 yun yun 7 Aug 30 10:35 vault_pwd</span><br><span class="line">-r-------- 1 yun yun 7 Aug 30 10:39 vault_pwd2</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建加密文件-1"><a href="#创建加密文件-1" class="headerlink" title="创建加密文件"></a>创建加密文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault create test_vault02.yml --vault-password-file=vault_pwd</span><br><span class="line">---</span><br><span class="line"># vault test 2</span><br><span class="line">[yun@ansi-manager object06]$ cat test_vault02.yml </span><br><span class="line">$ANSIBLE_VAULT;1.1;AES256</span><br><span class="line">34356364613864656136616365383361386635316332363861656334643230366136313333376366</span><br><span class="line">6638666536306162366263333037323231386365316238390a383139623435363738663832623533</span><br><span class="line">34666539393036383365333062333039643832616233623764613132303966396534616633326366</span><br><span class="line">6131313833383761620a383534363564393836306238666135656137623036386531653931623362</span><br><span class="line">30613036333161613235393539633233663136653566366266353232386230383434</span><br></pre></td></tr></table></figure>
+
+<h2 id="对已加密的文件进行解密-1"><a href="#对已加密的文件进行解密-1" class="headerlink" title="对已加密的文件进行解密"></a>对已加密的文件进行解密</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault decrypt test_vault02.yml --vault-password-file=vault_pwd</span><br><span class="line">Decryption successful</span><br><span class="line">[yun@ansi-manager object06]$ cat test_vault02.yml </span><br><span class="line">---</span><br><span class="line"># vault test 2</span><br></pre></td></tr></table></figure>
+
+<h2 id="对已存在文件进行加密-1"><a href="#对已存在文件进行加密-1" class="headerlink" title="对已存在文件进行加密"></a>对已存在文件进行加密</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault encrypt test_vault02.yml --vault-password-file=vault_pwd</span><br><span class="line">Encryption successful</span><br><span class="line">[yun@ansi-manager object06]$ </span><br><span class="line">[yun@ansi-manager object06]$ cat test_vault02.yml </span><br><span class="line">$ANSIBLE_VAULT;1.1;AES256</span><br><span class="line">65653035393230366365363637343137636337663638346463303532623139353137366162396536</span><br><span class="line">3533393766313339393665386463613831323366623962650a643365653833636663653938613966</span><br><span class="line">39323037396635333236663239316431343461346562393731363537313865623534396533653931</span><br><span class="line">3638363937626635390a303962653366353138373139623237356637656230386565663364626438</span><br><span class="line">31613837383338323065346634323632396339323635323766386236623038616233</span><br></pre></td></tr></table></figure>
+
+<h2 id="对已加密的文件进行编辑-1"><a href="#对已加密的文件进行编辑-1" class="headerlink" title="对已加密的文件进行编辑"></a>对已加密的文件进行编辑</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault edit test_vault02.yml --vault-password-file=vault_pwd</span><br><span class="line">---</span><br><span class="line"># vault test 2  ##</span><br></pre></td></tr></table></figure>
+
+<h2 id="对已加密文件更改密码-1"><a href="#对已加密文件更改密码-1" class="headerlink" title="对已加密文件更改密码"></a>对已加密文件更改密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault rekey test_vault02.yml --vault-password-file=vault_pwd --new-vault-password-file=vault_pwd2</span><br><span class="line">Rekey successful</span><br></pre></td></tr></table></figure>
+
+<h2 id="对已加密文件进行查看-1"><a href="#对已加密文件进行查看-1" class="headerlink" title="对已加密文件进行查看"></a>对已加密文件进行查看</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault view test_vault02.yml --vault-password-file=vault_pwd2</span><br><span class="line">---</span><br><span class="line"># vault test 2  ##</span><br></pre></td></tr></table></figure>
+
+<h2 id="对提供的字符串进行加密-1"><a href="#对提供的字符串进行加密-1" class="headerlink" title="对提供的字符串进行加密"></a>对提供的字符串进行加密</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager object06]$ ansible-vault encrypt_string &quot;test info&quot; --vault-password-file=vault_pwd2</span><br><span class="line">!vault |</span><br><span class="line">          $ANSIBLE_VAULT;1.1;AES256</span><br><span class="line">          30313766613263363963316663623664353862623032323331356563626636646239636666343766</span><br><span class="line">          6633363733303334373831303732326435396566313066630a373562633530333832613335393835</span><br><span class="line">          34396161313862656466353433313835643030633966383032656561343331616234373831623233</span><br><span class="line">          6636396135306436640a313531373835663633383665396139343464613861313034386365393137</span><br><span class="line">          6133</span><br><span class="line">Encryption successful</span><br></pre></td></tr></table></figure>
+
+<h1 id="Playbook-使用-vault-文件"><a href="#Playbook-使用-vault-文件" class="headerlink" title="Playbook 使用 vault 文件"></a>Playbook 使用 vault 文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 其中 test_vault.yml 的 vault 密码为 vault_pwd 中的信息</span><br><span class="line">[yun@ansi-manager object06]$ ansible-vault view test_vault.yml --vault-password-file=vault_pwd</span><br><span class="line">---</span><br><span class="line"># vault test  ==</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;touch file&quot;</span><br><span class="line">      file:</span><br><span class="line">        path: /tmp/with_itemstestfile</span><br><span class="line">        state: touch</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager object06]$ ansible-playbook -b -i ../hosts_key --syntax-check test_vault.yml --vault-password-file=vault_pwd  # 语法检测</span><br><span class="line">[yun@ansi-manager object06]$ ansible-playbook -b -i ../hosts_key -C test_vault.yml --vault-password-file=vault_pwd  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager object06]$ ansible-playbook -b -i ../hosts_key test_vault.yml --vault-password-file=vault_pwd  # 执行</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -569,7 +632,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangblog.com/2019/06/14/hexo03/" title="Linux下使用 github+hexo 搭建个人博客03-hexo配置优化">http://www.zhangblog.com/2019/06/14/hexo03/</a>
+    <a href="http://www.zhangblog.com/2020/01/08/ansible-09/" title="Ansible playbook Vault 加密">http://www.zhangblog.com/2020/01/08/ansible-09/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -584,9 +647,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
-          
-            <a href="/tags/Next/" rel="tag"># Next</a>
+            <a href="/tags/ansible/" rel="tag"># ansible</a>
           
         </div>
       
@@ -599,8 +660,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/12/hexo02/" rel="next" title="Linux下使用 github+hexo 搭建个人博客02-hexo部署到Github Pages">
-                <i class="fa fa-chevron-left"></i> Linux下使用 github+hexo 搭建个人博客02-hexo部署到Github Pages
+              <a href="/2020/01/08/ansible-08/" rel="next" title="Ansible playbook 编程">
+                <i class="fa fa-chevron-left"></i> Ansible playbook 编程
               </a>
             
           </div>
@@ -608,10 +669,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/16/hexo04/" rel="prev" title="Linux下使用 github+hexo 搭建个人博客04-next主题优化">
-                Linux下使用 github+hexo 搭建个人博客04-next主题优化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -789,7 +846,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo-的-config-yml优化"><span class="nav-number">2.</span> <span class="nav-text">hexo 的 _config.yml优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网站设置部分"><span class="nav-number">2.1.</span> <span class="nav-text">网站设置部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网址设置部分"><span class="nav-number">2.2.</span> <span class="nav-text">网址设置部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录设置部分"><span class="nav-number">2.3.</span> <span class="nav-text">目录设置部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章设置部分"><span class="nav-number">2.4.</span> <span class="nav-text">文章设置部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页设置部分"><span class="nav-number">2.5.</span> <span class="nav-text">分页设置部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展部分设置"><span class="nav-number">2.6.</span> <span class="nav-text">扩展部分设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署部分设置"><span class="nav-number">2.7.</span> <span class="nav-text">部署部分设置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">3.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机规划"><span class="nav-number">1.</span> <span class="nav-text">主机规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户账号"><span class="nav-number">1.1.</span> <span class="nav-text">添加用户账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-配置清单Inventory"><span class="nav-number">1.2.</span> <span class="nav-text">Ansible 配置清单Inventory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Vault-概述"><span class="nav-number">2.</span> <span class="nav-text">Ansible Vault 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Vault-交互式"><span class="nav-number">3.</span> <span class="nav-text">Ansible Vault 交互式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建加密文件"><span class="nav-number">3.1.</span> <span class="nav-text">创建加密文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对已加密的文件进行解密"><span class="nav-number">3.2.</span> <span class="nav-text">对已加密的文件进行解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对已存在文件进行加密"><span class="nav-number">3.3.</span> <span class="nav-text">对已存在文件进行加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对已加密的文件进行编辑"><span class="nav-number">3.4.</span> <span class="nav-text">对已加密的文件进行编辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对已加密文件更改密码"><span class="nav-number">3.5.</span> <span class="nav-text">对已加密文件更改密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对已加密文件进行查看"><span class="nav-number">3.6.</span> <span class="nav-text">对已加密文件进行查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对提供的字符串进行加密"><span class="nav-number">3.7.</span> <span class="nav-text">对提供的字符串进行加密</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Vault-非交互式"><span class="nav-number">4.</span> <span class="nav-text">Ansible Vault 非交互式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建密码文件"><span class="nav-number">4.1.</span> <span class="nav-text">创建密码文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建加密文件-1"><span class="nav-number">4.2.</span> <span class="nav-text">创建加密文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对已加密的文件进行解密-1"><span class="nav-number">4.3.</span> <span class="nav-text">对已加密的文件进行解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对已存在文件进行加密-1"><span class="nav-number">4.4.</span> <span class="nav-text">对已存在文件进行加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对已加密的文件进行编辑-1"><span class="nav-number">4.5.</span> <span class="nav-text">对已加密的文件进行编辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对已加密文件更改密码-1"><span class="nav-number">4.6.</span> <span class="nav-text">对已加密文件更改密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对已加密文件进行查看-1"><span class="nav-number">4.7.</span> <span class="nav-text">对已加密文件进行查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对提供的字符串进行加密-1"><span class="nav-number">4.8.</span> <span class="nav-text">对提供的字符串进行加密</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Playbook-使用-vault-文件"><span class="nav-number">5.</span> <span class="nav-text">Playbook 使用 vault 文件</span></a></li></ol></div>
             
 
           </div>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-01-08T04:19:30.915Z</updated>
+  <updated>2020-01-08T07:15:55.515Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ansible playbook Vault 加密</title>
+    <link href="http://www.zhangblog.com/2020/01/08/ansible-09/"/>
+    <id>http://www.zhangblog.com/2020/01/08/ansible-09/</id>
+    <published>2020-01-08T07:14:50.000Z</published>
+    <updated>2020-01-08T07:15:55.515Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
+    
+    
+      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
+    
+  </entry>
   
   <entry>
     <title>Ansible playbook 编程</title>
@@ -537,35 +564,6 @@
       <category term="DNS" scheme="http://www.zhangblog.com/tags/DNS/"/>
     
       <category term="proxy" scheme="http://www.zhangblog.com/tags/proxy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>负载均衡，必须要知道的 5 件事</title>
-    <link href="http://www.zhangblog.com/2019/08/12/slb01/"/>
-    <id>http://www.zhangblog.com/2019/08/12/slb01/</id>
-    <published>2019-08-12T02:38:59.000Z</published>
-    <updated>2019-08-12T02:54:20.820Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;blockquote&gt;
-&lt;p&gt;文章转载自微信公众号：「架构师之路」，作者： 58沈剑&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;什么是负载均衡？&quot;&gt;&lt;a href=&quot;#什么是负载均衡？&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="SLB" scheme="http://www.zhangblog.com/categories/SLB/"/>
-    
-    
-      <category term="SLB" scheme="http://www.zhangblog.com/tags/SLB/"/>
     
   </entry>
   
