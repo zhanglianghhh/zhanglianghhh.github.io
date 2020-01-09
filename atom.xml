@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-01-08T13:46:17.039Z</updated>
+  <updated>2020-01-09T02:40:04.654Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ansible Tests详解</title>
+    <link href="http://www.zhangblog.com/2020/01/09/ansible-11/"/>
+    <id>http://www.zhangblog.com/2020/01/09/ansible-11/</id>
+    <published>2020-01-09T02:32:56.000Z</published>
+    <updated>2020-01-09T02:40:04.654Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
+    
+    
+      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
+    
+  </entry>
   
   <entry>
     <title>Ansible Jinja2 模板使用</title>
@@ -534,32 +561,6 @@
       <category term="mysql" scheme="http://www.zhangblog.com/tags/mysql/"/>
     
       <category term="percona" scheme="http://www.zhangblog.com/tags/percona/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>-bash：fork：Cannot allocate memory 问题的处理</title>
-    <link href="http://www.zhangblog.com/2019/08/30/linux-thread/"/>
-    <id>http://www.zhangblog.com/2019/08/30/linux-thread/</id>
-    <published>2019-08-30T14:11:39.000Z</published>
-    <updated>2019-08-30T14:15:13.494Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;b&gt;文章来源：&lt;a href=&quot;http://bbs.qcloud.com/thread-22637-1-1.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;fork:cannot allocate
-        
-      
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://www.zhangblog.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="http://www.zhangblog.com/tags/Linux/"/>
     
   </entry>
   

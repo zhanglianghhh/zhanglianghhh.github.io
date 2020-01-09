@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="linux,">
+  <meta name="keywords" content="ansible,">
 
 
 
@@ -83,22 +83,20 @@
 
 
 
-<meta name="description" content="load average 的含义平均负载是指单位时间内，系统处于可运行状态和不可中断状态的平均进程数。和 CPU 使用率并没有直接的关系 一般的进程需要消耗 CPU、内存、磁盘I/O、网络I/O等资源，在这种情况下，平均负载就不是单独指的CPU使用情况。即内存、磁盘、网络等因素也可以影响系统的平均负载值。不过影响最大的是 CPU 使用率、CPU 等待和磁盘I/O。  一个机器的负载情况通常是通过">
-<meta name="keywords" content="linux">
+<meta name="description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
+<meta name="keywords" content="ansible">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux 平均负载 load average 的含义">
-<meta property="og:url" content="http://www.zhangblog.com/2019/09/14/linux-load/index.html">
+<meta property="og:title" content="Ansible Tests详解">
+<meta property="og:url" content="http://www.zhangblog.com/2020/01/09/ansible-11/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="load average 的含义平均负载是指单位时间内，系统处于可运行状态和不可中断状态的平均进程数。和 CPU 使用率并没有直接的关系 一般的进程需要消耗 CPU、内存、磁盘I/O、网络I/O等资源，在这种情况下，平均负载就不是单独指的CPU使用情况。即内存、磁盘、网络等因素也可以影响系统的平均负载值。不过影响最大的是 CPU 使用率、CPU 等待和磁盘I/O。  一个机器的负载情况通常是通过">
+<meta property="og:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/linux_load/load01.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/linux_load/load02.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/linux_load/load03.png">
-<meta property="og:updated_time" content="2019-09-15T04:32:00.089Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
+<meta property="og:updated_time" content="2020-01-09T02:40:04.654Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="linux 平均负载 load average 的含义">
-<meta name="twitter:description" content="load average 的含义平均负载是指单位时间内，系统处于可运行状态和不可中断状态的平均进程数。和 CPU 使用率并没有直接的关系 一般的进程需要消耗 CPU、内存、磁盘I/O、网络I/O等资源，在这种情况下，平均负载就不是单独指的CPU使用情况。即内存、磁盘、网络等因素也可以影响系统的平均负载值。不过影响最大的是 CPU 使用率、CPU 等待和磁盘I/O。  一个机器的负载情况通常是通过">
-<meta name="twitter:image" content="http://www.zhangblog.com/uploads/linux_load/load01.png">
+<meta name="twitter:title" content="Ansible Tests详解">
+<meta name="twitter:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
 
 
 
@@ -128,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/2019/09/14/linux-load/">
+  <link rel="canonical" href="http://www.zhangblog.com/2020/01/09/ansible-11/">
 
 
 
 
 
-  <title>linux 平均负载 load average 的含义 | lightzhang博客</title>
+  <title>Ansible Tests详解 | lightzhang博客</title>
   
 
 
@@ -313,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/09/14/linux-load/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/01/09/ansible-11/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lightzhang">
@@ -330,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">linux 平均负载 load average 的含义</h1>
+          <h1 class="post-title" itemprop="name headline">Ansible Tests详解</h1>
         
 
         <div class="post-meta">
@@ -342,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-14T22:00:16+08:00">
-                2019-09-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-09T10:32:56+08:00">
+                2020-01-09
               </time>
             
 
@@ -366,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/ansbile/" itemprop="url" rel="index">
+                    <span itemprop="name">ansbile</span>
                   </a>
                 </span>
 
@@ -384,8 +382,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/09/14/linux-load/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/09/14/linux-load/" itemprop="commentCount"></span>
+                <a href="/2020/01/09/ansible-11/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/01/09/ansible-11/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -393,7 +391,7 @@
 
           
           
-             <span id="/2019/09/14/linux-load/" class="leancloud_visitors" data-flag-title="linux 平均负载 load average 的含义">
+             <span id="/2020/01/09/ansible-11/" class="leancloud_visitors" data-flag-title="Ansible Tests详解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -418,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.5k
+                  1.6k
                 </span>
               
 
@@ -434,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  17
+                  8
                 </span>
               
             </div>
@@ -455,91 +453,107 @@
       
 
       
-        <h1 id="load-average-的含义"><a href="#load-average-的含义" class="headerlink" title="load average 的含义"></a>load average 的含义</h1><p>平均负载是指单位时间内，系统处于<b>可运行状态</b>和<b>不可中断状态</b>的平均进程数。和 CPU 使用率并没有直接的关系</p>
-<p>一般的进程需要消耗 CPU、内存、磁盘I/O、网络I/O等资源，在这种情况下，平均负载就不是单独指的CPU使用情况。即内存、磁盘、网络等因素也可以影响系统的平均负载值。不过影响最大的是 CPU 使用率、CPU 等待和磁盘I/O。 </p>
-<p>一个机器的负载情况通常是通过 CPU 核数来判断的。当平均负载比 CPU 核数还大的时候，系统已经出现了过载。</p>
-<p>如在单核处理器中，平均负载值为 1 或者小于 1 的时候，系统处理进程会非常轻松，即负载很低。当达到 3 的时候，就会显得很忙，达到 5 或者 8 的时候就不能很好的处理进程了（其中 5 和 8 目前还是个争议的阈值，为了保守起见，建议选择低的）。</p>
-<br>
+        <p><img src="/uploads/ansible/ansible-00-00.png" alt="image"></p>
+<h1 id="主机规划"><a href="#主机规划" class="headerlink" title="主机规划"></a>主机规划</h1><table>
+<thead>
+<tr>
+<th>主机名称</th>
+<th>操作系统版本</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+<th>安装软件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ansi-manager</td>
+<td>CentOS7.5</td>
+<td>172.16.1.180</td>
+<td>10.0.0.180</td>
+<td>ansible</td>
+</tr>
+<tr>
+<td>ansi-haproxy01</td>
+<td>CentOS7.5</td>
+<td>172.16.1.181</td>
+<td>10.0.0.181</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-haproxy02</td>
+<td>CentOS7.5</td>
+<td>172.16.1.182</td>
+<td>10.0.0.182</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web01</td>
+<td>CentOS7.5</td>
+<td>172.16.1.183</td>
+<td>10.0.0.183</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web02</td>
+<td>CentOS7.5</td>
+<td>172.16.1.184</td>
+<td>10.0.0.184</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web03</td>
+<td>CentOS7.5</td>
+<td>172.16.1.185</td>
+<td>10.0.0.185</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="添加用户账号"><a href="#添加用户账号" class="headerlink" title="添加用户账号"></a>添加用户账号</h2><p><b>说明：</b></p>
+<p>1、    运维人员使用的登录账号；</p>
+<p>2、    所有的业务都放在 /app/ 下「yun用户的家目录」，避免业务数据乱放；</p>
+<p>3、    该用户也被 ansible 使用，因为几乎所有的生产环境都是禁止 root 远程登录的（因此该 yun 用户也进行了 sudo 提权）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 使用一个专门的用户，避免直接使用root用户</span><br><span class="line"># 添加用户、指定家目录并指定用户密码</span><br><span class="line"># sudo提权</span><br><span class="line"># 让其它普通用户可以进入该目录查看信息</span><br><span class="line">useradd -u 1050 -d /app yun &amp;&amp; echo &apos;123456&apos; | /usr/bin/passwd --stdin yun</span><br><span class="line">echo &quot;yun  ALL=(ALL)       NOPASSWD: ALL&quot; &gt;&gt;  /etc/sudoers</span><br><span class="line">chmod 755 /app/</span><br></pre></td></tr></table></figure>
 
-<h1 id="查看load-average-数据"><a href="#查看load-average-数据" class="headerlink" title="查看load average 数据"></a>查看load average 数据</h1><p>下面几个命令都可以看到 load average</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># top </span><br><span class="line"># uptime </span><br><span class="line"># w</span><br></pre></td></tr></table></figure>
+<h2 id="Ansible-配置清单Inventory"><a href="#Ansible-配置清单Inventory" class="headerlink" title="Ansible 配置清单Inventory"></a>Ansible 配置清单Inventory</h2><p>之后文章都是如下主机配置清单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_info]$ pwd</span><br><span class="line">/app/ansible_info</span><br><span class="line">[yun@ansi-manager ansible_info]$ cat hosts_key </span><br><span class="line"># 方式1、主机 + 端口 + 密钥</span><br><span class="line">[manageservers]</span><br><span class="line">172.16.1.180:22</span><br><span class="line"></span><br><span class="line">[proxyservers]</span><br><span class="line">172.16.1.18[1:2]:22</span><br><span class="line"></span><br><span class="line"># 方式2：别名 + 主机 + 端口 + 密码</span><br><span class="line">[webservers]</span><br><span class="line">web01 ansible_ssh_host=172.16.1.183 ansible_ssh_port=22</span><br><span class="line">web02 ansible_ssh_host=172.16.1.184 ansible_ssh_port=22</span><br><span class="line">web03 ansible_ssh_host=172.16.1.185 ansible_ssh_port=22</span><br></pre></td></tr></table></figure>
 
-<p><span style="font-size:18px"><b>截图如下：</b></span></p>
-<p>top 命令:<br><img src="/uploads/linux_load/load01.png" alt="image"></p>
-<p>uptime 命令:<br><img src="/uploads/linux_load/load02.png" alt="image"></p>
-<p>w 命令:<br><img src="/uploads/linux_load/load03.png" alt="image"></p>
-<p>这里的 load average 的三个值分别指系统在最后 1/5/15 分钟 的平均负载值。</p>
-<p>根据经验：我们应该把重点放在5/15分钟的平均负载，因为 1 分钟的平均负载太频繁，一瞬间的高并发就会导致该值的大幅度改变。</p>
-<br>
+<h1 id="Tests-概述"><a href="#Tests-概述" class="headerlink" title="Tests 概述"></a>Tests 概述</h1><p>Tests 在 Jinja 中是一种评估模板表达式，并最终返回 True 或 False。Jinja 中就有自带的 Tests 清单，具体地址如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://docs.jinkan.org/docs/jinja2/templates.html#builtin-tests</span><br></pre></td></tr></table></figure>
 
-<h1 id="平均负载与-CPU-使用率"><a href="#平均负载与-CPU-使用率" class="headerlink" title="平均负载与 CPU 使用率"></a>平均负载与 CPU 使用率</h1><p>在日常使用中，我们经常容易把平均负载和 CPU 使用率混淆，这里我们做下区分。</p>
-<p>可能我们会有疑惑，既然平均负载代表的是活跃进程数，那么平均负载高了，不就意味着 CPU 使用率高了吗？</p>
-<p>这里我们还得回到平均负载的含义上来，平均负载是指单位时间内，处于<b>可运行状态</b>和<b>不可中断状态</b>的进程数。所以，他不仅包扩了<b>正在使用CPU</b>的进程，还包括<b>等待 CPU </b>和<b>等待磁盘I/O</b>的进程。</p>
-<p>而 CPU 使用率，是单位时间内 CPU 繁忙情况的统计，和平均负载并不一定完全对应。比如：</p>
-<ul>
-<li>CPU 密集型进程，使用大量 CPU 会导致平均负载升高，此时这两者是一致的。</li>
-<li>I/O 密集型进程， 等待 I/O 也会导致平均负载升高，但是 CPU 使用率不一定很高。</li>
-<li>大量等待CPU的进程调用也会导致平均负载升高，此时的 CPU 使用率也会比较高。</li>
-</ul>
-<br>
+<p>tests 和 filters 的主要区别在于Jinja tests 用于比较，而 filters 用于数据操作，两者在Jinja中有不同的应用。</p>
+<p>与所有模板一样，tests 总是在 Ansible 控制机上执行，而不是在任务的目标机上，因为它们测验本地数据。</p>
+<p>除了 Jinja2 tests 之外，Ansible还提供了一些 tests，用户也可以轻松创建自己的 tests。</p>
+<h1 id="测验字符串"><a href="#测验字符串" class="headerlink" title="测验字符串"></a>测验字符串</h1><p>若要将字符串与子字符串或正则表达式匹配，请使用「match」、「search」或「regex」过滤。</p>
+<p><font color="red">match：必须有开头匹配</font></p>
+<p><font color="red">search：子串匹配</font></p>
+<p><font color="red">regex：正则匹配</font></p>
+<p><b>示例：</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansi_tests]$ pwd</span><br><span class="line">/app/ansible_info/ansi_tests</span><br><span class="line">[yun@ansi-manager ansi_tests]$ cat tests_str.yml </span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">- hosts: manageservers</span><br><span class="line">  vars:</span><br><span class="line">    url: &quot;http://example.com/users/foo/resources/bar&quot;</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;matched pattern 1-1&quot;</span><br><span class="line">      when: url is match(&quot;http://example.com/users/.*/resources/.*&quot;) # True</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;matched pattern 1-2&quot;</span><br><span class="line">      when: url is match(&quot;http://example.com&quot;) # True</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;matched pattern 1-3&quot;</span><br><span class="line">      when: url is match(&quot;.*://example.com&quot;) # True</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;matched pattern 1-4&quot;</span><br><span class="line">      when: url is match(&quot;example.com/users/.*/resources/.*&quot;) # False</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;matched pattern 2-1&quot;</span><br><span class="line">      when: url is search(&quot;/users/.*/resources/.*&quot;) # True</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;matched pattern 2-2&quot;</span><br><span class="line">      when: url is search(&quot;/users/&quot;) # True</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;matched pattern 2-3&quot;</span><br><span class="line">      when: url is search(&quot;/user/&quot;) # False</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;matched pattern 3&quot;</span><br><span class="line">      when: url is regex(&quot;example.com/\w+/foo&quot;) # True</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansi_tests]$ ansible-playbook -b -i ../hosts_key tests_str.yml  # 注意查看执行</span><br></pre></td></tr></table></figure>
 
-<h1 id="平均负载案例分析"><a href="#平均负载案例分析" class="headerlink" title="平均负载案例分析"></a>平均负载案例分析</h1><p>机器是一个 16 核 CPU 的。</p>
-<p>这里会用到 2 个工具，stress 和 sysstat。</p>
-<p>stress 是一个 Linux 系统压力测试工具，这里我们用作异常进程模拟平均负载升高的场景。</p>
-<p>sysstat 是一个 Linux 性能工具，用来监控和分析系统的性能，以下案例中会用到这个包的 2 个命令 mpstat 和 pidstat。</p>
-<ul>
-<li>mpstat 是一个常用的多核 CPU 性能分析工具，用来实时查看每个 CPU 的性能指标，以及所有 CPU 的平均指标。</li>
-<li>pidstat 是一个常用的进程性能分析工具，用来实时查看进程的 CPU、内存、I/O 以及上下文切换等性能指标。</li>
-</ul>
-<h2 id="场景1：CPU密集型进程"><a href="#场景1：CPU密集型进程" class="headerlink" title="场景1：CPU密集型进程"></a>场景1：CPU密集型进程</h2><p><b>我们打开终端一运行 stree 命令，模拟一个 CPU 使用率 100% 的场景</b></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# stress --cpu 1 --timeout 600</span><br><span class="line">stress: info: [5399] dispatching hogs: 1 cpu, 0 io, 0 vm, 0 hdd</span><br></pre></td></tr></table></figure>
+<h1 id="测验版本比较"><a href="#测验版本比较" class="headerlink" title="测验版本比较"></a>测验版本比较</h1><p>使用「version」，用于版本号比较。</p>
+<p>「version」接受的运算符如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;, lt, &lt;=, le, &gt;, gt, &gt;=, ge, ==, =, eq, !=, &lt;&gt;, ne</span><br></pre></td></tr></table></figure>
 
-<p><b>我们打开终端二，查看 CPU 负载的上升状态</b></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# uptime</span><br><span class="line"> 01:50:42 up 1 day,  1:42,  3 users,  load average: 0.68, 0.22, 0.11</span><br><span class="line">[root@localhost ~]# uptime</span><br><span class="line"> 01:50:45 up 1 day,  1:42,  3 users,  load average: 0.71, 0.23, 0.12</span><br><span class="line">[root@localhost ~]# uptime</span><br><span class="line"> 01:51:10 up 1 day,  1:43,  3 users,  load average: 0.81, 0.29, 0.14</span><br><span class="line">[root@localhost ~]# uptime</span><br><span class="line"> 01:54:58 up 1 day,  1:47,  4 users,  load average: 1.03, 0.68, 0.33</span><br><span class="line"></span><br><span class="line"># 一段时间后，我们发现1分钟的平均 load 值超过了1，为啥？ 设备上还有些其他进程运行啊。</span><br></pre></td></tr></table></figure>
+<p>「version」也可以接受「strict」参数，这个参数默认值为「False」，如果设置为「True」则ansible会进行更严格的版本检查：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; sample_version_var is version(&apos;1.0&apos;, operator=&apos;lt&apos;, strict=True) &#125;&#125;</span><br></pre></td></tr></table></figure>
 
-<p><b>打开终端三，查看 CPU 使用状态</b></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mpstat -P ALL 5</span><br><span class="line">Linux 3.10.0-514.16.1.el7.x86_64 (localhost.localdomain)    11/24/2018  _x86_64_    (16 CPU)</span><br><span class="line"></span><br><span class="line">01:53:08 AM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle</span><br><span class="line">01:53:13 AM  all    6.24    0.00    0.01    0.00    0.00    0.00    0.01    0.00    0.00   93.73</span><br><span class="line">01:53:13 AM    0    0.00    0.00    0.00    0.00    0.00    0.00    0.20    0.00    0.00   99.80</span><br><span class="line">01:53:13 AM    1    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">01:53:13 AM    2    0.20    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   99.80</span><br><span class="line">01:53:13 AM    3    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">01:53:13 AM    4    0.00    0.00    0.20    0.00    0.00    0.00    0.00    0.00    0.00   99.80</span><br><span class="line">01:53:13 AM    5    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">01:53:13 AM    6    0.00    0.00    0.20    0.00    0.00    0.00    0.00    0.00    0.00   99.80</span><br><span class="line">01:53:13 AM    7    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">01:53:13 AM    8    0.20    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   99.80</span><br><span class="line">01:53:13 AM    9    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">01:53:13 AM   10    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">01:53:13 AM   11    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">01:53:13 AM   12    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">01:53:13 AM   13    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">01:53:13 AM   14    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line">01:53:13 AM   15  100.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00</span><br><span class="line"></span><br><span class="line"># 这里我们可以看到，在CPU15上 CPU的使用率一直处于100%状态，使用这个工具可以持续看到状态的变化。</span><br></pre></td></tr></table></figure>
+<p><b>示例：</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># 判断 ansible_python_version 版本是否 大于等于 2.7.3</span><br><span class="line">[yun@ansi-manager ansi_tests]$ pwd</span><br><span class="line">/app/ansible_info/ansi_tests</span><br><span class="line">[yun@ansi-manager ansi_tests]$ ll</span><br><span class="line">total 8</span><br><span class="line">drwxrwxr-x 2 yun yun  35 Sep 12 15:14 file</span><br><span class="line">-rw-rw-r-- 1 yun yun 209 Sep 12 15:08 tests_version.yml</span><br><span class="line">[yun@ansi-manager ansi_tests]$ cat file/tests_version.conf.j2   # 涉及文件</span><br><span class="line"># Jinja2 版本测验</span><br><span class="line"></span><br><span class="line">&#123;% if ansible_python_version is version(&apos;2.7.3&apos;, &apos;&gt;=&apos;) %&#125;</span><br><span class="line">result True. ansible_python_version = &#123;&#123; ansible_python_version &#125;&#125;</span><br><span class="line">&#123;% else %&#125;</span><br><span class="line">result False</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansi_tests]$ cat tests_version.yml  # 涉及的playbook文件</span><br><span class="line">---</span><br><span class="line"># ansible tests Version Comparison</span><br><span class="line"></span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;Tests Version Comparison&quot;</span><br><span class="line">      template:</span><br><span class="line">        src: ./file/tests_version.conf.j2</span><br><span class="line">        dest: /tmp/tests_version.conf</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansi_tests]$ ansible-playbook -b -i ../hosts_key tests_version.yml   # 执行</span><br></pre></td></tr></table></figure>
 
-<p>从终端二中可以看到，1 分钟的平均负载慢慢会增加到 1；而从终端三中可以看到，正好有一个 CPU 的使用率为 100%，但他的 iowait 为 0。这说明，平均负载的升高正是由于 CPU 使用率为 100% 导致的。</p>
-<p><b>那么，到底是哪个进程导致了 CPU 使用率为 100% 呢？ 你可以使用 pidstat 来查询：</b></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# pidstat -u 5 1</span><br><span class="line">Linux 3.10.0-514.16.1.el7.x86_64 (localhost.localdomain)    11/24/2018  _x86_64_    (16 CPU)</span><br><span class="line"></span><br><span class="line">02:00:20 AM   UID       PID    %usr %system  %guest    %CPU   CPU  Command</span><br><span class="line">02:00:25 AM     0      8451  100.00    0.00    0.00  100.00     2  stress</span><br><span class="line">02:00:25 AM     0      8456    0.00    0.20    0.00    0.20     3  pidstat</span><br><span class="line">02:00:25 AM     0      8457    0.20    0.20    0.00    0.40    15  client</span><br><span class="line"></span><br><span class="line">Average:      UID       PID    %usr %system  %guest    %CPU   CPU  Command</span><br><span class="line">Average:        0      8451  100.00    0.00    0.00  100.00     -  stress</span><br><span class="line">Average:        0      8456    0.00    0.20    0.00    0.20     -  pidstat</span><br><span class="line">Average:        0      8457    0.20    0.20    0.00    0.40     -  client</span><br></pre></td></tr></table></figure>
+<h1 id="测验子集和超集"><a href="#测验子集和超集" class="headerlink" title="测验子集和超集"></a>测验子集和超集</h1><p>关键字「superset」和「subset」，用于测验一个列表是否<font color="red">包含</font>或<font color="red">被包含</font>于另一个列表</p>
+<p><b>示例：</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansi_tests]$ pwd</span><br><span class="line">/app/ansible_info/ansi_tests</span><br><span class="line">[yun@ansi-manager ansi_tests]$ cat tests_set.yml </span><br><span class="line">---</span><br><span class="line"># tests 子集和超集</span><br><span class="line">- hosts: manageservers</span><br><span class="line"></span><br><span class="line">  vars:</span><br><span class="line">    a: [1,2,3,4,5]</span><br><span class="line">    b: [2,3]</span><br><span class="line">  tasks:</span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;A includes B&quot;</span><br><span class="line">      when: a is superset(b)</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;B is included in A&quot;</span><br><span class="line">      when: b is subset(a)</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansi_tests]$ ansible-playbook -b -i ../hosts_key tests_set.yml  # 注意查看执行</span><br></pre></td></tr></table></figure>
 
-<p>从这里，可以明显看到，stress 进程的 CPU 使用率为 100%。</p>
-<h2 id="场景二：I-O-密集型进程"><a href="#场景二：I-O-密集型进程" class="headerlink" title="场景二：I/O 密集型进程"></a>场景二：I/O 密集型进程</h2><p>首先还是运行 stress 命令，但这次模拟 I/O 压力，即不停的执行 sync。</p>
-<p><b>打开终端一，执行 stress</b></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# stress -i 1 --timeout 3600</span><br><span class="line">stress: info: [8817] dispatching hogs: 0 cpu, 1 io, 0 vm, 0 hdd</span><br></pre></td></tr></table></figure>
+<h1 id="测验列表真假"><a href="#测验列表真假" class="headerlink" title="测验列表真假"></a>测验列表真假</h1><p>关键字「all」和「any」，用于检查列表里元素的真假，列表中所有为真或者任何一个为真。</p>
+<p><font color="red">all：一假则假</font></p>
+<p><font color="red">any：一真则真</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansi_tests]$ pwd</span><br><span class="line">/app/ansible_info/ansi_tests</span><br><span class="line">[yun@ansi-manager ansi_tests]$ cat tests_list.yml </span><br><span class="line">---</span><br><span class="line">#  tests 测验 all any</span><br><span class="line">- hosts: manageservers</span><br><span class="line"></span><br><span class="line">  vars:</span><br><span class="line">    mylist:</span><br><span class="line">      - 1</span><br><span class="line">      - &quot;&#123;&#123; 3 == 3 &#125;&#125;&quot;</span><br><span class="line">      - True</span><br><span class="line">    myotherlist:</span><br><span class="line">      - False</span><br><span class="line">      - True</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;all are true!&quot;</span><br><span class="line">      when: mylist is all</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;at least one is true&quot;</span><br><span class="line">      when: myotherlist is any</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansi_tests]$ ansible-playbook -b -i ../hosts_key tests_list.yml  # 注意查看执行</span><br></pre></td></tr></table></figure>
 
-<p><b>打开终端二</b></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# uptime</span><br><span class="line"> 02:02:36 up 1 day,  1:54,  4 users,  load average: 0.83, 0.85, 0.56</span><br><span class="line">[root@localhost ~]# uptime</span><br><span class="line"> 02:05:27 up 1 day,  1:57,  4 users,  load average: 0.99, 0.92, 0.63</span><br><span class="line"></span><br><span class="line"># 这里，也会看到，load会不断的升高</span><br></pre></td></tr></table></figure>
+<h1 id="测验文件或目录"><a href="#测验文件或目录" class="headerlink" title="测验文件或目录"></a>测验文件或目录</h1><p>用于测验目录、文件、软连接、是否已存在、是相对路径还是绝对路径等等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansi_tests]$ pwd</span><br><span class="line">/app/ansible_info/ansi_tests</span><br><span class="line">[yun@ansi-manager ansi_tests]$ cat tests_path.yml </span><br><span class="line">---</span><br><span class="line">- hosts: manageservers</span><br><span class="line"></span><br><span class="line">  vars:</span><br><span class="line">    # - mypath: /tmp/</span><br><span class="line">    - mypath: /tmp/yum_hard.sh</span><br><span class="line">    - path2: /tmp/</span><br><span class="line">    # - path2: /tmp/yum_hard_2.sh</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;path is a directory&quot;</span><br><span class="line">      when: mypath is directory</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;path is a file&quot;</span><br><span class="line">      when: mypath is file</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;path is a symlink&quot;</span><br><span class="line">      when: mypath is link</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;path already exists&quot;</span><br><span class="line">      when: mypath is exists</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;path is &#123;&#123; (mypath is abs)|ternary(&apos;absolute&apos;,&apos;relative&apos;)&#125;&#125;&quot;</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;path is the same file as path2&quot;</span><br><span class="line">      when: mypath is same_file(path2)</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;path is a mount&quot;</span><br><span class="line">      when: mypath is mount</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansi_tests]$ ansible-playbook -b -i ../hosts_key tests_path.yml  # 注意查看执行</span><br></pre></td></tr></table></figure>
 
-<p><b>打开终端三</b></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mpstat -P ALL 5</span><br><span class="line">Linux 3.10.0-514.16.1.el7.x86_64 (localhost.localdomain)    11/24/2018  _x86_64_    (16 CPU)</span><br><span class="line"></span><br><span class="line">Average:     CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle</span><br><span class="line">Average:     all    0.05    0.00    5.93    0.34    0.00    0.00    0.05    0.00    0.00   93.63</span><br><span class="line">Average:       0    0.16    0.00    0.48    0.00    0.00    0.00    0.14    0.00    0.00   99.22</span><br><span class="line">Average:       1    0.03    0.00    0.09    0.01    0.00    0.00    0.03    0.00    0.00   99.84</span><br><span class="line">Average:       2    0.03    0.00    0.09    0.00    0.00    0.00    0.01    0.00    0.00   99.88</span><br><span class="line">Average:       3    0.09    0.00    0.23    0.00    0.00    0.00    0.03    0.00    0.00   99.65</span><br><span class="line">Average:       4    0.13    0.00    0.53    0.00    0.00    0.00    0.05    0.00    0.00   99.29</span><br><span class="line">Average:       5    0.02    0.00    0.05    0.00    0.00    0.00    0.05    0.00    0.00   99.88</span><br><span class="line">Average:       6    0.02    0.00    0.35    0.00    0.00    0.00    0.08    0.00    0.00   99.56</span><br><span class="line">Average:       7    0.02    0.00    0.04    0.00    0.00    0.00    0.03    0.00    0.00   99.90</span><br><span class="line">Average:       8    0.02    0.00    0.14    0.00    0.00    0.00    0.04    0.00    0.00   99.80</span><br><span class="line">Average:       9    0.10    0.00    0.28    0.00    0.00    0.00    0.03    0.00    0.00   99.59</span><br><span class="line">Average:      10    0.09    0.00    0.34    0.00    0.00    0.00    0.05    0.00    0.00   99.52</span><br><span class="line">Average:      11    0.01    0.00    0.06    0.00    0.00    0.00    0.03    0.00    0.00   99.90</span><br><span class="line">Average:      12    0.03    0.00   33.73    1.96    0.00    0.00    0.05    0.00    0.00   64.23</span><br><span class="line">Average:      13    0.02    0.00    0.04    0.00    0.00    0.00    0.02    0.00    0.00   99.92</span><br><span class="line">Average:      14    0.03    0.00    2.43    0.12    0.00    0.00    0.04    0.00    0.00   97.37</span><br><span class="line">Average:      15    0.04    0.00   56.38    3.30    0.00    0.00    0.17    0.00    0.00   40.12</span><br><span class="line"></span><br><span class="line"># 这里看到，CPU 的 use 使用不是很高，反而 sys 使用的比较高，分布在了 2 个 CPU 上，约等于 100%</span><br><span class="line"># 同时可以看到 iowait 的值也升高了一些，由于我的设备全是 ssd 磁盘，所以这个 io 的性能可能会稍微好一些。</span><br></pre></td></tr></table></figure>
+<h1 id="测验任务执行结果"><a href="#测验任务执行结果" class="headerlink" title="测验任务执行结果"></a>测验任务执行结果</h1><p>对任务执行结果进行测验。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansi_tests]$ pwd</span><br><span class="line">/app/ansible_info/ansi_tests</span><br><span class="line">[yun@ansi-manager ansi_tests]$ cat tests_result.yml </span><br><span class="line">---</span><br><span class="line">- hosts: 172.16.1.180</span><br><span class="line"></span><br><span class="line">  ## 对如下3种情况一次测验</span><br><span class="line">  tasks:</span><br><span class="line">    - shell: /usr/bin/foo</span><br><span class="line">    #- shell: /usr/bin/true</span><br><span class="line">    #- shell: /usr/bin/false</span><br><span class="line">      register: result</span><br><span class="line">      ignore_errors: True</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;&#123;&#123; result &#125;&#125;&quot;</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;it failed&quot;</span><br><span class="line">      when: result is failed</span><br><span class="line"></span><br><span class="line">    # in most cases you&apos;ll want a handler, but if you want to do something right now, this is nice</span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;it changed&quot;</span><br><span class="line">      when: result is changed</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;it succeeded in Ansible &gt;= 2.1&quot;</span><br><span class="line">      when: result is succeeded</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;it succeeded&quot;</span><br><span class="line">      when: result is success</span><br><span class="line"></span><br><span class="line">    - debug:</span><br><span class="line">        msg: &quot;it was skipped&quot;</span><br><span class="line">      when: result is skipped</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansi_tests]$ ansible-playbook -b -i ../hosts_key tests_result.yml  # 注意查看执行</span><br></pre></td></tr></table></figure>
 
-<p>从以上操作中，我们看到 1 分钟的平均负载会慢慢的增加，其中一个 CPU 的系统 CPU 使用率提升到了 56 ，同时 iowait 也提升到了 3，这说明平均负载的升高是由于<b>系统资源使用</b>和 <b>iowait</b> 导致。</p>
-<p>这里更新 sysstat 包的版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# wget http://pagesperso-orange.fr/sebastien.godard/sysstat-12.1.1-1.x86_64.rpm</span><br><span class="line">[root@localhost ~]# rpm -Uvh sysstat-12.1.1-1.x86_64.rpm</span><br></pre></td></tr></table></figure>
-
-<p><b>那么到底是哪个进程，导致系统 CPU 使用率特别高，及 CPU 的等待 wait 情况</b></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# pidstat -u 5 1</span><br><span class="line">Linux 3.10.0-514.16.1.el7.x86_64 (localhost.localdomain)    11/24/2018  _x86_64_    (16 CPU)</span><br><span class="line"></span><br><span class="line">02:34:53 AM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command</span><br><span class="line">02:34:58 AM     0       730    0.00    0.20    0.00    0.00    0.20    12  xfsaild/vda6</span><br><span class="line">02:34:58 AM     0      1471    0.00    0.20    0.00    0.00    0.20    10  kworker/10:2</span><br><span class="line">02:34:58 AM     0      3042    0.00    0.40    0.00    0.00    0.40     7  kworker/7:1H</span><br><span class="line">02:34:58 AM     0     11617    0.00    1.59    0.00    0.00    1.59     2  kworker/u32:1</span><br><span class="line">02:34:58 AM     0     15272    0.00   91.43    0.00    0.40   91.43     7  stress</span><br><span class="line">02:34:58 AM     0     15273    0.00    0.20    0.00    0.00    0.20    14  kworker/u32:0</span><br><span class="line">02:34:58 AM     0     15274    0.20    0.40    0.00    0.00    0.60     5  pidstat</span><br><span class="line"></span><br><span class="line"># %wait：表示等待运行时任务占用 CPU 百分比。</span><br></pre></td></tr></table></figure>
-
-<p>通过以上的信息，可以很清晰的看到，是由于 stress 进程出现了大量的系统使用。</p>
-<h2 id="场景三：大量进程的场景"><a href="#场景三：大量进程的场景" class="headerlink" title="场景三：大量进程的场景"></a>场景三：大量进程的场景</h2><p>当系统中运行进程超出CPU运行能力时，就会出现等待CPU的进程。</p>
-<p><b>我们打开终端一：使用 stress 模拟 24 个进程</b></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# stress -c 24 --timeout 3600</span><br><span class="line">stress: info: [11726] dispatching hogs: 24 cpu, 0 io, 0 vm, 0 hdd</span><br></pre></td></tr></table></figure>
-
-<p><b>打开终端二：看下当前的负载值</b></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# uptime</span><br><span class="line"> 02:20:36 up 1 day,  2:12,  4 users,  load average: 17.22, 5.98, 2.61</span><br><span class="line">[root@localhost ~]# uptime</span><br><span class="line"> 02:20:52 up 1 day,  2:13,  4 users,  load average: 18.72, 6.86, 2.95</span><br><span class="line">[root@localhost ~]# uptime</span><br><span class="line"> 02:24:03 up 1 day,  2:16,  4 users,  load average: 23.77, 14.94, 6.85</span><br></pre></td></tr></table></figure>
-
-<p><b>打开终端三：看下进程的资源使用信息</b></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# pidstat -u 5 1</span><br><span class="line">Linux 3.10.0-514.16.1.el7.x86_64 (localhost.localdomain)    11/24/2018  _x86_64_    (16 CPU)</span><br><span class="line"></span><br><span class="line">02:28:14 AM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command</span><br><span class="line">02:28:19 AM     0        43    0.00    0.20    0.00    0.00    0.20     7  ksoftirqd/7</span><br><span class="line">02:28:19 AM     0      2292    0.20    0.00    0.00    0.00    0.20    11  dstat</span><br><span class="line">02:28:19 AM     0     11727   48.81    0.00    0.00   44.05   48.81     5  stress</span><br><span class="line">02:28:19 AM     0     11728   44.64    0.00    0.00    0.00   44.64    12  stress</span><br><span class="line">02:28:19 AM     0     11729   41.27    0.00    0.00   49.60   41.27    11  stress</span><br><span class="line">02:28:19 AM     0     11730   46.03    0.00    0.00   41.27   46.03     2  stress</span><br><span class="line">02:28:19 AM     0     11731   59.92    0.00    0.00   30.16   59.92    15  stress</span><br><span class="line">02:28:19 AM     0     11732   47.62    0.00    0.00   25.60   47.62    13  stress</span><br><span class="line">02:28:19 AM     0     11733   65.67    0.00    0.00   22.02   65.67     2  stress</span><br><span class="line">02:28:19 AM     0     11734   41.67    0.00    0.00   50.40   41.67    10  stress</span><br><span class="line">02:28:19 AM     0     11735   54.17    0.00    0.00   32.34   54.17    15  stress</span><br><span class="line">02:28:19 AM     0     11736   42.06    0.00    0.00   50.20   42.06     6  stress</span><br><span class="line">02:28:19 AM     0     11737   35.91    0.00    0.00   29.96   35.91     3  stress</span><br><span class="line">02:28:19 AM     0     11738   50.20    0.00    0.00    5.16   50.20    10  stress</span><br><span class="line">02:28:19 AM     0     11739   42.06    0.00    0.00   49.60   42.06     6  stress</span><br><span class="line">02:28:19 AM     0     11740   58.73    0.00    0.00   34.92   58.73     4  stress</span><br><span class="line">02:28:19 AM     0     11741   46.63    0.00    0.00   13.49   46.63     1  stress</span><br><span class="line">02:28:19 AM     0     11742   43.45    0.00    0.00   50.79   43.45    14  stress</span><br><span class="line">02:28:19 AM     0     11743   44.05    0.00    0.00   45.24   44.05     7  stress</span><br><span class="line">02:28:19 AM     0     11744   56.55    0.00    0.00   12.70   56.55     0  stress</span><br><span class="line">02:28:19 AM     0     11745   46.23    0.00    0.00   49.80   46.23     5  stress</span><br><span class="line">02:28:19 AM     0     11746   49.40    0.00    0.00   41.27   49.40    11  stress</span><br><span class="line">02:28:19 AM     0     11747   43.65    0.00    0.00   49.40   43.65    14  stress</span><br><span class="line">02:28:19 AM     0     11748   59.33    0.00    0.00    0.99   59.33     8  stress</span><br><span class="line">02:28:19 AM     0     11749   46.43    0.00    0.00   45.24   46.43     4  stress</span><br><span class="line">02:28:19 AM     0     11750   51.19    0.00    0.00   24.60   51.19     9  stress</span><br><span class="line">02:28:19 AM     0     14276    0.00    0.40    0.00    0.20    0.40    10  pidstat</span><br></pre></td></tr></table></figure>
-
-<p>我们发现，运行的 24 个 stress 进程，出现了资源争抢的问题，既然出现了资源争抢，就会出现等待时间 wait。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>1、iowait 不等于 cpu wait。</p>
-<p>2、iowait 多少算高。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">一般 iowait 达 30% 就算高了，需要关注。</span><br><span class="line">使用：iostat -x 1 10</span><br><span class="line">其中如果 %util 到 70%，那么磁盘IO 就很频繁了，需要重点关注。</span><br></pre></td></tr></table></figure>
-
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p>1、<a href="https://www.jianshu.com/p/9821796a3eb1" target="_blank" rel="noopener">如何理解linux的平均负载？</a></p>
-<hr>
 
       
     </div>
@@ -612,7 +626,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangblog.com/2019/09/14/linux-load/" title="linux 平均负载 load average 的含义">http://www.zhangblog.com/2019/09/14/linux-load/</a>
+    <a href="http://www.zhangblog.com/2020/01/09/ansible-11/" title="Ansible Tests详解">http://www.zhangblog.com/2020/01/09/ansible-11/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -627,7 +641,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
+            <a href="/tags/ansible/" rel="tag"># ansible</a>
           
         </div>
       
@@ -640,8 +654,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/02/percona01/" rel="next" title="percona-toolkit大表操作DDL使用">
-                <i class="fa fa-chevron-left"></i> percona-toolkit大表操作DDL使用
+              <a href="/2020/01/08/ansible-10/" rel="next" title="Ansible Jinja2 模板使用">
+                <i class="fa fa-chevron-left"></i> Ansible Jinja2 模板使用
               </a>
             
           </div>
@@ -649,10 +663,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/26/rsync01/" rel="prev" title="Rsync 服务部署与参数详解">
-                Rsync 服务部署与参数详解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -830,7 +840,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#load-average-的含义"><span class="nav-number">1.</span> <span class="nav-text">load average 的含义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看load-average-数据"><span class="nav-number">2.</span> <span class="nav-text">查看load average 数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#平均负载与-CPU-使用率"><span class="nav-number">3.</span> <span class="nav-text">平均负载与 CPU 使用率</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#平均负载案例分析"><span class="nav-number">4.</span> <span class="nav-text">平均负载案例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#场景1：CPU密集型进程"><span class="nav-number">4.1.</span> <span class="nav-text">场景1：CPU密集型进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景二：I-O-密集型进程"><span class="nav-number">4.2.</span> <span class="nav-text">场景二：I/O 密集型进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景三：大量进程的场景"><span class="nav-number">4.3.</span> <span class="nav-text">场景三：大量进程的场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">4.4.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文章"><span class="nav-number">5.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机规划"><span class="nav-number">1.</span> <span class="nav-text">主机规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户账号"><span class="nav-number">1.1.</span> <span class="nav-text">添加用户账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-配置清单Inventory"><span class="nav-number">1.2.</span> <span class="nav-text">Ansible 配置清单Inventory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tests-概述"><span class="nav-number">2.</span> <span class="nav-text">Tests 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测验字符串"><span class="nav-number">3.</span> <span class="nav-text">测验字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测验版本比较"><span class="nav-number">4.</span> <span class="nav-text">测验版本比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测验子集和超集"><span class="nav-number">5.</span> <span class="nav-text">测验子集和超集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测验列表真假"><span class="nav-number">6.</span> <span class="nav-text">测验列表真假</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测验文件或目录"><span class="nav-number">7.</span> <span class="nav-text">测验文件或目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测验任务执行结果"><span class="nav-number">8.</span> <span class="nav-text">测验任务执行结果</span></a></li></ol></div>
             
 
           </div>

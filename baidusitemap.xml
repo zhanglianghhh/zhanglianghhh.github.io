@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.zhangblog.com/2020/01/09/ansible-11/</loc>
+    <lastmod>2020-01-09</lastmod>
+  </url>  <url>
     <loc>http://www.zhangblog.com/2020/01/08/ansible-10/</loc>
     <lastmod>2020-01-08</lastmod>
   </url>  <url>
