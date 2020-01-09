@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-01-09T02:40:04.654Z</updated>
+  <updated>2020-01-09T06:06:25.468Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ansible Roles详解</title>
+    <link href="http://www.zhangblog.com/2020/01/09/ansible-12/"/>
+    <id>http://www.zhangblog.com/2020/01/09/ansible-12/</id>
+    <published>2020-01-09T04:26:17.000Z</published>
+    <updated>2020-01-09T06:06:25.468Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
+    
+    
+      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
+    
+  </entry>
   
   <entry>
     <title>Ansible Tests详解</title>
@@ -532,35 +559,6 @@
     
     
       <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>percona-toolkit大表操作DDL使用</title>
-    <link href="http://www.zhangblog.com/2019/09/02/percona01/"/>
-    <id>http://www.zhangblog.com/2019/09/02/percona01/</id>
-    <published>2019-09-02T03:02:14.000Z</published>
-    <updated>2019-09-02T03:19:56.402Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/percona/01.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;操作系统与安装数据库&quot;&gt;&lt;a href=&quot;#操作系统与安装数据库&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="mysql" scheme="http://www.zhangblog.com/categories/mysql/"/>
-    
-    
-      <category term="mysql" scheme="http://www.zhangblog.com/tags/mysql/"/>
-    
-      <category term="percona" scheme="http://www.zhangblog.com/tags/percona/"/>
     
   </entry>
   

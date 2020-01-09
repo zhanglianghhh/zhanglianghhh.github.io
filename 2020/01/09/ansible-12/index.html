@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ansible,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
+<meta name="keywords" content="ansible">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible Roles详解">
+<meta property="og:url" content="http://www.zhangblog.com/2020/01/09/ansible-12/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
+<meta property="og:updated_time" content="2020-01-09T06:06:25.468Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ansible Roles详解">
+<meta name="twitter:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2020/01/09/ansible-12/">
+
+
+
+
+
+  <title>Ansible Roles详解 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/01/09/ansible-12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Ansible Roles详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-09T12:26:17+08:00">
+                2020-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ansbile/" itemprop="url" rel="index">
+                    <span itemprop="name">ansbile</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/01/09/ansible-12/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/01/09/ansible-12/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/01/09/ansible-12/" class="leancloud_visitors" data-flag-title="Ansible Roles详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/ansible/ansible-00-00.png" alt="image"></p>
+<h1 id="主机规划"><a href="#主机规划" class="headerlink" title="主机规划"></a>主机规划</h1><table>
+<thead>
+<tr>
+<th>主机名称</th>
+<th>操作系统版本</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+<th>安装软件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ansi-manager</td>
+<td>CentOS7.5</td>
+<td>172.16.1.180</td>
+<td>10.0.0.180</td>
+<td>ansible</td>
+</tr>
+<tr>
+<td>ansi-haproxy01</td>
+<td>CentOS7.5</td>
+<td>172.16.1.181</td>
+<td>10.0.0.181</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-haproxy02</td>
+<td>CentOS7.5</td>
+<td>172.16.1.182</td>
+<td>10.0.0.182</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web01</td>
+<td>CentOS7.5</td>
+<td>172.16.1.183</td>
+<td>10.0.0.183</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web02</td>
+<td>CentOS7.5</td>
+<td>172.16.1.184</td>
+<td>10.0.0.184</td>
+<td></td>
+</tr>
+<tr>
+<td>ansi-web03</td>
+<td>CentOS7.5</td>
+<td>172.16.1.185</td>
+<td>10.0.0.185</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="添加用户账号"><a href="#添加用户账号" class="headerlink" title="添加用户账号"></a>添加用户账号</h2><p><b>说明：</b></p>
+<p>1、    运维人员使用的登录账号；</p>
+<p>2、    所有的业务都放在 /app/ 下「yun用户的家目录」，避免业务数据乱放；</p>
+<p>3、    该用户也被 ansible 使用，因为几乎所有的生产环境都是禁止 root 远程登录的（因此该 yun 用户也进行了 sudo 提权）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 使用一个专门的用户，避免直接使用root用户</span><br><span class="line"># 添加用户、指定家目录并指定用户密码</span><br><span class="line"># sudo提权</span><br><span class="line"># 让其它普通用户可以进入该目录查看信息</span><br><span class="line">useradd -u 1050 -d /app yun &amp;&amp; echo &apos;123456&apos; | /usr/bin/passwd --stdin yun</span><br><span class="line">echo &quot;yun  ALL=(ALL)       NOPASSWD: ALL&quot; &gt;&gt;  /etc/sudoers</span><br><span class="line">chmod 755 /app/</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ansible-配置清单Inventory"><a href="#Ansible-配置清单Inventory" class="headerlink" title="Ansible 配置清单Inventory"></a>Ansible 配置清单Inventory</h2><p>之后文章都是如下主机配置清单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_info]$ pwd</span><br><span class="line">/app/ansible_info</span><br><span class="line">[yun@ansi-manager ansible_info]$ cat hosts_key </span><br><span class="line"># 方式1、主机 + 端口 + 密钥</span><br><span class="line">[manageservers]</span><br><span class="line">172.16.1.180:22</span><br><span class="line"></span><br><span class="line">[proxyservers]</span><br><span class="line">172.16.1.18[1:2]:22</span><br><span class="line"></span><br><span class="line"># 方式2：别名 + 主机 + 端口 + 密码</span><br><span class="line">[webservers]</span><br><span class="line">web01 ansible_ssh_host=172.16.1.183 ansible_ssh_port=22</span><br><span class="line">web02 ansible_ssh_host=172.16.1.184 ansible_ssh_port=22</span><br><span class="line">web03 ansible_ssh_host=172.16.1.185 ansible_ssh_port=22</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ansible-Roles-基本概述"><a href="#Ansible-Roles-基本概述" class="headerlink" title="Ansible Roles 基本概述"></a>Ansible Roles 基本概述</h1><p>前面已经学习了 变量、tasks 和 handlers，那怎样组织 playbook 才是最好的方式呢？</p>
+<p>简单的回答就是：使用 roles。roles 基于一个已知的文件结构，去自动的加载某些 vars_files，tasks 以及 handlers。以便 playbook 更好的调用。相比 playbook，roles 的结构更加的清晰有层次。</p>
+<p>假如：无论我们安装什么软件都会安装时间同步服务，那么每个 playbook 都要编写时间同步服务的 task。此时我们可以将时间同步服务 task 写好，等到用的时候再调用即可。</p>
+<p>注意事项：在编写 roles 的时候，最好能够将一个 task 拆分为一个文件，方便后续复用「彻底打散」。</p>
+<h2 id="Roles-目录结构"><a href="#Roles-目录结构" class="headerlink" title="Roles 目录结构"></a>Roles 目录结构</h2><p>在 roles 目录下，可以使用如下命令创建目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-galaxy init nfs roles   # 其中 nfs 为目录名称</span><br></pre></td></tr></table></figure>
+
+<p>这样创建的目录是全目录，但是我们可能只需要部分目录，因此实际应用中大多数都由我们自己创建目录，而不是用命令创建目录。</p>
+<p>示例目录构造如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager tmp]$ tree ./</span><br><span class="line">./</span><br><span class="line">├── sit.yml</span><br><span class="line">├── webservers.yml</span><br><span class="line">└── roles</span><br><span class="line">    └── nfs                  # 角色名称</span><br><span class="line">        ├── defaults         # 角色默认变量（最低优先级）</span><br><span class="line">        │   └── main.yml</span><br><span class="line">        ├── files            # 文件存放</span><br><span class="line">        ├── handlers         # 触发任务</span><br><span class="line">        │   └── main.yml</span><br><span class="line">        ├── meta             # 依赖关系</span><br><span class="line">        │   └── main.yml</span><br><span class="line">        ├── README.md        # 使用说明</span><br><span class="line">        ├── tasks            # 具体任务</span><br><span class="line">        │   └── main.yml</span><br><span class="line">        ├── templates        # 模板文件</span><br><span class="line">        └── vars             # 角色其他变量</span><br><span class="line">            └── main.yml</span><br><span class="line"></span><br><span class="line">10 directories, 10 files</span><br></pre></td></tr></table></figure>
+
+<p><b>目录说明：</b></p>
+<p>1、首先要有 roles 目录，然后在 roles 目录下创建相应的目录。</p>
+<p>2、roles 下的目录名最好见文知意，如 common 目录表示基础目录，是必要的；nfs 目录表示安装 nfs 服务；memcached 目录表示安装 memcached 服务；等等。</p>
+<p>3、可以根据自身需要创建 roles 下的二级目录，不需要的目录可以不创建，没需要全目录创建。</p>
+<p>4、roles 目录下的二级目录中，有些目录必须包含一个 main.yml 文件，以便 ansible 使用。</p>
+<h2 id="Roles-依赖关系"><a href="#Roles-依赖关系" class="headerlink" title="Roles 依赖关系"></a>Roles 依赖关系</h2><p>roles 允许在使用 role 时自动引入其他 role。roles 的依赖关系存储在 role 目录中的 meta/main.yml 文件中。</p>
+<p>例如：安装 WordPress 是需要先确保 Nginx 和 PHP 都能正常运行，此时都可以在 WordPress 的 role 中定义依赖 Nginx 和 php-fpm 的 role。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager playbook]$ cat /app/roles/wordpress/meta/main.yml</span><br><span class="line">---</span><br><span class="line">dependencies:</span><br><span class="line">  - &#123; role: nginx &#125;</span><br><span class="line">  - &#123; role: php-fpm &#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时 WordPress 的 role 会先执行 Nginx 的 role，然后执行 php-fpm 的 role，最后再执行 WordPress 本身的 role。</p>
+<h1 id="Ansible-Roles-案例实战-部署-NFS-服务"><a href="#Ansible-Roles-案例实战-部署-NFS-服务" class="headerlink" title="Ansible Roles 案例实战-部署 NFS 服务"></a>Ansible Roles 案例实战-部署 NFS 服务</h1><h2 id="整体目录结构"><a href="#整体目录结构" class="headerlink" title="整体目录结构"></a>整体目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ pwd</span><br><span class="line">/app/ansible_info/ansible_roles</span><br><span class="line">[yun@ansi-manager ansible_roles]$ ll</span><br><span class="line">total 4</span><br><span class="line">drwxrwxr-x 2 yun yun  17 Sep 15 19:41 group_vars</span><br><span class="line">-rw-rw-r-- 1 yun yun 108 Sep 15 19:37 nfs_server.yml</span><br><span class="line">drwxrwxr-x 4 yun yun  35 Sep 15 18:00 roles</span><br><span class="line">[yun@ansi-manager ansible_roles]$ tree  # 目录结构</span><br><span class="line">.</span><br><span class="line">├── group_vars</span><br><span class="line">│   └── all</span><br><span class="line">├── nfs_server.yml</span><br><span class="line">└── roles</span><br><span class="line">    ├── nfs  # 服务端</span><br><span class="line">    │   ├── handlers</span><br><span class="line">    │   │   └── main.yml</span><br><span class="line">    │   ├── tasks</span><br><span class="line">    │   │   ├── config.yml</span><br><span class="line">    │   │   ├── install.yml</span><br><span class="line">    │   │   ├── main.yml</span><br><span class="line">    │   │   ├── mkdir.yml</span><br><span class="line">    │   │   ├── start_NFS.yml</span><br><span class="line">    │   │   └── start_rpcbind.yml</span><br><span class="line">    │   └── templates</span><br><span class="line">    │       └── exports.j2</span><br><span class="line">    └── nfs_client  # 客户端</span><br><span class="line">        └── tasks</span><br><span class="line">            └── main.yml</span><br><span class="line"></span><br><span class="line">9 directories, 11 files</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务端信息"><a href="#服务端信息" class="headerlink" title="服务端信息"></a>服务端信息</h2><p><b>目录结构</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ pwd</span><br><span class="line">/app/ansible_info/ansible_roles</span><br><span class="line">[yun@ansi-manager ansible_roles]$ tree roles/nfs</span><br><span class="line">roles/nfs</span><br><span class="line">├── handlers</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── tasks</span><br><span class="line">│   ├── config.yml</span><br><span class="line">│   ├── install.yml</span><br><span class="line">│   ├── main.yml</span><br><span class="line">│   ├── mkdir.yml</span><br><span class="line">│   ├── start_NFS.yml</span><br><span class="line">│   └── start_rpcbind.yml</span><br><span class="line">└── templates</span><br><span class="line">    └── exports.j2</span><br><span class="line"></span><br><span class="line">4 directories, 8 files</span><br></pre></td></tr></table></figure>
+
+<p><b>tasks任务目录信息</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ cat roles/nfs/tasks/main.yml </span><br><span class="line">- include_tasks: install.yml</span><br><span class="line">- include_tasks: config.yml</span><br><span class="line">- include_tasks: mkdir.yml</span><br><span class="line">- include_tasks: start_rpcbind.yml</span><br><span class="line">- include_tasks: start_NFS.yml</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansible_roles]$ cat roles/nfs/tasks/install.yml </span><br><span class="line">- name: &quot;install package NFS &quot;</span><br><span class="line">  yum:</span><br><span class="line">    name:</span><br><span class="line">      - nfs-utils</span><br><span class="line">      - rpcbind</span><br><span class="line">    state: present</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansible_roles]$ cat roles/nfs/tasks/config.yml </span><br><span class="line">- name: &quot;NFS server config and edit restart&quot;</span><br><span class="line">  template:</span><br><span class="line">    src: exports.j2</span><br><span class="line">    dest: /etc/exports</span><br><span class="line">    owner: root</span><br><span class="line">    group: root</span><br><span class="line">    mode: &apos;644&apos;</span><br><span class="line">  notify: &quot;reload NFS server&quot;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansible_roles]$ cat roles/nfs/tasks/mkdir.yml </span><br><span class="line">- name: &quot;create NFS dir&quot;</span><br><span class="line">  file:</span><br><span class="line">    path: /data</span><br><span class="line">    owner: yun</span><br><span class="line">    group: yun</span><br><span class="line">    state: directory</span><br><span class="line">    recurse: yes</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansible_roles]$ cat roles/nfs/tasks/start_rpcbind.yml </span><br><span class="line">- name: &quot;rpcbind server start&quot;</span><br><span class="line">  systemd:</span><br><span class="line">    name: rpcbind</span><br><span class="line">    state: started</span><br><span class="line">    daemon_reload: yes</span><br><span class="line">    enabled: yes</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager ansible_roles]$ cat roles/nfs/tasks/start_NFS.yml </span><br><span class="line">- name: &quot;NFS server start&quot;</span><br><span class="line">  systemd:</span><br><span class="line">    name: nfs</span><br><span class="line">    state: started</span><br><span class="line">    daemon_reload: yes</span><br><span class="line">    enabled: yes</span><br></pre></td></tr></table></figure>
+
+<p><b>handlers任务目录信息</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ cat roles/nfs/handlers/main.yml </span><br><span class="line">- name: &quot;reload NFS server&quot;</span><br><span class="line">  systemd:</span><br><span class="line">    name: nfs</span><br><span class="line">    state: reloaded</span><br></pre></td></tr></table></figure>
+
+<p><b>模板目录信息</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ cat roles/nfs/templates/exports.j2 </span><br><span class="line">&#123;&#123; nfs_dir &#125;&#125;   172.16.1.0/24(rw,sync,root_squash,all_squash,anonuid=1050,anongid=1050)</span><br></pre></td></tr></table></figure>
+
+<h2 id="客户端信息"><a href="#客户端信息" class="headerlink" title="客户端信息"></a>客户端信息</h2><p>客户端就比较简单了，就一个挂载任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ cat roles/nfs_client/tasks/main.yml </span><br><span class="line">- name: &quot;mount NFS server&quot;</span><br><span class="line">  mount:</span><br><span class="line">    src: 172.16.1.180:&#123;&#123; nfs_dir &#125;&#125;</span><br><span class="line">    path: /mnt</span><br><span class="line">    fstype: nfs</span><br><span class="line">    opts: defaults</span><br><span class="line">    state: mounted</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量信息"><a href="#变量信息" class="headerlink" title="变量信息"></a>变量信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ pwd</span><br><span class="line">/app/ansible_info/ansible_roles</span><br><span class="line">[yun@ansi-manager ansible_roles]$ cat group_vars/all </span><br><span class="line"># NFS 服务端目录</span><br><span class="line">nfs_dir: /data</span><br></pre></td></tr></table></figure>
+
+<h2 id="playbook-信息"><a href="#playbook-信息" class="headerlink" title="playbook 信息"></a>playbook 信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ cat nfs_server.yml </span><br><span class="line">---</span><br><span class="line"># NFS server</span><br><span class="line">- hosts: manageservers</span><br><span class="line">  roles:</span><br><span class="line">    - nfs</span><br><span class="line"></span><br><span class="line">- hosts: proxyservers</span><br><span class="line">  roles:</span><br><span class="line">    - nfs_client</span><br></pre></td></tr></table></figure>
+
+<h2 id="任务执行"><a href="#任务执行" class="headerlink" title="任务执行"></a>任务执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ ansible-playbook -b -i ../hosts_key --syntax-check nfs_server.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager ansible_roles]$ ansible-playbook -b -i ../hosts_key -C nfs_server.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager ansible_roles]$ ansible-playbook -b -i ../hosts_key nfs_server.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ansible-Roles-案例实战-部署-memcached-服务"><a href="#Ansible-Roles-案例实战-部署-memcached-服务" class="headerlink" title="Ansible Roles 案例实战-部署 memcached 服务"></a>Ansible Roles 案例实战-部署 memcached 服务</h1><h2 id="整体目录结构-1"><a href="#整体目录结构-1" class="headerlink" title="整体目录结构"></a>整体目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ pwd</span><br><span class="line">/app/ansible_info/ansible_roles</span><br><span class="line">[yun@ansi-manager ansible_roles]$ ll</span><br><span class="line">total 8</span><br><span class="line">-rw-rw-r-- 1 yun yun  71 Sep 16 09:05 memcached_server.yml</span><br><span class="line">drwxrwxr-x 5 yun yun  52 Sep 16 08:38 roles</span><br><span class="line">[yun@ansi-manager ansible_roles]$ tree roles/</span><br><span class="line">roles/</span><br><span class="line">└── memcached</span><br><span class="line">    ├── handlers</span><br><span class="line">    │   └── main.yml</span><br><span class="line">    ├── tasks</span><br><span class="line">    │   ├── config.yml</span><br><span class="line">    │   ├── install.yml</span><br><span class="line">    │   ├── main.yml</span><br><span class="line">    │   └── start.yml</span><br><span class="line">    └── templates</span><br><span class="line">        └── memcached.j2</span><br><span class="line"></span><br><span class="line">11 directories, 15 files</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务信息"><a href="#服务信息" class="headerlink" title="服务信息"></a>服务信息</h2><p><b>目录结构</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager memcached]$ pwd</span><br><span class="line">/app/ansible_info/ansible_roles/roles/memcached</span><br><span class="line">[yun@ansi-manager memcached]$ ll</span><br><span class="line">total 0</span><br><span class="line">drwxrwxr-x 2 yun yun 22 Sep 16 08:56 handlers</span><br><span class="line">drwxrwxr-x 2 yun yun 76 Sep 16 08:53 tasks</span><br><span class="line">drwxrwxr-x 2 yun yun 26 Sep 16 08:55 templates</span><br><span class="line">[yun@ansi-manager memcached]$ tree</span><br><span class="line">.</span><br><span class="line">├── handlers</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── tasks</span><br><span class="line">│   ├── config.yml</span><br><span class="line">│   ├── install.yml</span><br><span class="line">│   ├── main.yml</span><br><span class="line">│   └── start.yml</span><br><span class="line">└── templates</span><br><span class="line">    └── memcached.j2</span><br><span class="line"></span><br><span class="line">3 directories, 6 files</span><br></pre></td></tr></table></figure>
+
+<p><b>tasks任务目录信息</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager memcached]$ cat tasks/main.yml </span><br><span class="line">- include_tasks: install.yml</span><br><span class="line">- include_tasks: config.yml</span><br><span class="line">- include_tasks: start.yml</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager memcached]$ cat tasks/install.yml </span><br><span class="line">- name: &quot; install package memcached&quot;</span><br><span class="line">  yum:</span><br><span class="line">    name: memcached</span><br><span class="line">    state: present</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager memcached]$ cat tasks/config.yml </span><br><span class="line">- name: &quot;memcached server config and edit restart&quot;</span><br><span class="line">  template:</span><br><span class="line">    src: memcached.j2</span><br><span class="line">    dest: /etc/sysconfig/memcached</span><br><span class="line">    owner: root</span><br><span class="line">    group: root</span><br><span class="line">    mode: &apos;644&apos;</span><br><span class="line">  notify: &quot;restart memcached server&quot;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager memcached]$ cat tasks/start.yml </span><br><span class="line">- name: &quot;memcached server start&quot;</span><br><span class="line">  systemd:</span><br><span class="line">    name: memcached</span><br><span class="line">    state: started</span><br><span class="line">    daemon_reload: yes</span><br><span class="line">    enabled: yes</span><br></pre></td></tr></table></figure>
+
+<p><b>handlers任务目录信息</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager memcached]$ cat handlers/main.yml </span><br><span class="line">- name: &quot;restart memcached server&quot;</span><br><span class="line">  systemd:</span><br><span class="line">    name: memcached</span><br><span class="line">    state: restarted</span><br></pre></td></tr></table></figure>
+
+<p><b>模板目录信息</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager memcached]$ cat templates/memcached.j2 </span><br><span class="line">PORT=&quot;11211&quot;</span><br><span class="line">USER=&quot;memcached&quot;</span><br><span class="line">MAXCONN=&quot;1024&quot;</span><br><span class="line">CACHESIZE=&quot;&#123;&#123; ansible_memtotal_mb // 2 &#125;&#125;&quot;</span><br><span class="line">OPTIONS=&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="playbook-信息-1"><a href="#playbook-信息-1" class="headerlink" title="playbook 信息"></a>playbook 信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ cat memcached_server.yml </span><br><span class="line">---</span><br><span class="line"># memcached server</span><br><span class="line">- hosts: manageservers</span><br><span class="line">  roles:</span><br><span class="line">    - memcached</span><br></pre></td></tr></table></figure>
+
+<h2 id="任务执行-1"><a href="#任务执行-1" class="headerlink" title="任务执行"></a>任务执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ ansible-playbook -b -i ../hosts_key --syntax-check memcached_server.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager ansible_roles]$ ansible-playbook -b -i ../hosts_key -C memcached_server.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager ansible_roles]$ ansible-playbook -b -i ../hosts_key memcached_server.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ansible-Roles-案例实战-部署-Rsync-服务"><a href="#Ansible-Roles-案例实战-部署-Rsync-服务" class="headerlink" title="Ansible Roles 案例实战-部署 Rsync 服务"></a>Ansible Roles 案例实战-部署 Rsync 服务</h1><h2 id="整体目录结构-2"><a href="#整体目录结构-2" class="headerlink" title="整体目录结构"></a>整体目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ pwd</span><br><span class="line">/app/ansible_info/ansible_roles</span><br><span class="line">[yun@ansi-manager ansible_roles]$ ll</span><br><span class="line">total 12</span><br><span class="line">drwxrwxr-x 2 yun yun  17 Sep 29 09:33 group_vars</span><br><span class="line">drwxrwxr-x 7 yun yun  86 Sep 29 08:49 roles</span><br><span class="line">-rw-rw-r-- 1 yun yun 116 Sep 29 09:50 rsyncd_server.yml</span><br><span class="line">[yun@ansi-manager ansible_roles]$ tree roles/</span><br><span class="line">roles/</span><br><span class="line">├── rsync_client</span><br><span class="line">│   ├── tasks</span><br><span class="line">│   │   └── main.yml</span><br><span class="line">│   └── templates</span><br><span class="line">│       └── rsync.password.j2</span><br><span class="line">└── rsyncd</span><br><span class="line">    ├── handlers</span><br><span class="line">    │   └── main.yml</span><br><span class="line">    ├── tasks</span><br><span class="line">    │   ├── config.yml</span><br><span class="line">    │   ├── install.yml</span><br><span class="line">    │   ├── main.yml</span><br><span class="line">    │   ├── mkdir.yml</span><br><span class="line">    │   └── start_rsyncd.yml</span><br><span class="line">    └── templates</span><br><span class="line">        ├── rsyncd.conf.j2</span><br><span class="line">        └── rsync.password.j2</span><br><span class="line"></span><br><span class="line">18 directories, 25 files</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务端信息-1"><a href="#服务端信息-1" class="headerlink" title="服务端信息"></a>服务端信息</h2><p><b>目录结构</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager rsyncd]$ pwd</span><br><span class="line">/app/ansible_info/ansible_roles/roles/rsyncd</span><br><span class="line">[yun@ansi-manager rsyncd]$ tree </span><br><span class="line">.</span><br><span class="line">├── handlers</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── tasks</span><br><span class="line">│   ├── config.yml</span><br><span class="line">│   ├── install.yml</span><br><span class="line">│   ├── main.yml</span><br><span class="line">│   ├── mkdir.yml</span><br><span class="line">│   └── start_rsyncd.yml</span><br><span class="line">└── templates</span><br><span class="line">    ├── rsyncd.conf.j2</span><br><span class="line">    └── rsync.password.j2</span><br><span class="line"></span><br><span class="line">3 directories, 8 files</span><br></pre></td></tr></table></figure>
+
+<p><b>tasks任务目录信息</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager rsyncd]$ pwd</span><br><span class="line">/app/ansible_info/ansible_roles/roles/rsyncd</span><br><span class="line">[yun@ansi-manager rsyncd]$ cat tasks/main.yml </span><br><span class="line">- include_tasks: install.yml</span><br><span class="line">- include_tasks: config.yml</span><br><span class="line">- include_tasks: mkdir.yml</span><br><span class="line">- include_tasks: start_rsyncd.yml</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager rsyncd]$ cat tasks/install.yml </span><br><span class="line">- name: &quot;Install package rsync&quot;</span><br><span class="line">  yum:</span><br><span class="line">    name: rsync</span><br><span class="line">    state: present</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager rsyncd]$ cat tasks/config.yml </span><br><span class="line">- name: &quot;rsyncd server config and edit restart&quot;</span><br><span class="line">  template:</span><br><span class="line">    src: rsyncd.conf.j2</span><br><span class="line">    dest: /etc/rsyncd.conf</span><br><span class="line">    owner: root</span><br><span class="line">    group: root</span><br><span class="line">    mode: &apos;644&apos;</span><br><span class="line">  notify: &quot;restart rsyncd server&quot;</span><br><span class="line"></span><br><span class="line">- name: &quot;rsyncd server password file&quot;</span><br><span class="line">  template:</span><br><span class="line">    src: rsync.password.j2</span><br><span class="line">    dest: /etc/rsync.password</span><br><span class="line">    owner: root</span><br><span class="line">    group: root</span><br><span class="line">    mode: &apos;400&apos;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager rsyncd]$ cat tasks/mkdir.yml </span><br><span class="line">- name: &quot;create rsync business backup dir&quot;</span><br><span class="line">  file:</span><br><span class="line">    path: /backup/busi_data</span><br><span class="line">    owner: root</span><br><span class="line">    group: root</span><br><span class="line">    state: directory</span><br><span class="line">    recurse: yes</span><br><span class="line"></span><br><span class="line">- name: &quot;create rsync database backup dir&quot;</span><br><span class="line">  file:</span><br><span class="line">    path: /backup/database</span><br><span class="line">    owner: root</span><br><span class="line">    group: root</span><br><span class="line">    state: directory</span><br><span class="line">    recurse: yes</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager rsyncd]$ cat tasks/start_rsyncd.yml</span><br><span class="line">- name: &quot;rsyncd server start&quot;</span><br><span class="line">  systemd:</span><br><span class="line">    name: rsyncd</span><br><span class="line">    state: started</span><br><span class="line">    daemon_reload: yes</span><br><span class="line">    enabled: yes</span><br></pre></td></tr></table></figure>
+
+<p><b>handlers任务目录信息</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager rsyncd]$ cat handlers/main.yml </span><br><span class="line">- name: &quot;restart rsyncd server&quot;</span><br><span class="line">  systemd:</span><br><span class="line">    name: rsyncd</span><br><span class="line">    state: restarted</span><br></pre></td></tr></table></figure>
+
+<p><b>模板目录信息</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager rsyncd]$ pwd</span><br><span class="line">/app/ansible_info/ansible_roles/roles/rsyncd</span><br><span class="line">[yun@ansi-manager rsyncd]$ cat templates/rsyncd.conf.j2  # 文件1</span><br><span class="line"># 备注：更多参数与更多详解，参见  man rsyncd.conf</span><br><span class="line">#rsync_config---------------start</span><br><span class="line">uid = root</span><br><span class="line">gid = root</span><br><span class="line">use chroot = false</span><br><span class="line">max connections = 200</span><br><span class="line">timeout = 100</span><br><span class="line">pid file = /var/run/rsyncd.pid</span><br><span class="line">lock file = /var/run/rsync.lock</span><br><span class="line">log file = /var/log/rsyncd.log</span><br><span class="line">dont compress = *.gz *.tgz *.zip *.z *.Z *.rpm *.deb *.bz2</span><br><span class="line">ignore errors = true</span><br><span class="line">read only = false</span><br><span class="line">list = false</span><br><span class="line"></span><br><span class="line">## 注意为了避免困惑 hosts allow 和 hosts deny 请二选其一</span><br><span class="line">hosts allow = 172.16.1.0/24,10.9.0.0/16,120.27.48.179</span><br><span class="line"># hosts deny = 10.0.0.0/16</span><br><span class="line"># 支持多个认证账号</span><br><span class="line">auth users = &#123;&#123; auth_user &#125;&#125;</span><br><span class="line">secrets file = /etc/rsync.password</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 数据备份 注意 path 目录的权限信息</span><br><span class="line">[back_data_module]</span><br><span class="line">path = /backup/busi_data/</span><br><span class="line"></span><br><span class="line"># 数据库备份 注意 path 目录的权限信息</span><br><span class="line">[back_db_module]</span><br><span class="line">path = /backup/database/</span><br><span class="line"></span><br><span class="line">#rsync_config---------------end</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager rsyncd]$ cat templates/rsync.password.j2  # 文件2</span><br><span class="line">&#123;&#123; auth_user &#125;&#125;:&#123;&#123; auth_pawd &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="客户端信息-1"><a href="#客户端信息-1" class="headerlink" title="客户端信息"></a>客户端信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager rsync_client]$ pwd</span><br><span class="line">/app/ansible_info/ansible_roles/roles/rsync_client</span><br><span class="line">[yun@ansi-manager rsync_client]$ tree  # 目录结构</span><br><span class="line">.</span><br><span class="line">├── tasks</span><br><span class="line">│   └── main.yml</span><br><span class="line">└── templates</span><br><span class="line">    └── rsync.password.j2</span><br><span class="line"></span><br><span class="line">2 directories, 2 files</span><br><span class="line">[yun@ansi-manager rsync_client]$ cat tasks/main.yml  # tasks 信息</span><br><span class="line">- name: &quot;rsync passwrod file config&quot;</span><br><span class="line">  template:</span><br><span class="line">    src: rsync.password.j2</span><br><span class="line">    dest: /etc/rsync.password</span><br><span class="line">    owner: root</span><br><span class="line">    group: root</span><br><span class="line">    mode: &apos;400&apos;</span><br><span class="line"></span><br><span class="line">[yun@ansi-manager rsync_client]$ cat templates/rsync.password.j2  # 模板信息</span><br><span class="line">&#123;&#123; auth_pawd &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量信息-1"><a href="#变量信息-1" class="headerlink" title="变量信息"></a>变量信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ pwd</span><br><span class="line">/app/ansible_info/ansible_roles</span><br><span class="line">[yun@ansi-manager ansible_roles]$ cat group_vars/all </span><br><span class="line"># NFS 服务端目录</span><br><span class="line">nfs_dir: /data</span><br><span class="line"># rsync daemon 使用</span><br><span class="line">auth_user: rsync_backup</span><br><span class="line">auth_pawd: rsync_backup_pwd</span><br></pre></td></tr></table></figure>
+
+<h2 id="playbook-信息-2"><a href="#playbook-信息-2" class="headerlink" title="playbook 信息"></a>playbook 信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ cat rsyncd_server.yml </span><br><span class="line">---</span><br><span class="line"># rsyncd server</span><br><span class="line">- hosts: manageservers</span><br><span class="line">  roles:</span><br><span class="line">    - rsyncd</span><br><span class="line"></span><br><span class="line">- hosts: proxyservers</span><br><span class="line">  roles:</span><br><span class="line">    - rsync_client</span><br></pre></td></tr></table></figure>
+
+<h2 id="任务执行-2"><a href="#任务执行-2" class="headerlink" title="任务执行"></a>任务执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_roles]$ ansible-playbook -b -i ../hosts_key --syntax-check rsyncd_server.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager ansible_roles]$ ansible-playbook -b -i ../hosts_key -C rsyncd_server.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager ansible_roles]$ ansible-playbook -b -i ../hosts_key rsyncd_server.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ansible-Galaxy"><a href="#Ansible-Galaxy" class="headerlink" title="Ansible Galaxy"></a>Ansible Galaxy</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://galaxy.ansible.com</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/01/09/ansible-12/" title="Ansible Roles详解">http://www.zhangblog.com/2020/01/09/ansible-12/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ansible/" rel="tag"># ansible</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/09/ansible-11/" rel="next" title="Ansible Tests详解">
+                <i class="fa fa-chevron-left"></i> Ansible Tests详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机规划"><span class="nav-number">1.</span> <span class="nav-text">主机规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户账号"><span class="nav-number">1.1.</span> <span class="nav-text">添加用户账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-配置清单Inventory"><span class="nav-number">1.2.</span> <span class="nav-text">Ansible 配置清单Inventory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Roles-基本概述"><span class="nav-number">2.</span> <span class="nav-text">Ansible Roles 基本概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Roles-目录结构"><span class="nav-number">2.1.</span> <span class="nav-text">Roles 目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Roles-依赖关系"><span class="nav-number">2.2.</span> <span class="nav-text">Roles 依赖关系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Roles-案例实战-部署-NFS-服务"><span class="nav-number">3.</span> <span class="nav-text">Ansible Roles 案例实战-部署 NFS 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整体目录结构"><span class="nav-number">3.1.</span> <span class="nav-text">整体目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端信息"><span class="nav-number">3.2.</span> <span class="nav-text">服务端信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端信息"><span class="nav-number">3.3.</span> <span class="nav-text">客户端信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量信息"><span class="nav-number">3.4.</span> <span class="nav-text">变量信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook-信息"><span class="nav-number">3.5.</span> <span class="nav-text">playbook 信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务执行"><span class="nav-number">3.6.</span> <span class="nav-text">任务执行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Roles-案例实战-部署-memcached-服务"><span class="nav-number">4.</span> <span class="nav-text">Ansible Roles 案例实战-部署 memcached 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整体目录结构-1"><span class="nav-number">4.1.</span> <span class="nav-text">整体目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务信息"><span class="nav-number">4.2.</span> <span class="nav-text">服务信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook-信息-1"><span class="nav-number">4.3.</span> <span class="nav-text">playbook 信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务执行-1"><span class="nav-number">4.4.</span> <span class="nav-text">任务执行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Roles-案例实战-部署-Rsync-服务"><span class="nav-number">5.</span> <span class="nav-text">Ansible Roles 案例实战-部署 Rsync 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整体目录结构-2"><span class="nav-number">5.1.</span> <span class="nav-text">整体目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端信息-1"><span class="nav-number">5.2.</span> <span class="nav-text">服务端信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端信息-1"><span class="nav-number">5.3.</span> <span class="nav-text">客户端信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量信息-1"><span class="nav-number">5.4.</span> <span class="nav-text">变量信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook-信息-2"><span class="nav-number">5.5.</span> <span class="nav-text">playbook 信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务执行-2"><span class="nav-number">5.6.</span> <span class="nav-text">任务执行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Galaxy"><span class="nav-number">6.</span> <span class="nav-text">Ansible Galaxy</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  蜀ICP备16019247号</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">103.5k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

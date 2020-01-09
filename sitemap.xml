@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2020/01/09/ansible-12/</loc>
+    
+    <lastmod>2020-01-09T06:06:25.468Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2020/01/09/ansible-11/</loc>
     
     <lastmod>2020-01-09T02:40:04.654Z</lastmod>
