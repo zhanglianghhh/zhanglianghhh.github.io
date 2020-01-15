@@ -92,7 +92,7 @@
 <meta property="og:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
-<meta property="og:updated_time" content="2020-01-08T13:46:17.039Z">
+<meta property="og:updated_time" content="2020-01-15T13:16:57.615Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ansible Jinja2 模板使用">
 <meta name="twitter:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5.1k
+                  5.6k
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  24
+                  27
                 </span>
               
             </div>
@@ -523,8 +523,6 @@
 <p><b>Ansible 如何使用 jinja2 模板</b></p>
 <p>Ansible 使用 jinja2 模板，也就是 template 模板。该模块和 copy 模块一样，都是将文件复制到目标机器，但是区别在于 template 模块可以获取要复制文件中的变量的值，而 copy 则是原封不动的把文件内容复制过去。</p>
 <p>实际运用，比如：针对不同的主机定义不同的变量，template 会在将文件分发前读取变量到 jinja2 模板，之后再然后分发到不同的被管理主机上。</p>
-<p><font color="red">注意事项：</font></p>
-<p>Ansible 允许 jinja2 模板中使用条件判断和循环，但是不允许在 playbook 中使用。</p>
 <h1 id="Jinja2-常用语法"><a href="#Jinja2-常用语法" class="headerlink" title="Jinja2 常用语法"></a>Jinja2 常用语法</h1><p><span style="font-size:16px"><b>赋值</b></span></p>
 <p>为变量赋值，优先级高于 playbook 中的优先级。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;% set username = &apos;zhang&apos; %&#125;</span><br><span class="line">&#123;% set navigation = [(&apos;index.html&apos;, &apos;Index&apos;), (&apos;about.html&apos;, &apos;About&apos;)] %&#125;</span><br></pre></td></tr></table></figure>
@@ -705,6 +703,19 @@
 
 <p><b>文件执行</b></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager jinja]$ ansible-playbook -b -i ../hosts_key --syntax-check test_jinja2_05.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager jinja]$ ansible-playbook -b -i ../hosts_key -C test_jinja2_05.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager jinja]$ ansible-playbook -b -i ../hosts_key test_jinja2_05.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ansible-Jinja2-使用案例-在playbook中使用"><a href="#Ansible-Jinja2-使用案例-在playbook中使用" class="headerlink" title="Ansible Jinja2 使用案例-在playbook中使用"></a>Ansible Jinja2 使用案例-在playbook中使用</h1><p>本例在 ansible 的 playbook 中使用 jinja2.</p>
+<p><b>目录结构</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager jinja]$ pwd</span><br><span class="line">/app/ansible_info/jinja</span><br><span class="line">[yun@ansi-manager jinja]$ ll</span><br><span class="line">total 28</span><br><span class="line">-rw-rw-r-- 1 yun yun 1103 Jan 15 21:06 test_jinja2_06.yml</span><br></pre></td></tr></table></figure>
+
+<p><b>playbook 文件</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager jinja]$ cat test_jinja2_06.yml </span><br><span class="line">---</span><br><span class="line"># 在 playbook 中使用 jinja2 模板</span><br><span class="line">- hosts: proxyservers</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    - name: &quot;test_jinja2_06.info create&quot;</span><br><span class="line">      file:</span><br><span class="line">        path: &quot;/tmp/test_jinja2_06.info&quot;</span><br><span class="line">        owner: yun</span><br><span class="line">        group: yun</span><br><span class="line">        state: touch</span><br><span class="line"></span><br><span class="line">    # 这里用了 jinja2 的过滤器，计算，in 判断，赋值，条件判断，循环</span><br><span class="line">    - name: &quot;test jinja2 06&quot;</span><br><span class="line">      blockinfile:</span><br><span class="line">        path: &quot;/tmp/test_jinja2_06.info&quot;</span><br><span class="line">        marker: &quot;### &#123;mark&#125; ANSIBLE MANAGED BLOCK jinja2 test ###&quot;</span><br><span class="line">        block: |</span><br><span class="line">          name: &quot;&#123;&#123; ansible_eth0[&apos;ipv4&apos;][&apos;address&apos;]|replace(&apos;.&apos;, &apos;-&apos;) &#125;&#125;&quot;</span><br><span class="line">          host: &quot;&#123;&#123; ansible_eth0[&apos;ipv4&apos;][&apos;address&apos;] &#125;&#125;&quot;</span><br><span class="line">          count: &quot;3.2 + 5.3 = &#123;&#123; 3.2 + 5.3 &#125;&#125;;5.3 - 3.2 = &#123;&#123; 5.3 - 3.2 &#125;&#125;;5.3 / 3.2 = &#123;&#123; 5.3 / 3.2 &#125;&#125;;5.3 % 3.2 = &#123;&#123; 5.3 % 3.2 &#125;&#125;;3.2 ** 3 = &#123;&#123; 3.2 ** 3 &#125;&#125;&quot;</span><br><span class="line">          other_count: &quot;&#123;&#123; 1 in [1,2,3] &#125;&#125;&quot;</span><br><span class="line">          ifelse:</span><br><span class="line">          &#123;% set name1 = &apos;zhang&apos; %&#125;</span><br><span class="line">          &#123;% if name1 == &apos;zhang&apos; %&#125;</span><br><span class="line">          结果：True.</span><br><span class="line">          &#123;% else %&#125;</span><br><span class="line">          结果：False.</span><br><span class="line">          &#123;% endif %&#125;</span><br><span class="line">          loop:</span><br><span class="line">          &#123;% for i in range(1,20) %&#125;</span><br><span class="line">            server 172.16.1.&#123;&#123; i &#125;&#125;:80</span><br><span class="line">          &#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+
+<p><b>文件执行</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager jinja]$ ansible-playbook -b -i ../hosts_key --syntax-check test_jinja2_06.yml  # 语法检测</span><br><span class="line">[yun@ansi-manager jinja]$ ansible-playbook -b -i ../hosts_key -C test_jinja2_06.yml  # 预执行，测试执行</span><br><span class="line">[yun@ansi-manager jinja]$ ansible-playbook -b -i ../hosts_key test_jinja2_06.yml  # 执行</span><br></pre></td></tr></table></figure>
+
+<p><b>受控机结果查看</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-haproxy01 ~]$ cat /tmp/test_jinja2_06.info </span><br><span class="line">### BEGIN ANSIBLE MANAGED BLOCK jinja2 test ###</span><br><span class="line">name: &quot;172-16-1-181&quot;</span><br><span class="line">host: &quot;172.16.1.181&quot;</span><br><span class="line">count: &quot;3.2 + 5.3 = 8.5;5.3 - 3.2 = 2.1;5.3 / 3.2 = 1.65625;5.3 % 3.2 = 2.1;3.2 ** 3 = 32.768&quot;</span><br><span class="line">other_count: &quot;True&quot;</span><br><span class="line">ifelse:</span><br><span class="line">结果：False.</span><br><span class="line">loop:</span><br><span class="line">  server 172.16.1.1:80</span><br><span class="line">  server 172.16.1.2:80</span><br><span class="line">  server 172.16.1.3:80</span><br><span class="line">  server 172.16.1.4:80</span><br><span class="line">  server 172.16.1.5:80</span><br><span class="line">  server 172.16.1.6:80</span><br><span class="line">  server 172.16.1.7:80</span><br><span class="line">  server 172.16.1.8:80</span><br><span class="line">  server 172.16.1.9:80</span><br><span class="line">  server 172.16.1.10:80</span><br><span class="line">  server 172.16.1.11:80</span><br><span class="line">  server 172.16.1.12:80</span><br><span class="line">  server 172.16.1.13:80</span><br><span class="line">  server 172.16.1.14:80</span><br><span class="line">  server 172.16.1.15:80</span><br><span class="line">  server 172.16.1.16:80</span><br><span class="line">  server 172.16.1.17:80</span><br><span class="line">  server 172.16.1.18:80</span><br><span class="line">  server 172.16.1.19:80</span><br><span class="line">### END ANSIBLE MANAGED BLOCK jinja2 test ###</span><br></pre></td></tr></table></figure>
 
 
       
@@ -900,7 +911,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -996,7 +1007,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机规划"><span class="nav-number">1.</span> <span class="nav-text">主机规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户账号"><span class="nav-number">1.1.</span> <span class="nav-text">添加用户账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-配置清单Inventory"><span class="nav-number">1.2.</span> <span class="nav-text">Ansible 配置清单Inventory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jinja2-模板概述"><span class="nav-number">2.</span> <span class="nav-text">Jinja2 模板概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jinja2-常用语法"><span class="nav-number">3.</span> <span class="nav-text">Jinja2 常用语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Jinja2-使用案例-常见功能"><span class="nav-number">4.</span> <span class="nav-text">Ansible Jinja2 使用案例-常见功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Jinja2-使用案例-宏与导入"><span class="nav-number">5.</span> <span class="nav-text">Ansible Jinja2 使用案例-宏与导入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Jinja2-使用案例-算术、比较、逻辑"><span class="nav-number">6.</span> <span class="nav-text">Ansible Jinja2 使用案例-算术、比较、逻辑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Jinja2-使用案例-其它运算"><span class="nav-number">7.</span> <span class="nav-text">Ansible Jinja2 使用案例-其它运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Jinja2-使用案例-过滤器和测验"><span class="nav-number">8.</span> <span class="nav-text">Ansible Jinja2 使用案例-过滤器和测验</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机规划"><span class="nav-number">1.</span> <span class="nav-text">主机规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户账号"><span class="nav-number">1.1.</span> <span class="nav-text">添加用户账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-配置清单Inventory"><span class="nav-number">1.2.</span> <span class="nav-text">Ansible 配置清单Inventory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jinja2-模板概述"><span class="nav-number">2.</span> <span class="nav-text">Jinja2 模板概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jinja2-常用语法"><span class="nav-number">3.</span> <span class="nav-text">Jinja2 常用语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Jinja2-使用案例-常见功能"><span class="nav-number">4.</span> <span class="nav-text">Ansible Jinja2 使用案例-常见功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Jinja2-使用案例-宏与导入"><span class="nav-number">5.</span> <span class="nav-text">Ansible Jinja2 使用案例-宏与导入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Jinja2-使用案例-算术、比较、逻辑"><span class="nav-number">6.</span> <span class="nav-text">Ansible Jinja2 使用案例-算术、比较、逻辑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Jinja2-使用案例-其它运算"><span class="nav-number">7.</span> <span class="nav-text">Ansible Jinja2 使用案例-其它运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Jinja2-使用案例-过滤器和测验"><span class="nav-number">8.</span> <span class="nav-text">Ansible Jinja2 使用案例-过滤器和测验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ansible-Jinja2-使用案例-在playbook中使用"><span class="nav-number">9.</span> <span class="nav-text">Ansible Jinja2 使用案例-在playbook中使用</span></a></li></ol></div>
             
 
           </div>
@@ -1030,7 +1041,7 @@
     
       <span class="post-meta-item-text">本站总字数&#58;</span>
     
-    <span title="本站总字数">103.5k</span>
+    <span title="本站总字数">105.1k</span>
   
 </div>
 

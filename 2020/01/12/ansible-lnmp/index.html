@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="ansible,">
 
 
 
@@ -83,16 +83,22 @@
 
 
 
-<meta name="description" content="lightzhang博客，不止于技术，更记录人生点滴感悟。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="lightzhang博客">
-<meta property="og:url" content="http://www.zhangblog.com/archives/2019/index.html">
+<meta name="description" content="主机规划   序号 主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    0 对外提供访问 CentOS7.5  10.0.0.170 keepalived【无主机，只有一个虚拟VIP】   1 ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181 zabbix-agent、haproxy   2 ansi-haproxy02 CentO">
+<meta name="keywords" content="ansible">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible-实战指南-LNMP环境部署">
+<meta property="og:url" content="http://www.zhangblog.com/2020/01/12/ansible-lnmp/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="lightzhang博客，不止于技术，更记录人生点滴感悟。">
+<meta property="og:description" content="主机规划   序号 主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    0 对外提供访问 CentOS7.5  10.0.0.170 keepalived【无主机，只有一个虚拟VIP】   1 ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181 zabbix-agent、haproxy   2 ansi-haproxy02 CentO">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-13-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-13-02.png">
+<meta property="og:updated_time" content="2020-01-12T04:11:59.776Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lightzhang博客">
-<meta name="twitter:description" content="lightzhang博客，不止于技术，更记录人生点滴感悟。">
+<meta name="twitter:title" content="Ansible-实战指南-LNMP环境部署">
+<meta name="twitter:description" content="主机规划   序号 主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    0 对外提供访问 CentOS7.5  10.0.0.170 keepalived【无主机，只有一个虚拟VIP】   1 ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181 zabbix-agent、haproxy   2 ansi-haproxy02 CentO">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
 
 
 
@@ -122,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/archives/2019/">
+  <link rel="canonical" href="http://www.zhangblog.com/2020/01/12/ansible-lnmp/">
 
 
 
 
 
-  <title>归档 | lightzhang博客</title>
+  <title>Ansible-实战指南-LNMP环境部署 | lightzhang博客</title>
   
 
 
@@ -157,7 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -293,740 +299,389 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 目前共计 43 篇日志。 继续努力。
-      </span>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/01/12/ansible-lnmp/">
 
-      
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">Ansible-实战指南-LNMP环境部署</h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-12T12:10:08+08:00">
+                2020-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/12/31/summary-2019/" itemprop="url">
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
               
-                <span itemprop="name">2019年总结</span>
+                <span class="post-meta-item-text">分类于</span>
               
-            </a>
-        
-      </h2>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ansbile/" itemprop="url" rel="index">
+                    <span itemprop="name">ansbile</span>
+                  </a>
+                </span>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-12-31T20:57:21+08:00" content="2019-12-31">
-          12-31
-        </time>
-      </div>
+                
+                
+              
+            </span>
+          
 
-    </header>
-  </article>
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/01/12/ansible-lnmp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/01/12/ansible-lnmp/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
+          
+          
+             <span id="/2020/01/12/ansible-lnmp/" class="leancloud_visitors" data-flag-title="Ansible-实战指南-LNMP环境部署">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/12/30/db-switch/" itemprop="url">
-              
-                <span itemprop="name">亿级数据DB秒级平滑扩容！！！</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-12-30T23:47:06+08:00" content="2019-12-30">
-          12-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <p><img src="/uploads/ansible/ansible-00-00.png" alt="image"></p>
+<h1 id="主机规划"><a href="#主机规划" class="headerlink" title="主机规划"></a>主机规划</h1><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>主机名称</th>
+<th>操作系统版本</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+<th>安装软件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>对外提供访问</td>
+<td>CentOS7.5</td>
+<td></td>
+<td>10.0.0.170</td>
+<td>keepalived【无主机，只有一个虚拟VIP】</td>
+</tr>
+<tr>
+<td>1</td>
+<td>ansi-haproxy01</td>
+<td>CentOS7.5</td>
+<td>172.16.1.181</td>
+<td>10.0.0.181</td>
+<td>zabbix-agent、haproxy</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ansi-haproxy02</td>
+<td>CentOS7.5</td>
+<td>172.16.1.182</td>
+<td>10.0.0.182</td>
+<td>zabbix-agent、haproxy</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ansi-web01</td>
+<td>CentOS7.5</td>
+<td>172.16.1.183</td>
+<td>10.0.0.183</td>
+<td>zabbix-agent、nginx+php、mysql(master)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>ansi-web02</td>
+<td>CentOS7.5</td>
+<td>172.16.1.184</td>
+<td>10.0.0.184</td>
+<td>zabbix-agent、nginx+php、mysql(slave)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ansi-web03</td>
+<td>CentOS7.5</td>
+<td>172.16.1.185</td>
+<td>10.0.0.185</td>
+<td>zabbix-agent、nginx+php、mysql(slave)、memcached</td>
+</tr>
+<tr>
+<td>6</td>
+<td>ansi-manager</td>
+<td>CentOS7.5</td>
+<td>172.16.1.180</td>
+<td>10.0.0.180</td>
+<td>Ansible、zabbix-server、zabbix-agent、mariadb「zabbix使用」</td>
+</tr>
+</tbody></table>
+<p>系统初始化：必要的系统初始化</p>
+<p>基础组件包括：zabbix监控，mariadb（用于存放zabbix监控信息）</p>
+<p>业务组件包括：MySQL、memcached、nginx、PHP、haproxy、keepalived</p>
+<h2 id="添加用户账号"><a href="#添加用户账号" class="headerlink" title="添加用户账号"></a>添加用户账号</h2><p><b>说明：</b></p>
+<p>1、    运维人员使用的登录账号；</p>
+<p>2、    所有的业务都放在 /app/ 下「yun用户的家目录」，避免业务数据乱放；</p>
+<p>3、    该用户也被 ansible 使用，因为几乎所有的生产环境都是禁止 root 远程登录的（因此该 yun 用户也进行了 sudo 提权）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 使用一个专门的用户，避免直接使用root用户</span><br><span class="line"># 添加用户、指定家目录并指定用户密码</span><br><span class="line"># sudo提权</span><br><span class="line"># 让其它普通用户可以进入该目录查看信息</span><br><span class="line">useradd -u 1050 -d /app yun &amp;&amp; echo &apos;123456&apos; | /usr/bin/passwd --stdin yun</span><br><span class="line">echo &quot;yun  ALL=(ALL)       NOPASSWD: ALL&quot; &gt;&gt;  /etc/sudoers</span><br><span class="line">chmod 755 /app/</span><br></pre></td></tr></table></figure>
 
-        
-        
+<p>备注：记得在管理机 172.16.1.180 上实现对其他机器的免密登录。</p>
+<h2 id="Ansible-配置清单Inventory"><a href="#Ansible-配置清单Inventory" class="headerlink" title="Ansible 配置清单Inventory"></a>Ansible 配置清单Inventory</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_info]$ cat hosts_key</span><br><span class="line"># 业务组件分组</span><br><span class="line">[manageservers]</span><br><span class="line">172.16.1.180:22</span><br><span class="line"></span><br><span class="line">[keepalivedserver]</span><br><span class="line">172.16.1.181</span><br><span class="line">172.16.1.182</span><br><span class="line"></span><br><span class="line">[proxyservers]</span><br><span class="line">172.16.1.18[1:2]:22</span><br><span class="line"></span><br><span class="line">[webservers]</span><br><span class="line">172.16.1.183 ansible_ssh_port=22</span><br><span class="line">172.16.1.184 ansible_ssh_port=22</span><br><span class="line">172.16.1.185 ansible_ssh_port=22</span><br><span class="line"></span><br><span class="line">[memservers]</span><br><span class="line">172.16.1.185</span><br><span class="line"></span><br><span class="line">[dbservers]</span><br><span class="line">172.16.1.183</span><br><span class="line">172.16.1.184</span><br><span class="line">172.16.1.185</span><br><span class="line"></span><br><span class="line">[dbservers_master]</span><br><span class="line">172.16.1.183</span><br><span class="line"></span><br><span class="line">[dbservers_slave]</span><br><span class="line">172.16.1.184</span><br><span class="line">172.16.1.185</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 基础组件分组</span><br><span class="line">## 数据库组件分组</span><br><span class="line">[zabbixdbserver]</span><br><span class="line">172.16.1.180</span><br><span class="line"></span><br><span class="line">## 基础业务组件分组</span><br><span class="line">[zabbixserver]</span><br><span class="line">172.16.1.180</span><br></pre></td></tr></table></figure>
 
-        
+<h1 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h1><p><img src="/uploads/ansible/ansible-13-01.png" alt="image"></p>
+<h1 id="实战项目GitHub地址"><a href="#实战项目GitHub地址" class="headerlink" title="实战项目GitHub地址"></a>实战项目GitHub地址</h1><p>该项目已经放在了<font color="red">GitHub</font>上，地址如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/zhanglianghhh/ansible-example-lnmp</span><br></pre></td></tr></table></figure>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p>如需要请自行访问或下载。<br><img src="/uploads/ansible/ansible-13-02.png" alt="image"></p>
+<h1 id="项目任务分解"><a href="#项目任务分解" class="headerlink" title="项目任务分解"></a>项目任务分解</h1><p>获取需求并拿到机器的时候，这时需要我们做如下分析：</p>
+<p>1、主机规划：每台主机用于部署什么模块【本文第一节实际已经规划好了】</p>
+<p>2、普通用户创建与提权：如果机器是公司统一初始化的，那么可以不创建普通用户，只需提权即可。</p>
+<p>3、ansible管理机到其他机器的免密登录。</p>
+<p>4、具体任务分解：包括机器必要的初始化、基础组件部署与业务组件部署。如果公司对机器做了统一的初始化，那么视情况而定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">## 系统初始化</span><br><span class="line">1、基础镜像源与epel镜像源</span><br><span class="line">2、必要的包安装</span><br><span class="line">3、指定环境变量，如：为history命令添加时间信息；操作命令记录到系统日志</span><br><span class="line">4、用户名、主机添加背景色，用于生产环境，这样可以减少人为的误操作</span><br><span class="line">5、别名配置，如：alias grep=&apos;grep --color=auto&apos;</span><br><span class="line">6、内核参数修改，生产中视情况而定</span><br><span class="line">7、创建web站点用户 www。</span><br><span class="line">8、创建必要的目录，如：软件包存放目录，后期运维脚本存放目录</span><br><span class="line"></span><br><span class="line">## 基础组件部署</span><br><span class="line">1、yum 安装mariadb，用于存放监控信息</span><br><span class="line">2、yum 安装zabbix server</span><br><span class="line">3、yum 安装zabbix agent</span><br><span class="line"></span><br><span class="line">## 业务组件部署</span><br><span class="line">1、MySQL 数据库部署</span><br><span class="line">2、MySQL 主从实现</span><br><span class="line">3、memcached 部署</span><br><span class="line">4、nginx 部署</span><br><span class="line">5、PHP 部署</span><br><span class="line">6、nginx、PHP整合，nginx、PHP、MySQL整合，nginx、PHP、memcached整合</span><br><span class="line">7、haproxy 部署</span><br><span class="line">8、keepalived 部署</span><br></pre></td></tr></table></figure>
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/12/24/zookeeper03/" itemprop="url">
-              
-                <span itemprop="name">zookeeper常用命令行操作</span>
-              
-            </a>
-        
-      </h2>
+<h1 id="项目编写与后续验证步骤"><a href="#项目编写与后续验证步骤" class="headerlink" title="项目编写与后续验证步骤"></a>项目编写与后续验证步骤</h1><p>请参见：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/zhanglianghhh/ansible-example-lnmp</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-12-24T22:10:52+08:00" content="2019-12-24">
-          12-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+<p>这里包含：涉及目录与文件说明；服务部署；停止服务【因为是个人电脑通过虚拟机实现的】；服务验证。</p>
+<p>为了避免重复这里就不单独说了，参见上面地址即可。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/12/24/zookeeper02/" itemprop="url">
-              
-                <span itemprop="name">zookeeper部署</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-12-24T15:53:54+08:00" content="2019-12-24">
-          12-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/12/19/zookeeper01/" itemprop="url">
-              
-                <span itemprop="name">zookeeper入门概述</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-12-19T23:42:00+08:00" content="2019-12-19">
-          12-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/12/15/bg-color/" itemprop="url">
-              
-                <span itemprop="name">Linux 用户名、主机添加背景色</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-12-15T20:35:21+08:00" content="2019-12-15">
-          12-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/09/26/rsync01/" itemprop="url">
-              
-                <span itemprop="name">Rsync 服务部署与参数详解</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-26T11:11:30+08:00" content="2019-09-26">
-          09-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/09/14/linux-load/" itemprop="url">
-              
-                <span itemprop="name">linux 平均负载 load average 的含义</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-14T22:00:16+08:00" content="2019-09-14">
-          09-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/09/02/percona01/" itemprop="url">
-              
-                <span itemprop="name">percona-toolkit大表操作DDL使用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-02T11:02:14+08:00" content="2019-09-02">
-          09-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/30/linux-thread/" itemprop="url">
-              
-                <span itemprop="name">-bash：fork：Cannot allocate memory 问题的处理</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-30T22:11:39+08:00" content="2019-08-30">
-          08-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/12/proxy_dns01/" itemprop="url">
-              
-                <span itemprop="name">“反向代理层”绝不能替代“DNS轮询”！</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-12T17:52:01+08:00" content="2019-08-12">
-          08-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/12/slb01/" itemprop="url">
-              
-                <span itemprop="name">负载均衡，必须要知道的 5 件事</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-12T10:38:59+08:00" content="2019-08-12">
-          08-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/08/docker-swarm01/" itemprop="url">
-              
-                <span itemprop="name">Docker Swarm 常用操作</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-08T16:04:49+08:00" content="2019-08-08">
-          08-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/06/docker-deploy01/" itemprop="url">
-              
-                <span itemprop="name">安装指定版本的 Docker 服务</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-06T17:27:51+08:00" content="2019-08-06">
-          08-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/08/06/iptables01/" itemprop="url">
-              
-                <span itemprop="name">VMware 实现 iptables NAT及端口映射</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-06T16:20:04+08:00" content="2019-08-06">
-          08-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/23/jvm01/" itemprop="url">
-              
-                <span itemprop="name">从头到尾说一次 Java 垃圾回收</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-23T22:38:10+08:00" content="2019-07-23">
-          07-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/20/curl03/" itemprop="url">
-              
-                <span itemprop="name">Linux curl 表单登录或提交与cookie使用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-20T16:29:13+08:00" content="2019-07-20">
-          07-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/18/curl02/" itemprop="url">
-              
-                <span itemprop="name">Linux curl 常用示例</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-18T17:00:01+08:00" content="2019-07-18">
-          07-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/16/curl01/" itemprop="url">
-              
-                <span itemprop="name">Linux curl 命令详解</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-16T15:21:18+08:00" content="2019-07-16">
-          07-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/07/05/nfs1/" itemprop="url">
-              
-                <span itemprop="name">NFS 服务搭建与配置</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-05T15:53:45+08:00" content="2019-07-05">
-          07-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/01/12/ansible-lnmp/" title="Ansible-实战指南-LNMP环境部署">http://www.zhangblog.com/2020/01/12/ansible-lnmp/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ansible/" rel="tag"># ansible</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/09/ansible-12/" rel="next" title="Ansible Roles详解">
+                <i class="fa fa-chevron-left"></i> Ansible Roles详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2019/page/2/">2</a><a class="extend next" rel="next" href="/archives/2019/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -1034,6 +689,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -1054,8 +716,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1158,6 +829,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机规划"><span class="nav-number">1.</span> <span class="nav-text">主机规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户账号"><span class="nav-number">1.1.</span> <span class="nav-text">添加用户账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-配置清单Inventory"><span class="nav-number">1.2.</span> <span class="nav-text">Ansible 配置清单Inventory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统架构"><span class="nav-number">2.</span> <span class="nav-text">系统架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实战项目GitHub地址"><span class="nav-number">3.</span> <span class="nav-text">实战项目GitHub地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目任务分解"><span class="nav-number">4.</span> <span class="nav-text">项目任务分解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目编写与后续验证步骤"><span class="nav-number">5.</span> <span class="nav-text">项目编写与后续验证步骤</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1354,6 +1041,10 @@ document.write('<script src="' + src + '" id="sozz"><\/script>');
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-01-09T06:06:25.468Z</updated>
+  <updated>2020-01-12T04:11:59.776Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ansible-实战指南-LNMP环境部署</title>
+    <link href="http://www.zhangblog.com/2020/01/12/ansible-lnmp/"/>
+    <id>http://www.zhangblog.com/2020/01/12/ansible-lnmp/</id>
+    <published>2020-01-12T04:10:08.000Z</published>
+    <updated>2020-01-12T04:11:59.776Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
+    
+    
+      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
+    
+  </entry>
   
   <entry>
     <title>Ansible Roles详解</title>
@@ -75,7 +102,7 @@
     <link href="http://www.zhangblog.com/2020/01/08/ansible-10/"/>
     <id>http://www.zhangblog.com/2020/01/08/ansible-10/</id>
     <published>2020-01-08T09:40:21.000Z</published>
-    <updated>2020-01-08T13:46:17.039Z</updated>
+    <updated>2020-01-15T13:16:57.615Z</updated>
     
     <summary type="html">
     
@@ -533,32 +560,6 @@
     
     
       <category term="Rsync" scheme="http://www.zhangblog.com/tags/Rsync/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>linux 平均负载 load average 的含义</title>
-    <link href="http://www.zhangblog.com/2019/09/14/linux-load/"/>
-    <id>http://www.zhangblog.com/2019/09/14/linux-load/</id>
-    <published>2019-09-14T14:00:16.000Z</published>
-    <updated>2019-09-15T04:32:00.089Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;load-average-的含义&quot;&gt;&lt;a href=&quot;#load-average-的含义&quot; class=&quot;headerlink&quot; title=&quot;load average 的含义&quot;&gt;&lt;/a&gt;load average
-        
-      
-    
-    </summary>
-    
-      <category term="linux" scheme="http://www.zhangblog.com/categories/linux/"/>
-    
-    
-      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
     
   </entry>
   
