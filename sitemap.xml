@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2020/02/20/tcpdump-01/</loc>
+    
+    <lastmod>2020-02-20T13:28:09.885Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.zhangblog.com/2020/02/04/disk-io/</loc>
+    
+    <lastmod>2020-02-04T15:14:53.141Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2020/01/08/ansible-10/</loc>
     
     <lastmod>2020-01-15T13:16:57.615Z</lastmod>

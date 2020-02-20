@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-01-12T04:11:59.776Z</updated>
+  <updated>2020-02-20T13:28:09.885Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,65 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux tcpdump 命令详解与示例</title>
+    <link href="http://www.zhangblog.com/2020/02/20/tcpdump-01/"/>
+    <id>http://www.zhangblog.com/2020/02/20/tcpdump-01/</id>
+    <published>2020-02-20T13:09:54.000Z</published>
+    <updated>2020-02-20T13:28:09.885Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/tcpdump/tcpdump-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;命令概要&quot;&gt;&lt;a href=&quot;#命令概要&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="tcpdump" scheme="http://www.zhangblog.com/categories/tcpdump/"/>
+    
+    
+      <category term="tcpdump" scheme="http://www.zhangblog.com/tags/tcpdump/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 查看磁盘IO并找出占用IO读写很高的进程</title>
+    <link href="http://www.zhangblog.com/2020/02/04/disk-io/"/>
+    <id>http://www.zhangblog.com/2020/02/04/disk-io/</id>
+    <published>2020-02-04T15:01:47.000Z</published>
+    <updated>2020-02-04T15:14:53.141Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/disk-io/disk-io-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;根据磁盘IO告警，找到占用磁盘IO (util)读写很高的进程。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="linux" scheme="http://www.zhangblog.com/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
+    
+      <category term="disk" scheme="http://www.zhangblog.com/tags/disk/"/>
+    
+  </entry>
   
   <entry>
     <title>Ansible-实战指南-LNMP环境部署</title>
@@ -506,60 +565,6 @@
       <category term="ZooKeeper" scheme="http://www.zhangblog.com/tags/ZooKeeper/"/>
     
       <category term="Java" scheme="http://www.zhangblog.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux 用户名、主机添加背景色</title>
-    <link href="http://www.zhangblog.com/2019/12/15/bg-color/"/>
-    <id>http://www.zhangblog.com/2019/12/15/bg-color/</id>
-    <published>2019-12-15T12:35:21.000Z</published>
-    <updated>2019-12-15T12:39:11.459Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;背景色添加&quot;&gt;&lt;a href=&quot;#背景色添加&quot; class=&quot;headerlink&quot; title=&quot;背景色添加&quot;&gt;&lt;/a&gt;背景色添加&lt;/h1&gt;&lt;p&gt;Linux 用户名、主机添加背景色，用于生产环境，这样可以减少人为的误操作。&lt;/p&gt;
-&lt;figure
-        
-      
-    
-    </summary>
-    
-      <category term="Shell" scheme="http://www.zhangblog.com/categories/Shell/"/>
-    
-    
-      <category term="Shell" scheme="http://www.zhangblog.com/tags/Shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Rsync 服务部署与参数详解</title>
-    <link href="http://www.zhangblog.com/2019/09/26/rsync01/"/>
-    <id>http://www.zhangblog.com/2019/09/26/rsync01/</id>
-    <published>2019-09-26T03:11:30.000Z</published>
-    <updated>2019-09-26T07:19:30.895Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/rsync/rsync-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;Rsync-简介&quot;&gt;&lt;a href=&quot;#Rsync-简介&quot; class=&quot;headerlink&quot; title=&quot;Rsync
-        
-      
-    
-    </summary>
-    
-      <category term="Rsync" scheme="http://www.zhangblog.com/categories/Rsync/"/>
-    
-    
-      <category term="Rsync" scheme="http://www.zhangblog.com/tags/Rsync/"/>
     
   </entry>
   
