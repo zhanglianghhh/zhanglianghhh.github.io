@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="VMware,Linux,虚拟机,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="如何在Vmware安装Linux CentOS 7.7系统，并且是最小化安装。之后进行必要的配置修改，并实现基础优化。最后做一个快照。  安装Linux CentOS 7.7安装要求：安装后的虚拟机用于服务器，因此要最小化安装，不要安装多余的软件，也不需要安装图形化界面。 虚拟机如何创建参见：「VMware如何创建虚拟机并设置虚拟机网络》」 启动虚拟机  安装CentOS 7选择（通过上下键切">
+<meta name="keywords" content="VMware,Linux,虚拟机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VMware安装Linux CentOS 7.7系统">
+<meta property="og:url" content="http://www.zhangblog.com/2020/03/15/VMware-02/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="如何在Vmware安装Linux CentOS 7.7系统，并且是最小化安装。之后进行必要的配置修改，并实现基础优化。最后做一个快照。  安装Linux CentOS 7.7安装要求：安装后的虚拟机用于服务器，因此要最小化安装，不要安装多余的软件，也不需要安装图形化界面。 虚拟机如何创建参见：「VMware如何创建虚拟机并设置虚拟机网络》」 启动虚拟机  安装CentOS 7选择（通过上下键切">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-00.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-03.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-04.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-05.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-06.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-07.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-08.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-09.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-10.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-11.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-12.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-13.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-14.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-15.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-16.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-17.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-18.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-19.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-20.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-21.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-22.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-23.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-24.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-25.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-26.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-27.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-28.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-29.png">
+<meta property="og:updated_time" content="2020-03-15T09:38:35.049Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VMware安装Linux CentOS 7.7系统">
+<meta name="twitter:description" content="如何在Vmware安装Linux CentOS 7.7系统，并且是最小化安装。之后进行必要的配置修改，并实现基础优化。最后做一个快照。  安装Linux CentOS 7.7安装要求：安装后的虚拟机用于服务器，因此要最小化安装，不要安装多余的软件，也不需要安装图形化界面。 虚拟机如何创建参见：「VMware如何创建虚拟机并设置虚拟机网络》」 启动虚拟机  安装CentOS 7选择（通过上下键切">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/VMware/VMware-00.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2020/03/15/VMware-02/">
+
+
+
+
+
+  <title>VMware安装Linux CentOS 7.7系统 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/03/15/VMware-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">VMware安装Linux CentOS 7.7系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-15T17:20:55+08:00">
+                2020-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VMware/" itemprop="url" rel="index">
+                    <span itemprop="name">VMware</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VMware/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VMware/Linux/虚拟机/" itemprop="url" rel="index">
+                    <span itemprop="name">虚拟机</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/15/VMware-02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/03/15/VMware-02/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/03/15/VMware-02/" class="leancloud_visitors" data-flag-title="VMware安装Linux CentOS 7.7系统">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/VMware/VMware-00.jpg" alt="image"></p>
+<blockquote>
+<p>如何在Vmware安装Linux CentOS 7.7系统，并且是最小化安装。之后进行必要的配置修改，并实现基础优化。最后做一个快照。</p>
+</blockquote>
+<h1 id="安装Linux-CentOS-7-7"><a href="#安装Linux-CentOS-7-7" class="headerlink" title="安装Linux CentOS 7.7"></a>安装Linux CentOS 7.7</h1><p><font color="red">安装要求：安装后的虚拟机用于服务器，因此要最小化安装，不要安装多余的软件，也不需要安装图形化界面。</font></p>
+<p>虚拟机如何创建参见：「<a href="http://www.zhangblog.com/2020/03/15/VMware-01/">VMware如何创建虚拟机并设置虚拟机网络</a>》」</p>
+<p>启动虚拟机</p>
+<p><img src="/uploads/VMware/VMware-02-01.png" alt="image"></p>
+<h2 id="安装CentOS-7"><a href="#安装CentOS-7" class="headerlink" title="安装CentOS 7"></a>安装CentOS 7</h2><p>选择（通过上下键切换选项）第一个，安装CentOS 7</p>
+<p><img src="/uploads/VMware/VMware-02-02.png" alt="image"></p>
+<h2 id="键盘及语言选择"><a href="#键盘及语言选择" class="headerlink" title="键盘及语言选择"></a>键盘及语言选择</h2><p>选择键盘模式，选择语言以及语言所在国家（比如：美国英语，英国英语、印度英语、澳大利亚英语、加拿大英语等）</p>
+<p><img src="/uploads/VMware/VMware-02-03.png" alt="image"></p>
+<h2 id="选择时区"><a href="#选择时区" class="headerlink" title="选择时区"></a>选择时区</h2><p>选择：亚洲/上海</p>
+<p><img src="/uploads/VMware/VMware-02-04.png" alt="image"></p>
+<p><img src="/uploads/VMware/VMware-02-05.png" alt="image"></p>
+<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><p>最小化安装</p>
+<p><img src="/uploads/VMware/VMware-02-06.png" alt="image"></p>
+<p><img src="/uploads/VMware/VMware-02-07.png" alt="image"></p>
+<h2 id="磁盘分区"><a href="#磁盘分区" class="headerlink" title="磁盘分区"></a>磁盘分区</h2><p>自己手动分区</p>
+<p><img src="/uploads/VMware/VMware-02-08.png" alt="image"></p>
+<p><img src="/uploads/VMware/VMware-02-09.png" alt="image"></p>
+<p><img src="/uploads/VMware/VMware-02-10.png" alt="image"></p>
+<p>/boot 分区磁盘大小分配</p>
+<p><img src="/uploads/VMware/VMware-02-11.png" alt="image"></p>
+<p>/ 根分区磁盘大小分配</p>
+<p><img src="/uploads/VMware/VMware-02-12.png" alt="image"></p>
+<p>分区后的结果</p>
+<p><img src="/uploads/VMware/VMware-02-13.png" alt="image"></p>
+<p>分区生效</p>
+<p><img src="/uploads/VMware/VMware-02-14.png" alt="image"></p>
+<h2 id="安装系统并设置root密码"><a href="#安装系统并设置root密码" class="headerlink" title="安装系统并设置root密码"></a>安装系统并设置root密码</h2><p><img src="/uploads/VMware/VMware-02-15.png" alt="image"></p>
+<p><img src="/uploads/VMware/VMware-02-16.png" alt="image"></p>
+<p><img src="/uploads/VMware/VMware-02-17.png" alt="image"></p>
+<p><img src="/uploads/VMware/VMware-02-18.png" alt="image"></p>
+<p><img src="/uploads/VMware/VMware-02-19.png" alt="image"></p>
+<h1 id="系统配置修改"><a href="#系统配置修改" class="headerlink" title="系统配置修改"></a>系统配置修改</h1><p><font color="red">注意：安装好后，没有ifconfig命令</font></p>
+<h2 id="主机名修改"><a href="#主机名修改" class="headerlink" title="主机名修改"></a>主机名修改</h2><p>不要使用默认的主机名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/hostname</span><br><span class="line">zhang</span><br><span class="line">[root@localhost ~]# hostname zhang</span><br></pre></td></tr></table></figure>
+
+<p>操作完毕后，重新登录下就能发现hostname已经改好了。</p>
+<h2 id="网卡修改"><a href="#网卡修改" class="headerlink" title="网卡修改"></a>网卡修改</h2><p>默认的网卡名不为eth0，eth1。因此要进行修改。</p>
+<p><img src="/uploads/VMware/VMware-02-20.png" alt="image"></p>
+<h3 id="修改-grub-文件并生效"><a href="#修改-grub-文件并生效" class="headerlink" title="修改 grub 文件并生效"></a>修改 grub 文件并生效</h3><p>修改 <font color="red">/etc/default/grub</font> 文件，并在变量GRUB_CMDLINE_LINU中加入：net.ifnames=0来禁用新的命名规则。</p>
+<p><img src="/uploads/VMware/VMware-02-21.png" alt="image"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@zhang ~]# cat /etc/default/grub </span><br><span class="line">GRUB_TIMEOUT=5</span><br><span class="line">GRUB_DISTRIBUTOR=&quot;$(sed &apos;s, release .*$,,g&apos; /etc/system-release)&quot;</span><br><span class="line">GRUB_DEFAULT=saved</span><br><span class="line">GRUB_DISABLE_SUBMENU=true</span><br><span class="line">GRUB_TERMINAL_OUTPUT=&quot;console&quot;</span><br><span class="line">GRUB_CMDLINE_LINUX=&quot;net.ifnames=0 crashkernel=auto spectre_v2=retpoline rhgb quiet&quot;</span><br><span class="line">GRUB_DISABLE_RECOVERY=&quot;true&quot;</span><br></pre></td></tr></table></figure>
+
+<p>保存后需要重新生成grub配置文件并更新内核参数，为此我们需要运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># grub2-mkconfig -o /etc/grub2.cfg  # 结果如下图</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/VMware/VMware-02-22.png" alt="image"></p>
+<h3 id="对网卡名重命名并修改文件配置"><a href="#对网卡名重命名并修改文件配置" class="headerlink" title="对网卡名重命名并修改文件配置"></a>对网卡名重命名并修改文件配置</h3><p>网卡重命名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># cd /etc/sysconfig/network-scripts/</span><br><span class="line"># mv ifcfg-ens33 ifcfg-eth0</span><br><span class="line"># mv ifcfg-ens37 ifcfg-eth1</span><br></pre></td></tr></table></figure>
+
+<p>eth0（内网）修改后文件内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@zhang network-scripts]# cat ifcfg-eth0 </span><br><span class="line">DEVICE=eth0</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NM_CONTROLLED=yes</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">USERCTL=no</span><br><span class="line">IPADDR=172.16.1.100</span><br><span class="line">NETMASK=255.255.255.0</span><br></pre></td></tr></table></figure>
+
+<p>eth1（外网）修改后文件内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@zhang network-scripts]# cat ifcfg-eth1</span><br><span class="line">DEVICE=eth1</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NM_CONTROLLED=yes</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">USERCTL=no</span><br><span class="line">IPADDR=10.0.0.100</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=10.0.0.2</span><br><span class="line">DNS1=223.5.5.5</span><br><span class="line">DNS2=223.6.6.6</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">备注：</font></p>
+<ol>
+<li>eth1的IPADDR=10.0.0.100这里是当做外网IP使用，由于是在个人电脑上Vmware创建的虚拟机，不会有真实的公网IP配置。因此用了10.0.0.0/8 网段当做外网IP。</li>
+<li>GATEWAY=10.0.0.2 是在Vmware虚拟机全局设置的。参见：「<a href="http://www.zhangblog.com/2020/03/15/VMware-01/">VMware如何创建虚拟机并设置虚拟机网络</a>」</li>
+<li>DNS1=223.5.5.5 与 DNS2=223.6.6.6 是阿里云的DNS地址。</li>
+<li>最好不要使用谷歌的 8.8.8.8，因为这个国外的IP，可能会被限制。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl restart network.service</span><br></pre></td></tr></table></figure>
+
+<p>重启网卡服务，就能生效了。</p>
+<h2 id="ifconfig安装"><a href="#ifconfig安装" class="headerlink" title="ifconfig安装"></a>ifconfig安装</h2><p><img src="/uploads/VMware/VMware-02-23.png" alt="image"></p>
+<p>可见上网正常</p>
+<p>如何安装ifconfig命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># yum search ifconfig       # 查询该命令在哪个工具包中</span><br><span class="line"># yum install -y net-tools</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/VMware/VMware-02-24.png" alt="image"></p>
+<p>执行ifconfig命令</p>
+<p><img src="/uploads/VMware/VMware-02-25.png" alt="image"></p>
+<h1 id="安装完之后系统基础优化"><a href="#安装完之后系统基础优化" class="headerlink" title="安装完之后系统基础优化"></a>安装完之后系统基础优化</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 相关网址：</span><br><span class="line">https://github.com/zhanglianghhh/system-install/blob/master/linux-CenetOS7/basedOptimi_7.sh</span><br></pre></td></tr></table></figure>
+
+<p><span style="font-size:16px">具体优化点：</span></p>
+<ol>
+<li>CentOS base镜像源和epel镜像源</li>
+<li>关闭并禁止selinux</li>
+<li>关闭并禁止firewall防护墙</li>
+<li>创建一个普通用户并可提权（生产环境是不允许直接使用root登录的）</li>
+<li>时间同步（同步阿里云的时间服务器）</li>
+<li>若无任何操作多久断开连接与保存历史命令记录条数（脚本中是注释的，请根据需要是否去掉注释）</li>
+<li>给一些命令添加别名。目的：显示颜色，更加方便查看信息。如：alias grep=’grep –color=auto’；alias ls=’ls –color=auto’等</li>
+<li>将用户的操作记录保存到系统日志中。这样如果出现问题，有历史记录可追述</li>
+<li>系统文件句柄数设置</li>
+<li>内核参数优化</li>
+<li>隐藏系统内核参数并设置登录欢迎语</li>
+<li>SSH配置优化</li>
+<li>必要的包安装。比如：bash-completion、lrzsz、sysstat、nmap、tree、telnet、dos2unix、nc、vim等。</li>
+</ol>
+<h1 id="快照管理【重要★★★★★】"><a href="#快照管理【重要★★★★★】" class="headerlink" title="快照管理【重要★★★★★】"></a>快照管理【重要★★★★★】</h1><p>完成上述步骤后，整个Vmware Linux CentOS 7.7 部署实际已经完毕。但还有重要的一步也必须完成。</p>
+<p>该虚拟机我们是<font color="red">用作模板的</font>，后续其他虚拟机是从该虚拟机克隆过去的，并且克隆的就是此刻虚拟机的状态，还有就是为了保证该虚拟机当前状态即使被改变也能进行恢复。因此我们要做一个快照，用于保存虚拟机的当前状态。</p>
+<p>关闭客户机，为了节约磁盘空间，因此我们先关机，之后做快照。</p>
+<p><img src="/uploads/VMware/VMware-02-26.png" alt="image"></p>
+<p>选择快照管理</p>
+<p><img src="/uploads/VMware/VMware-02-27.png" alt="image"></p>
+<p>写好快照名称与描述。一定要有意义，不然时间久了自己也不清楚是什么东东。</p>
+<p><img src="/uploads/VMware/VMware-02-28.png" alt="image"></p>
+<p>快照制作完毕</p>
+<p><img src="/uploads/VMware/VMware-02-29.png" alt="image"></p>
+<h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>「<a href="http://www.zhangblog.com/2020/03/15/VMware-01/">VMware如何创建虚拟机并设置虚拟机网络</a>》」</p>
+<p>完毕！</p>
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/03/15/VMware-02/" title="VMware安装Linux CentOS 7.7系统">http://www.zhangblog.com/2020/03/15/VMware-02/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/VMware/" rel="tag"># VMware</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/虚拟机/" rel="tag"># 虚拟机</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/15/VMware-01/" rel="next" title="VMware如何创建虚拟机并设置虚拟机网络">
+                <i class="fa fa-chevron-left"></i> VMware如何创建虚拟机并设置虚拟机网络
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/15/VMware-03/" rel="prev" title="VMware如何克隆一个虚拟机">
+                VMware如何克隆一个虚拟机 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Linux-CentOS-7-7"><span class="nav-number">1.</span> <span class="nav-text">安装Linux CentOS 7.7</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装CentOS-7"><span class="nav-number">1.1.</span> <span class="nav-text">安装CentOS 7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#键盘及语言选择"><span class="nav-number">1.2.</span> <span class="nav-text">键盘及语言选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择时区"><span class="nav-number">1.3.</span> <span class="nav-text">选择时区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件安装"><span class="nav-number">1.4.</span> <span class="nav-text">软件安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘分区"><span class="nav-number">1.5.</span> <span class="nav-text">磁盘分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装系统并设置root密码"><span class="nav-number">1.6.</span> <span class="nav-text">安装系统并设置root密码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统配置修改"><span class="nav-number">2.</span> <span class="nav-text">系统配置修改</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主机名修改"><span class="nav-number">2.1.</span> <span class="nav-text">主机名修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网卡修改"><span class="nav-number">2.2.</span> <span class="nav-text">网卡修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改-grub-文件并生效"><span class="nav-number">2.2.1.</span> <span class="nav-text">修改 grub 文件并生效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对网卡名重命名并修改文件配置"><span class="nav-number">2.2.2.</span> <span class="nav-text">对网卡名重命名并修改文件配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ifconfig安装"><span class="nav-number">2.3.</span> <span class="nav-text">ifconfig安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装完之后系统基础优化"><span class="nav-number">3.</span> <span class="nav-text">安装完之后系统基础优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快照管理【重要★★★★★】"><span class="nav-number">4.</span> <span class="nav-text">快照管理【重要★★★★★】</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读"><span class="nav-number">5.</span> <span class="nav-text">相关阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  蜀ICP备16019247号</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">114.8k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

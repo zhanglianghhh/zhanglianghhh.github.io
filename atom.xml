@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-02-20T13:28:09.885Z</updated>
+  <updated>2020-03-15T09:42:52.430Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,118 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>VMware如何克隆一个虚拟机</title>
+    <link href="http://www.zhangblog.com/2020/03/15/VMware-03/"/>
+    <id>http://www.zhangblog.com/2020/03/15/VMware-03/</id>
+    <published>2020-03-15T09:20:57.000Z</published>
+    <updated>2020-03-15T09:42:52.430Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/VMware/VMware-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如何在Vmware克隆一个虚拟机，并修改哪些配置。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="VMware" scheme="http://www.zhangblog.com/categories/VMware/"/>
+    
+      <category term="Linux" scheme="http://www.zhangblog.com/categories/VMware/Linux/"/>
+    
+      <category term="虚拟机" scheme="http://www.zhangblog.com/categories/VMware/Linux/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+    
+      <category term="VMware" scheme="http://www.zhangblog.com/tags/VMware/"/>
+    
+      <category term="Linux" scheme="http://www.zhangblog.com/tags/Linux/"/>
+    
+      <category term="虚拟机" scheme="http://www.zhangblog.com/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VMware安装Linux CentOS 7.7系统</title>
+    <link href="http://www.zhangblog.com/2020/03/15/VMware-02/"/>
+    <id>http://www.zhangblog.com/2020/03/15/VMware-02/</id>
+    <published>2020-03-15T09:20:55.000Z</published>
+    <updated>2020-03-15T09:38:35.049Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/VMware/VMware-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如何在Vmware安装Linux CentOS
+        
+      
+    
+    </summary>
+    
+      <category term="VMware" scheme="http://www.zhangblog.com/categories/VMware/"/>
+    
+      <category term="Linux" scheme="http://www.zhangblog.com/categories/VMware/Linux/"/>
+    
+      <category term="虚拟机" scheme="http://www.zhangblog.com/categories/VMware/Linux/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+    
+      <category term="VMware" scheme="http://www.zhangblog.com/tags/VMware/"/>
+    
+      <category term="Linux" scheme="http://www.zhangblog.com/tags/Linux/"/>
+    
+      <category term="虚拟机" scheme="http://www.zhangblog.com/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VMware如何创建虚拟机并设置虚拟机网络</title>
+    <link href="http://www.zhangblog.com/2020/03/15/VMware-01/"/>
+    <id>http://www.zhangblog.com/2020/03/15/VMware-01/</id>
+    <published>2020-03-15T09:20:52.000Z</published>
+    <updated>2020-03-15T09:30:33.686Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/VMware/VMware-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如何在Vmware中创建Linux虚拟机并设置Vmware和虚拟机网络&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="VMware" scheme="http://www.zhangblog.com/categories/VMware/"/>
+    
+      <category term="Linux" scheme="http://www.zhangblog.com/categories/VMware/Linux/"/>
+    
+      <category term="虚拟机" scheme="http://www.zhangblog.com/categories/VMware/Linux/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+    
+      <category term="VMware" scheme="http://www.zhangblog.com/tags/VMware/"/>
+    
+      <category term="Linux" scheme="http://www.zhangblog.com/tags/Linux/"/>
+    
+      <category term="虚拟机" scheme="http://www.zhangblog.com/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux tcpdump 命令详解与示例</title>
@@ -476,95 +588,6 @@
     
     
       <category term="数据库" scheme="http://www.zhangblog.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>zookeeper常用命令行操作</title>
-    <link href="http://www.zhangblog.com/2019/12/24/zookeeper03/"/>
-    <id>http://www.zhangblog.com/2019/12/24/zookeeper03/</id>
-    <published>2019-12-24T14:10:52.000Z</published>
-    <updated>2019-12-24T14:15:48.245Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/zookeeper/zk01-00.png&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ZooKeeper" scheme="http://www.zhangblog.com/categories/ZooKeeper/"/>
-    
-    
-      <category term="ZooKeeper" scheme="http://www.zhangblog.com/tags/ZooKeeper/"/>
-    
-      <category term="Java" scheme="http://www.zhangblog.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>zookeeper部署</title>
-    <link href="http://www.zhangblog.com/2019/12/24/zookeeper02/"/>
-    <id>http://www.zhangblog.com/2019/12/24/zookeeper02/</id>
-    <published>2019-12-24T07:53:54.000Z</published>
-    <updated>2019-12-24T08:06:41.321Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/zookeeper/zk01-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;讲述zookeeper的单机部署、伪集群部署与集群部署&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1
-        
-      
-    
-    </summary>
-    
-      <category term="ZooKeeper" scheme="http://www.zhangblog.com/categories/ZooKeeper/"/>
-    
-    
-      <category term="ZooKeeper" scheme="http://www.zhangblog.com/tags/ZooKeeper/"/>
-    
-      <category term="Java" scheme="http://www.zhangblog.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>zookeeper入门概述</title>
-    <link href="http://www.zhangblog.com/2019/12/19/zookeeper01/"/>
-    <id>http://www.zhangblog.com/2019/12/19/zookeeper01/</id>
-    <published>2019-12-19T15:42:00.000Z</published>
-    <updated>2019-12-19T15:57:59.635Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/zookeeper/zk01-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;Zookeeper概念简介和应用场景&quot;&gt;&lt;a href=&quot;#Zookeeper概念简介和应用场景&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ZooKeeper" scheme="http://www.zhangblog.com/categories/ZooKeeper/"/>
-    
-    
-      <category term="ZooKeeper" scheme="http://www.zhangblog.com/tags/ZooKeeper/"/>
-    
-      <category term="Java" scheme="http://www.zhangblog.com/tags/Java/"/>
     
   </entry>
   
