@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-27.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-28.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/VMware/VMware-02-29.png">
-<meta property="og:updated_time" content="2020-03-15T10:03:46.239Z">
+<meta property="og:updated_time" content="2020-03-15T10:14:44.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VMware安装Linux CentOS 7.7系统">
 <meta name="twitter:description" content="如何在Vmware安装Linux CentOS 7.7系统，并且是最小化安装。之后进行必要的配置修改，并实现基础优化。最后做一个快照。  安装Linux CentOS 7.7安装要求：安装后的虚拟机用于服务器，因此要最小化安装，不要安装多余的软件，也不需要安装图形化界面。 虚拟机如何创建参见：「VMware如何创建虚拟机并设置虚拟机网络》」 启动虚拟机  安装CentOS 7选择（通过上下键切">
@@ -590,7 +590,7 @@
 </ol>
 <h1 id="快照管理【重要★★★★★】"><a href="#快照管理【重要★★★★★】" class="headerlink" title="快照管理【重要★★★★★】"></a>快照管理【重要★★★★★】</h1><p>完成上述步骤后，整个Vmware Linux CentOS 7.7 部署实际已经完毕。但还有重要的一步也必须完成。</p>
 <p>该虚拟机我们是<font color="red">用作模板的</font>，后续其他虚拟机是从该虚拟机克隆过去的，并且克隆的就是此刻虚拟机的状态，还有就是为了保证该虚拟机当前状态即使被改变也能进行恢复。因此我们要做一个快照，用于保存虚拟机的当前状态。</p>
-<p>关闭客户机，为了节约磁盘空间，因此我们先关机，之后做快照。</p>
+<p>关闭客户机，为了节约磁盘空间，因此我们<font color="red">先关机，之后做快照</font>。</p>
 <p><img src="/uploads/VMware/VMware-02-26.png" alt="image"></p>
 <p>选择快照管理</p>
 <p><img src="/uploads/VMware/VMware-02-27.png" alt="image"></p>
