@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-04-05.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-04-06.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-04-07.png">
-<meta property="og:updated_time" content="2020-01-04T05:27:14.262Z">
+<meta property="og:updated_time" content="2020-03-17T07:46:41.114Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ansible Ad-Hoc与常用模块">
 <meta name="twitter:description" content="主机规划   主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    ansi-manager CentOS7.5 172.16.1.180 10.0.0.180 ansible   ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181    ansi-haproxy02 CentOS7.5 172.16.1.182 10.0.0.182">
@@ -622,7 +622,7 @@
 
 <p><b>相关选项说明：</b></p>
 <p>src：源文件，当前仅支持文件，不支持目录</p>
-<p>dest：推送数据的目标路径，默认为：<font color="red">dest路径/hostname/src路径。参见上面示例</font></p>
+<p>dest：推送数据的目标路径，默认为：<font color="red">dest[路径]/hostname/src[路径]。参见上面示例</font></p>
 <p>flat： 默认 False。当为 yes/True 时，那么拷贝效果类似于本地的 copy。</p>
 <h2 id="template-模板使用"><a href="#template-模板使用" class="headerlink" title="template 模板使用"></a>template 模板使用</h2><p>该模块功能类似于 copy 模块，但 copy 模块不支持变量，不支持模板。</p>
 <p>template 模块支持变量，支持 Jinja 模板。因此如果生成中的配置文件涉及变量，那么请使用 template 模块。</p>

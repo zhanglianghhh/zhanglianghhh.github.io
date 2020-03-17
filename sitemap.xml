@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2020/01/02/ansible-04/</loc>
+    
+    <lastmod>2020-03-17T07:46:41.114Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2020/03/15/VMware-02/</loc>
     
     <lastmod>2020-03-15T10:14:44.321Z</lastmod>
@@ -96,13 +103,6 @@
     <loc>http://www.zhangblog.com/2020/01/06/ansible-05/</loc>
     
     <lastmod>2020-01-06T03:27:05.590Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.zhangblog.com/2020/01/02/ansible-04/</loc>
-    
-    <lastmod>2020-01-04T05:27:14.262Z</lastmod>
     
   </url>
   
