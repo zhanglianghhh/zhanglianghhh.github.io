@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-03-15T10:03:54.857Z</updated>
+  <updated>2020-04-12T09:42:28.325Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Xshell如何远程连接Linux服务器详解</title>
+    <link href="http://www.zhangblog.com/2020/04/12/xshell-01/"/>
+    <id>http://www.zhangblog.com/2020/04/12/xshell-01/</id>
+    <published>2020-04-12T09:36:30.000Z</published>
+    <updated>2020-04-12T09:42:28.325Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/Xshell/xshell-00.png&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="xshell" scheme="http://www.zhangblog.com/categories/xshell/"/>
+    
+    
+      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
+    
+      <category term="xshell" scheme="http://www.zhangblog.com/tags/xshell/"/>
+    
+  </entry>
   
   <entry>
     <title>VMware如何克隆一个虚拟机</title>
@@ -555,33 +583,6 @@
     
     
       <category term="总结" scheme="http://www.zhangblog.com/tags/%E6%80%BB%E7%BB%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>亿级数据DB秒级平滑扩容！！！</title>
-    <link href="http://www.zhangblog.com/2019/12/30/db-switch/"/>
-    <id>http://www.zhangblog.com/2019/12/30/db-switch/</id>
-    <published>2019-12-30T15:47:06.000Z</published>
-    <updated>2019-12-30T15:50:31.788Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;blockquote&gt;
-&lt;p&gt;文章转载自微信公众号：「架构师之路」，作者：
-        
-      
-    
-    </summary>
-    
-      <category term="数据库" scheme="http://www.zhangblog.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-      <category term="数据库" scheme="http://www.zhangblog.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
