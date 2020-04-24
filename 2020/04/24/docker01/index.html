@@ -91,15 +91,15 @@
 <meta property="og:site_name" content="lightzhang博客">
 <meta property="og:description" content="什么是DockerDocker提供了一个可以运行你的应用程序的封装，或者说容器。它原本是dotCloud的一个内部项目，开源的时候吸引了大量的关注与讨论，后续导致dotCloud把公司名称改为了Docker Inc。Docker 最初是在 Ubuntu 12.04 上开发实现的；Red Hat 则从 RHEL 6.5 开始对 Docker 进行支持；Google 也在其 PaaS 产品中广泛应用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/dokcer/docker-00.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/dokcer/docker-01-01.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/dokcer/docker-01-02.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/dokcer/docker-01-03.png">
-<meta property="og:updated_time" content="2020-04-24T03:05:12.395Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-00.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-01-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-01-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-01-03.png">
+<meta property="og:updated_time" content="2020-04-24T03:09:40.996Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker简介与安装">
 <meta name="twitter:description" content="什么是DockerDocker提供了一个可以运行你的应用程序的封装，或者说容器。它原本是dotCloud的一个内部项目，开源的时候吸引了大量的关注与讨论，后续导致dotCloud把公司名称改为了Docker Inc。Docker 最初是在 Ubuntu 12.04 上开发实现的；Red Hat 则从 RHEL 6.5 开始对 Docker 进行支持；Google 也在其 PaaS 产品中广泛应用">
-<meta name="twitter:image" content="http://www.zhangblog.com/uploads/dokcer/docker-00.jpg">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/docker/docker-00.jpg">
 
 
 
@@ -456,17 +456,17 @@
       
 
       
-        <p><img src="/uploads/dokcer/docker-00.jpg" alt="image"></p>
+        <p><img src="/uploads/docker/docker-00.jpg" alt="image"></p>
 <h1 id="什么是Docker"><a href="#什么是Docker" class="headerlink" title="什么是Docker"></a>什么是Docker</h1><p>Docker提供了一个可以运行你的应用程序的封装，或者说容器。它原本是dotCloud的一个内部项目，开源的时候吸引了大量的关注与讨论，后续导致dotCloud把公司名称改为了Docker Inc。Docker 最初是在 Ubuntu 12.04 上开发实现的；Red Hat 则从 RHEL 6.5 开始对 Docker 进行支持；Google 也在其 PaaS 产品中广泛应用 Docker。</p>
 <p>Docker 使用 Google 公司推出的 Go 语言进行开发实现并遵从Apache2.0协议开源，基于 Linux 内核的 cgroup，namespace，以及 OverlayFS 类的 Union FS 等技术，对进程进行封装隔离，属于操作系统层面的虚拟化技术。由于隔离的进程独立于宿主和其它的隔离的进程，因此也称其为容器。最初实现是基于 LXC，从 0.7 版本以后开始去除 LXC，转而使用自行开发的 libcontainer，从 1.11 开始，则进一步演进为使用 runC 和 containerd。</p>
 <p>Docker 在容器的基础上，进行了进一步的封装，从文件系统、网络互联到进程隔离等等，极大的简化了容器的创建和维护。使得 Docker 技术比虚拟机技术更为轻便、快捷。</p>
 <p>Docker将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。<font color="red">有了Docker，就不用担心环境问题</font>，这大大地提高了程序运行的灵活性和可移植性。</p>
 <p>Docker属于Linux容器的一种封装，提供简单易用的容器使用接口。总体来说，Docker的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。</p>
 <h1 id="Docker与虚拟机区别"><a href="#Docker与虚拟机区别" class="headerlink" title="Docker与虚拟机区别"></a>Docker与虚拟机区别</h1><p>下面的图片比较了 Docker 和传统虚拟化方式的不同之处。传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程；而容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核，而且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便。</p>
-<p><img src="/uploads/dokcer/docker-01-01.png" alt="image"></p>
+<p><img src="/uploads/docker/docker-01-01.png" alt="image"></p>
 <center><i>上图：传统虚拟化</i></center>
 
-<p><img src="/uploads/dokcer/docker-01-02.png" alt="image"></p>
+<p><img src="/uploads/docker/docker-01-02.png" alt="image"></p>
 <center><i>上图：Docker</i></center>
 
 <br>
@@ -581,7 +581,7 @@
 
 <h1 id="docker服务启动异常处理"><a href="#docker服务启动异常处理" class="headerlink" title="docker服务启动异常处理"></a>docker服务启动异常处理</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 tools]# systemctl start docker</span><br><span class="line">Job for docker.service failed because the control process exited with error code. See &quot;systemctl status docker.service&quot; and &quot;journalctl -xe&quot; for details.</span><br><span class="line">[root@docker01 tools]# journalctl -xe  # 查询具体信息</span><br><span class="line">-- Defined-By: systemd</span><br><span class="line">-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel</span><br><span class="line">-- </span><br><span class="line">-- Unit docker.service has begun starting up.</span><br><span class="line">Nov 01 17:40:55 docker01 dockerd[2493]: time=&quot;2018-11-01T17:40:55.181209947+08:00&quot; level=info msg=&quot;libcontainerd: new containerd process, pid: 2501&quot;</span><br><span class="line">Nov 01 17:40:56 docker01 dockerd[2493]: time=&quot;2018-11-01T17:40:56.187023899+08:00&quot; level=error msg=&quot;[graphdriver] prior storage driver overlay2 failed: driver not supported&quot;</span><br><span class="line">Nov 01 17:40:56 docker01 dockerd[2493]: Error starting daemon: error initializing graphdriver: driver not supported</span><br><span class="line">Nov 01 17:40:56 docker01 systemd[1]: docker.service: main process exited, code=exited, status=1/FAILURE</span><br><span class="line">Nov 01 17:40:56 docker01 systemd[1]: Failed to start Docker Application Container Engine.</span><br><span class="line">-- Subject: Unit docker.service has failed</span><br><span class="line">-- Defined-By: systemd</span><br><span class="line">-- Support: http://lists.freedesktop.org/mailman/listinfo/systemd-devel</span><br><span class="line">………………</span><br><span class="line"># 具体信息如下截图，解决方法如下，之后就可以正常起docker服务了</span><br><span class="line">[root@docker01 tools]# mv /var/lib/docker /var/lib/docker.old</span><br></pre></td></tr></table></figure>
 
-<p><img src="/uploads/dokcer/docker-01-03.png" alt="image"></p>
+<p><img src="/uploads/docker/docker-01-03.png" alt="image"></p>
 <h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Docker官网：https://www.docker.com/</span><br><span class="line">Docker中文社区：http://www.docker.org.cn/</span><br><span class="line">Docker HUB官方镜像仓库：https://hub.docker.com/</span><br><span class="line">Docker从入门到实践：https://yeasy.gitbooks.io/docker_practice/content/</span><br></pre></td></tr></table></figure>
 
 <hr>
