@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-04-25T13:19:13.549Z</updated>
+  <updated>2020-04-25T13:21:59.483Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Dcoker镜像与容器的常见操作</title>
+    <title>Dcoker镜像与容器的常用操作</title>
     <link href="http://www.zhangblog.com/2020/04/25/docker02/"/>
     <id>http://www.zhangblog.com/2020/04/25/docker02/</id>
     <published>2020-04-25T13:17:22.000Z</published>
-    <updated>2020-04-25T13:19:13.549Z</updated>
+    <updated>2020-04-25T13:21:59.483Z</updated>
     
     <summary type="html">
     
