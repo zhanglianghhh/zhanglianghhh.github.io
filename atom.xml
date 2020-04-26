@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-04-26T13:18:10.618Z</updated>
+  <updated>2020-04-26T13:33:08.068Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker数据管理与挂载</title>
+    <link href="http://www.zhangblog.com/2020/04/26/docker03/"/>
+    <id>http://www.zhangblog.com/2020/04/26/docker03/</id>
+    <published>2020-04-26T13:32:05.000Z</published>
+    <updated>2020-04-26T13:33:08.068Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/docker/docker-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;介绍如何在 Docker 内部以及容器之间管理数据；在容器中管理数据主要有两种方式：数据卷（Volumes）、挂载主机目录
+        
+      
+    
+    </summary>
+    
+      <category term="docker" scheme="http://www.zhangblog.com/categories/docker/"/>
+    
+    
+      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
+    
+      <category term="docker" scheme="http://www.zhangblog.com/tags/docker/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker镜像与容器的常用操作</title>
@@ -545,33 +575,6 @@
     <id>http://www.zhangblog.com/2020/01/01/ansible-03/</id>
     <published>2020-01-01T03:39:29.000Z</published>
     <updated>2020-01-01T03:40:30.802Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
-    
-    
-      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ansible-安装配置</title>
-    <link href="http://www.zhangblog.com/2020/01/01/ansible-02/"/>
-    <id>http://www.zhangblog.com/2020/01/01/ansible-02/</id>
-    <published>2020-01-01T02:58:22.000Z</published>
-    <updated>2020-01-01T03:02:06.438Z</updated>
     
     <summary type="html">
     

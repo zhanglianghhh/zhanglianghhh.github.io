@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="DNS,proxy,">
+  <meta name="keywords" content="linux,docker,">
 
 
 
@@ -83,26 +83,20 @@
 
 
 
-<meta name="description" content="文章转载自微信公众号：「架构师之路」，作者： 58沈剑  有朋友问我，DNS轮询是不是过时的技术了？有了反向代理层（Nginx、LVS、F5等），是不是就不需要DNS轮询了？ 然而，反向代理层绝不能替代 DNS 轮询！   反向代理层有什么用？架构实现时要注意什么？(1) 作为服务端统一入口，屏蔽后端WEB集群细节，代表整个WEB集群； PS：这就是为啥它叫反向代理。 (2) 保证WEB集群的扩">
-<meta name="keywords" content="DNS,proxy">
+<meta name="description" content="介绍如何在 Docker 内部以及容器之间管理数据；在容器中管理数据主要有两种方式：数据卷（Volumes）、挂载主机目录 (Bind mounts)  镜像来源12345[root@docker01 ~]# docker pull registry.cn-beijing.aliyuncs.com/google_registry/nginx:1.17[root@docker01 ~]# doc">
+<meta name="keywords" content="linux,docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="“反向代理层”绝不能替代“DNS轮询”！">
-<meta property="og:url" content="http://www.zhangblog.com/2019/08/12/proxy_dns01/index.html">
+<meta property="og:title" content="Docker数据管理与挂载">
+<meta property="og:url" content="http://www.zhangblog.com/2020/04/26/docker03/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="文章转载自微信公众号：「架构师之路」，作者： 58沈剑  有朋友问我，DNS轮询是不是过时的技术了？有了反向代理层（Nginx、LVS、F5等），是不是就不需要DNS轮询了？ 然而，反向代理层绝不能替代 DNS 轮询！   反向代理层有什么用？架构实现时要注意什么？(1) 作为服务端统一入口，屏蔽后端WEB集群细节，代表整个WEB集群； PS：这就是为啥它叫反向代理。 (2) 保证WEB集群的扩">
+<meta property="og:description" content="介绍如何在 Docker 内部以及容器之间管理数据；在容器中管理数据主要有两种方式：数据卷（Volumes）、挂载主机目录 (Bind mounts)  镜像来源12345[root@docker01 ~]# docker pull registry.cn-beijing.aliyuncs.com/google_registry/nginx:1.17[root@docker01 ~]# doc">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/proxy_dns/proxy01-01.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/proxy_dns/proxy01-02.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/proxy_dns/proxy01-03.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/proxy_dns/proxy01-04.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/proxy_dns/proxy01-05.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/proxy_dns/proxy01-06.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/proxy_dns/proxy01-07.png">
-<meta property="og:updated_time" content="2019-08-12T09:57:22.756Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-00.jpg">
+<meta property="og:updated_time" content="2020-04-26T13:33:08.068Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="“反向代理层”绝不能替代“DNS轮询”！">
-<meta name="twitter:description" content="文章转载自微信公众号：「架构师之路」，作者： 58沈剑  有朋友问我，DNS轮询是不是过时的技术了？有了反向代理层（Nginx、LVS、F5等），是不是就不需要DNS轮询了？ 然而，反向代理层绝不能替代 DNS 轮询！   反向代理层有什么用？架构实现时要注意什么？(1) 作为服务端统一入口，屏蔽后端WEB集群细节，代表整个WEB集群； PS：这就是为啥它叫反向代理。 (2) 保证WEB集群的扩">
-<meta name="twitter:image" content="http://www.zhangblog.com/uploads/proxy_dns/proxy01-01.png">
+<meta name="twitter:title" content="Docker数据管理与挂载">
+<meta name="twitter:description" content="介绍如何在 Docker 内部以及容器之间管理数据；在容器中管理数据主要有两种方式：数据卷（Volumes）、挂载主机目录 (Bind mounts)  镜像来源12345[root@docker01 ~]# docker pull registry.cn-beijing.aliyuncs.com/google_registry/nginx:1.17[root@docker01 ~]# doc">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/docker/docker-00.jpg">
 
 
 
@@ -132,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/2019/08/12/proxy_dns01/">
+  <link rel="canonical" href="http://www.zhangblog.com/2020/04/26/docker03/">
 
 
 
 
 
-  <title>“反向代理层”绝不能替代“DNS轮询”！ | lightzhang博客</title>
+  <title>Docker数据管理与挂载 | lightzhang博客</title>
   
 
 
@@ -317,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/08/12/proxy_dns01/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/04/26/docker03/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lightzhang">
@@ -334,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">“反向代理层”绝不能替代“DNS轮询”！</h1>
+          <h1 class="post-title" itemprop="name headline">Docker数据管理与挂载</h1>
         
 
         <div class="post-meta">
@@ -346,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-12T17:52:01+08:00">
-                2019-08-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T21:32:05+08:00">
+                2020-04-26
               </time>
             
 
@@ -370,19 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DNS/" itemprop="url" rel="index">
-                    <span itemprop="name">DNS</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DNS/proxy/" itemprop="url" rel="index">
-                    <span itemprop="name">proxy</span>
+                  <a href="/categories/docker/" itemprop="url" rel="index">
+                    <span itemprop="name">docker</span>
                   </a>
                 </span>
 
@@ -399,8 +382,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/08/12/proxy_dns01/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/12/proxy_dns01/" itemprop="commentCount"></span>
+                <a href="/2020/04/26/docker03/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/04/26/docker03/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -408,7 +391,7 @@
 
           
           
-             <span id="/2019/08/12/proxy_dns01/" class="leancloud_visitors" data-flag-title="“反向代理层”绝不能替代“DNS轮询”！">
+             <span id="/2020/04/26/docker03/" class="leancloud_visitors" data-flag-title="Docker数据管理与挂载">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -433,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.7k
+                  1.4k
                 </span>
               
 
@@ -449,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  7
                 </span>
               
             </div>
@@ -470,93 +453,55 @@
       
 
       
-        <blockquote>
-<p>文章转载自微信公众号：「架构师之路」，作者： 58沈剑</p>
+        <p><img src="/uploads/docker/docker-00.jpg" alt="image"></p>
+<blockquote>
+<p>介绍如何在 Docker 内部以及容器之间管理数据；在容器中管理数据主要有两种方式：数据卷（Volumes）、挂载主机目录 (Bind mounts)</p>
 </blockquote>
-<p>有朋友问我，DNS轮询是不是过时的技术了？有了反向代理层（Nginx、LVS、F5等），是不是就不需要DNS轮询了？</p>
-<p>然而，反向代理层绝不能替代 DNS 轮询！</p>
-<br>
+<h1 id="镜像来源"><a href="#镜像来源" class="headerlink" title="镜像来源"></a>镜像来源</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 ~]# docker pull registry.cn-beijing.aliyuncs.com/google_registry/nginx:1.17</span><br><span class="line">[root@docker01 ~]# docker tag ed21b7a8aee9 nginx:1.17</span><br><span class="line">[root@docker01 ~]# docker images | grep &apos;nginx&apos;</span><br><span class="line">nginx                                                    1.17   ed21b7a8aee9   2 weeks ago   127MB</span><br><span class="line">registry.cn-beijing.aliyuncs.com/google_registry/nginx   1.17   ed21b7a8aee9   2 weeks ago   127MB</span><br></pre></td></tr></table></figure>
 
-<h1 id="反向代理层有什么用？架构实现时要注意什么？"><a href="#反向代理层有什么用？架构实现时要注意什么？" class="headerlink" title="反向代理层有什么用？架构实现时要注意什么？"></a>反向代理层有什么用？架构实现时要注意什么？</h1><p>(1) <b>作为服务端统一入口</b>，屏蔽后端WEB集群细节，代表整个WEB集群；</p>
-<p>PS：这就是为啥它叫反向代理。</p>
-<p>(2) <b>保证WEB集群的扩展性</b>，Nginx后端可随时加WEB实例；</p>
-<p>(3) <b>实施负载均衡</b>，反向代理层会将请求均匀分发给后端WEB集群的每一个实例；</p>
-<p>(4) <b>保证WEB集群的高可用</b>，任何一个WEB实例挂了，服务都不受影响；</p>
-<p>(5) <b>注意自身高可用</b>，防止一台Nginx挂了，服务端统一入口受影响；</p>
-<h2 id="反向代理层还存在啥问题？"><a href="#反向代理层还存在啥问题？" class="headerlink" title="反向代理层还存在啥问题？"></a>反向代理层还存在啥问题？</h2><p>反向代理层<font color="red">自身的扩展性问题</font>并没有得到很好的解决，例如当Nginx成为系统瓶颈的时候，无法扩容。</p>
-<br>
+<h1 id="数据卷【-v-–volume】"><a href="#数据卷【-v-–volume】" class="headerlink" title="数据卷【-v, –volume】"></a>数据卷【-v, –volume】</h1><p>数据卷 是一个可供<font color="red">一个或多个容器</font>使用的特殊目录，它绕过 UFS，可以提供很多有用的特性：</p>
+<p>1、数据卷可以在容器之间共享和重用</p>
+<p>2、对数据卷的修改会立马生效</p>
+<p>3、对数据卷的更新，不会影响镜像</p>
+<p>4、数据卷默认会一直存在，即使容器被删除</p>
+<p><font color="red">注意：</font>数据卷的使用，类似于 Linux 下对目录或文件进行 mount，镜像中的被指定为挂载点的目录中的文件会隐藏掉，能显示看的是挂载的数据卷。</p>
+<h2 id="数据卷挂载方式1【重点，常用】"><a href="#数据卷挂载方式1【重点，常用】" class="headerlink" title="数据卷挂载方式1【重点，常用】"></a>数据卷挂载方式1【重点，常用】</h2><p>包括<font color="red">挂载目录</font>和<font color="red">挂载文件</font></p>
+<div style="font-size:17px"><b>宿主机挂载的目录和文件</b></div>
 
-<h1 id="DNS轮询如何解决反向代理层的扩展性问题？"><a href="#DNS轮询如何解决反向代理层的扩展性问题？" class="headerlink" title="DNS轮询如何解决反向代理层的扩展性问题？"></a>DNS轮询如何解决反向代理层的扩展性问题？</h1><p>通过在DNS-server上对一个域名设置多个IP解析，<font color="red">能够增加入口Nginx实例个数</font>，起到水平扩容的作用，解决反向代理层的扩展性问题。</p>
-<p>因此，反向代理和DNS轮询并不是互斥的技术，however，这里详细展开讲一下接入层的架构渐进历程。</p>
-<h2 id="裸奔时代（1）单机架构"><a href="#裸奔时代（1）单机架构" class="headerlink" title="裸奔时代（1）单机架构"></a>裸奔时代（1）单机架构</h2><p><img src="/uploads/proxy_dns/proxy01-01.png" alt="image"></p>
-<p><b>裸奔时代的架构图如上：</b></p>
-<p>(1) 浏览器通过DNS-server，域名解析到ip；</p>
-<p>(2) 浏览器通过ip访问web-server；</p>
-<p><b>缺点：</b></p>
-<p>(1) 非高可用，web-server挂了整个系统就挂了；</p>
-<p>(2) 扩展性差，当吞吐量达到web-server上限时，无法扩容；</p>
-<p>PS：单机不涉及负载均衡问题。</p>
-<h2 id="简易扩容方案（2）DNS轮询"><a href="#简易扩容方案（2）DNS轮询" class="headerlink" title="简易扩容方案（2）DNS轮询"></a>简易扩容方案（2）DNS轮询</h2><p>假设tomcat的吞吐量是1000次每秒，当系统总吞吐量达到3000时，如何扩容是首先要解决的问题，DNS轮询是一个很容易想到的方案。</p>
-<p>PS：DNS轮询解决扩展性问题。</p>
-<p><img src="/uploads/proxy_dns/proxy01-02.png" alt="image"></p>
-<p><b>此时的架构图如上：</b></p>
-<p>(1) 多部署几份web-server，1个tomcat抗1000，部署3个tomcat就能抗3000；</p>
-<p>(2) 在DNS-server层面，域名每次解析到不同的ip；</p>
-<p><b>优点：</b></p>
-<p>(1) <b>零成本</b>：在DNS-server上多配几个ip即可，功能也不收费；</p>
-<p>(2) <b>部署简单</b>：多部署几个web-server即可，原系统架构不需要做任何改造；</p>
-<p>(3) <b>负载均衡</b>：变成了多机，负载也是均衡的；</p>
-<p><b>缺点：</b></p>
-<p>(1) <b>非高可用</b>：DNS-server只负责域名解析ip，这个ip对应的服务是否可用，DNS-server是不保证的，假设有一个web-server挂了，部分服务会受到影响；</p>
-<p>(2) <b>扩容非实时</b>：DNS解析有一个生效周期；</p>
-<p>(3) <b>暴露了太多的外网 ip</b>；</p>
-<h2 id="简易扩容方案（3）反向代理Nginx"><a href="#简易扩容方案（3）反向代理Nginx" class="headerlink" title="简易扩容方案（3）反向代理Nginx"></a>简易扩容方案（3）反向代理Nginx</h2><p>tomcat的性能较差，但Nginx作为反向代理的性能就强很多，假设线上跑到1w，就比tomcat高了10倍，可以利用这个特性来做扩容。</p>
-<p><img src="/uploads/proxy_dns/proxy01-03.png" alt="image"></p>
-<p><b>此时的架构图如上：</b></p>
-<p>(1) 站点层与浏览器层之间加入了一个反向代理层，利用高性能的Nginx来做反向代理；</p>
-<p>(2) Nginx将http请求分发给后端多个web-server；</p>
-<p><b>优点：</b></p>
-<p>(1) DNS-server不需要动；</p>
-<p>(2) <b>负载均衡</b>：通过Nginx来保证；</p>
-<p>(3) <b>只暴露一个外网 ip</b>，Nginx-&gt;tomcat之间使用内网访问；</p>
-<p>(4) <b>扩容实时</b>：Nginx内部可控，随时增加web-server随时实时扩容；</p>
-<p>(5) <b>能够保证站点层的可用性</b>：任何一台tomcat挂了，Nginx可以将流量迁移到其他tomcat；</p>
-<p>PS：反向代理，能够更实时，更方便的扩容了。</p>
-<p><b>缺点：</b></p>
-<p>(1) <b>时延增加 + 架构更复杂了</b>：中间多加了一个反向代理层；</p>
-<p>(2) <b>反向代理层成了单点，非高可用</b>：tomcat挂了不影响服务，Nginx挂了怎么办？</p>
-<h2 id="高可用方案（4）keepalived"><a href="#高可用方案（4）keepalived" class="headerlink" title="高可用方案（4）keepalived"></a>高可用方案（4）keepalived</h2><p>为了解决高可用的问题，keepalived出场了。</p>
-<p><img src="/uploads/proxy_dns/proxy01-04.png" alt="image"></p>
-<p>(1) 做两台Nginx组成一个集群，分别部署上keepalived，设置成相同的虚IP，保证Nginx的高可用；</p>
-<p>(2) 当一台Nginx挂了，keepalived能够探测到，并将流量自动迁移到另一台Nginx上，整个过程对调用方透明；</p>
-<p><img src="/uploads/proxy_dns/proxy01-05.png" alt="image"></p>
-<p><b>优点：</b></p>
-<p>(1) 解决了高可用的问题；</p>
-<p>PS：反向代理的高可用也解决了。</p>
-<p><b>缺点：</b></p>
-<p>(1) 资源利用率只有50%；</p>
-<p>(2) Nginx仍然是接入单点，<font color="red">如果接入吞吐量超过的Nginx的性能上限怎么办</font>，例如qps达到了50000咧？</p>
-<h2 id="scale-up扩容方案（5）lvs-f5"><a href="#scale-up扩容方案（5）lvs-f5" class="headerlink" title="scale up扩容方案（5）lvs/f5"></a>scale up扩容方案（5）lvs/f5</h2><p>Nginx是应用软件，性能比tomcat好，但总有个上限，超出了上限，还是扛不住。</p>
-<p>lvs就不一样了，它实施在操作系统层面；f5的性能又更好了，它实施在硬件层面；它们性能比Nginx好很多，例如每秒可以抗10w，这样可以利用他们来扩容，常见的架构图如下：</p>
-<p><img src="/uploads/proxy_dns/proxy01-06.png" alt="image"></p>
-<p>(1) 如果通过Nginx可以扩展多个tomcat一样，可以通过lvs来扩展多个Nginx；</p>
-<p>(2) 通过keepalived+VIP的方案可以保证可用性；</p>
-<p>99.9999%的公司到这一步基本就结束了，解决了接入层高可用、扩展性、负载均衡的问题。<br>PS：上游再加一层扩充性能。</p>
-<p><b>完美了嘛，还有什么潜在问题？</b></p>
-<p>好吧，不管是使用lvs还是f5，这些都是scale up的方案，根本上，lvs/f5还是会有性能上限，假设每秒能处理10w的请求，一天也只能处理80亿的请求（10w秒吞吐量*8w秒），那万一系统的日PV超过80亿怎么办呢？</p>
-<h2 id="scale-out扩容方案（6）DNS轮询"><a href="#scale-out扩容方案（6）DNS轮询" class="headerlink" title="scale out扩容方案（6）DNS轮询"></a>scale out扩容方案（6）DNS轮询</h2><p>如之前文章所述，<font color="red">水平扩展，才是解决性能问题的根本方案</font>，能够通过加机器扩充性能的方案才具备最好的扩展性。</p>
-<p>facebook，google，baidu的PV是不是超过80亿呢，它们的域名只对应一个ip么，终点又是起点，还是得通过DNS轮询来进行扩容。<br>PS：DNS轮询解决扩展性问题。</p>
-<p><img src="/uploads/proxy_dns/proxy01-07.png" alt="image"></p>
-<p>(1) 通过DNS轮询来线性扩展入口lvs层的性能；</p>
-<p>(2) 通过keepalived来保证高可用；</p>
-<p>(3) 通过lvs来扩展多个Nginx；</p>
-<p>(4) 通过Nginx来做负载均衡，业务七层路由；</p>
-<br>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 ~]# mkdir -p /data/nginx_test2  # 在宿主机创建目录</span><br><span class="line">[root@docker01 ~]# cat /etc/hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line"># hosts info 2020-04-18</span><br></pre></td></tr></table></figure>
 
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>稍微做一个简要的总结：</p>
-<p>(1) 接入层架构要考虑的问题域为：<b>高可用、扩展性、反向代理、负载均衡</b>；</p>
-<p>(2) Nginx、keepalived、lvs、f5可以很好的解决高可用、扩展性、反向代理、负载均衡的问题；</p>
-<p>(3) 水平扩展 <b>scale out是解决扩展性问题的根本方案</b>，DNS轮询是不能完全被Nginx/lvs/f5所替代的；</p>
+<div style="font-size:17px"><b>宿主机操作</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># /data/nginx_test2:/data_volume_test2  目录挂载  前面：宿主机目录； 后面：容器目录</span><br><span class="line"># /etc/hosts:/etc/hosts  文件挂载  前面：宿主机文件； 后面：容器文件</span><br><span class="line">[root@docker01 ~]# docker run -d -v /data/nginx_test2:/data_volume_test2 -v /etc/hosts:/etc/hosts --name nginx102 nginx:1.17  # 发布容器</span><br><span class="line">[root@docker01 ~]# docker inspect nginx102   # 然后在 Mounts 查看信息</span><br><span class="line">…………</span><br><span class="line">        &quot;Mounts&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/etc/hosts&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/etc/hosts&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/data/nginx_test2&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/data_volume_test2&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">…………</span><br><span class="line"># 在宿主机的挂载目录创建文件和目录</span><br><span class="line">[root@docker01 ~]# cd /data/nginx_test2/</span><br><span class="line">[root@docker01 nginx_test2]# echo &quot;aaa&quot; &gt; aaa</span><br><span class="line">[root@docker01 nginx_test2]# mkdir abc</span><br><span class="line">[root@docker01 nginx_test2]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 4 Apr 18 16:41 aaa</span><br><span class="line">drwxr-xr-x 2 root root 6 Apr 18 16:41 abc</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>容器操作</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 进入容器</span><br><span class="line">[root@docker01 ~]# docker exec -it nginx102 bash</span><br><span class="line"># 查看挂载目录信息</span><br><span class="line">root@8c8db5089c0e:/# ls  </span><br><span class="line">bin  boot  data_volume_test2  dev  etc	home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var</span><br><span class="line">root@8c8db5089c0e:/# cd data_volume_test2/</span><br><span class="line">root@8c8db5089c0e:/data_volume_test2# ls -l</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 4 Apr 18 08:41 aaa</span><br><span class="line">drwxr-xr-x 2 root root 6 Apr 18 08:41 abc</span><br><span class="line"># 查看挂载文件信息</span><br><span class="line">root@2537d3854b42:/# cat /etc/hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line"># hosts info 2020-04-18</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据卷挂载方式2【了解】"><a href="#数据卷挂载方式2【了解】" class="headerlink" title="数据卷挂载方式2【了解】"></a>数据卷挂载方式2【了解】</h2><div style="font-size:17px"><b>宿主机操作</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 ~]# docker run -d -v /data_volume --name nginx101 nginx:1.17   # 发布时，加入数据卷信息 -v /data_volume</span><br><span class="line">594ea376d9301263046b13c72304af9c74a2a7516d0f3d8292f020ceba94742d</span><br><span class="line">[root@docker01 ~]# docker ps </span><br><span class="line">CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS    NAMES</span><br><span class="line">594ea376d930   nginx:1.17     &quot;nginx -g &apos;daemon of…&quot;   5 seconds ago   Up 3 seconds   80/tcp   nginx101 </span><br><span class="line">[root@docker01 ~]# docker inspect -f &#123;&#123;.Mounts&#125;&#125; nginx101   # 或者执行 docker inspect nginx101 然后在 Mounts 查看信息</span><br><span class="line">[&#123;volume b7bXXXX897 /var/lib/docker/volumes/b7bXXXX897/_data /data_volume local  true &#125;]</span><br><span class="line">[root@docker01 ~]# cd /var/lib/docker/volumes/b7bXXXX897/_data  # 进入数据卷目录</span><br><span class="line">[root@docker01 _data]# echo &quot;1111&quot; &gt; 111  # 创建文件并写入数据</span><br><span class="line">[root@docker01 _data]# mkdir aaa/bbb -p   # 创建多个目录</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>进入容器操作</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 ~]# docker exec -it nginx101 bash   # 进入容器</span><br><span class="line">root@594ea376d930:/# ls -l   # 查看容器根目录信息</span><br><span class="line">total 8</span><br><span class="line">drwxr-xr-x   2 root root 4096 Mar 27 00:00 bin</span><br><span class="line">drwxr-xr-x   2 root root    6 Feb  1 17:09 boot</span><br><span class="line">drwxr-xr-x   2 root root    6 Apr 17 14:35 data_volume  # 存在该目录</span><br><span class="line">drwxr-xr-x   5 root root  340 Apr 17 14:35 dev</span><br><span class="line">…………</span><br><span class="line">root@594ea376d930:/# cd data_volume/   # 进入数据卷</span><br><span class="line">root@594ea376d930:/data_volume# ls -l  # 可见文件和目录都在容器中存在</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root  5 Apr 17 14:44 111</span><br><span class="line">drwxr-xr-x 3 root root 17 Apr 17 14:44 aaa</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看容器的挂载信息"><a href="#查看容器的挂载信息" class="headerlink" title="查看容器的挂载信息"></a>查看容器的挂载信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@594ea376d930:/# mount  # 查看容器挂载信息</span><br><span class="line">………………</span><br><span class="line">/dev/sda2 on /data_volume type xfs (rw,relatime,attr2,inode64,noquota)   # 找到数据卷信息</span><br><span class="line">………………</span><br></pre></td></tr></table></figure>
+
+<h1 id="挂载主机目录【–mount】"><a href="#挂载主机目录【–mount】" class="headerlink" title="挂载主机目录【–mount】"></a>挂载主机目录【–mount】</h1><p>包括<font color="red">挂载目录</font>和<font color="red">挂载文件</font></p>
+<div style="font-size:17px"><b>宿主机挂载的目录和文件</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 ~]# mkdir -p /data/nginx_test3  # 在宿主机创建目录</span><br><span class="line">[root@docker01 ~]# cat /etc/hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line"># hosts info 2020-04-18</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>宿主机操作</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 ~]# docker run -d --mount type=bind,source=/data/nginx_test3,target=/data_volume_test3 --mount type=bind,source=/etc/hosts,target=/etc/hosts --name nginx103 nginx:1.17   # 发布容器</span><br><span class="line">[root@docker01 ~]# docker inspect nginx103  # 在Mounts可见容器的挂载信息</span><br><span class="line">…………</span><br><span class="line">        &quot;Mounts&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/data/nginx_test3&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/data_volume_test3&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;/etc/hosts&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;/etc/hosts&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">…………</span><br><span class="line"># 在宿主机的挂载目录创建文件和目录</span><br><span class="line">[root@docker01 ~]# cd /data/nginx_test3/</span><br><span class="line">[root@docker01 nginx_test3]# echo &quot;123&quot; &gt; 123</span><br><span class="line">[root@docker01 nginx_test3]# mkdir -p 111/222</span><br><span class="line">[root@docker01 nginx_test3]# ll</span><br><span class="line">total 4</span><br><span class="line">drwxr-xr-x 3 root root 17 Apr 18 18:05 111</span><br><span class="line">-rw-r--r-- 1 root root  4 Apr 18 18:05 123</span><br><span class="line">[root@docker01 nginx_test3]# tree </span><br><span class="line">.</span><br><span class="line">├── 111</span><br><span class="line">│   └── 222</span><br><span class="line">└── 123</span><br><span class="line"></span><br><span class="line">2 directories, 1 file</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>容器操作</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 进入容器</span><br><span class="line">[root@docker01 ~]# docker exec -it nginx103 bash</span><br><span class="line"># 查看挂载目录信息</span><br><span class="line">root@c9427fcbc26c:/# ls  </span><br><span class="line">bin  boot  data_volume_test3  dev  etc	home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var</span><br><span class="line">root@c9427fcbc26c:/# ls -l data_volume_test3/</span><br><span class="line">total 4</span><br><span class="line">drwxr-xr-x 3 root root 17 Apr 18 10:05 111</span><br><span class="line">-rw-r--r-- 1 root root  4 Apr 18 10:05 123</span><br><span class="line"># 查看挂载文件信息</span><br><span class="line">root@c9427fcbc26c:/# cat /etc/hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line"># hosts info 2020-04-18</span><br></pre></td></tr></table></figure>
+
+<p>完毕！</p>
 <hr>
 
       
@@ -630,7 +575,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangblog.com/2019/08/12/proxy_dns01/" title="“反向代理层”绝不能替代“DNS轮询”！">http://www.zhangblog.com/2019/08/12/proxy_dns01/</a>
+    <a href="http://www.zhangblog.com/2020/04/26/docker03/" title="Docker数据管理与挂载">http://www.zhangblog.com/2020/04/26/docker03/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -645,9 +590,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/DNS/" rel="tag"># DNS</a>
+            <a href="/tags/linux/" rel="tag"># linux</a>
           
-            <a href="/tags/proxy/" rel="tag"># proxy</a>
+            <a href="/tags/docker/" rel="tag"># docker</a>
           
         </div>
       
@@ -660,8 +605,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/12/slb01/" rel="next" title="负载均衡，必须要知道的 5 件事">
-                <i class="fa fa-chevron-left"></i> 负载均衡，必须要知道的 5 件事
+              <a href="/2020/04/25/docker02/" rel="next" title="Docker镜像与容器的常用操作">
+                <i class="fa fa-chevron-left"></i> Docker镜像与容器的常用操作
               </a>
             
           </div>
@@ -669,10 +614,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/30/linux-thread/" rel="prev" title="-bash：fork：Cannot allocate memory 问题的处理">
-                -bash：fork：Cannot allocate memory 问题的处理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -850,7 +791,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#反向代理层有什么用？架构实现时要注意什么？"><span class="nav-number">1.</span> <span class="nav-text">反向代理层有什么用？架构实现时要注意什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#反向代理层还存在啥问题？"><span class="nav-number">1.1.</span> <span class="nav-text">反向代理层还存在啥问题？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS轮询如何解决反向代理层的扩展性问题？"><span class="nav-number">2.</span> <span class="nav-text">DNS轮询如何解决反向代理层的扩展性问题？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#裸奔时代（1）单机架构"><span class="nav-number">2.1.</span> <span class="nav-text">裸奔时代（1）单机架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简易扩容方案（2）DNS轮询"><span class="nav-number">2.2.</span> <span class="nav-text">简易扩容方案（2）DNS轮询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简易扩容方案（3）反向代理Nginx"><span class="nav-number">2.3.</span> <span class="nav-text">简易扩容方案（3）反向代理Nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高可用方案（4）keepalived"><span class="nav-number">2.4.</span> <span class="nav-text">高可用方案（4）keepalived</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scale-up扩容方案（5）lvs-f5"><span class="nav-number">2.5.</span> <span class="nav-text">scale up扩容方案（5）lvs/f5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scale-out扩容方案（6）DNS轮询"><span class="nav-number">2.6.</span> <span class="nav-text">scale out扩容方案（6）DNS轮询</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#镜像来源"><span class="nav-number">1.</span> <span class="nav-text">镜像来源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据卷【-v-–volume】"><span class="nav-number">2.</span> <span class="nav-text">数据卷【-v, –volume】</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据卷挂载方式1【重点，常用】"><span class="nav-number">2.1.</span> <span class="nav-text">数据卷挂载方式1【重点，常用】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据卷挂载方式2【了解】"><span class="nav-number">2.2.</span> <span class="nav-text">数据卷挂载方式2【了解】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看容器的挂载信息"><span class="nav-number">2.3.</span> <span class="nav-text">查看容器的挂载信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#挂载主机目录【–mount】"><span class="nav-number">3.</span> <span class="nav-text">挂载主机目录【–mount】</span></a></li></ol></div>
             
 
           </div>
