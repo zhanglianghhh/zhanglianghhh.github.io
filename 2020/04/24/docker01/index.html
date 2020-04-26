@@ -83,22 +83,22 @@
 
 
 
-<meta name="description" content="什么是DockerDocker提供了一个可以运行你的应用程序的封装，或者说容器。它原本是dotCloud的一个内部项目，开源的时候吸引了大量的关注与讨论，后续导致dotCloud把公司名称改为了Docker Inc。Docker 最初是在 Ubuntu 12.04 上开发实现的；Red Hat 则从 RHEL 6.5 开始对 Docker 进行支持；Google 也在其 PaaS 产品中广泛应用">
+<meta name="description" content="Docker简介；Docker与虚拟机区别；Docker的优点及内部组件说明；如何安装Docker与镜像加速配置。  什么是DockerDocker提供了一个可以运行你的应用程序的封装，或者说容器。它原本是dotCloud的一个内部项目，开源的时候吸引了大量的关注与讨论，后续导致dotCloud把公司名称改为了Docker Inc。Docker 最初是在 Ubuntu 12.04 上开发实现的">
 <meta name="keywords" content="linux,docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker简介与安装">
 <meta property="og:url" content="http://www.zhangblog.com/2020/04/24/docker01/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="什么是DockerDocker提供了一个可以运行你的应用程序的封装，或者说容器。它原本是dotCloud的一个内部项目，开源的时候吸引了大量的关注与讨论，后续导致dotCloud把公司名称改为了Docker Inc。Docker 最初是在 Ubuntu 12.04 上开发实现的；Red Hat 则从 RHEL 6.5 开始对 Docker 进行支持；Google 也在其 PaaS 产品中广泛应用">
+<meta property="og:description" content="Docker简介；Docker与虚拟机区别；Docker的优点及内部组件说明；如何安装Docker与镜像加速配置。  什么是DockerDocker提供了一个可以运行你的应用程序的封装，或者说容器。它原本是dotCloud的一个内部项目，开源的时候吸引了大量的关注与讨论，后续导致dotCloud把公司名称改为了Docker Inc。Docker 最初是在 Ubuntu 12.04 上开发实现的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-00.jpg">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-01-01.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-01-02.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-01-03.png">
-<meta property="og:updated_time" content="2020-04-25T12:29:20.384Z">
+<meta property="og:updated_time" content="2020-04-26T13:16:46.023Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker简介与安装">
-<meta name="twitter:description" content="什么是DockerDocker提供了一个可以运行你的应用程序的封装，或者说容器。它原本是dotCloud的一个内部项目，开源的时候吸引了大量的关注与讨论，后续导致dotCloud把公司名称改为了Docker Inc。Docker 最初是在 Ubuntu 12.04 上开发实现的；Red Hat 则从 RHEL 6.5 开始对 Docker 进行支持；Google 也在其 PaaS 产品中广泛应用">
+<meta name="twitter:description" content="Docker简介；Docker与虚拟机区别；Docker的优点及内部组件说明；如何安装Docker与镜像加速配置。  什么是DockerDocker提供了一个可以运行你的应用程序的封装，或者说容器。它原本是dotCloud的一个内部项目，开源的时候吸引了大量的关注与讨论，后续导致dotCloud把公司名称改为了Docker Inc。Docker 最初是在 Ubuntu 12.04 上开发实现的">
 <meta name="twitter:image" content="http://www.zhangblog.com/uploads/docker/docker-00.jpg">
 
 
@@ -435,7 +435,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  18
+                  19
                 </span>
               
             </div>
@@ -457,6 +457,9 @@
 
       
         <p><img src="/uploads/docker/docker-00.jpg" alt="image"></p>
+<blockquote>
+<p>Docker简介；Docker与虚拟机区别；Docker的优点及内部组件说明；如何安装Docker与镜像加速配置。</p>
+</blockquote>
 <h1 id="什么是Docker"><a href="#什么是Docker" class="headerlink" title="什么是Docker"></a>什么是Docker</h1><p>Docker提供了一个可以运行你的应用程序的封装，或者说容器。它原本是dotCloud的一个内部项目，开源的时候吸引了大量的关注与讨论，后续导致dotCloud把公司名称改为了Docker Inc。Docker 最初是在 Ubuntu 12.04 上开发实现的；Red Hat 则从 RHEL 6.5 开始对 Docker 进行支持；Google 也在其 PaaS 产品中广泛应用 Docker。</p>
 <p>Docker 使用 Google 公司推出的 Go 语言进行开发实现并遵从Apache2.0协议开源，基于 Linux 内核的 cgroup，namespace，以及 OverlayFS 类的 Union FS 等技术，对进程进行封装隔离，属于操作系统层面的虚拟化技术。由于隔离的进程独立于宿主和其它的隔离的进程，因此也称其为容器。最初实现是基于 LXC，从 0.7 版本以后开始去除 LXC，转而使用自行开发的 libcontainer，从 1.11 开始，则进一步演进为使用 runC 和 containerd。</p>
 <p>Docker 在容器的基础上，进行了进一步的封装，从文件系统、网络互联到进程隔离等等，极大的简化了容器的创建和维护。使得 Docker 技术比虚拟机技术更为轻便、快捷。</p>
