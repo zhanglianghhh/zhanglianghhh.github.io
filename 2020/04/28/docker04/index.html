@@ -93,7 +93,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-00.jpg">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-04-01.png">
-<meta property="og:updated_time" content="2020-04-28T13:26:31.993Z">
+<meta property="og:updated_time" content="2020-04-28T13:32:10.335Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker Dockerfile 指令详解与实战案例">
 <meta name="twitter:description" content="Dockerfile介绍及常用指令，包括FROM，RUN，还提及了 COPY，ADD，EXPOSE，WORKDIR等，其实 Dockerfile 功能很强大，它提供了十多个指令。  Dockerfile介绍Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一条条构建镜像所需的指令和说明。 在Docker中创建镜像最常用的方式，就是使用Dockerfile。Dockerfile是">
@@ -513,7 +513,7 @@
 
 <p>&lt;目标路径&gt; 可以是<font color="red">容器内</font>的绝对路径，也可以是相对于工作目录的相对路径（工作目录可以用 WORKDIR 指令来指定）。<font color="red">目标路径不需要事先创建，如果目录不存在会在复制文件前先行创建缺失目录。</font></p>
 <p>此外，还需要注意一点，使用 COPY 指令，源文件的各种元数据都会保留。比如读、写、执行权限、文件变更时间等。这个特性对于镜像定制很有用。特别是构建相关文件都在使用 Git 进行管理的时候。</p>
-<p>在使用该指令的时候还可以加上 --chown=<user>:<group> 选项来改变文件的所属用户及所属组。</group></user></p>
+<p>在使用该指令的时候还可以加上 --chown=&lt;user&gt;:&lt;group&gt; 选项来改变文件的所属用户及所属组。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">COPY --chown=55:mygroup files* /mydir/</span><br><span class="line">COPY --chown=bin files* /mydir/</span><br><span class="line">COPY --chown=1 files* /mydir/</span><br><span class="line">COPY --chown=10:11 files* /mydir/</span><br></pre></td></tr></table></figure>
 
 <h1 id="ADD-更高级的复制文件"><a href="#ADD-更高级的复制文件" class="headerlink" title="ADD 更高级的复制文件"></a>ADD 更高级的复制文件</h1><p>ADD 指令和 COPY 的格式和性质基本一致。但是在 COPY 基础上增加了一些功能。</p>
@@ -521,7 +521,7 @@
 <p>在某些情况下，如果我们真的是<font color="red">希望复制个压缩文件进去，而不解压缩</font>，这时就不可以使用 ADD 命令了。</p>
 <p>在 Docker 官方的 Dockerfile 最佳实践文档 中要求，尽可能的使用 COPY，因为 COPY 的语义很明确，就是复制文件而已，而 ADD 则包含了更复杂的功能，其行为也不一定很清晰。最适合使用 ADD 的场合，就是所提及的需要自动解压缩的场合。</p>
 <p><font color="red">特别说明：在 COPY 和 ADD 指令中选择的时候，可以遵循这样的原则，所有的文件复制均使用 COPY 指令，仅在需要自动解压缩的场合使用 ADD。</font></p>
-<p>在使用该指令的时候还可以加上 --chown=<user>:<group> 选项来改变文件的所属用户及所属组。</group></user></p>
+<p>在使用该指令的时候还可以加上 --chown=&lt;user&gt;:&lt;group&gt; 选项来改变文件的所属用户及所属组。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ADD --chown=55:mygroup files* /mydir/</span><br><span class="line">ADD --chown=bin files* /mydir/</span><br><span class="line">ADD --chown=1 files* /mydir/</span><br><span class="line">ADD --chown=10:11 files* /mydir/</span><br></pre></td></tr></table></figure>
 
 <h1 id="WORKDIR-指定工作目录"><a href="#WORKDIR-指定工作目录" class="headerlink" title="WORKDIR 指定工作目录"></a>WORKDIR 指定工作目录</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式为 WORKDIR &lt;工作目录路径&gt;</span><br></pre></td></tr></table></figure>
