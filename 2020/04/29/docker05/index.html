@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="Linux,">
+  <meta name="keywords" content="linux,docker,">
 
 
 
@@ -83,22 +83,22 @@
 
 
 
-<meta name="description" content="文章来源：fork:cannot allocate memory问题的处理 文章参考：pid max导致fork: Cannot allocate memory 的分析及解决办法 今天遇到服务器无法SSH，VNC操作命令提示fork:cannot allocate memory free查看内存还有（注意，命令可能要多敲几次才会出来）  查看最大进程数 sysctl kernel.pid_max">
-<meta name="keywords" content="Linux">
+<meta name="description" content="Docker如何搭建私有镜像仓库，与如何访问私有镜像仓库，删除私有镜像仓库镜像  机器规划   服务器名称(hostname) 操作系统版本 内网IP 外网IP(模拟) 安装软件    docker01 CentOS7.7 172.16.1.31 10.0.0.31 docker   docker02 CentOS7.7 172.16.1.32 10.0.0.32 docker   说明：在d">
+<meta name="keywords" content="linux,docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="-bash：fork：Cannot allocate memory 问题的处理">
-<meta property="og:url" content="http://www.zhangblog.com/2019/08/30/linux-thread/index.html">
+<meta property="og:title" content="Dcoker如何搭建私有镜像仓库">
+<meta property="og:url" content="http://www.zhangblog.com/2020/04/29/docker05/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="文章来源：fork:cannot allocate memory问题的处理 文章参考：pid max导致fork: Cannot allocate memory 的分析及解决办法 今天遇到服务器无法SSH，VNC操作命令提示fork:cannot allocate memory free查看内存还有（注意，命令可能要多敲几次才会出来）  查看最大进程数 sysctl kernel.pid_max">
+<meta property="og:description" content="Docker如何搭建私有镜像仓库，与如何访问私有镜像仓库，删除私有镜像仓库镜像  机器规划   服务器名称(hostname) 操作系统版本 内网IP 外网IP(模拟) 安装软件    docker01 CentOS7.7 172.16.1.31 10.0.0.31 docker   docker02 CentOS7.7 172.16.1.32 10.0.0.32 docker   说明：在d">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/linux_thread/linux_thread01.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/linux_thread/linux_thread02.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/linux_thread/linux_thread03.jpg">
-<meta property="og:updated_time" content="2019-08-30T14:15:13.494Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-00.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-05-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/docker/docker-05-02.png">
+<meta property="og:updated_time" content="2020-04-29T04:45:17.839Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="-bash：fork：Cannot allocate memory 问题的处理">
-<meta name="twitter:description" content="文章来源：fork:cannot allocate memory问题的处理 文章参考：pid max导致fork: Cannot allocate memory 的分析及解决办法 今天遇到服务器无法SSH，VNC操作命令提示fork:cannot allocate memory free查看内存还有（注意，命令可能要多敲几次才会出来）  查看最大进程数 sysctl kernel.pid_max">
-<meta name="twitter:image" content="http://www.zhangblog.com/uploads/linux_thread/linux_thread01.jpg">
+<meta name="twitter:title" content="Dcoker如何搭建私有镜像仓库">
+<meta name="twitter:description" content="Docker如何搭建私有镜像仓库，与如何访问私有镜像仓库，删除私有镜像仓库镜像  机器规划   服务器名称(hostname) 操作系统版本 内网IP 外网IP(模拟) 安装软件    docker01 CentOS7.7 172.16.1.31 10.0.0.31 docker   docker02 CentOS7.7 172.16.1.32 10.0.0.32 docker   说明：在d">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/docker/docker-00.jpg">
 
 
 
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/2019/08/30/linux-thread/">
+  <link rel="canonical" href="http://www.zhangblog.com/2020/04/29/docker05/">
 
 
 
 
 
-  <title>-bash：fork：Cannot allocate memory 问题的处理 | lightzhang博客</title>
+  <title>Dcoker如何搭建私有镜像仓库 | lightzhang博客</title>
   
 
 
@@ -313,7 +313,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/08/30/linux-thread/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/04/29/docker05/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lightzhang">
@@ -330,7 +330,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">-bash：fork：Cannot allocate memory 问题的处理</h1>
+          <h1 class="post-title" itemprop="name headline">Dcoker如何搭建私有镜像仓库</h1>
         
 
         <div class="post-meta">
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-30T22:11:39+08:00">
-                2019-08-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-29T12:43:52+08:00">
+                2020-04-29
               </time>
             
 
@@ -366,8 +366,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/docker/" itemprop="url" rel="index">
+                    <span itemprop="name">docker</span>
                   </a>
                 </span>
 
@@ -384,8 +384,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/08/30/linux-thread/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/30/linux-thread/" itemprop="commentCount"></span>
+                <a href="/2020/04/29/docker05/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/04/29/docker05/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -393,7 +393,7 @@
 
           
           
-             <span id="/2019/08/30/linux-thread/" class="leancloud_visitors" data-flag-title="-bash：fork：Cannot allocate memory 问题的处理">
+             <span id="/2020/04/29/docker05/" class="leancloud_visitors" data-flag-title="Dcoker如何搭建私有镜像仓库">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -418,7 +418,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  136
+                  1.8k
                 </span>
               
 
@@ -434,7 +434,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  8
                 </span>
               
             </div>
@@ -455,22 +455,128 @@
       
 
       
-        <p><b>文章来源：<a href="http://bbs.qcloud.com/thread-22637-1-1.html" target="_blank" rel="noopener">fork:cannot allocate memory问题的处理</a></b></p>
-<p><b>文章参考：<a href="https://blog.csdn.net/onlyellow/article/details/51917757" target="_blank" rel="noopener">pid max导致fork: Cannot allocate memory 的分析及解决办法</a></b></p>
-<p>今天遇到服务器无法SSH，VNC操作命令提示fork:cannot allocate memory</p>
-<p>free查看内存还有（注意，命令可能要多敲几次才会出来）</p>
-<p><img src="/uploads/linux_thread/linux_thread01.jpg" alt="image"></p>
-<p>查看最大进程数 sysctl kernel.pid_max</p>
-<p><img src="/uploads/linux_thread/linux_thread02.jpg" alt="image"></p>
-<p>ps -eLf | wc -l查看进程数</p>
-<p><img src="/uploads/linux_thread/linux_thread03.jpg" alt="image"></p>
-<p>确认是进程数满了</p>
-<p>修改最大进程数后系统恢复</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 1000000 &gt; /proc/sys/kernel/pid_max</span><br></pre></td></tr></table></figure>
+        <p><img src="/uploads/docker/docker-00.jpg" alt="image"></p>
+<blockquote>
+<p>Docker如何搭建私有镜像仓库，与如何访问私有镜像仓库，删除私有镜像仓库镜像</p>
+</blockquote>
+<h1 id="机器规划"><a href="#机器规划" class="headerlink" title="机器规划"></a>机器规划</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>操作系统版本</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+<th>安装软件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker01</td>
+<td>CentOS7.7</td>
+<td>172.16.1.31</td>
+<td>10.0.0.31</td>
+<td>docker</td>
+</tr>
+<tr>
+<td>docker02</td>
+<td>CentOS7.7</td>
+<td>172.16.1.32</td>
+<td>10.0.0.32</td>
+<td>docker</td>
+</tr>
+</tbody></table>
+<p>说明：在docker01机器有<font color="red">registry镜像</font>和<font color="red">docker-registry-web镜像</font>，用搭建私有镜像仓库和web页面访问。</p>
+<h1 id="访问仓库"><a href="#访问仓库" class="headerlink" title="访问仓库"></a>访问仓库</h1><p>仓库（Repository）是集中存放镜像的地方。</p>
+<p>一个容易混淆的概念是注册服务器（Registry）。实际上注册服务器是管理仓库的具体服务器，每个服务器上可以有多个仓库，而每个仓库下面有多个镜像。从这方面来说，仓库可以被认为是一个具体的项目或目录。例如对于仓库地址 docker.io/ubuntu 来说，docker.io 是注册服务器地址，ubuntu 是仓库名。</p>
+<p>大部分时候，并不需要严格区分这两者的概念。</p>
+<h1 id="私有仓库搭建"><a href="#私有仓库搭建" class="headerlink" title="私有仓库搭建"></a>私有仓库搭建</h1><p>有时候使用 Docker Hub 这样的公共仓库可能不方便，用户可以创建一个本地仓库供私人使用。</p>
+<p>本文介绍如何使用本地仓库。</p>
+<p>docker-registry 是官方提供的工具，可以用于构建私有的镜像仓库。</p>
+<h2 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h2><p><font color="red">说明：registry 镜像选择 registry:2 和 registry:2.4.1 都可以。</font></p>
+<p>拉取私有镜像仓库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry:2.4.1  # 当然 docker pull registry:2  也可以</span><br><span class="line"># 或者如下获取，然后通过docker tag 重命名</span><br><span class="line">docker pull registry.cn-beijing.aliyuncs.com/google_registry/registry:2.4.1</span><br></pre></td></tr></table></figure>
 
-<p>永久生效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;kernel.pid_max=1000000 &quot; &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+<p>用于web页面查看仓库中的镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull hyper/docker-registry-web</span><br><span class="line"># 或者如下获取，然后通过docker tag 重命名</span><br><span class="line">docker pull registry.cn-beijing.aliyuncs.com/google_registry/docker-registry-web:latest</span><br></pre></td></tr></table></figure>
 
+<p>要得到的镜像信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 ~]# docker images </span><br><span class="line">REPOSITORY                  TAG      IMAGE ID       CREATED       SIZE</span><br><span class="line">hyper/docker-registry-web   latest   0db5683824d8   3 years ago   599MB</span><br><span class="line">registry                    2.4.1    8ff6a4aae657   3 years ago   172MB</span><br></pre></td></tr></table></figure>
+
+<h2 id="容器运行"><a href="#容器运行" class="headerlink" title="容器运行"></a>容器运行</h2><p>将上传的镜像放到本地的 /opt/data/registry 目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /opt/data/registry</span><br></pre></td></tr></table></figure>
+
+<p>启动私有仓库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 5000:5000 -v /opt/data/registry:/var/lib/registry --name registry registry:2.4.1</span><br></pre></td></tr></table></figure>
+
+<p>或则如下启动，目的：可以删除仓库中的镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 5000:5000 -v /opt/data/registry:/var/lib/registry  -v /data/config.yml:/etc/docker/registry/config.yml --name registry registry:2.4.1</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">/data/config.yml 这个是什么呢？我们在下面删除仓库镜像介绍</font></p>
+<p><font color="red">这里需要说明一点，在启动仓库时，需在配置文件中的storage配置中增加delete=true配置项，允许删除镜像。默认的镜像是没有这个参数</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ cat config.yml</span><br><span class="line">version: 0.1</span><br><span class="line">log:</span><br><span class="line">  fields:</span><br><span class="line">    service: registry</span><br><span class="line">storage:</span><br><span class="line">  delete:</span><br><span class="line">    enabled: true</span><br><span class="line">  cache:</span><br><span class="line">    blobdescriptor: inmemory</span><br><span class="line">  filesystem:</span><br><span class="line">    rootdirectory: /var/lib/registry</span><br><span class="line">http:</span><br><span class="line">  addr: :5000</span><br><span class="line">  headers:</span><br><span class="line">    X-Content-Type-Options: [nosniff]</span><br><span class="line">health:</span><br><span class="line">  storagedriver:</span><br><span class="line">    enabled: true</span><br><span class="line">    interval: 10s</span><br><span class="line">    threshold: 3</span><br></pre></td></tr></table></figure>
+
+<p>启动web页面查看仓库镜像容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8080:8080 --name registry-web --link registry \</span><br><span class="line">  -e REGISTRY_URL=http://172.16.1.31:5000/v2 \</span><br><span class="line">  -e REGISTRY_TRUST_ANY_SSL=true \</span><br><span class="line">  -e REGISTRY_BASIC_AUTH=&quot;YWRtaW46YWRtaW4=&quot; \</span><br><span class="line">  -e REGISTRY_NAME=10.0.0.31:5000 \</span><br><span class="line">  hyper/docker-registry-web</span><br></pre></td></tr></table></figure>
+
+<p>查看docker运行容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 ~]# docker ps </span><br><span class="line">CONTAINER ID   IMAGE                       COMMAND                  CREATED       STATUS       PORTS                    NAMES</span><br><span class="line">2575cca9eace   hyper/docker-registry-web   &quot;start.sh&quot;               2 hours ago   Up 2 hours   0.0.0.0:8080-&gt;8080/tcp   registry-web</span><br><span class="line">9e4530dd82df   registry:2.4.1              &quot;/entrypoint.sh /etc…&quot;  3 hours ago   Up 2 hours   0.0.0.0:5000-&gt;5000/tcp   registry</span><br></pre></td></tr></table></figure>
+
+<h1 id="实现http访问私有仓库"><a href="#实现http访问私有仓库" class="headerlink" title="实现http访问私有仓库"></a>实现http访问私有仓库</h1><p>Docker 默认不允许非 HTTPS 方式推送镜像。我们可以通过 Docker 的配置选项来取消这个限制。</p>
+<p><font color="red">如果直接【上传】或【拉取】镜像会失败，因为默认为https方式</font>，得到提示信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ~]# docker push 172.16.1.31:5000/nginx:1.17   # 推动镜像失败</span><br><span class="line">The push refers to repository [172.16.1.31:5000/nginx]</span><br><span class="line">Get https://172.16.1.31:5000/v2/: http: server gave HTTP response to HTTPS client</span><br><span class="line">[root@docker02 ~]# docker pull 172.16.1.31:5000/flannel:v0.12.0-amd64    # 拉取镜像失败</span><br><span class="line">Error response from daemon: Get https://172.16.1.31:5000/v2/: http: server gave HTTP response to HTTPS client</span><br></pre></td></tr></table></figure>
+
+<h2 id="实现http上传方式一"><a href="#实现http上传方式一" class="headerlink" title="实现http上传方式一"></a>实现http上传方式一</h2><p>添加如下配置，如果文件不存在则添加，在docker01和docker02机器都要添加，因为这两台机器都可能<font color="red">向仓库推送或拉取</font>镜像。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ~]# vim /etc/docker/daemon.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;insecure-registries&quot;: [&quot;172.16.1.31:5000&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明：该文件必须符合 json 规范，否则 Docker 将不能启动。</p>
+<p>重启docker服务并向镜像中心推送镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ~]# systemctl restart docker.service  </span><br><span class="line">[root@docker02 ~]# docker images </span><br><span class="line">REPOSITORY                TAG     IMAGE ID        CREATED       SIZE</span><br><span class="line">172.16.1.31:5000/nginx    1.17    ed21b7a8aee9    2 weeks ago   127MB</span><br><span class="line"># 推送镜像到镜像仓库【注意镜像名称】</span><br><span class="line">[root@docker02 ~]# docker push 172.16.1.31:5000/nginx:1.17</span><br><span class="line">The push refers to repository [172.16.1.31:5000/nginx]</span><br><span class="line">d37eecb5b769: Layer already exists </span><br><span class="line">99134ec7f247: Layer already exists </span><br><span class="line">c3a984abe8a8: Layer already exists </span><br><span class="line">1.17: digest: sha256:7ac7819e1523911399b798309025935a9968b277d86d50e5255465d6592c0266 size: 948</span><br></pre></td></tr></table></figure>
+
+<p>可见推送成功。</p>
+<h2 id="实现http上传方式二"><a href="#实现http上传方式二" class="headerlink" title="实现http上传方式二"></a>实现http上传方式二</h2><p>在启动docker server时增加启动参数为默认使用http访问。在docker01和docker02机器都要添加，因为这两台机器都可能<font color="red">向仓库推送或拉取</font>镜像。修改docker启动配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ~]# vim  /usr/lib/systemd/system/docker.service</span><br></pre></td></tr></table></figure>
+
+<p>找到<font color="red">ExecStart</font>，行尾追加信息，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=/usr/bin/dockerd --insecure-registry 172.16.1.31:5000</span><br></pre></td></tr></table></figure>
+
+<p>重启docker服务并向镜像中心推送镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ~]# systemctl daemon-reload</span><br><span class="line">[root@docker02 ~]# systemctl restart docker</span><br><span class="line">[root@docker02 ~]# docker images </span><br><span class="line">REPOSITORY                TAG       IMAGE ID       CREATED       SIZE</span><br><span class="line">172.16.1.31:5000/centos   7.7.1908  08d05d1d5859   5 months ago  204MB</span><br><span class="line"># 推送镜像到镜像仓库【注意镜像名称】</span><br><span class="line">[root@docker02 ~]# docker push 172.16.1.31:5000/centos:7.7.1908</span><br><span class="line">The push refers to repository [172.16.1.31:5000/centos]</span><br><span class="line">034f282942cd: Pushed </span><br><span class="line">7.7.1908: digest: sha256:8f2c78ca3141051eef77fb083066222abf20330a2345c970a5a61427aeb2dc7b size: 529</span><br></pre></td></tr></table></figure>
+
+<p>可见推送成功。</p>
+<h1 id="registry-web浏览器访问"><a href="#registry-web浏览器访问" class="headerlink" title="registry-web浏览器访问"></a>registry-web浏览器访问</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.0.0.31:8080/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/docker/docker-05-01.png" alt="image"></p>
+<h1 id="Registry删除镜像、垃圾回收"><a href="#Registry删除镜像、垃圾回收" class="headerlink" title="Registry删除镜像、垃圾回收"></a>Registry删除镜像、垃圾回收</h1><h2 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ~]# docker push 172.16.1.31:5000/nginx:1.17</span><br><span class="line">The push refers to repository [172.16.1.31:5000/nginx]</span><br><span class="line">d37eecb5b769: Layer already exists </span><br><span class="line">99134ec7f247: Layer already exists </span><br><span class="line">c3a984abe8a8: Layer already exists </span><br><span class="line">1.17: digest: sha256:7ac7819e1523911399b798309025935a9968b277d86d50e5255465d6592c0266 size: 948</span><br></pre></td></tr></table></figure>
+
+<p>说明：通过上面的方式可以获取<font color="red">镜像的sha256 信息</font>。</p>
+<div style="font-size:17px"><b>查看数据大小，进入仓库容器中，通过du命令查看大小</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 ~]# docker exec -it registry sh  # 进入容器</span><br><span class="line"># du -sh /var/lib/registry/    # 已经在容器内部了</span><br><span class="line">138M	/var/lib/registry/</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h2><p>删除镜像对应的API如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE /v2/&lt;name&gt;/manifests/&lt;reference&gt;</span><br></pre></td></tr></table></figure>
+
+<p>name:镜像名称</p>
+<p>reference: 镜像对应sha256值</p>
+<div style="font-size:17px"><b>发送请求，删除刚才上传的镜像【注意格式】</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ~]# curl -I -X DELETE http://172.16.1.31:5000/v2/nginx/manifests/sha256:7ac7819e1523911399b798309025935a9968b277d86d50e5255465d6592c0266</span><br><span class="line">HTTP/1.1 202 Accepted</span><br><span class="line">Docker-Distribution-Api-Version: registry/2.0</span><br><span class="line">X-Content-Type-Options: nosniff</span><br><span class="line">Date: Tue, 21 Apr 2020 05:11:14 GMT</span><br><span class="line">Content-Length: 0</span><br><span class="line">Content-Type: text/plain; charset=utf-8</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看镜像"><a href="#查看镜像" class="headerlink" title="查看镜像"></a>查看镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.0.0.31:8080/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/docker/docker-05-02.png" alt="image"></p>
+<p>可以看到镜像索引已经被删除</p>
+<h2 id="查看数据大小"><a href="#查看数据大小" class="headerlink" title="查看数据大小"></a>查看数据大小</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@docker01 ~]# docker exec -it registry sh</span><br><span class="line"># du -sh /var/lib/registry/</span><br><span class="line">138M	/var/lib/registry/</span><br></pre></td></tr></table></figure>
+
+<p>可以看到数据大小没有变化（只删除了元数据）</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p>进行容器执行垃圾回收命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># registry garbage-collect /etc/docker/registry/config.yml </span><br><span class="line">INFO[0000] Deleting blob: /docker/registry/v2/blobs/sha256/74/74cda408e262b296a56beb25c60ce2cf938a3a2fa6a1a1ddc862e67ac1135c9f  go.version=go1.6.2 instance.id=a4ea7e2a-71a1-4607-b313-274d0f725589</span><br><span class="line">INFO[0000] Deleting blob: /docker/registry/v2/blobs/sha256/7a/7ac7819e1523911399b798309025935a9968b277d86d50e5255465d6592c0266  go.version=go1.6.2 instance.id=a4ea7e2a-71a1-4607-b313-274d0f725589</span><br><span class="line">INFO[0000] Deleting blob: /docker/registry/v2/blobs/sha256/c4/c499e6d256d6d4a546f1c141e04b5b4951983ba7581e39deaf5cc595289ee70f  go.version=go1.6.2 instance.id=a4ea7e2a-71a1-4607-b313-274d0f725589</span><br><span class="line">INFO[0000] Deleting blob: /docker/registry/v2/blobs/sha256/ed/ed21b7a8aee9cc677df6d7f38a641fa0e3c05f65592c592c9f28c42b3dd89291  go.version=go1.6.2 instance.id=a4ea7e2a-71a1-4607-b313-274d0f725589</span><br><span class="line">INFO[0000] Deleting blob: /docker/registry/v2/blobs/sha256/ff/ffadbd415ab7081b4d3fac4adf708f1bc2ed5d0b65d85c947342a5fa46257486  go.version=go1.6.2 instance.id=a4ea7e2a-71a1-4607-b313-274d0f725589</span><br></pre></td></tr></table></figure>
+
+<p>查看数据大小</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># du -sh /var/lib/registry/</span><br><span class="line">89M	/var/lib/registry/</span><br></pre></td></tr></table></figure>
+
+<p>可以看到<font color="red">镜像数据已被删除</font>。</p>
+<p>完毕！</p>
+<hr>
 
       
     </div>
@@ -543,7 +649,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangblog.com/2019/08/30/linux-thread/" title="-bash：fork：Cannot allocate memory 问题的处理">http://www.zhangblog.com/2019/08/30/linux-thread/</a>
+    <a href="http://www.zhangblog.com/2020/04/29/docker05/" title="Dcoker如何搭建私有镜像仓库">http://www.zhangblog.com/2020/04/29/docker05/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -558,7 +664,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
           
         </div>
       
@@ -571,8 +679,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/12/proxy_dns01/" rel="next" title="“反向代理层”绝不能替代“DNS轮询”！">
-                <i class="fa fa-chevron-left"></i> “反向代理层”绝不能替代“DNS轮询”！
+              <a href="/2020/04/28/docker04/" rel="next" title="Docker Dockerfile 指令详解与实战案例">
+                <i class="fa fa-chevron-left"></i> Docker Dockerfile 指令详解与实战案例
               </a>
             
           </div>
@@ -580,10 +688,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/02/percona01/" rel="prev" title="percona-toolkit大表操作DDL使用">
-                percona-toolkit大表操作DDL使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -638,8 +742,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -742,6 +855,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#机器规划"><span class="nav-number">1.</span> <span class="nav-text">机器规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#访问仓库"><span class="nav-number">2.</span> <span class="nav-text">访问仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#私有仓库搭建"><span class="nav-number">3.</span> <span class="nav-text">私有仓库搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取镜像"><span class="nav-number">3.1.</span> <span class="nav-text">获取镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器运行"><span class="nav-number">3.2.</span> <span class="nav-text">容器运行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现http访问私有仓库"><span class="nav-number">4.</span> <span class="nav-text">实现http访问私有仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现http上传方式一"><span class="nav-number">4.1.</span> <span class="nav-text">实现http上传方式一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现http上传方式二"><span class="nav-number">4.2.</span> <span class="nav-text">实现http上传方式二</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#registry-web浏览器访问"><span class="nav-number">5.</span> <span class="nav-text">registry-web浏览器访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Registry删除镜像、垃圾回收"><span class="nav-number">6.</span> <span class="nav-text">Registry删除镜像、垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#上传镜像"><span class="nav-number">6.1.</span> <span class="nav-text">上传镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除镜像"><span class="nav-number">6.2.</span> <span class="nav-text">删除镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看镜像"><span class="nav-number">6.3.</span> <span class="nav-text">查看镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看数据大小"><span class="nav-number">6.4.</span> <span class="nav-text">查看数据大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾回收"><span class="nav-number">6.5.</span> <span class="nav-text">垃圾回收</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
