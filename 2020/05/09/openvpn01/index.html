@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,OpenVPN,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="在CentOS 7环境下搭建OpenVPN服务，Windows客户端、Linux客户端通过OpenVPN服务访问后端机器。  主机规划与架构   服务器名称(hostname) 操作系统版本 内网IP 外网IP(模拟) 角色    web01 CentOS7.7 172.16.10.191 无 被访问机器   web02 CentOS7.7 172.16.10.192 无 被访问机器   op">
+<meta name="keywords" content="linux,OpenVPN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Linux CentOS 7搭建OpenVPN服务与管理">
+<meta property="og:url" content="http://www.zhangblog.com/2020/05/09/openvpn01/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="在CentOS 7环境下搭建OpenVPN服务，Windows客户端、Linux客户端通过OpenVPN服务访问后端机器。  主机规划与架构   服务器名称(hostname) 操作系统版本 内网IP 外网IP(模拟) 角色    web01 CentOS7.7 172.16.10.191 无 被访问机器   web02 CentOS7.7 172.16.10.192 无 被访问机器   op">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-00.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-03.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-04.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-05.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-06.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-07.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-08.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-09.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-10.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-11.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-12.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-13.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-14.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-15.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-16.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-17.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-01-18.png">
+<meta property="og:updated_time" content="2020-05-09T15:50:23.365Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在Linux CentOS 7搭建OpenVPN服务与管理">
+<meta name="twitter:description" content="在CentOS 7环境下搭建OpenVPN服务，Windows客户端、Linux客户端通过OpenVPN服务访问后端机器。  主机规划与架构   服务器名称(hostname) 操作系统版本 内网IP 外网IP(模拟) 角色    web01 CentOS7.7 172.16.10.191 无 被访问机器   web02 CentOS7.7 172.16.10.192 无 被访问机器   op">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/openvpn/openvpn-00.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2020/05/09/openvpn01/">
+
+
+
+
+
+  <title>在Linux CentOS 7搭建OpenVPN服务与管理 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/05/09/openvpn01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在Linux CentOS 7搭建OpenVPN服务与管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-09T23:45:20+08:00">
+                2020-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenVPN/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenVPN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/09/openvpn01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/05/09/openvpn01/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/05/09/openvpn01/" class="leancloud_visitors" data-flag-title="在Linux CentOS 7搭建OpenVPN服务与管理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  20
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/openvpn/openvpn-00.jpg" alt="image"></p>
+<blockquote>
+<p>在CentOS 7环境下搭建OpenVPN服务，Windows客户端、Linux客户端通过OpenVPN服务访问后端机器。</p>
+</blockquote>
+<h1 id="主机规划与架构"><a href="#主机规划与架构" class="headerlink" title="主机规划与架构"></a>主机规划与架构</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>操作系统版本</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>web01</td>
+<td>CentOS7.7</td>
+<td>172.16.10.191</td>
+<td>无</td>
+<td>被访问机器</td>
+</tr>
+<tr>
+<td>web02</td>
+<td>CentOS7.7</td>
+<td>172.16.10.192</td>
+<td>无</td>
+<td>被访问机器</td>
+</tr>
+<tr>
+<td>openvpn-server</td>
+<td>CentOS7.7</td>
+<td>172.16.10.190</td>
+<td>10.0.0.190</td>
+<td>Openvpn-Server</td>
+</tr>
+<tr>
+<td>openvpn-client</td>
+<td>CentOS7.7</td>
+<td>无</td>
+<td>10.0.0.180</td>
+<td>Openvpn-Client</td>
+</tr>
+<tr>
+<td>本地笔记本电脑</td>
+<td>Windows10</td>
+<td>无</td>
+<td>10.0.0.X</td>
+<td>Openvpn-Client</td>
+</tr>
+</tbody></table>
+<h2 id="OpenVPN软件版本"><a href="#OpenVPN软件版本" class="headerlink" title="OpenVPN软件版本"></a>OpenVPN软件版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Linux 安装：openvpn-2.4.9.tar.gz     # GitHub地址：https://github.com/OpenVPN/openvpn</span><br><span class="line">Linux 安装：easy-rsa-3.0.7.tar.gz    # GitHub地址：https://github.com/OpenVPN/easy-rsa</span><br><span class="line">widows安装：openvpn-install-2.4.9-I601-Win10.exe   # OpenVPN官网</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">如果widows安装软件在官方访问失败，那么可以从如下地址下载：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.techspot.com/downloads/5182-openvpn.html</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/openvpn/openvpn-01-01.png" alt="image"></p>
+<h2 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h2><p><img src="/uploads/openvpn/openvpn-01-02.png" alt="image"></p>
+<h2 id="OpenVPN机器配置必要修改"><a href="#OpenVPN机器配置必要修改" class="headerlink" title="OpenVPN机器配置必要修改"></a>OpenVPN机器配置必要修改</h2><div style="font-size:17px"><b>开启转发功能并生效</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## 不存在该配置则添加</span><br><span class="line"># grep &apos;net.ipv4.ip_forward = 1&apos; /etc/sysctl.conf || echo &apos;net.ipv4.ip_forward = 1&apos; &gt;&gt; /etc/sysctl.conf</span><br><span class="line"># sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>原因：从客户端访问web01或web02机器需要通过VPN机器中转。</p>
+<div style="font-size:17px"><b>iptables配置</b></div>
+
+<p>只需添加配置，不需要启动iptables服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">## 添加如下配置</span><br><span class="line"># iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE</span><br><span class="line"># iptables-save &gt; /etc/sysconfig/iptables</span><br><span class="line"># iptables -L -n -t nat</span><br><span class="line">Chain PREROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination </span><br><span class="line"></span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination </span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination </span><br><span class="line"></span><br><span class="line">Chain POSTROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination </span><br><span class="line">MASQUERADE  all  --  10.8.0.0/24          0.0.0.0/0</span><br></pre></td></tr></table></figure>
+
+<p>原因：客户端连接VPN后，默认分配的10.8.0.0/24网段地址，不能直接访问web01或web02机器【这两台是172.16.10.0/24网段】，因此需要在iptables进行nat配置。</p>
+<p><font color="red">删除上面的iptables配置信息命令如下。作用：对比正常的访问和异常的访问</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># iptables -t nat -D POSTROUTING 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="系统时间与硬件时间同步"><a href="#系统时间与硬件时间同步" class="headerlink" title="系统时间与硬件时间同步"></a>系统时间与硬件时间同步</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@openvpn-server ~]# crontab -l   # 定时任务同步系统时间</span><br><span class="line"># time sync by zhang at 2020-03-09</span><br><span class="line">*/10 * * * * /usr/sbin/ntpdate ntp1.aliyun.com &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">[root@openvpn-server ~]# ll /etc/localtime   # 使用上海时间</span><br><span class="line">lrwxrwxrwx. 1 root root 33 Mar  9 03:59 /etc/localtime -&gt; /usr/share/zoneinfo/Asia/Shanghai</span><br><span class="line">[root@openvpn-server ~]# hwclock --show   # 查看硬件时间</span><br><span class="line">Sun 03 May 2020 03:34:37 PM CST  -0.614806 seconds</span><br><span class="line">[root@openvpn-server ~]# hwclock --systohc   # 系统时间同步到硬件时间</span><br></pre></td></tr></table></figure>
+
+<p>说明：如果时间不同步，那么VPN登录访问就可能存在问题。</p>
+<h1 id="Vmware虚拟机网络设置【可略】"><a href="#Vmware虚拟机网络设置【可略】" class="headerlink" title="Vmware虚拟机网络设置【可略】"></a>Vmware虚拟机网络设置【可略】</h1><h2 id="web01机器"><a href="#web01机器" class="headerlink" title="web01机器"></a>web01机器</h2><p><img src="/uploads/openvpn/openvpn-01-03.png" alt="image"></p>
+<div style="font-size:17px"><b>网卡eth0内网设置</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/sysconfig/network-scripts/ifcfg-eth0 </span><br><span class="line">DEVICE=eth0</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NM_CONTROLLED=yes</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">USERCTL=no</span><br><span class="line">IPADDR=172.16.10.191</span><br><span class="line">NETMASK=255.255.255.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="web02机器"><a href="#web02机器" class="headerlink" title="web02机器"></a>web02机器</h2><p><img src="/uploads/openvpn/openvpn-01-04.png" alt="image"></p>
+<div style="font-size:17px"><b>网卡eth0内网设置</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[zhang@zhang ~]$ cat /etc/sysconfig/network-scripts/ifcfg-eth0 </span><br><span class="line">DEVICE=eth0</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NM_CONTROLLED=yes</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">USERCTL=no</span><br><span class="line">IPADDR=172.16.10.192</span><br><span class="line">NETMASK=255.255.255.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="openvpn-server机器"><a href="#openvpn-server机器" class="headerlink" title="openvpn-server机器"></a>openvpn-server机器</h2><p><img src="/uploads/openvpn/openvpn-01-05.png" alt="image"></p>
+<div style="font-size:17px"><b>网卡eth0内网设置</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/sysconfig/network-scripts/ifcfg-eth0 </span><br><span class="line">DEVICE=eth0</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NM_CONTROLLED=yes</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">USERCTL=no</span><br><span class="line">IPADDR=172.16.10.190</span><br><span class="line">NETMASK=255.255.255.0</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>网卡eth1模拟外网设置</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/sysconfig/network-scripts/ifcfg-eth1 </span><br><span class="line">DEVICE=eth1</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NM_CONTROLLED=yes</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">USERCTL=no</span><br><span class="line">IPADDR=10.0.0.190</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=10.0.0.2</span><br><span class="line">DNS1=223.5.5.5</span><br><span class="line">DNS2=223.6.6.6</span><br></pre></td></tr></table></figure>
+
+<h2 id="openvpn-client机器"><a href="#openvpn-client机器" class="headerlink" title="openvpn-client机器"></a>openvpn-client机器</h2><p><img src="/uploads/openvpn/openvpn-01-06.png" alt="image"></p>
+<div style="font-size:17px"><b>网卡eth0模拟外网设置</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/sysconfig/network-scripts/ifcfg-eth0 </span><br><span class="line">DEVICE=eth0</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NM_CONTROLLED=yes</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">USERCTL=no</span><br><span class="line">IPADDR=10.0.0.180</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=10.0.0.2</span><br><span class="line">DNS1=223.5.5.5</span><br><span class="line">DNS2=223.6.6.6</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装openvpn"><a href="#安装openvpn" class="headerlink" title="安装openvpn"></a>安装openvpn</h1><p>根据主机规划，在openvpn-server【172.16.10.190、10.0.0.190】部署openvpn。</p>
+<p>安装依赖包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install -y lz4-devel lzo-devel pam-devel openssl-devel systemd-devel sqlite-devel</span><br></pre></td></tr></table></figure>
+
+<p>[备注如果是阿里云机器，可能还需要装如下包：]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y autoconf</span><br><span class="line">yum install -y automake</span><br><span class="line">yum install -y libtool libtool-ltdl</span><br></pre></td></tr></table></figure>
+
+<p>从github上下载openvpn源代码包并解压后编译安装，最后建立软连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># wget https://github.com/OpenVPN/openvpn/archive/v2.4.9.tar.gz</span><br><span class="line"># mv v2.4.9.tar.gz openvpn-2.4.9.tar.gz</span><br><span class="line"># tar xf openvpn-2.4.9.tar.gz </span><br><span class="line"># cd openvpn-2.4.9/</span><br><span class="line"># autoreconf -i -v -f</span><br><span class="line"># ./configure --prefix=/usr/local/openvpn --enable-lzo --enable-lz4 --enable-crypto --enable-server --enable-plugins --enable-port-share --enable-iproute2 --enable-pf --enable-plugin-auth-pam --enable-pam-dlopen --enable-systemd</span><br><span class="line"># make &amp;&amp; make install</span><br><span class="line"># ln -s /usr/local/openvpn/sbin/openvpn /usr/local/sbin/openvpn</span><br></pre></td></tr></table></figure>
+
+<p>配置文件修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># vim /usr/local/openvpn/lib/systemd/system/openvpn-server@.service</span><br><span class="line">### 找到 ExecStart 这行，改为如下</span><br><span class="line">ExecStart=/usr/local/openvpn/sbin/openvpn --config server.conf</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">配置系统服务，并开机自启动</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># cp -a /usr/local/openvpn/lib/systemd/system/openvpn-server@.service /usr/lib/systemd/system/openvpn.service</span><br><span class="line"># systemctl enable openvpn.service</span><br></pre></td></tr></table></figure>
+
+<h1 id="生成证书"><a href="#生成证书" class="headerlink" title="生成证书"></a>生成证书</h1><h2 id="easy-rsa下载与配置修改"><a href="#easy-rsa下载与配置修改" class="headerlink" title="easy-rsa下载与配置修改"></a>easy-rsa下载与配置修改</h2><p>下载easy-rsa并解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># wget https://github.com/OpenVPN/easy-rsa/archive/v3.0.7.tar.gz </span><br><span class="line"># mv v3.0.7.tar.gz easy-rsa-3.0.7.tar.gz</span><br><span class="line"># tar xf easy-rsa-3.0.7.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>根据easy-rsa-3.0.7/easyrsa3/vars.example文件生成全局配置文件vars</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># cd easy-rsa-3.0.7/easyrsa3</span><br><span class="line"># cp -a vars.example vars</span><br></pre></td></tr></table></figure>
+
+<p>修改vars文件，根据需要去掉注释，并修改对应值；<font color="red">或者直接在文件末尾追加如下信息</font>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 国家</span><br><span class="line">set_var EASYRSA_REQ_COUNTRY     &quot;CN&quot;</span><br><span class="line"># 省</span><br><span class="line">set_var EASYRSA_REQ_PROVINCE    &quot;BJ&quot;</span><br><span class="line"># 城市</span><br><span class="line">set_var EASYRSA_REQ_CITY        &quot;BeiJing&quot;</span><br><span class="line"># 组织</span><br><span class="line">set_var EASYRSA_REQ_ORG         &quot;zhang&quot;</span><br><span class="line"># 邮箱</span><br><span class="line">set_var EASYRSA_REQ_EMAIL       &quot;zhang@test.com&quot;</span><br><span class="line"># 拥有者</span><br><span class="line">set_var EASYRSA_REQ_OU          &quot;ZJ&quot;</span><br><span class="line"></span><br><span class="line"># 长度</span><br><span class="line">set_var EASYRSA_KEY_SIZE        2048</span><br><span class="line"># 算法</span><br><span class="line">set_var EASYRSA_ALGO            rsa</span><br><span class="line"></span><br><span class="line"># CA证书过期时间，单位天</span><br><span class="line">set_var EASYRSA_CA_EXPIRE      36500</span><br><span class="line"># 签发证书的有效期是多少天，单位天</span><br><span class="line">set_var EASYRSA_CERT_EXPIRE    36500</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成服务端和客户端证书"><a href="#生成服务端和客户端证书" class="headerlink" title="生成服务端和客户端证书"></a>生成服务端和客户端证书</h2><div style="font-size:17px"><b>初始化与创建CA根证书</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ./easyrsa init-pki</span><br></pre></td></tr></table></figure>
+
+<p>初始化，会在当前目录创建PKI目录，用于存储一些中间变量及最终生成的证书</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ./easyrsa build-ca</span><br></pre></td></tr></table></figure>
+
+<p>在这部分需要输入PEM密码 PEM pass phrase，输入两次，此密码必须记住，不然以后不能为证书签名。<br>还需要输入common name 通用名，如：<font color="red">openvpen</font>，这个你自己随便设置个独一无二的。</p>
+<div style="font-size:17px"><b>生成服务端证书</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ./easyrsa build-server-full server nopass</span><br></pre></td></tr></table></figure>
+
+<p>为服务端生成证书对并在本地签名。nopass参数生成一个无密码的证书；在此过程中会让你确认ca密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ./easyrsa gen-dh</span><br></pre></td></tr></table></figure>
+
+<p>创建Diffie-Hellman，确保key穿越不安全网络的命令，时间会有点长，耐心等待</p>
+<div style="font-size:17px"><b>生成客户端证书</b></div>
+
+<p>生成多个客户端证书</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># ./easyrsa build-client-full client nopass    # 无密码，实际应用中不推荐，客户端有密码可提高安全性</span><br><span class="line"># ./easyrsa build-client-full zhangsan    # 让你输入密码，后续VPN连接时会使用</span><br><span class="line"># ./easyrsa build-client-full lisi        # 让你输入密码，后续VPN连接时会使用</span><br><span class="line"># ./easyrsa build-client-full wangwu      # 让你输入密码，后续VPN连接时会使用</span><br></pre></td></tr></table></figure>
+
+<p>为客户端生成证书对并在本地签名。nopass参数生成一个无密码的证书；在此过程中都会让你确认ca密码</p>
+<div style="font-size:17px"><b>为了提高安全性，生成ta.key</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># openvpn --genkey --secret ta.key</span><br></pre></td></tr></table></figure>
+
+<p>加强认证方式，防攻击。如果配置文件中启用此项(默认是启用的)，就需要执行上述命令，并把ta.key放到/etc/openvpn/server目录。配置文件中服务端第二个参数为0，同时客户端也要有此文件，且client.conf中此指令的第二个参数需要为1。<font color="red">【服务端有该配置，那么客户端也必须要有】</font></p>
+<div style="font-size:17px"><b>整理服务端证书</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/openvpn/server/</span><br><span class="line">cp -a pki/ca.crt /etc/openvpn/server/</span><br><span class="line">cp -a pki/private/server.key /etc/openvpn/server/</span><br><span class="line">cp -a pki/issued/server.crt /etc/openvpn/server/</span><br><span class="line">cp -a pki/dh.pem /etc/openvpn/server/</span><br><span class="line">cp -a ta.key /etc/openvpn/server/</span><br></pre></td></tr></table></figure>
+
+<h1 id="创建服务端配置文件"><a href="#创建服务端配置文件" class="headerlink" title="创建服务端配置文件"></a>创建服务端配置文件</h1><p>参照openvpn-2.4.9/sample/sample-config-files/server.conf文件</p>
+<h2 id="服务端配置文件"><a href="#服务端配置文件" class="headerlink" title="服务端配置文件"></a>服务端配置文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># cat /etc/openvpn/server/server.conf   # 配置文件内容</span><br><span class="line">local 0.0.0.0</span><br><span class="line">port 1194</span><br><span class="line">proto tcp</span><br><span class="line">dev tun</span><br><span class="line">ca /etc/openvpn/server/ca.crt</span><br><span class="line">cert /etc/openvpn/server/server.crt</span><br><span class="line">key /etc/openvpn/server/server.key</span><br><span class="line">dh /etc/openvpn/server/dh.pem</span><br><span class="line">server 10.8.0.0 255.255.255.0</span><br><span class="line">ifconfig-pool-persist ipp.txt</span><br><span class="line">push &quot;route 172.16.10.0 255.255.255.0&quot;</span><br><span class="line">;client-to-client</span><br><span class="line">;duplicate-cn</span><br><span class="line">keepalive 10 120</span><br><span class="line">tls-auth /etc/openvpn/server/ta.key 0</span><br><span class="line">cipher AES-256-CBC</span><br><span class="line">compress lz4-v2</span><br><span class="line">push &quot;compress lz4-v2&quot;</span><br><span class="line">;comp-lzo</span><br><span class="line">max-clients 1000</span><br><span class="line">user nobody</span><br><span class="line">group nobody</span><br><span class="line">persist-key</span><br><span class="line">persist-tun</span><br><span class="line">status openvpn-status.log</span><br><span class="line">log  /var/log/openvpn.log</span><br><span class="line">verb 3</span><br><span class="line">;explicit-exit-notify 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置文件参数说明"><a href="#配置文件参数说明" class="headerlink" title="配置文件参数说明"></a>配置文件参数说明</h2><p>参考：openvpn-2.4.9/sample/sample-config-files/server.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">local 0.0.0.0</span><br><span class="line">表示openvpn服务端的监听地址</span><br><span class="line"></span><br><span class="line">port 1194</span><br><span class="line">监听的端口，默认是1194</span><br><span class="line"></span><br><span class="line">proto tcp</span><br><span class="line">使用的协议，有udp和tcp。建议选择tcp</span><br><span class="line"></span><br><span class="line">dev tun</span><br><span class="line">使用三层路由IP隧道(tun)还是二层以太网隧道(tap)。一般都使用tun</span><br><span class="line"></span><br><span class="line">ca ca.crt</span><br><span class="line">cert server.crt</span><br><span class="line">key server.key</span><br><span class="line">dh dh2048.pem</span><br><span class="line">ca证书、服务端证书、服务端密钥和密钥交换文件。如果它们和server.conf在同一个目录下则可以不写绝对路径，否则需要写绝对路径调用</span><br><span class="line"></span><br><span class="line">server 10.8.0.0 255.255.255.0</span><br><span class="line">vpn服务端为自己和客户端分配IP的地址池。</span><br><span class="line">服务端自己获取网段的第一个地址(此处为10.8.0.1)，后为客户端分配其他的可用地址。以后客户端就可以和10.8.0.1进行通信。</span><br><span class="line">注意：该网段地址池不要和已有网段冲突或重复。其实一般来说是不用改的。除非当前内网使用了10.8.0.0/24的网段。</span><br><span class="line"></span><br><span class="line">ifconfig-pool-persist ipp.txt</span><br><span class="line">使用一个文件记录已分配虚拟IP的客户端和虚拟IP的对应关系，</span><br><span class="line">以后openvpn重启时，将可以按照此文件继续为对应的客户端分配此前相同的IP。也就是自动续借IP的意思。</span><br><span class="line"></span><br><span class="line">server-bridge XXXXXX</span><br><span class="line">使用tap模式的时候考虑此选项。</span><br><span class="line"></span><br><span class="line">push &quot;route 10.0.10.0 255.255.255.0&quot;</span><br><span class="line">push &quot;route 192.168.10.0 255.255.255.0&quot;</span><br><span class="line">vpn服务端向客户端推送vpn服务端内网网段的路由配置，以便让客户端能够找到服务端内网。多条路由就写多个Push指令</span><br><span class="line"></span><br><span class="line">client-to-client</span><br><span class="line">让vpn客户端之间可以互相看见对方，即能互相通信。默认情况客户端只能看到服务端一个人；</span><br><span class="line">默认是注释的，不能客户端之间相互看见</span><br><span class="line"></span><br><span class="line">duplicate-cn</span><br><span class="line">允许多个客户端使用同一个VPN帐号连接服务端</span><br><span class="line">默认是注释的，不支持多个客户登录一个账号</span><br><span class="line"></span><br><span class="line">keepalive 10 120</span><br><span class="line">每10秒ping一次，120秒后没收到ping就说明对方挂了</span><br><span class="line"></span><br><span class="line">tls-auth ta.key 0</span><br><span class="line">加强认证方式，防攻击。如果配置文件中启用此项(默认是启用的)</span><br><span class="line">需要执行openvpn --genkey --secret ta.key，并把ta.key放到/etc/openvpn/server目录</span><br><span class="line">服务端第二个参数为0；同时客户端也要有此文件，且client.conf中此指令的第二个参数需要为1。</span><br><span class="line"></span><br><span class="line">cipher AES-256-CBC</span><br><span class="line"># 选择一个密码。如果在服务器上使用了cipher选项，那么您也必须在这里指定它。注意，v2.4客户端/服务器将在TLS模式下自动协商AES-256-GCM。</span><br><span class="line"></span><br><span class="line">compress lz4-v2</span><br><span class="line">push &quot;compress lz4-v2&quot;</span><br><span class="line">openvpn 2.4版本的vpn才能设置此选项。表示服务端启用lz4的压缩功能，传输数据给客户端时会压缩数据包。</span><br><span class="line">Push后在客户端也配置启用lz4的压缩功能，向服务端发数据时也会压缩。如果是2.4版本以下的老版本，则使用用comp-lzo指令</span><br><span class="line"></span><br><span class="line">comp-lzo</span><br><span class="line">启用lzo数据压缩格式。此指令用于低于2.4版本的老版本。且如果服务端配置了该指令，客户端也必须要配置</span><br><span class="line"></span><br><span class="line">max-clients 100</span><br><span class="line">并发客户端的连接数</span><br><span class="line"></span><br><span class="line">persist-key</span><br><span class="line">persist-tun</span><br><span class="line">通过ping得知超时时，当重启vpn后将使用同一个密钥文件以及保持tun连接状态</span><br><span class="line"></span><br><span class="line">status openvpn-status.log</span><br><span class="line">在文件中输出当前的连接信息，每分钟截断并重写一次该文件</span><br><span class="line"></span><br><span class="line">;log openvpn.log</span><br><span class="line">;log-append openvpn.log</span><br><span class="line">默认vpn的日志会记录到rsyslog中，使用这两个选项可以改变。</span><br><span class="line">log指令表示每次启动vpn时覆盖式记录到指定日志文件中，</span><br><span class="line">log-append则表示每次启动vpn时追加式的记录到指定日志中。</span><br><span class="line">但两者只能选其一，或者不选时记录到rsyslog中</span><br><span class="line"></span><br><span class="line">verb 3</span><br><span class="line">日志记录的详细级别。</span><br><span class="line"></span><br><span class="line">;mute 20</span><br><span class="line">沉默的重复信息。最多20条相同消息类别的连续消息将输出到日志。</span><br><span class="line"></span><br><span class="line">explicit-exit-notify 1</span><br><span class="line">当服务器重新启动时，通知客户端，以便它可以自动重新连接。仅在UDP协议是可用</span><br></pre></td></tr></table></figure>
+
+<h1 id="启动openvpn服务并查看进程与端口"><a href="#启动openvpn服务并查看进程与端口" class="headerlink" title="启动openvpn服务并查看进程与端口"></a>启动openvpn服务并查看进程与端口</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># systemctl start openvpn.service</span><br><span class="line"># ps -ef | grep &apos;open&apos;</span><br><span class="line">nobody   19095   1  0 01:19 ?   00:00:00 /usr/local/openvpn/sbin/openvpn --config server.conf</span><br><span class="line"># netstat -lntup | grep &apos;19095&apos;</span><br><span class="line">tcp    0      0 0.0.0.0:1194    0.0.0.0:*     LISTEN     19095/openvpn</span><br></pre></td></tr></table></figure>
+
+<p>通过ifconfig命令，也可见多个tun0网卡信息</p>
+<p><img src="/uploads/openvpn/openvpn-01-07.png" alt="image"></p>
+<h1 id="Windows客户端配置与访问"><a href="#Windows客户端配置与访问" class="headerlink" title="Windows客户端配置与访问"></a>Windows客户端配置与访问</h1><h2 id="客户端安装"><a href="#客户端安装" class="headerlink" title="客户端安装"></a>客户端安装</h2><p><img src="/uploads/openvpn/openvpn-01-08.png" alt="image"></p>
+<p>安装完毕后会在「网络连接」中会多出一个连接</p>
+<p><img src="/uploads/openvpn/openvpn-01-09.png" alt="image"></p>
+<h2 id="客户端client用户配置文件"><a href="#客户端client用户配置文件" class="headerlink" title="客户端client用户配置文件"></a>客户端client用户配置文件</h2><p><font color="red">备注：文件名 windows为client.ovpn，Linux为client.conf</font></p>
+<div style="font-size:17px"><b>需要的证书与配置文件如下图：</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">说明：</span><br><span class="line">1、注意路径，在OpenVPN/config目录下建立了client目录</span><br><span class="line">2、ca.crt、client.crt、client.key、ta.key都是之前创建好的，只有client.ovpn需要单独下载并修改。</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/openvpn/openvpn-01-10.png" alt="image"></p>
+<div style="font-size:17px"><b>client.ovpn内容如下：</b></div>
+
+<p>参照openvpn-2.4.9/sample/sample-config-files/client.conf文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">;# 文件名 windows为client.ovpn，Linux为client.conf</span><br><span class="line"></span><br><span class="line">client</span><br><span class="line">dev tun</span><br><span class="line">proto tcp</span><br><span class="line">remote 10.0.0.190 1194</span><br><span class="line">resolv-retry infinite</span><br><span class="line">nobind</span><br><span class="line">;user nobody</span><br><span class="line">;group nobody</span><br><span class="line">persist-key</span><br><span class="line">persist-tun</span><br><span class="line">ca ca.crt</span><br><span class="line">cert client.crt</span><br><span class="line">key client.key</span><br><span class="line">remote-cert-tls server</span><br><span class="line">tls-auth ta.key 1</span><br><span class="line">cipher AES-256-CBC</span><br><span class="line">compress lz4-v2</span><br><span class="line">verb 3</span><br><span class="line">;mute 20</span><br></pre></td></tr></table></figure>
+
+<h2 id="客户端zhangsan用户配置文件"><a href="#客户端zhangsan用户配置文件" class="headerlink" title="客户端zhangsan用户配置文件"></a>客户端zhangsan用户配置文件</h2><p><font color="red">备注：文件名 windows为zhangsan.ovpn，Linux为zhangsan.conf</font></p>
+<div style="font-size:17px"><b>需要的证书与配置文件如下图：</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">说明：</span><br><span class="line">1、注意路径，在OpenVPN/config目录下建立了zhangsan目录</span><br><span class="line">2、ca.crt、zhangsan.crt、zhangsan.key、ta.key都是之前创建好的，只有zhangsan.ovpn需要单独下载并修改。</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/openvpn/openvpn-01-11.png" alt="image"></p>
+<div style="font-size:17px"><b>zhangsan.ovpn内容如下：</b></div>
+
+<p>参照openvpn-2.4.9/sample/sample-config-files/client.conf文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">;# 文件名 windows为client.ovpn，Linux为client.conf</span><br><span class="line"></span><br><span class="line">client</span><br><span class="line">dev tun</span><br><span class="line">proto tcp</span><br><span class="line">remote 10.0.0.190 1194</span><br><span class="line">resolv-retry infinite</span><br><span class="line">nobind</span><br><span class="line">;user nobody</span><br><span class="line">;group nobody</span><br><span class="line">persist-key</span><br><span class="line">persist-tun</span><br><span class="line">ca ca.crt</span><br><span class="line">cert zhangsan.crt</span><br><span class="line">key zhangsan.key</span><br><span class="line">remote-cert-tls server</span><br><span class="line">tls-auth ta.key 1</span><br><span class="line">cipher AES-256-CBC</span><br><span class="line">compress lz4-v2</span><br><span class="line">verb 3</span><br><span class="line">;mute 20</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b><font color="red">其他用户如：lisi，wangwu参考上述进行配置即可。</font></b></div>
+
+<h2 id="配置文件参数说明-1"><a href="#配置文件参数说明-1" class="headerlink" title="配置文件参数说明"></a>配置文件参数说明</h2><p>参考：openvpn-2.4.9/sample/sample-config-files/client.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"># 文件名 windows为client.ovpn，Linux为client.conf</span><br><span class="line"></span><br><span class="line">client</span><br><span class="line"># 标识这是个客户端</span><br><span class="line"></span><br><span class="line">dev tun</span><br><span class="line"># 使用三层路由IP隧道(tun)还是二层以太网隧道(tap)。服务端是什么客户端就是什么</span><br><span class="line"></span><br><span class="line">proto tcp</span><br><span class="line"># 使用的协议，有udp和tcp。服务端是什么客户端就是什么</span><br><span class="line"></span><br><span class="line">remote 10.0.0.190 1194</span><br><span class="line"># 服务端的地址和端口</span><br><span class="line"></span><br><span class="line">resolv-retry infinite</span><br><span class="line"># 一直尝试解析OpenVPN服务器的主机名。</span><br><span class="line"># 在机器上非常有用，不是永久连接到互联网，如笔记本电脑。</span><br><span class="line"></span><br><span class="line">nobind</span><br><span class="line"># 大多数客户机不需要绑定到特定的本地端口号。</span><br><span class="line"></span><br><span class="line">;user nobody</span><br><span class="line">;group nobody</span><br><span class="line"># 初始化后的降级特权(仅非windows)</span><br><span class="line"></span><br><span class="line">persist-key</span><br><span class="line">persist-tun</span><br><span class="line"># 尝试在重新启动时保留某些状态。</span><br><span class="line"></span><br><span class="line">ca ca.crt</span><br><span class="line">cert client.crt</span><br><span class="line">key client.key</span><br><span class="line"># ca证书、客户端证书、客户端密钥</span><br><span class="line"># 如果它们和client.conf或client.ovpn在同一个目录下则可以不写绝对路径，否则需要写绝对路径调用</span><br><span class="line"></span><br><span class="line">remote-cert-tls server</span><br><span class="line"># 通过检查certicate是否具有正确的密钥使用设置来验证服务器证书。</span><br><span class="line"></span><br><span class="line">tls-auth ta.key 1</span><br><span class="line"># 加强认证方式，防攻击。服务端有配置，则客户端必须有</span><br><span class="line"></span><br><span class="line">cipher AES-256-CBC</span><br><span class="line"># 选择一个密码。如果在服务器上使用了cipher选项，那么您也必须在这里指定它。注意，v2.4客户端/服务器将在TLS模式下自动协商AES-256-GCM。</span><br><span class="line"></span><br><span class="line">compress lz4-v2</span><br><span class="line"># 服务端用的什么，客户端就用的什么</span><br><span class="line"># 表示客户端启用lz4的压缩功能，传输数据给客户端时会压缩数据包。</span><br><span class="line"></span><br><span class="line">verb 3</span><br><span class="line"># 日志级别</span><br><span class="line"></span><br><span class="line">;mute 20</span><br><span class="line"># 沉默的重复信息。最多20条相同消息类别的连续消息将输出到日志。</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动客户端并连接VPN"><a href="#启动客户端并连接VPN" class="headerlink" title="启动客户端并连接VPN"></a>启动客户端并连接VPN</h2><p><img src="/uploads/openvpn/openvpn-01-12.png" alt="image"></p>
+<div style="font-size:17px"><b>连接client用户</b></div>
+
+<p>之前生成客户端证书的时候，加上 nopass 参数，因此直接连接无需输入密码。如果连接的是用户zhangsan，则需要输入密码。</p>
+<p>连接成功后，会有如下提示</p>
+<p><img src="/uploads/openvpn/openvpn-01-13.png" alt="image"></p>
+<h2 id="客户端访问后端的web01和web02机器"><a href="#客户端访问后端的web01和web02机器" class="headerlink" title="客户端访问后端的web01和web02机器"></a>客户端访问后端的web01和web02机器</h2><p>本地笔记本电脑操作</p>
+<p><img src="/uploads/openvpn/openvpn-01-14.png" alt="image"></p>
+<p>VPN机器抓包</p>
+<p><img src="/uploads/openvpn/openvpn-01-15.png" alt="image"></p>
+<p>可见能够正常访问</p>
+<p><font color="red">备注：可以将VPN机器的iptables配置删除；然后断开客户端连接，再重新连接，之后客户端ping 访问试试。【用于对比】</font></p>
+<h1 id="Linux客户端配置与访问"><a href="#Linux客户端配置与访问" class="headerlink" title="Linux客户端配置与访问"></a>Linux客户端配置与访问</h1><h2 id="安装openvpn-1"><a href="#安装openvpn-1" class="headerlink" title="安装openvpn"></a>安装openvpn</h2><p>安装参见上文，上面说过了Linux安装OpenVPN，这里不单独说了。我们这里<font color="red">使用之前创建的wangwu客户端用户进行验证</font>。</p>
+<p>配置文件修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@openvpn-client ~]# vim /usr/local/openvpn/lib/systemd/system/openvpn-server@.service</span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">PrivateTmp=true</span><br><span class="line">#WorkingDirectory=/etc/openvpn/server</span><br><span class="line">WorkingDirectory=/etc/openvpn/wangwu</span><br><span class="line">#ExecStart=/usr/local/openvpn/sbin/openvpn --status %t/openvpn-server/status-%i.log --status-version 2 --suppress-timestamps --config %i.conf</span><br><span class="line">ExecStart=/usr/local/openvpn/sbin/openvpn --config wangwu.conf</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">配置系统服务，并开机自启动【请根据需要加入开机自启动】</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># cp -a /usr/local/openvpn/lib/systemd/system/openvpn-server@.service /usr/lib/systemd/system/openvpn.service</span><br><span class="line"># systemctl enable openvpn.service</span><br></pre></td></tr></table></figure>
+
+<h2 id="客户端wangwu客户配置"><a href="#客户端wangwu客户配置" class="headerlink" title="客户端wangwu客户配置"></a>客户端wangwu客户配置</h2><p><font color="red">备注：文件名 windows为wangwu.ovpn，Linux为wangwu.conf</font></p>
+<div style="font-size:17px"><b>需要的证书与配置文件如下：</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">说明：</span><br><span class="line">1、注意路径，在/etc/openvpn/目录下建立了wangwu目录</span><br><span class="line">2、ca.crt、wangwu.crt、wangwu.key、ta.key都是之前创建好的，只有wangwu.ovpn需要单独下载并修改。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@openvpn-client wangwu]# pwd</span><br><span class="line">/etc/openvpn/wangwu</span><br><span class="line">[root@openvpn-client wangwu]# ll</span><br><span class="line">total 24</span><br><span class="line">-rw-r--r-- 1 root root 1164 May  2 23:08 ca.crt</span><br><span class="line">-rw-r--r-- 1 root root  636 May  2 23:46 ta.key</span><br><span class="line">-rw-r--r-- 1 root root  318 May  3 21:54 wangwu.conf</span><br><span class="line">-rw-r--r-- 1 root root 4422 May  2 23:14 wangwu.crt</span><br><span class="line">-rw-r--r-- 1 root root 1834 May  2 23:14 wangwu.key</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>wangwu.conf内容如下：</b></div>
+
+<p>参照openvpn-2.4.9/sample/sample-config-files/client.conf文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@openvpn-client wangwu]# cat wangwu.conf </span><br><span class="line">;# 文件名 windows为client.ovpn，Linux为client.conf</span><br><span class="line"></span><br><span class="line">client</span><br><span class="line">dev tun</span><br><span class="line">proto tcp</span><br><span class="line">remote 10.0.0.190 1194</span><br><span class="line">resolv-retry infinite</span><br><span class="line">nobind</span><br><span class="line">user nobody</span><br><span class="line">group nobody</span><br><span class="line">persist-key</span><br><span class="line">persist-tun</span><br><span class="line">ca ca.crt</span><br><span class="line">cert wangwu.crt</span><br><span class="line">key wangwu.key</span><br><span class="line">remote-cert-tls server</span><br><span class="line">tls-auth ta.key 1</span><br><span class="line">cipher AES-256-CBC</span><br><span class="line">compress lz4-v2</span><br><span class="line">verb 3</span><br><span class="line">;mute 20</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><font color="red"><b>其他用户如：参考上述进行配置即可。</b></font></div>
+
+<h2 id="启动客户端并连接VPN-1"><a href="#启动客户端并连接VPN-1" class="headerlink" title="启动客户端并连接VPN"></a>启动客户端并连接VPN</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@openvpn-client wangwu]# systemctl start openvpn.service </span><br><span class="line">Enter Private Key Password: ******  # 输入该用户创建时设定的密码</span><br><span class="line">[root@openvpn-client wangwu]# ps -ef | grep &apos;open&apos;</span><br><span class="line">nobody   11266   1  0 21:56 ?   00:00:00 /usr/local/openvpn/sbin/openvpn --config wangwu.conf</span><br></pre></td></tr></table></figure>
+
+<p>网卡信息如下图：</p>
+<p><img src="/uploads/openvpn/openvpn-01-16.png" alt="image"></p>
+<h2 id="客户端访问后端的web01和web02机器-1"><a href="#客户端访问后端的web01和web02机器-1" class="headerlink" title="客户端访问后端的web01和web02机器"></a>客户端访问后端的web01和web02机器</h2><p>客户端Linux操作</p>
+<p><img src="/uploads/openvpn/openvpn-01-17.png" alt="image"></p>
+<p>VPN机器抓包</p>
+<p><img src="/uploads/openvpn/openvpn-01-18.png" alt="image"></p>
+<p>可见能够正常访问</p>
+<p><font color="red">备注：可以将VPN机器的iptables配置删除；然后断开客户端连接，再重新连接，之后客户端ping 访问试试。【用于对比】</font></p>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><div style="font-size:17px"><b>应用openvpn</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.bbsmax.com/A/x9J23DRZ56/</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>OpenVPN服务搭建与管理</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://my.oschina.net/u/3021599/blog/3048615</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>CentOS安装PPTP VPN</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.ttlsa.com/linux/centos-install-pptp-vpn/</span><br></pre></td></tr></table></figure>
+
+<p>完毕！</p>
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/05/09/openvpn01/" title="在Linux CentOS 7搭建OpenVPN服务与管理">http://www.zhangblog.com/2020/05/09/openvpn01/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/OpenVPN/" rel="tag"># OpenVPN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/29/docker-01/" rel="next" title="如何查看docker run启动参数命令">
+                <i class="fa fa-chevron-left"></i> 如何查看docker run启动参数命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机规划与架构"><span class="nav-number">1.</span> <span class="nav-text">主机规划与架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenVPN软件版本"><span class="nav-number">1.1.</span> <span class="nav-text">OpenVPN软件版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构图"><span class="nav-number">1.2.</span> <span class="nav-text">架构图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenVPN机器配置必要修改"><span class="nav-number">1.3.</span> <span class="nav-text">OpenVPN机器配置必要修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统时间与硬件时间同步"><span class="nav-number">1.4.</span> <span class="nav-text">系统时间与硬件时间同步</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vmware虚拟机网络设置【可略】"><span class="nav-number">2.</span> <span class="nav-text">Vmware虚拟机网络设置【可略】</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#web01机器"><span class="nav-number">2.1.</span> <span class="nav-text">web01机器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web02机器"><span class="nav-number">2.2.</span> <span class="nav-text">web02机器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openvpn-server机器"><span class="nav-number">2.3.</span> <span class="nav-text">openvpn-server机器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openvpn-client机器"><span class="nav-number">2.4.</span> <span class="nav-text">openvpn-client机器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装openvpn"><span class="nav-number">3.</span> <span class="nav-text">安装openvpn</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#生成证书"><span class="nav-number">4.</span> <span class="nav-text">生成证书</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#easy-rsa下载与配置修改"><span class="nav-number">4.1.</span> <span class="nav-text">easy-rsa下载与配置修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成服务端和客户端证书"><span class="nav-number">4.2.</span> <span class="nav-text">生成服务端和客户端证书</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建服务端配置文件"><span class="nav-number">5.</span> <span class="nav-text">创建服务端配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端配置文件"><span class="nav-number">5.1.</span> <span class="nav-text">服务端配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件参数说明"><span class="nav-number">5.2.</span> <span class="nav-text">配置文件参数说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动openvpn服务并查看进程与端口"><span class="nav-number">6.</span> <span class="nav-text">启动openvpn服务并查看进程与端口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows客户端配置与访问"><span class="nav-number">7.</span> <span class="nav-text">Windows客户端配置与访问</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端安装"><span class="nav-number">7.1.</span> <span class="nav-text">客户端安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端client用户配置文件"><span class="nav-number">7.2.</span> <span class="nav-text">客户端client用户配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端zhangsan用户配置文件"><span class="nav-number">7.3.</span> <span class="nav-text">客户端zhangsan用户配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件参数说明-1"><span class="nav-number">7.4.</span> <span class="nav-text">配置文件参数说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动客户端并连接VPN"><span class="nav-number">7.5.</span> <span class="nav-text">启动客户端并连接VPN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端访问后端的web01和web02机器"><span class="nav-number">7.6.</span> <span class="nav-text">客户端访问后端的web01和web02机器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux客户端配置与访问"><span class="nav-number">8.</span> <span class="nav-text">Linux客户端配置与访问</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装openvpn-1"><span class="nav-number">8.1.</span> <span class="nav-text">安装openvpn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端wangwu客户配置"><span class="nav-number">8.2.</span> <span class="nav-text">客户端wangwu客户配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动客户端并连接VPN-1"><span class="nav-number">8.3.</span> <span class="nav-text">启动客户端并连接VPN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端访问后端的web01和web02机器-1"><span class="nav-number">8.4.</span> <span class="nav-text">客户端访问后端的web01和web02机器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">9.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  蜀ICP备16019247号</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">137k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

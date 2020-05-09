@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2020/05/09/openvpn01/</loc>
+    
+    <lastmod>2020-05-09T15:50:23.365Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2020/04/29/docker05/</loc>
     
     <lastmod>2020-04-30T12:34:31.884Z</lastmod>

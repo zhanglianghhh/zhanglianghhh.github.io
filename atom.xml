@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-04-29T12:52:18.420Z</updated>
+  <updated>2020-05-09T15:50:23.365Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>在Linux CentOS 7搭建OpenVPN服务与管理</title>
+    <link href="http://www.zhangblog.com/2020/05/09/openvpn01/"/>
+    <id>http://www.zhangblog.com/2020/05/09/openvpn01/</id>
+    <published>2020-05-09T15:45:20.000Z</published>
+    <updated>2020-05-09T15:50:23.365Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/openvpn/openvpn-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在CentOS
+        
+      
+    
+    </summary>
+    
+      <category term="OpenVPN" scheme="http://www.zhangblog.com/categories/OpenVPN/"/>
+    
+    
+      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
+    
+      <category term="OpenVPN" scheme="http://www.zhangblog.com/tags/OpenVPN/"/>
+    
+  </entry>
   
   <entry>
     <title>如何查看docker run启动参数命令</title>
@@ -561,33 +591,6 @@
     <id>http://www.zhangblog.com/2020/01/06/ansible-07/</id>
     <published>2020-01-06T15:07:00.000Z</published>
     <updated>2020-01-06T15:08:10.769Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
-    
-    
-      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ansible Playbook 变量与 register 详解</title>
-    <link href="http://www.zhangblog.com/2020/01/06/ansible-06/"/>
-    <id>http://www.zhangblog.com/2020/01/06/ansible-06/</id>
-    <published>2020-01-06T09:40:52.000Z</published>
-    <updated>2020-01-06T09:42:14.770Z</updated>
     
     <summary type="html">
     
