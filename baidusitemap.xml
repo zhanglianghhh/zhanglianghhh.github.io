@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.zhangblog.com/2020/04/28/docker04/</loc>
+    <lastmod>2020-05-10</lastmod>
+  </url>  <url>
     <loc>http://www.zhangblog.com/2020/05/09/openvpn01/</loc>
     <lastmod>2020-05-09</lastmod>
   </url>  <url>
@@ -9,9 +12,6 @@
   </url>  <url>
     <loc>http://www.zhangblog.com/2020/04/29/docker-01/</loc>
     <lastmod>2020-04-29</lastmod>
-  </url>  <url>
-    <loc>http://www.zhangblog.com/2020/04/28/docker04/</loc>
-    <lastmod>2020-04-28</lastmod>
   </url>  <url>
     <loc>http://www.zhangblog.com/2020/04/26/docker03/</loc>
     <lastmod>2020-04-26</lastmod>
