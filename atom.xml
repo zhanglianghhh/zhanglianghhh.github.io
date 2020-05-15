@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-05-13T14:44:15.101Z</updated>
+  <updated>2020-05-15T02:27:23.041Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Harbor-企业级Docker私有仓库部署</title>
+    <title>Harbor企业级私有Docker镜像仓库部署</title>
     <link href="http://www.zhangblog.com/2020/05/13/docker06/"/>
     <id>http://www.zhangblog.com/2020/05/13/docker06/</id>
     <published>2020-05-13T14:28:30.000Z</published>
-    <updated>2020-05-13T14:44:15.101Z</updated>
+    <updated>2020-05-15T02:27:23.041Z</updated>
     
     <summary type="html">
     
@@ -359,11 +359,11 @@
   </entry>
   
   <entry>
-    <title>VMware如何创建虚拟机并设置虚拟机网络</title>
+    <title>VMware如何创建Linux虚拟机并设置虚拟机网络</title>
     <link href="http://www.zhangblog.com/2020/03/15/VMware-01/"/>
     <id>http://www.zhangblog.com/2020/03/15/VMware-01/</id>
     <published>2020-03-15T09:20:52.000Z</published>
-    <updated>2020-03-15T10:03:38.965Z</updated>
+    <updated>2020-05-15T02:53:09.901Z</updated>
     
     <summary type="html">
     

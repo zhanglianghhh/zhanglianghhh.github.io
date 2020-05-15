@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2020/03/15/VMware-01/</loc>
+    
+    <lastmod>2020-05-15T02:53:09.901Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2020/05/13/docker06/</loc>
     
-    <lastmod>2020-05-13T14:44:15.101Z</lastmod>
+    <lastmod>2020-05-15T02:27:23.041Z</lastmod>
     
   </url>
   
@@ -82,13 +89,6 @@
     <loc>http://www.zhangblog.com/2020/03/15/VMware-03/</loc>
     
     <lastmod>2020-03-15T10:03:54.857Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.zhangblog.com/2020/03/15/VMware-01/</loc>
-    
-    <lastmod>2020-03-15T10:03:38.965Z</lastmod>
     
   </url>
   
