@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux,YAML,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="YAML语言教程与使用案例，如何编与读懂写YAML文件。  YAML概要YAML 是 “YAML Ain’t a Markup Language”（YAML 不是一种标记语言）的递归缩写。在开发的这种语言时，YAML 的意思其实是：”Yet Another Markup Language”（仍是一种标记语言）。 YAML是一个类似 XML、JSON 的标记性语言。YAML 强调以数据为中心，并">
+<meta name="keywords" content="Linux,YAML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YAML 语言教程与使用案例">
+<meta property="og:url" content="http://www.zhangblog.com/2020/05/17/yaml01/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="YAML语言教程与使用案例，如何编与读懂写YAML文件。  YAML概要YAML 是 “YAML Ain’t a Markup Language”（YAML 不是一种标记语言）的递归缩写。在开发的这种语言时，YAML 的意思其实是：”Yet Another Markup Language”（仍是一种标记语言）。 YAML是一个类似 XML、JSON 的标记性语言。YAML 强调以数据为中心，并">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/yaml/yaml-00.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/yaml/yaml-01-01.png">
+<meta property="og:updated_time" content="2020-05-17T09:46:44.118Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="YAML 语言教程与使用案例">
+<meta name="twitter:description" content="YAML语言教程与使用案例，如何编与读懂写YAML文件。  YAML概要YAML 是 “YAML Ain’t a Markup Language”（YAML 不是一种标记语言）的递归缩写。在开发的这种语言时，YAML 的意思其实是：”Yet Another Markup Language”（仍是一种标记语言）。 YAML是一个类似 XML、JSON 的标记性语言。YAML 强调以数据为中心，并">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/yaml/yaml-00.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2020/05/17/yaml01/">
+
+
+
+
+
+  <title>YAML 语言教程与使用案例 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/05/17/yaml01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">YAML 语言教程与使用案例</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-17T17:33:29+08:00">
+                2020-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/YAML/" itemprop="url" rel="index">
+                    <span itemprop="name">YAML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/17/yaml01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/05/17/yaml01/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/05/17/yaml01/" class="leancloud_visitors" data-flag-title="YAML 语言教程与使用案例">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/yaml/yaml-00.jpg" alt="image"></p>
+<blockquote>
+<p>YAML语言教程与使用案例，如何编与读懂写YAML文件。</p>
+</blockquote>
+<h1 id="YAML概要"><a href="#YAML概要" class="headerlink" title="YAML概要"></a>YAML概要</h1><p>YAML 是 “YAML Ain’t a Markup Language”（YAML 不是一种标记语言）的递归缩写。在开发的这种语言时，YAML 的意思其实是：”Yet Another Markup Language”（仍是一种标记语言）。</p>
+<p>YAML是一个类似 XML、JSON 的标记性语言。YAML 强调以数据为中心，并不是以标识语言为重点。因而 YAML 本身的定义比较简单，号称“一种人性化的数据格式语言”。</p>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><p>1、大小写敏感</p>
+<p>2、使用缩进表示层级关系</p>
+<p>3、缩进时不允许使用Tab键，只允许使用空格</p>
+<p>4、缩进的空格数不重要，只要相同层级的元素左侧对齐即可。【实际使用中建议两个空格作为一个层级的缩进】</p>
+<p>5、# 表示注释，从这个字符一直到行尾，都会被解释器忽略</p>
+<p>6、冒号，以冒号结尾除外，其他所有冒号后面必须有空格</p>
+<p>7、短横线，表示列表项，使用一个短横线加一个空格；多个项使用同样的缩进级别作为同一列表</p>
+<h2 id="支持的数据结构"><a href="#支持的数据结构" class="headerlink" title="支持的数据结构"></a>支持的数据结构</h2><p>1、对象：键值对的集合，又称为映射（mapping）/ 哈希（hashes） / 字典（dictionary）</p>
+<p>2、数组：一组按次序排列的值，又称为序列（sequence） / 列表（list）</p>
+<p>3、字面量/纯量（数字、字符串、布尔值）(scalars)：单个的、不可再分的值</p>
+<h2 id="YAML-组织结构"><a href="#YAML-组织结构" class="headerlink" title="YAML 组织结构"></a>YAML 组织结构</h2><p>YAML 文件可以由<font color="red">一或多个文档</font>组成（即相对独立的组织结构组成），<font color="red">文档间使用“---”（三个横线）在每文档开始作为分隔符(可选)</font>。同时，<font color="red">文档也可以使用“...”（三个点号）作为结束符（可选）</font>。如下图所示：</p>
+<p>备注：<font color="red">如果只是单个文档，分隔符“---”可省略。</font></p>
+<p>每个文档并不需要使用结束符“...”来表示结束，但是对于网络传输或者流来说，有明确结束的符号，有利于软件处理。（例如不需要知道流关闭就能知道文档结束）</p>
+<p><img src="/uploads/yaml/yaml-01-01.png" alt="image"></p>
+<h1 id="Python中yaml模块的使用"><a href="#Python中yaml模块的使用" class="headerlink" title="Python中yaml模块的使用"></a>Python中yaml模块的使用</h1><h2 id="Python-pip-安装"><a href="#Python-pip-安装" class="headerlink" title="Python pip 安装"></a>Python pip 安装</h2><p>如果未安装pip，则可以使用以下方法来安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py   # 下载安装脚本</span><br><span class="line"># python get-pip.py    # 运行安装脚本  或则：python3 get-pip.py  根据使用的Python决定</span><br><span class="line"># pip --version        # 版本查看</span><br></pre></td></tr></table></figure>
+
+<p>用哪个版本的 Python 运行安装脚本，pip 就被关联到哪个版本。</p>
+<h2 id="pip安装yaml与导入"><a href="#pip安装yaml与导入" class="headerlink" title="pip安装yaml与导入"></a>pip安装yaml与导入</h2><p>安装pyyaml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pip install pyyaml  # 或者pip3 install pyyaml</span><br></pre></td></tr></table></figure>
+
+<p>检查是否安装成功：</p>
+<p>1、命令行输入：python</p>
+<p>2、再输入：import yaml</p>
+<p>安装成功后，在脚本里导入的语句，都是 import yaml  </p>
+<h1 id="YAML-对象数据类型"><a href="#YAML-对象数据类型" class="headerlink" title="YAML-对象数据类型"></a>YAML-对象数据类型</h1><p><font color="red">备注：之所以对yaml文件使用Python进行解析，是因为我们要测验yaml文件格式是否书写正确。</font></p>
+<p>对象数据：是一组键值对，使用冒号结构表示。</p>
+<h2 id="单个对象文档文件"><a href="#单个对象文档文件" class="headerlink" title="单个对象文档文件"></a>单个对象文档文件</h2><p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_01_obj.yml</span><br><span class="line">---</span><br><span class="line">name: zhang</span><br><span class="line">age: 22</span><br></pre></td></tr></table></figure>
+
+<p>Python解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_01_obj.py</span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"># Author: zhang</span><br><span class="line"></span><br><span class="line">import yaml</span><br><span class="line"></span><br><span class="line">file_path = &quot;./demo_01_obj.yml&quot;</span><br><span class="line">file = open(file_path, &apos;r&apos;)</span><br><span class="line">ys = yaml.load(file.read(), Loader=yaml.Loader)</span><br><span class="line">print ys</span><br></pre></td></tr></table></figure>
+
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# python demo_01_obj.py </span><br><span class="line">&#123;&apos;age&apos;: 22, &apos;name&apos;: &apos;zhang&apos;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多个对象文档文件"><a href="#多个对象文档文件" class="headerlink" title="多个对象文档文件"></a>多个对象文档文件</h2><p>yaml文件，仔细对比下加了”---“和”...“ 的区别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_02_obj.yml</span><br><span class="line">---</span><br><span class="line">name: zhang</span><br><span class="line">age: 22</span><br><span class="line">...</span><br><span class="line">---</span><br><span class="line">name: Jane</span><br><span class="line">age: 20</span><br><span class="line">key: </span><br><span class="line">  child-key: value</span><br><span class="line">  child-key2: value2</span><br><span class="line">...</span><br><span class="line">---</span><br><span class="line">obj: &#123;obj_key1: value1, obj_key2: value2&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>Python解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_02_obj.py</span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"># Author: zhang</span><br><span class="line"></span><br><span class="line">import yaml</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">file_path = &quot;demo_02_obj.yml&quot;</span><br><span class="line">file = open(file_path, &apos;r&apos;)</span><br><span class="line"></span><br><span class="line">ys = yaml.load_all(file.read(), Loader=yaml.Loader)</span><br><span class="line">for y in ys:</span><br><span class="line">  # 两种打印方式都尝试下 </span><br><span class="line">  #print y</span><br><span class="line">  print json.dumps(y, indent=2)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# python demo_02_obj.py</span><br><span class="line">&#123;&apos;age&apos;: 22, &apos;name&apos;: &apos;zhang&apos;&#125;</span><br><span class="line">&#123;&apos;age&apos;: 20, &apos;name&apos;: &apos;Jane&apos;, &apos;key&apos;: &#123;&apos;child-key2&apos;: &apos;value2&apos;, &apos;child-key&apos;: &apos;value&apos;&#125;&#125;</span><br><span class="line">&#123;&apos;obj&apos;: &#123;&apos;obj_key1&apos;: &apos;value1&apos;, &apos;obj_key2&apos;: &apos;value2&apos;&#125;&#125;</span><br><span class="line"># 或者如下</span><br><span class="line">[root@docker02 yaml]# python demo_02_obj.py </span><br><span class="line">&#123;</span><br><span class="line">  &quot;age&quot;: 22, </span><br><span class="line">  &quot;name&quot;: &quot;zhang&quot;</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;age&quot;: 20, </span><br><span class="line">  &quot;name&quot;: &quot;Jane&quot;, </span><br><span class="line">  &quot;key&quot;: &#123;</span><br><span class="line">    &quot;child-key2&quot;: &quot;value2&quot;, </span><br><span class="line">    &quot;child-key&quot;: &quot;value&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;obj&quot;: &#123;</span><br><span class="line">    &quot;obj_key1&quot;: &quot;value1&quot;, </span><br><span class="line">    &quot;obj_key2&quot;: &quot;value2&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="YAML-数组数据类型"><a href="#YAML-数组数据类型" class="headerlink" title="YAML-数组数据类型"></a>YAML-数组数据类型</h1><p><font color="red">备注：之所以对yaml文件使用Python进行解析，是因为我们要测验yaml文件格式是否书写正确。</font></p>
+<p>数组类型：一组连词线开头的行，构成一个数组</p>
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_03_list.yml </span><br><span class="line"># 书写方式1</span><br><span class="line">color:</span><br><span class="line">- red</span><br><span class="line">- blue</span><br><span class="line">- green</span><br><span class="line">- orange</span><br><span class="line">- white</span><br><span class="line"># 书写方式2：行内表示法</span><br><span class="line">fruits: [orange, apple, banana]</span><br></pre></td></tr></table></figure>
+
+<p>Python解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_03_list.py </span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"># Author: zhang</span><br><span class="line"></span><br><span class="line">import yaml</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">file_path = &quot;demo_03_list.yml&quot;</span><br><span class="line">file = open(file_path, &apos;r&apos;)</span><br><span class="line"></span><br><span class="line">ys = yaml.load_all(file.read(), Loader=yaml.Loader)</span><br><span class="line">for y in ys:</span><br><span class="line">  # 两种打印方式都尝试下  </span><br><span class="line">  #print y</span><br><span class="line">  print json.dumps(y, indent=2)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# python demo_03_list.py </span><br><span class="line">&#123;&apos;color&apos;: [&apos;red&apos;, &apos;blue&apos;, &apos;green&apos;, &apos;orange&apos;, &apos;white&apos;], &apos;fruits&apos;: [&apos;orange&apos;, &apos;apple&apos;, &apos;banana&apos;]&#125;</span><br><span class="line"># 或者结果如下</span><br><span class="line">[root@docker02 yaml]# python demo_03_list.py</span><br><span class="line">&#123;</span><br><span class="line">  &quot;color&quot;: [</span><br><span class="line">    &quot;red&quot;, </span><br><span class="line">    &quot;blue&quot;, </span><br><span class="line">    &quot;green&quot;, </span><br><span class="line">    &quot;orange&quot;, </span><br><span class="line">    &quot;white&quot;</span><br><span class="line">  ], </span><br><span class="line">  &quot;fruits&quot;: [</span><br><span class="line">    &quot;orange&quot;, </span><br><span class="line">    &quot;apple&quot;, </span><br><span class="line">    &quot;banana&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="YAML-复合结构"><a href="#YAML-复合结构" class="headerlink" title="YAML-复合结构"></a>YAML-复合结构</h1><p><font color="red">备注：之所以对yaml文件使用Python进行解析，是因为我们要测验yaml文件格式是否书写正确。</font></p>
+<p>复合结构：对象和数组可以结合使用，形成复合结构</p>
+<p>yaml文件，注意其书序格式，并细细对比输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_04_compose.yml</span><br><span class="line">shop: GoodShopping</span><br><span class="line">address: BJ</span><br><span class="line">goods:</span><br><span class="line">  Food:</span><br><span class="line">  - sell_time: &quot;AM 08:30&quot;</span><br><span class="line">    food01: rice</span><br><span class="line">    food02: pork</span><br><span class="line">  Fruits:</span><br><span class="line">  - sell_time: &quot;AM 09:00&quot;</span><br><span class="line">  - fruit01: orange</span><br><span class="line">    price: 3.50</span><br><span class="line">  - fruit02: banana</span><br><span class="line">    price: 3.00</span><br><span class="line">  clothes:</span><br><span class="line">  - sell_time: &quot;AM 09:30&quot;</span><br><span class="line">  - clothe01</span><br><span class="line">  - clothe02</span><br></pre></td></tr></table></figure>
+
+<p>Python解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_04_compose.py </span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"># Author: zhang</span><br><span class="line"></span><br><span class="line">import yaml</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">file_path = &quot;demo_04_compose.yml&quot;</span><br><span class="line">file = open(file_path, &apos;r&apos;)</span><br><span class="line"></span><br><span class="line">ys = yaml.load_all(file.read(), Loader=yaml.Loader)</span><br><span class="line">for y in ys: </span><br><span class="line">  # 两种打印方式都尝试下  </span><br><span class="line">  print y</span><br><span class="line">  #print json.dumps(y, indent=2)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果，仔细对比下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# python demo_04_compose.py </span><br><span class="line">&#123;&apos;shop&apos;: &apos;GoodShopping&apos;, &apos;goods&apos;: &#123;&apos;Food&apos;: [&#123;&apos;food02&apos;: &apos;pork&apos;, &apos;sell_time&apos;: &apos;AM 08:30&apos;, &apos;food01&apos;: &apos;rice&apos;&#125;], &apos;Fruits&apos;: [&#123;&apos;sell_time&apos;: &apos;AM 09:00&apos;&#125;, &#123;&apos;fruit01&apos;: &apos;orange&apos;, &apos;price&apos;: 3.5&#125;, &#123;&apos;price&apos;: 3.0, &apos;fruit02&apos;: &apos;banana&apos;&#125;], &apos;clothes&apos;: [&#123;&apos;sell_time&apos;: &apos;AM 09:30&apos;&#125;, &apos;clothe01&apos;, &apos;clothe02&apos;]&#125;, &apos;address&apos;: &apos;BJ&apos;&#125;</span><br><span class="line"># 或者结果如下</span><br><span class="line">[root@docker02 yaml]# python demo_04_compose.py </span><br><span class="line">&#123;</span><br><span class="line">  &quot;shop&quot;: &quot;GoodShopping&quot;, </span><br><span class="line">  &quot;goods&quot;: &#123;</span><br><span class="line">    &quot;Food&quot;: [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;food02&quot;: &quot;pork&quot;, </span><br><span class="line">        &quot;sell_time&quot;: &quot;AM 08:30&quot;, </span><br><span class="line">        &quot;food01&quot;: &quot;rice&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    ], </span><br><span class="line">    &quot;Fruits&quot;: [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;sell_time&quot;: &quot;AM 09:00&quot;</span><br><span class="line">      &#125;, </span><br><span class="line">      &#123;</span><br><span class="line">        &quot;fruit01&quot;: &quot;orange&quot;, </span><br><span class="line">        &quot;price&quot;: 3.5</span><br><span class="line">      &#125;, </span><br><span class="line">      &#123;</span><br><span class="line">        &quot;price&quot;: 3.0, </span><br><span class="line">        &quot;fruit02&quot;: &quot;banana&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    ], </span><br><span class="line">    &quot;clothes&quot;: [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;sell_time&quot;: &quot;AM 09:30&quot;</span><br><span class="line">      &#125;, </span><br><span class="line">      &quot;clothe01&quot;, </span><br><span class="line">      &quot;clothe02&quot;</span><br><span class="line">    ]</span><br><span class="line">  &#125;, </span><br><span class="line">  &quot;address&quot;: &quot;BJ&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="YAML-纯量数据类型"><a href="#YAML-纯量数据类型" class="headerlink" title="YAML-纯量数据类型"></a>YAML-纯量数据类型</h1><p><font color="red">备注：之所以对yaml文件使用Python进行解析，是因为我们要测验yaml文件格式是否书写正确。</font></p>
+<p>纯量是最基本的，不可再分的值，包括：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">字符串</span><br><span class="line">布尔值</span><br><span class="line">整数</span><br><span class="line">浮点数</span><br><span class="line">Null</span><br><span class="line">时间</span><br><span class="line">日期</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用数据类型的表示格式进行了约定"><a href="#常用数据类型的表示格式进行了约定" class="headerlink" title="常用数据类型的表示格式进行了约定"></a>常用数据类型的表示格式进行了约定</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_05_scalars.yml</span><br><span class="line">boolean: </span><br><span class="line">  - TRUE   # true,True都可以</span><br><span class="line">  - FALSE  # false，False都可以</span><br><span class="line">float:</span><br><span class="line">  - 3.14</span><br><span class="line">  - 6.8523015e+5  #可以使用科学计数法</span><br><span class="line">int:</span><br><span class="line">  - 123</span><br><span class="line">null:</span><br><span class="line">  nodeName: &apos;node&apos;</span><br><span class="line">  parent: ~  # 使用~表示null</span><br><span class="line">string:</span><br><span class="line">  - 哈哈</span><br><span class="line">  - &apos;Hello world&apos;  # 可以使用双引号或者单引号包裹特殊字符</span><br><span class="line">  - newline</span><br><span class="line">    newline2    # 字符串可以拆成多行，非尾行的每一行换行符都转为空格</span><br><span class="line">date:</span><br><span class="line">  - 2018-02-17    # 日期必须使用ISO 8601格式，即yyyy-MM-dd</span><br><span class="line">datetime: </span><br><span class="line">  -  2018-02-17T15:02:31+08:00    #时间使用ISO 8601格式，时间和日期之间使用T连接，最后使用+代表时区</span><br></pre></td></tr></table></figure>
+
+<h2 id="双叹号强制转换类型"><a href="#双叹号强制转换类型" class="headerlink" title="双叹号强制转换类型"></a>双叹号强制转换类型</h2><p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_06_switch.yml </span><br><span class="line"># 原信息</span><br><span class="line">ori01: 3.14</span><br><span class="line">ori02: &quot;123&quot;</span><br><span class="line"># 强制转换</span><br><span class="line">int_str: !!str 3.14  # value 整数强制转换为字符串</span><br><span class="line">str_int: !!int &quot;123&quot; # value 字符串强制转换为整数</span><br></pre></td></tr></table></figure>
+
+<p>Python解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_06_switch.py </span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"># Author: zhang</span><br><span class="line"></span><br><span class="line">import yaml</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">file_path = &quot;demo_06_switch.yml&quot;</span><br><span class="line">file = open(file_path, &apos;r&apos;)</span><br><span class="line"></span><br><span class="line">ys = yaml.load_all(file.read(), Loader=yaml.Loader)</span><br><span class="line">for y in ys: </span><br><span class="line">  # 两种打印方式都尝试下  </span><br><span class="line">  print y</span><br><span class="line">  #print json.dumps(y, indent=2)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果，仔细对比下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# python demo_06_switch.py </span><br><span class="line">&#123;&apos;ori01&apos;: 3.14, &apos;int_str&apos;: &apos;3.14&apos;, &apos;ori02&apos;: &apos;123&apos;, &apos;str_int&apos;: 123&#125;</span><br><span class="line"># 或者输出如下</span><br><span class="line">[root@docker02 yaml]# python demo_06_switch.py </span><br><span class="line">&#123;</span><br><span class="line">  &quot;ori01&quot;: 3.14, </span><br><span class="line">  &quot;int_str&quot;: &quot;3.14&quot;, </span><br><span class="line">  &quot;ori02&quot;: &quot;123&quot;, </span><br><span class="line">  &quot;str_int&quot;: 123</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="YAML-引用"><a href="#YAML-引用" class="headerlink" title="YAML-引用"></a>YAML-引用</h1><p><font color="red">备注：之所以对yaml文件使用Python进行解析，是因为我们要测验yaml文件格式是否书写正确。</font></p>
+<p><font color="red">&amp;</font> 用来建立锚点（defaults），<font color="red">&lt;&lt;</font> 表示合并到当前数据，<font color="red">*</font> 用来引用锚点。</p>
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_07_anchor.yml</span><br><span class="line">---</span><br><span class="line">hr:</span><br><span class="line">  - Mark McGwire</span><br><span class="line">  # Following node labeled SS</span><br><span class="line">  - &amp;SS Sammy Sosa            # 定义要复制的数据</span><br><span class="line">rbi:</span><br><span class="line">  - *SS # Subsequent occurrence   这里是数据复制目标</span><br><span class="line">  - Ken Griffey</span><br><span class="line">...</span><br><span class="line">---</span><br><span class="line">defaults: &amp;defaults</span><br><span class="line">  adapter:  postgres</span><br><span class="line">  host:     localhost</span><br><span class="line"></span><br><span class="line">development:</span><br><span class="line">  database: myapp_development</span><br><span class="line">  &lt;&lt;: *defaults</span><br><span class="line"></span><br><span class="line">test:</span><br><span class="line">  database: myapp_test</span><br><span class="line">  info: *defaults</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>Python解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_07_anchor.py </span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"># Author: zhang</span><br><span class="line"></span><br><span class="line">import yaml</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">file_path = &quot;demo_07_anchor.yml&quot;</span><br><span class="line">file = open(file_path, &apos;r&apos;)</span><br><span class="line"></span><br><span class="line">ys = yaml.load_all(file.read(), Loader=yaml.Loader)</span><br><span class="line">for y in ys: </span><br><span class="line">  # 两种打印方式都尝试下  </span><br><span class="line">  print y</span><br><span class="line">  #print json.dumps(y, indent=2)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果，仔细对比下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# python demo_07_anchor.py </span><br><span class="line">&#123;&apos;hr&apos;: [&apos;Mark McGwire&apos;, &apos;Sammy Sosa&apos;], &apos;rbi&apos;: [&apos;Sammy Sosa&apos;, &apos;Ken Griffey&apos;]&#125;</span><br><span class="line">&#123;&apos;development&apos;: &#123;&apos;adapter&apos;: &apos;postgres&apos;, &apos;host&apos;: &apos;localhost&apos;, &apos;database&apos;: &apos;myapp_development&apos;&#125;, &apos;test&apos;: &#123;&apos;info&apos;: &#123;&apos;adapter&apos;: &apos;postgres&apos;, &apos;host&apos;: &apos;localhost&apos;&#125;, &apos;database&apos;: &apos;myapp_test&apos;&#125;, &apos;defaults&apos;: &#123;&apos;adapter&apos;: &apos;postgres&apos;, &apos;host&apos;: &apos;localhost&apos;&#125;&#125;</span><br><span class="line"># 或者结果如下</span><br><span class="line">[root@docker02 yaml]# python demo_07_anchor.py </span><br><span class="line">&#123;</span><br><span class="line">  &quot;hr&quot;: [</span><br><span class="line">    &quot;Mark McGwire&quot;, </span><br><span class="line">    &quot;Sammy Sosa&quot;</span><br><span class="line">  ], </span><br><span class="line">  &quot;rbi&quot;: [</span><br><span class="line">    &quot;Sammy Sosa&quot;, </span><br><span class="line">    &quot;Ken Griffey&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;development&quot;: &#123;</span><br><span class="line">    &quot;adapter&quot;: &quot;postgres&quot;, </span><br><span class="line">    &quot;host&quot;: &quot;localhost&quot;, </span><br><span class="line">    &quot;database&quot;: &quot;myapp_development&quot;</span><br><span class="line">  &#125;, </span><br><span class="line">  &quot;test&quot;: &#123;</span><br><span class="line">    &quot;info&quot;: &#123;</span><br><span class="line">      &quot;adapter&quot;: &quot;postgres&quot;, </span><br><span class="line">      &quot;host&quot;: &quot;localhost&quot;</span><br><span class="line">    &#125;, </span><br><span class="line">    &quot;database&quot;: &quot;myapp_test&quot;</span><br><span class="line">  &#125;, </span><br><span class="line">  &quot;defaults&quot;: &#123;</span><br><span class="line">    &quot;adapter&quot;: &quot;postgres&quot;, </span><br><span class="line">    &quot;host&quot;: &quot;localhost&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="YAML-字符串"><a href="#YAML-字符串" class="headerlink" title="YAML-字符串"></a>YAML-字符串</h1><p><font color="red">备注：之所以对yaml文件使用Python进行解析，是因为我们要测验yaml文件格式是否书写正确。</font></p>
+<p>字符串是最常见，也是最复杂的一种数据类型。</p>
+<p>字符串默认不使用引号表示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str: 这是一行字符串</span><br></pre></td></tr></table></figure>
+
+<p>如果字符串之中包含空格或特殊字符，需要放在引号之中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str: &apos;内容： 字符串&apos;</span><br></pre></td></tr></table></figure>
+
+<p>单引号和双引号都可以使用，双引号不会对特殊字符转义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s1: &apos;内容\n字符串&apos;</span><br><span class="line">s2: &quot;内容\n字符串&quot;</span><br></pre></td></tr></table></figure>
+
+<p>单引号之中如果还有单引号，必须连续使用两个单引号转义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str: &apos;labor&apos;&apos;s day&apos;</span><br></pre></td></tr></table></figure>
+
+<p>字符串可以写成多行，从第二行开始，必须有空格缩进。<font color="red">换行符会被转为空格</font>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str: 这是一段</span><br><span class="line">  多行</span><br><span class="line">  字符串</span><br></pre></td></tr></table></figure>
+
+<p>多行字符串可以使用 | 保留换行符，也可以使用 &gt; 折叠换行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">this: |</span><br><span class="line">  Foo</span><br><span class="line">  Bar</span><br><span class="line">that: &gt;</span><br><span class="line">  Foo</span><br><span class="line">  Bar</span><br></pre></td></tr></table></figure>
+
+<p>+ 表示保留字符串行末尾的换行，- 表示删除字符串末尾的换行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">s1: |</span><br><span class="line">  Foo</span><br><span class="line"></span><br><span class="line">s2: |+</span><br><span class="line">  Foo</span><br><span class="line"></span><br><span class="line">s3: |-</span><br><span class="line">  Foo</span><br></pre></td></tr></table></figure>
+
+<p>字符串之中可以插入 HTML 标记。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">message: |</span><br><span class="line"></span><br><span class="line">  &lt;p style=&quot;color: red&quot;&gt;</span><br><span class="line">    段落</span><br><span class="line">  &lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串测验案例"><a href="#字符串测验案例" class="headerlink" title="字符串测验案例"></a>字符串测验案例</h2><p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_08_str.yml </span><br><span class="line">str01: zhangsan</span><br><span class="line">str02: &apos;Q: What are you doing?&apos;</span><br><span class="line"></span><br><span class="line">str03: &apos;zhangsan\nlisi\nwangwu&apos;</span><br><span class="line">str04: &quot;zhangsan\nlisi\nwangwu&quot;</span><br><span class="line"></span><br><span class="line">str05: &apos;What&apos;&apos;s your name?&apos;</span><br><span class="line">str06: &quot;What&apos;s your name?&quot;</span><br><span class="line"></span><br><span class="line">str07:</span><br><span class="line">  &apos;Ken: Hello,</span><br><span class="line">  My name is Ken.</span><br><span class="line">  What&apos;&apos;s your name?&apos;</span><br><span class="line"></span><br><span class="line">str08:</span><br><span class="line">  &quot;Ken: Hello,</span><br><span class="line">  My name is Ken.</span><br><span class="line">  What&apos;s your name?&quot;</span><br><span class="line"></span><br><span class="line">str11: |</span><br><span class="line">  111</span><br><span class="line">  222</span><br><span class="line">  333</span><br><span class="line">str12: &gt;</span><br><span class="line">  aaa xxx</span><br><span class="line">  bbb yyy</span><br><span class="line">  ccc zzz</span><br><span class="line"></span><br><span class="line"># 之后有2行空行</span><br><span class="line">str16: |</span><br><span class="line">  zhangsan</span><br><span class="line">  lisi</span><br><span class="line">  wangwu</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 之后有2行空行</span><br><span class="line">str17: |+</span><br><span class="line">  zhangsan</span><br><span class="line">  lisi</span><br><span class="line">  wangwu</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 之后有2行空行</span><br><span class="line">str18: |-</span><br><span class="line">  zhangsan</span><br><span class="line">  lisi</span><br><span class="line">  wangwu</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">message: |</span><br><span class="line"></span><br><span class="line">  &lt;p style=&quot;color: red&quot;&gt; </span><br><span class="line">    one line str</span><br><span class="line">  &lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Python解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# cat demo_08_str.py </span><br><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"># Author: zhang</span><br><span class="line"></span><br><span class="line">import yaml</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">file_path = &quot;demo_08_str.yml&quot;</span><br><span class="line">file = open(file_path, &apos;r&apos;)</span><br><span class="line"></span><br><span class="line">ys = yaml.load_all(file.read(), Loader=yaml.Loader)</span><br><span class="line">for y in ys: </span><br><span class="line">  # 两种打印方式都尝试下  </span><br><span class="line">  print y</span><br><span class="line">  #print json.dumps(y, indent=2)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果，仔细对比下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 yaml]# python demo_08_str.py </span><br><span class="line">&#123;&apos;str02&apos;: &apos;Q: What are you doing?&apos;, &apos;str01&apos;: &apos;zhangsan&apos;, &apos;str05&apos;: &quot;What&apos;s your name?&quot;, &apos;str08&apos;: &quot;Ken: Hello, My name is Ken. What&apos;s your name?&quot;, &apos;str06&apos;: &quot;What&apos;s your name?&quot;, &apos;str18&apos;: &apos;zhangsan\nlisi\nwangwu&apos;, &apos;str17&apos;: &apos;zhangsan\nlisi\nwangwu\n\n\n&apos;, &apos;str16&apos;: &apos;zhangsan\nlisi\nwangwu\n&apos;, &apos;message&apos;: u&apos;\n&lt;p style=&quot;color: red&quot;&gt;\n  one line str\n&lt;/p&gt;\n&apos;, &apos;str03&apos;: &apos;zhangsan\\nlisi\\nwangwu&apos;, &apos;str04&apos;: &apos;zhangsan\nlisi\nwangwu&apos;, &apos;str12&apos;: &apos;aaa xxx bbb yyy ccc zzz\n&apos;, &apos;str11&apos;: &apos;111\n222\n333\n&apos;, &apos;str07&apos;: &quot;Ken: Hello, My name is Ken. What&apos;s your name?&quot;&#125;</span><br><span class="line"># 或者输出如下</span><br><span class="line">[root@docker02 yaml]# python demo_08_str.py </span><br><span class="line">&#123;</span><br><span class="line">  &quot;str02&quot;: &quot;Q: What are you doing?&quot;, </span><br><span class="line">  &quot;str01&quot;: &quot;zhangsan&quot;, </span><br><span class="line">  &quot;str05&quot;: &quot;What&apos;s your name?&quot;, </span><br><span class="line">  &quot;str08&quot;: &quot;Ken: Hello, My name is Ken. What&apos;s your name?&quot;, </span><br><span class="line">  &quot;str06&quot;: &quot;What&apos;s your name?&quot;, </span><br><span class="line">  &quot;str18&quot;: &quot;zhangsan\nlisi\nwangwu&quot;, </span><br><span class="line">  &quot;str17&quot;: &quot;zhangsan\nlisi\nwangwu\n\n\n&quot;, </span><br><span class="line">  &quot;str16&quot;: &quot;zhangsan\nlisi\nwangwu\n&quot;, </span><br><span class="line">  &quot;message&quot;: &quot;\n&lt;p style=\&quot;color: red\&quot;&gt;\n  one line str\n&lt;/p&gt;\n&quot;,</span><br><span class="line">  &quot;str03&quot;: &quot;zhangsan\\nlisi\\nwangwu&quot;, </span><br><span class="line">  &quot;str04&quot;: &quot;zhangsan\nlisi\nwangwu&quot;, </span><br><span class="line">  &quot;str12&quot;: &quot;aaa xxx bbb yyy ccc zzz\n&quot;, </span><br><span class="line">  &quot;str11&quot;: &quot;111\n222\n333\n&quot;, </span><br><span class="line">  &quot;str07&quot;: &quot;Ken: Hello, My name is Ken. What&apos;s your name?&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完毕！</p>
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/05/17/yaml01/" title="YAML 语言教程与使用案例">http://www.zhangblog.com/2020/05/17/yaml01/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/YAML/" rel="tag"># YAML</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/13/docker06/" rel="next" title="Harbor企业级私有Docker镜像仓库部署">
+                <i class="fa fa-chevron-left"></i> Harbor企业级私有Docker镜像仓库部署
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YAML概要"><span class="nav-number">1.</span> <span class="nav-text">YAML概要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-number">1.1.</span> <span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持的数据结构"><span class="nav-number">1.2.</span> <span class="nav-text">支持的数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YAML-组织结构"><span class="nav-number">1.3.</span> <span class="nav-text">YAML 组织结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python中yaml模块的使用"><span class="nav-number">2.</span> <span class="nav-text">Python中yaml模块的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-pip-安装"><span class="nav-number">2.1.</span> <span class="nav-text">Python pip 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pip安装yaml与导入"><span class="nav-number">2.2.</span> <span class="nav-text">pip安装yaml与导入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YAML-对象数据类型"><span class="nav-number">3.</span> <span class="nav-text">YAML-对象数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单个对象文档文件"><span class="nav-number">3.1.</span> <span class="nav-text">单个对象文档文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多个对象文档文件"><span class="nav-number">3.2.</span> <span class="nav-text">多个对象文档文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YAML-数组数据类型"><span class="nav-number">4.</span> <span class="nav-text">YAML-数组数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YAML-复合结构"><span class="nav-number">5.</span> <span class="nav-text">YAML-复合结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YAML-纯量数据类型"><span class="nav-number">6.</span> <span class="nav-text">YAML-纯量数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用数据类型的表示格式进行了约定"><span class="nav-number">6.1.</span> <span class="nav-text">常用数据类型的表示格式进行了约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双叹号强制转换类型"><span class="nav-number">6.2.</span> <span class="nav-text">双叹号强制转换类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YAML-引用"><span class="nav-number">7.</span> <span class="nav-text">YAML-引用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#YAML-字符串"><span class="nav-number">8.</span> <span class="nav-text">YAML-字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串测验案例"><span class="nav-number">8.1.</span> <span class="nav-text">字符串测验案例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  蜀ICP备16019247号</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">143.4k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

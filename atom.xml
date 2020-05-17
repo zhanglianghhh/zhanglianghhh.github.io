@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-05-15T02:27:23.041Z</updated>
+  <updated>2020-05-17T09:46:44.118Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>YAML 语言教程与使用案例</title>
+    <link href="http://www.zhangblog.com/2020/05/17/yaml01/"/>
+    <id>http://www.zhangblog.com/2020/05/17/yaml01/</id>
+    <published>2020-05-17T09:33:29.000Z</published>
+    <updated>2020-05-17T09:46:44.118Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/yaml/yaml-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;YAML语言教程与使用案例，如何编与读懂写YAML文件。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;YAML概要&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="YAML" scheme="http://www.zhangblog.com/categories/YAML/"/>
+    
+    
+      <category term="Linux" scheme="http://www.zhangblog.com/tags/Linux/"/>
+    
+      <category term="YAML" scheme="http://www.zhangblog.com/tags/YAML/"/>
+    
+  </entry>
   
   <entry>
     <title>Harbor企业级私有Docker镜像仓库部署</title>
@@ -567,33 +599,6 @@
     <id>http://www.zhangblog.com/2020/01/08/ansible-09/</id>
     <published>2020-01-08T07:14:50.000Z</published>
     <updated>2020-01-08T07:15:55.515Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
-    
-    
-      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ansible playbook 编程</title>
-    <link href="http://www.zhangblog.com/2020/01/08/ansible-08/"/>
-    <id>http://www.zhangblog.com/2020/01/08/ansible-08/</id>
-    <published>2020-01-08T03:08:00.000Z</published>
-    <updated>2020-01-08T04:19:30.915Z</updated>
     
     <summary type="html">
     
