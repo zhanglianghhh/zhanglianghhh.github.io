@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2020/05/13/docker06/</loc>
+    
+    <lastmod>2020-06-28T15:55:25.854Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2020/04/29/docker05/</loc>
     
     <lastmod>2020-06-06T00:49:59.613Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>http://www.zhangblog.com/2020/03/15/VMware-01/</loc>
     
     <lastmod>2020-05-15T02:53:09.901Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.zhangblog.com/2020/05/13/docker06/</loc>
-    
-    <lastmod>2020-05-15T02:27:23.041Z</lastmod>
     
   </url>
   
