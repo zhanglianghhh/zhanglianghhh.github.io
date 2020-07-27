@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-05-17T09:46:44.118Z</updated>
+  <updated>2020-07-27T15:35:03.716Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S 基本概述、设计架构和设计理念</title>
+    <link href="http://www.zhangblog.com/2020/07/27/kubernetes01/"/>
+    <id>http://www.zhangblog.com/2020/07/27/kubernetes01/</id>
+    <published>2020-07-27T15:31:12.000Z</published>
+    <updated>2020-07-27T15:35:03.716Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Kubernetes K8S
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CICD" scheme="http://www.zhangblog.com/tags/CICD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>YAML 语言教程与使用案例</title>
@@ -572,33 +608,6 @@
     <id>http://www.zhangblog.com/2020/01/08/ansible-10/</id>
     <published>2020-01-08T09:40:21.000Z</published>
     <updated>2020-01-15T13:16:57.615Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
-    
-    
-      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ansible playbook Vault 加密</title>
-    <link href="http://www.zhangblog.com/2020/01/08/ansible-09/"/>
-    <id>http://www.zhangblog.com/2020/01/08/ansible-09/</id>
-    <published>2020-01-08T07:14:50.000Z</published>
-    <updated>2020-01-08T07:15:55.515Z</updated>
     
     <summary type="html">
     
