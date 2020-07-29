@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-07-27T15:35:03.716Z</updated>
+  <updated>2020-07-29T13:00:17.832Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -17,11 +17,47 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>基于kubeadm快速部署kubernetes K8S V1.17.4集群-无坑完整版</title>
+    <link href="http://www.zhangblog.com/2020/07/29/kubernetes02/"/>
+    <id>http://www.zhangblog.com/2020/07/29/kubernetes02/</id>
+    <published>2020-07-29T12:55:32.000Z</published>
+    <updated>2020-07-29T13:00:17.832Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;基于kubeadm快速部署kubernetes K8S V1.17.4集群，并部署Dashboard
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Kubernetes K8S 基本概述、设计架构和设计理念</title>
     <link href="http://www.zhangblog.com/2020/07/27/kubernetes01/"/>
     <id>http://www.zhangblog.com/2020/07/27/kubernetes01/</id>
     <published>2020-07-27T15:31:12.000Z</published>
-    <updated>2020-07-27T15:35:03.716Z</updated>
+    <updated>2020-07-29T13:00:30.589Z</updated>
     
     <summary type="html">
     
@@ -46,7 +82,7 @@
     
       <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
     
-      <category term="CICD" scheme="http://www.zhangblog.com/tags/CICD/"/>
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
     
       <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
     
@@ -581,33 +617,6 @@
     <id>http://www.zhangblog.com/2020/01/09/ansible-11/</id>
     <published>2020-01-09T02:32:56.000Z</published>
     <updated>2020-01-09T02:40:04.654Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
-    
-    
-      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ansible Jinja2 模板使用</title>
-    <link href="http://www.zhangblog.com/2020/01/08/ansible-10/"/>
-    <id>http://www.zhangblog.com/2020/01/08/ansible-10/</id>
-    <published>2020-01-08T09:40:21.000Z</published>
-    <updated>2020-01-15T13:16:57.615Z</updated>
     
     <summary type="html">
     
