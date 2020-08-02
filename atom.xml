@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-07-29T13:00:17.832Z</updated>
+  <updated>2020-08-02T14:57:26.299Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S之SSL证书有效期修改</title>
+    <link href="http://www.zhangblog.com/2020/08/02/kubernetes03/"/>
+    <id>http://www.zhangblog.com/2020/08/02/kubernetes03/</id>
+    <published>2020-08-02T14:55:36.000Z</published>
+    <updated>2020-08-02T14:57:26.299Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如何修改Kubernetes的SSL证书有效期&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>基于kubeadm快速部署kubernetes K8S V1.17.4集群-无坑完整版</title>
@@ -590,33 +628,6 @@
     <id>http://www.zhangblog.com/2020/01/09/ansible-12/</id>
     <published>2020-01-09T04:26:17.000Z</published>
     <updated>2020-01-09T06:06:25.468Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/ansible/ansible-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;主机规划&quot;&gt;&lt;a href=&quot;#主机规划&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="ansbile" scheme="http://www.zhangblog.com/categories/ansbile/"/>
-    
-    
-      <category term="ansible" scheme="http://www.zhangblog.com/tags/ansible/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ansible Tests详解</title>
-    <link href="http://www.zhangblog.com/2020/01/09/ansible-11/"/>
-    <id>http://www.zhangblog.com/2020/01/09/ansible-11/</id>
-    <published>2020-01-09T02:32:56.000Z</published>
-    <updated>2020-01-09T02:40:04.654Z</updated>
     
     <summary type="html">
     
