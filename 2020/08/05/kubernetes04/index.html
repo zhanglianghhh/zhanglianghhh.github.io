@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="Linux,">
+  <meta name="keywords" content="Docker,Kubernetes,K8S,CI/CD,DevOps,">
 
 
 
@@ -83,22 +83,20 @@
 
 
 
-<meta name="description" content="文章来源：fork:cannot allocate memory问题的处理 文章参考：pid max导致fork: Cannot allocate memory 的分析及解决办法 今天遇到服务器无法SSH，VNC操作命令提示fork:cannot allocate memory free查看内存还有（注意，命令可能要多敲几次才会出来）  查看最大进程数 sysctl kernel.pid_max">
-<meta name="keywords" content="Linux">
+<meta name="description" content="YAML语法规范；在kubernetes k8s中如何通过yaml文件创建pod，以及pod常用字段详解  YAML 语法规范K8S 里所有的资源或者配置都可以用 yaml 或 Json 定义。YAML 是一个 JSON 的超集，任何有效的 JSON 文件也都是一个有效的YAML文件。 具体参见：「YAML 语言教程与使用案例」 通过yaml创建nginx pod对象yaml文件在Kubern">
+<meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
 <meta property="og:type" content="article">
-<meta property="og:title" content="-bash：fork：Cannot allocate memory 问题的处理">
-<meta property="og:url" content="http://www.zhangblog.com/2019/08/30/linux-thread/index.html">
+<meta property="og:title" content="Kubernetes K8S之通过yaml文件创建Pod与Pod常用字段详解">
+<meta property="og:url" content="http://www.zhangblog.com/2020/08/05/kubernetes04/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="文章来源：fork:cannot allocate memory问题的处理 文章参考：pid max导致fork: Cannot allocate memory 的分析及解决办法 今天遇到服务器无法SSH，VNC操作命令提示fork:cannot allocate memory free查看内存还有（注意，命令可能要多敲几次才会出来）  查看最大进程数 sysctl kernel.pid_max">
+<meta property="og:description" content="YAML语法规范；在kubernetes k8s中如何通过yaml文件创建pod，以及pod常用字段详解  YAML 语法规范K8S 里所有的资源或者配置都可以用 yaml 或 Json 定义。YAML 是一个 JSON 的超集，任何有效的 JSON 文件也都是一个有效的YAML文件。 具体参见：「YAML 语言教程与使用案例」 通过yaml创建nginx pod对象yaml文件在Kubern">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/linux_thread/linux_thread01.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/linux_thread/linux_thread02.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/linux_thread/linux_thread03.jpg">
-<meta property="og:updated_time" content="2019-08-30T14:15:13.494Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+<meta property="og:updated_time" content="2020-08-05T13:59:13.434Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="-bash：fork：Cannot allocate memory 问题的处理">
-<meta name="twitter:description" content="文章来源：fork:cannot allocate memory问题的处理 文章参考：pid max导致fork: Cannot allocate memory 的分析及解决办法 今天遇到服务器无法SSH，VNC操作命令提示fork:cannot allocate memory free查看内存还有（注意，命令可能要多敲几次才会出来）  查看最大进程数 sysctl kernel.pid_max">
-<meta name="twitter:image" content="http://www.zhangblog.com/uploads/linux_thread/linux_thread01.jpg">
+<meta name="twitter:title" content="Kubernetes K8S之通过yaml文件创建Pod与Pod常用字段详解">
+<meta name="twitter:description" content="YAML语法规范；在kubernetes k8s中如何通过yaml文件创建pod，以及pod常用字段详解  YAML 语法规范K8S 里所有的资源或者配置都可以用 yaml 或 Json 定义。YAML 是一个 JSON 的超集，任何有效的 JSON 文件也都是一个有效的YAML文件。 具体参见：「YAML 语言教程与使用案例」 通过yaml创建nginx pod对象yaml文件在Kubern">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
 
 
 
@@ -128,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/2019/08/30/linux-thread/">
+  <link rel="canonical" href="http://www.zhangblog.com/2020/08/05/kubernetes04/">
 
 
 
 
 
-  <title>-bash：fork：Cannot allocate memory 问题的处理 | lightzhang博客</title>
+  <title>Kubernetes K8S之通过yaml文件创建Pod与Pod常用字段详解 | lightzhang博客</title>
   
 
 
@@ -313,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/08/30/linux-thread/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/08/05/kubernetes04/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lightzhang">
@@ -330,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">-bash：fork：Cannot allocate memory 问题的处理</h1>
+          <h1 class="post-title" itemprop="name headline">Kubernetes K8S之通过yaml文件创建Pod与Pod常用字段详解</h1>
         
 
         <div class="post-meta">
@@ -342,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-30T22:11:39+08:00">
-                2019-08-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-05T21:55:53+08:00">
+                2020-08-05
               </time>
             
 
@@ -366,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
                   </a>
                 </span>
 
@@ -384,8 +382,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/08/30/linux-thread/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/30/linux-thread/" itemprop="commentCount"></span>
+                <a href="/2020/08/05/kubernetes04/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/08/05/kubernetes04/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -393,7 +391,7 @@
 
           
           
-             <span id="/2019/08/30/linux-thread/" class="leancloud_visitors" data-flag-title="-bash：fork：Cannot allocate memory 问题的处理">
+             <span id="/2020/08/05/kubernetes04/" class="leancloud_visitors" data-flag-title="Kubernetes K8S之通过yaml文件创建Pod与Pod常用字段详解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -418,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  136
+                  3.2k
                 </span>
               
 
@@ -434,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  13
                 </span>
               
             </div>
@@ -455,22 +453,46 @@
       
 
       
-        <p><b>文章来源：<a href="http://bbs.qcloud.com/thread-22637-1-1.html" target="_blank" rel="noopener">fork:cannot allocate memory问题的处理</a></b></p>
-<p><b>文章参考：<a href="https://blog.csdn.net/onlyellow/article/details/51917757" target="_blank" rel="noopener">pid max导致fork: Cannot allocate memory 的分析及解决办法</a></b></p>
-<p>今天遇到服务器无法SSH，VNC操作命令提示fork:cannot allocate memory</p>
-<p>free查看内存还有（注意，命令可能要多敲几次才会出来）</p>
-<p><img src="/uploads/linux_thread/linux_thread01.jpg" alt="image"></p>
-<p>查看最大进程数 sysctl kernel.pid_max</p>
-<p><img src="/uploads/linux_thread/linux_thread02.jpg" alt="image"></p>
-<p>ps -eLf | wc -l查看进程数</p>
-<p><img src="/uploads/linux_thread/linux_thread03.jpg" alt="image"></p>
-<p>确认是进程数满了</p>
-<p>修改最大进程数后系统恢复</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 1000000 &gt; /proc/sys/kernel/pid_max</span><br></pre></td></tr></table></figure>
+        <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
+<blockquote>
+<p>YAML语法规范；在kubernetes k8s中如何通过yaml文件创建pod，以及pod常用字段详解</p>
+</blockquote>
+<h1 id="YAML-语法规范"><a href="#YAML-语法规范" class="headerlink" title="YAML 语法规范"></a>YAML 语法规范</h1><p>K8S 里所有的资源或者配置都可以用 yaml 或 Json 定义。YAML 是一个 JSON 的超集，任何有效的 JSON 文件也都是一个有效的YAML文件。</p>
+<p>具体参见：「<a href="http://www.zhangblog.com/2020/05/17/yaml01/">YAML 语言教程与使用案例</a>」</p>
+<h1 id="通过yaml创建nginx-pod对象"><a href="#通过yaml创建nginx-pod对象" class="headerlink" title="通过yaml创建nginx pod对象"></a>通过yaml创建nginx pod对象</h1><h2 id="yaml文件"><a href="#yaml文件" class="headerlink" title="yaml文件"></a>yaml文件</h2><p>在Kubernetes的 yaml文件中，最好<font color="red">不要出现下划线，可以有中横线</font>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master test]# pwd</span><br><span class="line">/root/k8s_practice/test</span><br><span class="line">[root@k8s-master test]# cat nginx_demo.yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-demo</span><br><span class="line">  namespace: default</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: nginx</span><br><span class="line">    environment: dev</span><br><span class="line">  annotations:</span><br><span class="line">    name: nginx-demo</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: nginx</span><br><span class="line">    image: registry.cn-beijing.aliyuncs.com/google_registry/nginx:1.17</span><br><span class="line">    imagePullPolicy: IfNotPresent</span><br><span class="line">    ports:</span><br><span class="line">    - name: httpd</span><br><span class="line">      containerPort: 80</span><br><span class="line">      protocol: TCP</span><br><span class="line">    volumeMounts:        #定义容器挂载内容</span><br><span class="line">    - name: nginx-site   #使用的存储卷名称，跟下面volume字段的某个name值相同，这里表示使用volume的nginx-site这个存储卷</span><br><span class="line">      mountPath: /usr/share/nginx/html  #挂载至容器中哪个目录</span><br><span class="line">      readOnly: false                   #读写挂载方式，默认为读写模式false</span><br><span class="line">    - name: nginx-log</span><br><span class="line">      mountPath: /var/log/nginx/</span><br><span class="line">      readOnly: false</span><br><span class="line">  volumes:              #volumes字段定义了paues容器关联的宿主机或分布式文件系统存储卷</span><br><span class="line">  - name: nginx-site    #存储卷名称</span><br><span class="line">    hostPath:           #路径，为宿主机存储路径</span><br><span class="line">      path: /data/volumes/nginx/html/   #在宿主机上目录的路径</span><br><span class="line">      type: DirectoryOrCreate           #定义类型，这表示如果宿主机没有此目录，则会自动创建</span><br><span class="line">  - name: nginx-log</span><br><span class="line">    hostPath:</span><br><span class="line">      path: /data/volumes/nginx/log/</span><br><span class="line">      type: DirectoryOrCreate</span><br></pre></td></tr></table></figure>
 
-<p>永久生效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;kernel.pid_max=1000000 &quot; &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+<h2 id="Pod常见操作"><a href="#Pod常见操作" class="headerlink" title="Pod常见操作"></a>Pod常见操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master test]# pwd</span><br><span class="line">/root/k8s_practice/test</span><br><span class="line">[root@k8s-master test]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 1317 Jul 29 16:42 nginx_demo.yaml</span><br><span class="line"># 创建pod</span><br><span class="line">[root@k8s-master test]# kubectl apply -f nginx_demo.yaml </span><br><span class="line">pod/nginx-demo created</span><br><span class="line"># 查看pod。根据结果可见被调度到了 k8s-node02 节点</span><br><span class="line">[root@k8s-master test]# kubectl get pod -o wide   # 或者 kubectl get pod -n default -o wide  因为名称空间为default</span><br><span class="line">NAME                READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">nginx-demo          1/1     Running   0          10s   10.244.2.16   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line"># 查看pod描述</span><br><span class="line">[root@k8s-master test]# kubectl describe pod -n default nginx-demo   # 由于是默认名称空间，因此可以省略 -n default</span><br><span class="line">…………</span><br><span class="line"># 查看指定pod的基本信息，并显示标签信息</span><br><span class="line">[root@k8s-master test]# kubectl get pod nginx-demo -o wide --show-labels</span><br><span class="line">NAME          READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES   LABELS</span><br><span class="line">nginx-demo    1/1     Running   0          61s   10.244.2.16   k8s-node02   &lt;none&gt;           &lt;none&gt;            environment=dev,k8s-app=nginx</span><br><span class="line"># 删除pod</span><br><span class="line">[root@k8s-master test]# kubectl delete -f nginx_demo.yaml   # 或者 kubectl delete pod nginx-demo</span><br><span class="line">pod &quot;nginx-demo&quot; deleted</span><br></pre></td></tr></table></figure>
 
+<h2 id="volume查看"><a href="#volume查看" class="headerlink" title="volume查看"></a>volume查看</h2><p>由上可知 pod nginx-demo 被调度到了 k8s-node02 节点。那么对应的volume信息如下：</p>
+<p>站点信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node02 nginx]# ll /data/volumes/nginx/html/    # 宿主机目录已经被创建</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root 14 May 20 22:50 index.html</span><br><span class="line">[root@k8s-node02 nginx]# vim /data/volumes/nginx/html/index.html   # 然后我们创建该文件，用于后续站点访问</span><br><span class="line">&lt;h1&gt;Test&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+
+<p>日志信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node02 nginx]# ll /data/volumes/nginx/log/   # 宿主机目录已经被创建，且下面的两个日志文件也是容器启动时创建的</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root  0 May 20 23:04 access.log</span><br><span class="line">-rw-r--r-- 1 root root  0 May 20 22:47 error.log</span><br></pre></td></tr></table></figure>
+
+<h2 id="nginx站点访问"><a href="#nginx站点访问" class="headerlink" title="nginx站点访问"></a>nginx站点访问</h2><p>查看指定pod的基本信息。得到了该pod的IP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master k8s_study]# kubectl get pod nginx-demo -o wide</span><br><span class="line">NAME                READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">nginx-demo          1/1     Running   0          61s   10.244.2.16   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">[root@k8s-master k8s_study]# curl http://10.244.2.16   # curl 访问站点</span><br><span class="line">&lt;h1&gt;Test&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+
+<p>同时在k8s-node02节点机器也可见访问日志，信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node02 nginx]# cat /data/volumes/nginx/log/access.log </span><br><span class="line">10.244.0.0 - - [20/May/2020:15:04:42 +0000] &quot;GET / HTTP/1.1&quot; 200 14 &quot;-&quot; &quot;curl/7.29.0&quot; &quot;-&quot;</span><br><span class="line">10.244.0.0 - - [20/May/2020:15:34:50 +0000] &quot;GET / HTTP/1.1&quot; 200 14 &quot;-&quot; &quot;curl/7.29.0&quot; &quot;-&quot;</span><br></pre></td></tr></table></figure>
+
+<h1 id="K8S-Pod-Yaml文件参数详细说明"><a href="#K8S-Pod-Yaml文件参数详细说明" class="headerlink" title="K8S Pod Yaml文件参数详细说明"></a>K8S Pod Yaml文件参数详细说明</h1><p><font color="red">特别说明：注意格式，层级与缩进。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1                  #必选，版本号，例如v1，可以用 kubectl api-versions 查询到</span><br><span class="line">kind: Pod                       #必选，指yaml文件定义的k8s 资源类型或角色，比如：Pod</span><br><span class="line">metadata:                       #必选，元数据对象</span><br><span class="line">  name: string                  #必选，元数据对象的名字，自己定义，比如命名Pod的名字</span><br><span class="line">  namespace: string             #必选，元数据对象的名称空间，默认为&quot;default&quot;</span><br><span class="line">  labels:                       #自定义标签</span><br><span class="line">    key1: value1      　        #自定义标签键值对1</span><br><span class="line">    key2: value2      　        #自定义标签键值对2</span><br><span class="line">  annotations:                  #自定义注解</span><br><span class="line">    key1: value1      　        #自定义注解键值对1</span><br><span class="line">    key2: value2      　        #自定义注解键值对2</span><br><span class="line">spec:                           #必选，对象【如pod】的详细定义</span><br><span class="line">  containers:                   #必选，spec对象的容器信息</span><br><span class="line">  - name: string                #必选，容器名称</span><br><span class="line">    image: string               #必选，要用到的镜像名称</span><br><span class="line">    imagePullPolicy: [Always|Never|IfNotPresent]  #获取镜像的策略；(1)Always：意思是每次都尝试重新拉取镜像；(2)Never：表示仅使用本地镜像，即使本地没有镜像也不拉取；(3) IfNotPresent：如果本地有镜像就使用本地镜像，没有就拉取远程镜像。默认：Always</span><br><span class="line">    command: [string]           #指定容器启动命令，由于是数组因此可以指定多个。不指定则使用镜像打包时指定的启动命令。</span><br><span class="line">    args: [string]              #指定容器启动命令参数，由于是数组因此可以指定多个</span><br><span class="line">    workingDir: string          #指定容器的工作目录</span><br><span class="line">    volumeMounts:               #指定容器内部的存储卷配置</span><br><span class="line">    - name: string              #指定可以被容器挂载的存储卷的名称。跟下面volume字段的name值相同表示使用这个存储卷</span><br><span class="line">      mountPath: string         #指定可以被容器挂载的存储卷的路径，应少于512字符</span><br><span class="line">      readOnly: boolean         #设置存储卷路径的读写模式，true或者false，默认为读写模式false</span><br><span class="line">    ports:                      #需要暴露的端口号列表</span><br><span class="line">    - name: string              #端口的名称</span><br><span class="line">      containerPort: int        #容器监听的端口号</span><br><span class="line">      protocol: string          #端口协议，支持TCP和UDP，默认TCP</span><br><span class="line">    env:                        #容器运行前需设置的环境变量列表</span><br><span class="line">    - name: string              #环境变量名称</span><br><span class="line">      value: string             #环境变量的值</span><br><span class="line">    resources:                  #资源限制和资源请求的设置（设置容器的资源上线）</span><br><span class="line">      limits:                   #容器运行时资源使用的上线</span><br><span class="line">        cpu: string             #CPU限制，单位为core数，允许浮点数，如0.1等价于100m，0.5等价于500m；因此如果小于1那么优先选择如100m的形式，精度为1m。这个数字用作 docker run 命令中的 --cpu-quota 参数。</span><br><span class="line">        memory: string          #内存限制，单位：E,P,T,G,M,K；或者Ei,Pi,Ti,Gi,Mi,Ki；或者字节数。将用于docker run --memory参数</span><br><span class="line">      requests:                 #容器启动和调度时的限制设定</span><br><span class="line">        cpu: string             #CPU请求，容器启动时初始化可用数量，单位为core数，允许浮点数，如0.1等价于100m，0.5等价于500m；因此如果小于1那么优先选择如100m的形式，精度为1m。这个数字用作 docker run 命令中的 --cpu-shares 参数。</span><br><span class="line">        memory: string          #内存请求,容器启动的初始化可用数量。单位：E,P,T,G,M,K；或者Ei,Pi,Ti,Gi,Mi,Ki；或者字节数</span><br><span class="line">    # 参见官网地址：https://kubernetes.io/zh/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/</span><br><span class="line">    livenessProbe:      　　    #对Pod内各容器健康检查的设置，当探测无响应几次后将自动重启该容器，检查方法有exec、httpGet和tcpSocket，对一个容器【只需设置其中一种方法即可】</span><br><span class="line">      exec:       　　　　　　  #对Pod内容器健康检查方式设置为exec方式</span><br><span class="line">        command: [string]       #exec方式需要制定的命令或脚本</span><br><span class="line">      httpGet:        　　　　  #对Pod内容器健康检查方法设置为HttpGet，需要制定Path、port</span><br><span class="line">        path: string            #访问 HTTP 服务的路径</span><br><span class="line">        port: number            #访问容器的端口号或者端口名。如果数字必须在 1 ~ 65535 之间。</span><br><span class="line">        host: string            #当没有定义 &quot;host&quot; 时，使用 &quot;PodIP&quot;</span><br><span class="line">        scheme: string          #当没有定义 &quot;scheme&quot; 时，使用 &quot;HTTP&quot;，scheme 只允许 &quot;HTTP&quot; 和 &quot;HTTPS&quot;</span><br><span class="line">        HttpHeaders:            #请求中自定义的 HTTP 头。HTTP 头字段允许重复。</span><br><span class="line">        - name: string</span><br><span class="line">          value: string</span><br><span class="line">      tcpSocket:      　　　　  #对Pod内容器健康检查方式设置为tcpSocket方式</span><br><span class="line">         port: number</span><br><span class="line">      initialDelaySeconds: 5    #容器启动完成后，kubelet在执行第一次探测前应该等待 5 秒。默认是 0 秒，最小值是 0。</span><br><span class="line">      periodSeconds: 60    　　 #指定 kubelet 每隔 60 秒执行一次存活探测。默认是 10 秒。最小值是 1</span><br><span class="line">      timeoutSeconds: 3    　　 #对容器健康检查探测等待响应的超时时间为 3 秒，默认1秒</span><br><span class="line">      successThreshold: 1       #检测到有1次成功则认为服务是`就绪`</span><br><span class="line">      failureThreshold: 5       #检测到有5次失败则认为服务是`未就绪`。默认值是 3，最小值是 1。</span><br><span class="line">    restartPolicy: [Always|Never|OnFailure] #Pod的重启策略，默认Always。Always表示一旦不管以何种方式终止运行，kubelet都将重启；OnFailure表示只有Pod以非0退出码退出才重启；Nerver表示不再重启该Pod</span><br><span class="line">    nodeSelector:           　　#定义Node的label过滤标签，以key：value的格式指定。节点选择，先给主机打标签kubectl label nodes kube-node01 key1=value1 </span><br><span class="line">      key1: value1</span><br><span class="line">    imagePullSecrets:     　　  #Pull镜像时使用的secret名称，以name：secretKeyName格式指定</span><br><span class="line">    - name: string</span><br><span class="line">    hostNetwork: false      　　#是否使用主机网络模式，默认为false。如果设置为true，表示使用宿主机网络，不使用docker网桥</span><br><span class="line">  # volumes 和 containers 是同层级 ******************************</span><br><span class="line">  # 参见官网地址：https://kubernetes.io/zh/docs/concepts/storage/volumes/</span><br><span class="line">  volumes:        　　　　　　#定义了paues容器关联的宿主机或分布式文件系统存储卷列表 （volumes类型有很多种，选其中一种即可）</span><br><span class="line">  - name: string     　　 　　#共享存储卷名称。</span><br><span class="line">    emptyDir: &#123;&#125;      　　    #类型为emtyDir的存储卷，与Pod同生命周期的一个临时目录。当Pod因为某些原因被从节点上删除时，emptyDir卷中的数据也会永久删除。</span><br><span class="line">    hostPath: string      　　#类型为hostPath的存储卷，表示挂载Pod所在宿主机的文件或目录</span><br><span class="line">      path: string      　　  #在宿主机上文件或目录的路径</span><br><span class="line">      type: [|DirectoryOrCreate|Directory|FileOrCreate|File] #空字符串（默认）用于向后兼容，这意味着在安装 hostPath 卷之前不会执行任何检查。DirectoryOrCreate：如果给定目录不存在则创建，权限设置为 0755，具有与 Kubelet 相同的组和所有权。Directory：给定目录必须存在。FileOrCreate：如果给定文件不存在，则创建空文件，权限设置为 0644，具有与 Kubelet 相同的组和所有权。File：给定文件必须存在。</span><br><span class="line">    secret:       　　　　　  #类型为secret的存储卷，挂载集群预定义的secre对象到容器内部。Secret 是一种包含少量敏感信息例如密码、token 或 key 的对象。放在一个 secret 对象中可以更好地控制它的用途，并降低意外暴露的风险。</span><br><span class="line">      secretName: string      #secret 对象的名字</span><br><span class="line">      items:                  #可选，修改key 的目标路径</span><br><span class="line">      - key: username         #username secret存储在/etc/foo/my-group/my-username 文件中而不是 /etc/foo/username 中。【此时存在spec.containers[].volumeMounts[].mountPath为/etc/foo】</span><br><span class="line">        path: my-group/my-username</span><br><span class="line">    configMap:      　　　　  #类型为configMap的存储卷，挂载预定义的configMap对象到容器内部。ConfigMap 允许您将配置文件与镜像文件分离，以使容器化的应用程序具有可移植性。</span><br><span class="line">      name: string             #提供你想要挂载的 ConfigMap 的名字</span><br></pre></td></tr></table></figure>
+
+<h2 id="资源需求（Requests）和限制（Limits）说明"><a href="#资源需求（Requests）和限制（Limits）说明" class="headerlink" title="资源需求（Requests）和限制（Limits）说明"></a>资源需求（Requests）和限制（Limits）说明</h2><p>对于每一个资源，container可以指定具体的资源需求（requests）和限制（limits）。</p>
+<p>requests申请范围是0到node节点的最大配置，而limits申请范围是requests到无限，即0 &lt;= requests &lt;=Node Allocatable，requests &lt;= limits &lt;= Infinity。</p>
+<p><font color="red">对于CPU</font>，如果pod中服务使用CPU超过设置的limits，pod不会被kill掉但会被限制。如果没有设置limits，pod可以使用全部空闲的cpu资源。</p>
+<p><font color="red">对于内存</font>，当一个pod使用内存超过了设置的limits，【一个Pod可能有多个container】pod中container的进程会被kernel因OOM kill掉。当container因为OOM被kill掉时，系统倾向于在其原所在的机器上重启该container或本机或其他重新创建一个pod。</p>
+<h2 id="volumeMounts和volumes区别"><a href="#volumeMounts和volumes区别" class="headerlink" title="volumeMounts和volumes区别"></a>volumeMounts和volumes区别</h2><p>volumeMounts示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">volumeMounts:        #定义容器挂载内容</span><br><span class="line">- name: nginx-site   #使用的存储卷名称，跟下面volume字段的某个name值相同，这里表示使用volume的nginx-site这个存储卷</span><br><span class="line">  mountPath: /usr/share/nginx/html  #挂载至容器中哪个目录</span><br><span class="line">  readOnly: false                   #读写挂载方式，默认为读写模式false</span><br><span class="line">- name: nginx-log</span><br><span class="line">  mountPath: /var/log/nginx/</span><br><span class="line">  readOnly: false</span><br></pre></td></tr></table></figure>
+
+<p>volumes示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">volumes:              #volumes字段定义了paues容器关联的宿主机或分布式文件系统存储卷</span><br><span class="line">- name: nginx-site    #存储卷名称</span><br><span class="line">  hostPath:           #路径，为宿主机存储路径</span><br><span class="line">    path: /data/volumes/nginx/html/   #在宿主机上目录的路径</span><br><span class="line">    type: DirectoryOrCreate           #定义类型，这表示如果宿主机没有此目录，则会自动创建</span><br><span class="line">- name: nginx-log</span><br><span class="line">  hostPath:</span><br><span class="line">    path: /data/volumes/nginx/log/</span><br><span class="line">    type: DirectoryOrCreate</span><br></pre></td></tr></table></figure>
+
+<h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="http://www.zhangblog.com/2020/05/17/yaml01/">YAML 语言教程与使用案例</a></p>
+<p>完毕！</p>
+<hr>
 
       
     </div>
@@ -543,7 +565,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangblog.com/2019/08/30/linux-thread/" title="-bash：fork：Cannot allocate memory 问题的处理">http://www.zhangblog.com/2019/08/30/linux-thread/</a>
+    <a href="http://www.zhangblog.com/2020/08/05/kubernetes04/" title="Kubernetes K8S之通过yaml文件创建Pod与Pod常用字段详解">http://www.zhangblog.com/2020/08/05/kubernetes04/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -558,7 +580,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
           
         </div>
       
@@ -571,8 +601,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/12/proxy_dns01/" rel="next" title="“反向代理层”绝不能替代“DNS轮询”！">
-                <i class="fa fa-chevron-left"></i> “反向代理层”绝不能替代“DNS轮询”！
+              <a href="/2020/08/02/kubernetes03/" rel="next" title="Kubernetes K8S之SSL证书有效期修改">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S之SSL证书有效期修改
               </a>
             
           </div>
@@ -580,10 +610,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/02/percona01/" rel="prev" title="percona-toolkit大表操作DDL使用">
-                percona-toolkit大表操作DDL使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -638,8 +664,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -742,6 +777,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YAML-语法规范"><span class="nav-number">1.</span> <span class="nav-text">YAML 语法规范</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过yaml创建nginx-pod对象"><span class="nav-number">2.</span> <span class="nav-text">通过yaml创建nginx pod对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yaml文件"><span class="nav-number">2.1.</span> <span class="nav-text">yaml文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod常见操作"><span class="nav-number">2.2.</span> <span class="nav-text">Pod常见操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volume查看"><span class="nav-number">2.3.</span> <span class="nav-text">volume查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx站点访问"><span class="nav-number">2.4.</span> <span class="nav-text">nginx站点访问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#K8S-Pod-Yaml文件参数详细说明"><span class="nav-number">3.</span> <span class="nav-text">K8S Pod Yaml文件参数详细说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#资源需求（Requests）和限制（Limits）说明"><span class="nav-number">3.1.</span> <span class="nav-text">资源需求（Requests）和限制（Limits）说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volumeMounts和volumes区别"><span class="nav-number">3.2.</span> <span class="nav-text">volumeMounts和volumes区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读"><span class="nav-number">4.</span> <span class="nav-text">相关阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
