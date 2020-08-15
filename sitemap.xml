@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zhangblog.com/2020/08/05/kubernetes04/</loc>
+    
+    <lastmod>2020-08-15T02:43:37.536Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zhangblog.com/2020/08/12/kubernetes06/</loc>
     
     <lastmod>2020-08-12T13:56:01.143Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://www.zhangblog.com/2020/08/09/kubernetes05/</loc>
     
     <lastmod>2020-08-12T13:55:28.777Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.zhangblog.com/2020/08/05/kubernetes04/</loc>
-    
-    <lastmod>2020-08-12T13:55:20.489Z</lastmod>
     
   </url>
   
