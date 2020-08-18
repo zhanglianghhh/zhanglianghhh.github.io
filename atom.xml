@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-08-16T15:02:50.720Z</updated>
+  <updated>2020-08-18T13:16:06.216Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S之Pod 生命周期与postStart、preStop事件</title>
+    <link href="http://www.zhangblog.com/2020/08/18/kubernetes08/"/>
+    <id>http://www.zhangblog.com/2020/08/18/kubernetes08/</id>
+    <published>2020-08-18T13:15:08.000Z</published>
+    <updated>2020-08-18T13:16:06.216Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Kubernetes 支持 postStart 和 preStop 事件。当一个主容器启动后，Kubernetes
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S之Pod生命周期与探针检测</title>
@@ -640,42 +678,6 @@
           &lt;p&gt;&lt;img src=&quot;/uploads/VMware/VMware-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;如何在Vmware安装Linux CentOS
-        
-      
-    
-    </summary>
-    
-      <category term="VMware" scheme="http://www.zhangblog.com/categories/VMware/"/>
-    
-      <category term="虚拟机" scheme="http://www.zhangblog.com/categories/VMware/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
-    
-      <category term="VMware" scheme="http://www.zhangblog.com/tags/VMware/"/>
-    
-      <category term="Linux" scheme="http://www.zhangblog.com/tags/Linux/"/>
-    
-      <category term="虚拟机" scheme="http://www.zhangblog.com/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>VMware如何创建Linux虚拟机并设置虚拟机网络</title>
-    <link href="http://www.zhangblog.com/2020/03/15/VMware-01/"/>
-    <id>http://www.zhangblog.com/2020/03/15/VMware-01/</id>
-    <published>2020-03-15T09:20:52.000Z</published>
-    <updated>2020-05-15T02:53:09.901Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/VMware/VMware-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;如何在Vmware中创建Linux虚拟机并设置Vmware和虚拟机网络&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1
         
       
     

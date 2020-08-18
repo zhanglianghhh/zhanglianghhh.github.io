@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Docker,Kubernetes,K8S,CI/CD,DevOps,">
 
 
 
@@ -83,16 +83,21 @@
 
 
 
-<meta name="description" content="lightzhang博客，不止于技术，更记录人生点滴感悟。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="lightzhang博客">
-<meta property="og:url" content="http://www.zhangblog.com/tags/DevOps/index.html">
+<meta name="description" content="Kubernetes 支持 postStart 和 preStop 事件。当一个主容器启动后，Kubernetes 将立即发送 postStart 事件；在主容器被终结之前，Kubernetes 将发送一个 preStop 事件。  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G">
+<meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes K8S之Pod 生命周期与postStart、preStop事件">
+<meta property="og:url" content="http://www.zhangblog.com/2020/08/18/kubernetes08/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="lightzhang博客，不止于技术，更记录人生点滴感悟。">
+<meta property="og:description" content="Kubernetes 支持 postStart 和 preStop 事件。当一个主容器启动后，Kubernetes 将立即发送 postStart 事件；在主容器被终结之前，Kubernetes 将发送一个 preStop 事件。  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-06-01.png">
+<meta property="og:updated_time" content="2020-08-18T13:16:06.216Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lightzhang博客">
-<meta name="twitter:description" content="lightzhang博客，不止于技术，更记录人生点滴感悟。">
+<meta name="twitter:title" content="Kubernetes K8S之Pod 生命周期与postStart、preStop事件">
+<meta name="twitter:description" content="Kubernetes 支持 postStart 和 preStop 事件。当一个主容器启动后，Kubernetes 将立即发送 postStart 事件；在主容器被终结之前，Kubernetes 将发送一个 preStop 事件。  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
 
 
 
@@ -122,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/tags/DevOps/">
+  <link rel="canonical" href="http://www.zhangblog.com/2020/08/18/kubernetes08/">
 
 
 
 
 
-  <title>标签: DevOps | lightzhang博客</title>
+  <title>Kubernetes K8S之Pod 生命周期与postStart、preStop事件 | lightzhang博客</title>
   
 
 
@@ -157,7 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -293,234 +298,378 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>DevOps<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/08/18/kubernetes08/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2020/08/18/kubernetes08/" itemprop="url">
-              
-                <span itemprop="name">Kubernetes K8S之Pod 生命周期与postStart、preStop事件</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Kubernetes K8S之Pod 生命周期与postStart、preStop事件</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-08-18T21:15:08+08:00" content="2020-08-18">
-          08-18
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-18T21:15:08+08:00">
+                2020-08-18
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/K8S/" itemprop="url" rel="index">
+                    <span itemprop="name">K8S</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/08/18/kubernetes08/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/08/18/kubernetes08/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/08/18/kubernetes08/" class="leancloud_visitors" data-flag-title="Kubernetes K8S之Pod 生命周期与postStart、preStop事件">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/08/16/kubernetes07/" itemprop="url">
-              
-                <span itemprop="name">Kubernetes K8S之Pod生命周期与探针检测</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-08-16T22:51:53+08:00" content="2020-08-16">
-          08-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
+        <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
+<blockquote>
+<p>Kubernetes 支持 postStart 和 preStop 事件。当一个主容器启动后，Kubernetes 将立即发送 postStart 事件；在主容器被终结之前，Kubernetes 将发送一个 preStop 事件。</p>
+</blockquote>
+<h1 id="主机配置规划"><a href="#主机配置规划" class="headerlink" title="主机配置规划"></a>主机配置规划</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>系统版本</th>
+<th>配置</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.110</td>
+<td>10.0.0.110</td>
+</tr>
+<tr>
+<td>k8s-node01</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.111</td>
+<td>10.0.0.111</td>
+</tr>
+<tr>
+<td>k8s-node02</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.112</td>
+<td>10.0.0.112</td>
+</tr>
+</tbody></table>
+<h1 id="Pod容器生命周期"><a href="#Pod容器生命周期" class="headerlink" title="Pod容器生命周期"></a>Pod容器生命周期</h1><p><img src="/uploads/kubernetes/k8s-06-01.png" alt="image"></p>
+<h2 id="Pause容器说明"><a href="#Pause容器说明" class="headerlink" title="Pause容器说明"></a>Pause容器说明</h2><p>每个Pod里运行着一个特殊的被称之为Pause的容器，其他容器则为业务容器，这些业务容器<font color="red">共享Pause容器的网络栈和Volume挂载卷</font>，因此他们之间通信和数据交换更为高效。在设计时可以充分利用这一特性，将一组密切相关的服务进程放入同一个Pod中；同一个Pod里的容器之间仅需通过localhost就能互相通信。</p>
+<div style="font-size:17px"><b>kubernetes中的pause容器主要为每个业务容器提供以下功能：</b></div>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p>PID命名空间：Pod中的不同应用程序可以看到其他应用程序的进程ID。</p>
+<p>网络命名空间：Pod中的多个容器能够访问同一个IP和端口范围。</p>
+<p>IPC命名空间：Pod中的多个容器能够使用SystemV IPC或POSIX消息队列进行通信。</p>
+<p>UTS命名空间：Pod中的多个容器共享一个主机名；Volumes（共享存储卷）。</p>
+<p>Pod中的各个容器可以访问在Pod级别定义的Volumes。</p>
+<h1 id="主容器生命周期事件的处理函数"><a href="#主容器生命周期事件的处理函数" class="headerlink" title="主容器生命周期事件的处理函数"></a>主容器生命周期事件的处理函数</h1><p>Kubernetes 支持 postStart 和 preStop 事件。当一个主容器启动后，Kubernetes 将立即发送 postStart 事件；在主容器被终结之前，Kubernetes 将发送一个 preStop 事件。</p>
+<h2 id="postStart-和-preStop-处理函数示例"><a href="#postStart-和-preStop-处理函数示例" class="headerlink" title="postStart 和 preStop 处理函数示例"></a>postStart 和 preStop 处理函数示例</h2><p>pod yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master lifecycle]# pwd</span><br><span class="line">/root/k8s_practice/lifecycle</span><br><span class="line">[root@k8s-master lifecycle]# cat lifecycle-events.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: lifecycle-demo-pod</span><br><span class="line">  namespace: default</span><br><span class="line">  labels:</span><br><span class="line">    test: lifecycle</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: lifecycle-demo</span><br><span class="line">    image: registry.cn-beijing.aliyuncs.com/google_registry/nginx:1.17</span><br><span class="line">    imagePullPolicy: IfNotPresent</span><br><span class="line">    lifecycle:</span><br><span class="line">      postStart:</span><br><span class="line">        exec:</span><br><span class="line">          command: [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;echo &apos;Hello from the postStart handler&apos; &gt;&gt; /var/log/nginx/message&quot;]</span><br><span class="line">      preStop:</span><br><span class="line">        exec:</span><br><span class="line">          command: [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;echo &apos;Hello from the preStop handler&apos;   &gt;&gt; /var/log/nginx/message&quot;]</span><br><span class="line">    volumeMounts:         #定义容器挂载内容</span><br><span class="line">    - name: message-log   #使用的存储卷名称，如果跟下面volume字段name值相同，则表示使用volume的nginx-site这个存储卷</span><br><span class="line">      mountPath: /var/log/nginx/  #挂载至容器中哪个目录</span><br><span class="line">      readOnly: false             #读写挂载方式，默认为读写模式false</span><br><span class="line">  initContainers:</span><br><span class="line">  - name: init-myservice</span><br><span class="line">    image: registry.cn-beijing.aliyuncs.com/google_registry/busybox:1.24</span><br><span class="line">    command: [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;echo &apos;Hello initContainers&apos;   &gt;&gt; /var/log/nginx/message&quot;]</span><br><span class="line">    volumeMounts:         #定义容器挂载内容</span><br><span class="line">    - name: message-log   #使用的存储卷名称，如果跟下面volume字段name值相同，则表示使用volume的nginx-site这个存储卷</span><br><span class="line">      mountPath: /var/log/nginx/  #挂载至容器中哪个目录</span><br><span class="line">      readOnly: false             #读写挂载方式，默认为读写模式false</span><br><span class="line">  volumes:              #volumes字段定义了paues容器关联的宿主机或分布式文件系统存储卷</span><br><span class="line">  - name: message-log   #存储卷名称</span><br><span class="line">    hostPath:           #路径，为宿主机存储路径</span><br><span class="line">      path: /data/volumes/nginx/log/    #在宿主机上目录的路径</span><br><span class="line">      type: DirectoryOrCreate           #定义类型，这表示如果宿主机没有此目录则会自动创建</span><br></pre></td></tr></table></figure>
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/08/12/kubernetes06/" itemprop="url">
-              
-                <span itemprop="name">Kubernetes K8S之Pod 生命周期与init container初始化容器详解</span>
-              
-            </a>
-        
-      </h2>
+<p>启动pod，查看pod状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master lifecycle]# kubectl apply -f lifecycle-events.yaml </span><br><span class="line">pod/lifecycle-demo-pod created</span><br><span class="line">[root@k8s-master lifecycle]# kubectl get pod -o wide</span><br><span class="line">NAME                 READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">lifecycle-demo-pod   1/1     Running   0          5s    10.244.2.30   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-08-12T21:51:31+08:00" content="2020-08-12">
-          08-12
-        </time>
-      </div>
+<p>查看pod详情</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master lifecycle]# kubectl describe pod lifecycle-demo-pod</span><br><span class="line">Name:         lifecycle-demo-pod</span><br><span class="line">Namespace:    default</span><br><span class="line">Priority:     0</span><br><span class="line">Node:         k8s-node02/172.16.1.112</span><br><span class="line">Start Time:   Sat, 23 May 2020 22:08:04 +0800</span><br><span class="line">Labels:       test=lifecycle</span><br><span class="line">………………</span><br><span class="line">Init Containers:</span><br><span class="line">  init-myservice:</span><br><span class="line">    Container ID:  docker://1cfabcb60b817efd5c7283ad9552dafada95dbe932f92822b814aaa9c38f8ba5</span><br><span class="line">    Image:         registry.cn-beijing.aliyuncs.com/google_registry/busybox:1.24</span><br><span class="line">    Image ID:      docker-pullable://registry.cn-beijing.aliyuncs.com/ducafe/busybox@sha256:f73ae051fae52945d92ee20d62c315306c593c59a429ccbbdcba4a488ee12269</span><br><span class="line">    Port:          &lt;none&gt;</span><br><span class="line">    Host Port:     &lt;none&gt;</span><br><span class="line">    Command:</span><br><span class="line">      /bin/sh</span><br><span class="line">      -c</span><br><span class="line">      echo &apos;Hello initContainers&apos;   &gt;&gt; /var/log/nginx/message</span><br><span class="line">    State:          Terminated</span><br><span class="line">      Reason:       Completed</span><br><span class="line">      Exit Code:    0</span><br><span class="line">      Started:      Sat, 23 May 2020 22:08:06 +0800</span><br><span class="line">      Finished:     Sat, 23 May 2020 22:08:06 +0800</span><br><span class="line">    Ready:          True</span><br><span class="line">    Restart Count:  0</span><br><span class="line">    Environment:    &lt;none&gt;</span><br><span class="line">    Mounts:</span><br><span class="line">      /var/log/nginx/ from message-log (rw)</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-v48g4 (ro)</span><br><span class="line">Containers:</span><br><span class="line">  lifecycle-demo:</span><br><span class="line">    Container ID:   docker://c07f7f3d838206878ad0bfeaec9b4222ac7d6b13fb758cc1b340ac43e7212a3a</span><br><span class="line">    Image:          registry.cn-beijing.aliyuncs.com/google_registry/nginx:1.17</span><br><span class="line">    Image ID:       docker-pullable://registry.cn-beijing.aliyuncs.com/google_registry/nginx@sha256:7ac7819e1523911399b798309025935a9968b277d86d50e5255465d6592c0266</span><br><span class="line">    Port:           &lt;none&gt;</span><br><span class="line">    Host Port:      &lt;none&gt;</span><br><span class="line">    State:          Running</span><br><span class="line">      Started:      Sat, 23 May 2020 22:08:07 +0800</span><br><span class="line">    Ready:          True</span><br><span class="line">    Restart Count:  0</span><br><span class="line">    Environment:    &lt;none&gt;</span><br><span class="line">    Mounts:</span><br><span class="line">      /var/log/nginx/ from message-log (rw)</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-v48g4 (ro)</span><br><span class="line">Conditions:</span><br><span class="line">  Type              Status</span><br><span class="line">  Initialized       True </span><br><span class="line">  Ready             True </span><br><span class="line">  ContainersReady   True </span><br><span class="line">  PodScheduled      True </span><br><span class="line">Volumes:</span><br><span class="line">  message-log:</span><br><span class="line">    Type:          HostPath (bare host directory volume)</span><br><span class="line">    Path:          /data/volumes/nginx/log/</span><br><span class="line">    HostPathType:  DirectoryOrCreate</span><br><span class="line">  default-token-v48g4:</span><br><span class="line">    Type:        Secret (a volume populated by a Secret)</span><br><span class="line">    SecretName:  default-token-v48g4</span><br><span class="line">    Optional:    false</span><br><span class="line">QoS Class:       BestEffort</span><br><span class="line">Node-Selectors:  &lt;none&gt;</span><br><span class="line">Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s</span><br><span class="line">                 node.kubernetes.io/unreachable:NoExecute for 300s</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason     Age        From                 Message</span><br><span class="line">  ----    ------     ----       ----                 -------</span><br><span class="line">  Normal  Scheduled  &lt;unknown&gt;  default-scheduler    Successfully assigned default/lifecycle-demo-pod to k8s-node02</span><br><span class="line">  Normal  Pulled     87s        kubelet, k8s-node02  Container image &quot;registry.cn-beijing.aliyuncs.com/google_registry/busybox:1.24&quot; already present on machine</span><br><span class="line">  Normal  Created    87s        kubelet, k8s-node02  Created container init-myservice</span><br><span class="line">  Normal  Started    87s        kubelet, k8s-node02  Started container init-myservice</span><br><span class="line">  Normal  Pulled     86s        kubelet, k8s-node02  Container image &quot;registry.cn-beijing.aliyuncs.com/google_registry/nginx:1.17&quot; already present on machine</span><br><span class="line">  Normal  Created    86s        kubelet, k8s-node02  Created container lifecycle-demo</span><br><span class="line">  Normal  Started    86s        kubelet, k8s-node02  Started container lifecycle-demo</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </article>
+<p>此时在k8s-node02查看输出信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node02 log]# pwd</span><br><span class="line">/data/volumes/nginx/log</span><br><span class="line">[root@k8s-node02 log]# cat message </span><br><span class="line">Hello initContainers</span><br><span class="line">Hello from the postStart handler</span><br></pre></td></tr></table></figure>
 
+<p><font color="red">由上可知，init Container先执行，然后当一个主容器启动后，Kubernetes 将立即发送 postStart 事件。</font></p>
+<p>停止该pod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master lifecycle]# kubectl delete pod lifecycle-demo-pod</span><br><span class="line">pod &quot;lifecycle-demo-pod&quot; deleted</span><br></pre></td></tr></table></figure>
 
-      
-        
+<p>此时在k8s-node02查看输出信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node02 log]# pwd</span><br><span class="line">/data/volumes/nginx/log</span><br><span class="line">[root@k8s-node02 log]# cat message </span><br><span class="line">Hello initContainers</span><br><span class="line">Hello from the postStart handler</span><br><span class="line">Hello from the preStop handler</span><br></pre></td></tr></table></figure>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/08/09/kubernetes05/" itemprop="url">
-              
-                <span itemprop="name">Kubernetes K8S之kubectl命令详解及常用示例</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-08-09T22:51:06+08:00" content="2020-08-09">
-          08-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/08/05/kubernetes04/" itemprop="url">
-              
-                <span itemprop="name">Kubernetes K8S之通过yaml文件创建Pod与Pod常用字段详解</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-08-05T21:55:53+08:00" content="2020-08-05">
-          08-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+<p><font color="red">由上可知，当在容器被终结之前， Kubernetes 将发送一个 preStop 事件。</font></p>
+<p>完毕！</p>
+<hr>
 
       
-        
+    </div>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/08/02/kubernetes03/" itemprop="url">
-              
-                <span itemprop="name">Kubernetes K8S之SSL证书有效期修改</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-08-02T22:55:36+08:00" content="2020-08-02">
-          08-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/29/kubernetes02/" itemprop="url">
-              
-                <span itemprop="name">基于kubeadm快速部署kubernetes K8S V1.17.4集群-无坑完整版</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-07-29T20:55:32+08:00" content="2020-07-29">
-          07-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/27/kubernetes01/" itemprop="url">
-              
-                <span itemprop="name">Kubernetes K8S 基本概述、设计架构和设计理念</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-07-27T23:31:12+08:00" content="2020-07-27">
-          07-27
-        </time>
-      </div>
-
-    </header>
-  </article>
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
 
 
       
     </div>
 
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/08/18/kubernetes08/" title="Kubernetes K8S之Pod 生命周期与postStart、preStop事件">http://www.zhangblog.com/2020/08/18/kubernetes08/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/16/kubernetes07/" rel="next" title="Kubernetes K8S之Pod生命周期与探针检测">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S之Pod生命周期与探针检测
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -528,6 +677,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -548,8 +704,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -652,6 +817,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机配置规划"><span class="nav-number">1.</span> <span class="nav-text">主机配置规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pod容器生命周期"><span class="nav-number">2.</span> <span class="nav-text">Pod容器生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pause容器说明"><span class="nav-number">2.1.</span> <span class="nav-text">Pause容器说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主容器生命周期事件的处理函数"><span class="nav-number">3.</span> <span class="nav-text">主容器生命周期事件的处理函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#postStart-和-preStop-处理函数示例"><span class="nav-number">3.1.</span> <span class="nav-text">postStart 和 preStop 处理函数示例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -848,6 +1029,10 @@ document.write('<script src="' + src + '" id="sozz"><\/script>');
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
