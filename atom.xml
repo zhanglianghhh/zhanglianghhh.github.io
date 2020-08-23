@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-08-18T13:16:06.216Z</updated>
+  <updated>2020-08-23T13:52:01.504Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S之资源控制器RC、RS、Deployment详解</title>
+    <link href="http://www.zhangblog.com/2020/08/23/kubernetes09/"/>
+    <id>http://www.zhangblog.com/2020/08/23/kubernetes09/</id>
+    <published>2020-08-23T13:50:53.000Z</published>
+    <updated>2020-08-23T13:52:01.504Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S之Pod 生命周期与postStart、preStop事件</title>
@@ -644,40 +680,6 @@
 &lt;p&gt;如何在Vmware克隆一个虚拟机，并修改哪些配置。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1
-        
-      
-    
-    </summary>
-    
-      <category term="VMware" scheme="http://www.zhangblog.com/categories/VMware/"/>
-    
-      <category term="虚拟机" scheme="http://www.zhangblog.com/categories/VMware/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
-    
-      <category term="VMware" scheme="http://www.zhangblog.com/tags/VMware/"/>
-    
-      <category term="Linux" scheme="http://www.zhangblog.com/tags/Linux/"/>
-    
-      <category term="虚拟机" scheme="http://www.zhangblog.com/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>VMware安装Linux CentOS 7.7系统</title>
-    <link href="http://www.zhangblog.com/2020/03/15/VMware-02/"/>
-    <id>http://www.zhangblog.com/2020/03/15/VMware-02/</id>
-    <published>2020-03-15T09:20:55.000Z</published>
-    <updated>2020-03-15T10:14:44.321Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/VMware/VMware-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;如何在Vmware安装Linux CentOS
         
       
     
