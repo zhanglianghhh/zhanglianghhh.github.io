@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,Next,">
+  <meta name="keywords" content="Docker,Kubernetes,K8S,CI/CD,DevOps,">
 
 
 
@@ -83,20 +83,20 @@
 
 
 
-<meta name="description" content="前言上两张文章，我们说了 hexo 部署、主题的切换、博文的创建、MarkDown 简单使用和 hexo 部署到 GitHub Pages。 也说了我们会使用 next 主题做为我们后期博客的使用和维护。但是该主题的原生态，可能或多或少不满足我们当前的需求，因此需要我们对其进行优化，达到我们想要的效果。 因此这篇文章和下篇文章主要就是针对主题的优化进行书写的。 注意事项 1、优化完毕或者新建博客">
-<meta name="keywords" content="Hexo,Next">
+<meta name="description" content="Kubernetes的资源控制器StatefulSet详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
+<meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux下使用 github+hexo 搭建个人博客03-hexo配置优化">
-<meta property="og:url" content="http://www.zhangblog.com/2019/06/14/hexo03/index.html">
+<meta property="og:title" content="Kubernetes K8S之资源控制器StatefulSets详解">
+<meta property="og:url" content="http://www.zhangblog.com/2020/08/26/kubernetes10/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="前言上两张文章，我们说了 hexo 部署、主题的切换、博文的创建、MarkDown 简单使用和 hexo 部署到 GitHub Pages。 也说了我们会使用 next 主题做为我们后期博客的使用和维护。但是该主题的原生态，可能或多或少不满足我们当前的需求，因此需要我们对其进行优化，达到我们想要的效果。 因此这篇文章和下篇文章主要就是针对主题的优化进行书写的。 注意事项 1、优化完毕或者新建博客">
+<meta property="og:description" content="Kubernetes的资源控制器StatefulSet详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/hexo/03.jpg">
-<meta property="og:updated_time" content="2019-07-25T08:27:38.662Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+<meta property="og:updated_time" content="2020-08-26T15:19:08.206Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux下使用 github+hexo 搭建个人博客03-hexo配置优化">
-<meta name="twitter:description" content="前言上两张文章，我们说了 hexo 部署、主题的切换、博文的创建、MarkDown 简单使用和 hexo 部署到 GitHub Pages。 也说了我们会使用 next 主题做为我们后期博客的使用和维护。但是该主题的原生态，可能或多或少不满足我们当前的需求，因此需要我们对其进行优化，达到我们想要的效果。 因此这篇文章和下篇文章主要就是针对主题的优化进行书写的。 注意事项 1、优化完毕或者新建博客">
-<meta name="twitter:image" content="http://www.zhangblog.com/uploads/hexo/03.jpg">
+<meta name="twitter:title" content="Kubernetes K8S之资源控制器StatefulSets详解">
+<meta name="twitter:description" content="Kubernetes的资源控制器StatefulSet详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
 
 
 
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/2019/06/14/hexo03/">
+  <link rel="canonical" href="http://www.zhangblog.com/2020/08/26/kubernetes10/">
 
 
 
 
 
-  <title>Linux下使用 github+hexo 搭建个人博客03-hexo配置优化 | lightzhang博客</title>
+  <title>Kubernetes K8S之资源控制器StatefulSets详解 | lightzhang博客</title>
   
 
 
@@ -311,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/06/14/hexo03/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/08/26/kubernetes10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lightzhang">
@@ -328,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux下使用 github+hexo 搭建个人博客03-hexo配置优化</h1>
+          <h1 class="post-title" itemprop="name headline">Kubernetes K8S之资源控制器StatefulSets详解</h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-14T14:27:14+08:00">
-                2019-06-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-26T23:17:59+08:00">
+                2020-08-26
               </time>
             
 
@@ -364,8 +364,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/K8S/" itemprop="url" rel="index">
+                    <span itemprop="name">K8S</span>
                   </a>
                 </span>
 
@@ -382,8 +393,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/06/14/hexo03/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/14/hexo03/" itemprop="commentCount"></span>
+                <a href="/2020/08/26/kubernetes10/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/08/26/kubernetes10/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -391,7 +402,7 @@
 
           
           
-             <span id="/2019/06/14/hexo03/" class="leancloud_visitors" data-flag-title="Linux下使用 github+hexo 搭建个人博客03-hexo配置优化">
+             <span id="/2020/08/26/kubernetes10/" class="leancloud_visitors" data-flag-title="Kubernetes K8S之资源控制器StatefulSets详解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -416,7 +427,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  2.1k
                 </span>
               
 
@@ -432,7 +443,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  9
                 </span>
               
             </div>
@@ -453,49 +464,110 @@
       
 
       
-        <p><img src="/uploads/hexo/03.jpg" alt="image"></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上两张文章，我们说了 hexo 部署、主题的切换、博文的创建、MarkDown 简单使用和 hexo 部署到 GitHub Pages。</p>
-<p>也说了我们会使用 next 主题做为我们后期博客的使用和维护。但是该主题的原生态，可能或多或少不满足我们当前的需求，因此需要我们对其进行优化，达到我们想要的效果。</p>
-<p>因此这篇文章和下篇文章主要就是针对主题的优化进行书写的。</p>
-<p><strong>注意事项</strong></p>
-<p>1、优化完毕或者新建博客后需要 hexo g 生成静态文件；</p>
-<p>2、然后重新启动服务，使用命令 hexo s -p 80 </p>
-<p>3、浏览器查看没有问题后，部署到 GitHub，使用命令：hexo d</p>
-<h1 id="hexo-的-config-yml优化"><a href="#hexo-的-config-yml优化" class="headerlink" title="hexo 的 _config.yml优化"></a>hexo 的 _config.yml优化</h1><p><strong>官网地址</strong></p>
+        <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
 <blockquote>
-<p><a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/configuration.html</a></p>
+<p>Kubernetes的资源控制器StatefulSet详解与示例</p>
 </blockquote>
-<h2 id="网站设置部分"><a href="#网站设置部分" class="headerlink" title="网站设置部分"></a>网站设置部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml </span><br><span class="line"># Site</span><br><span class="line">title: lightzhang博客</span><br><span class="line">subtitle:</span><br><span class="line">description: lightzhang博客，不止于技术，更记录人生点滴感悟。</span><br><span class="line">keywords:</span><br><span class="line">author: lightzhang</span><br><span class="line">language:</span><br><span class="line">timezone:</span><br></pre></td></tr></table></figure>
+<h1 id="主机配置规划"><a href="#主机配置规划" class="headerlink" title="主机配置规划"></a>主机配置规划</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>系统版本</th>
+<th>配置</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.110</td>
+<td>10.0.0.110</td>
+</tr>
+<tr>
+<td>k8s-node01</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.111</td>
+<td>10.0.0.111</td>
+</tr>
+<tr>
+<td>k8s-node02</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.112</td>
+<td>10.0.0.112</td>
+</tr>
+</tbody></table>
+<h1 id="什么是控制器"><a href="#什么是控制器" class="headerlink" title="什么是控制器"></a>什么是控制器</h1><p>kubernetes中内建了很多controller（控制器），这些相当于一个状态机，用来控制pod的具体状态和行为。</p>
+<div style="font-size:17px"><b>部分控制器类型如下：</b></div>
 
-<p>title     网站标题，需要填写<br>subtitle    网站副标题<br>description    网站描述，主要用于SEO，告诉搜索引擎一个关于您站点的简单描述，通常建议在其中包含您网站的关键词。<br>author    您的名字，用于主题显示文章的作者。<br>language     网站使用的语言<br>timezone     网站时区。Hexo 默认使用您电脑的时区。</p>
-<h2 id="网址设置部分"><a href="#网址设置部分" class="headerlink" title="网址设置部分"></a>网址设置部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml </span><br><span class="line"># URL</span><br><span class="line">## If your site is put in a subdirectory, set url as &apos;http://yoursite.com/child&apos; and root as &apos;/child/&apos;</span><br><span class="line">url: http://www.zhangblog.com</span><br><span class="line">root: /</span><br><span class="line">permalink: :year/:month/:day/:title/</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ReplicationController 和 ReplicaSet</li>
+<li>Deployment</li>
+<li>DaemonSet</li>
+<li>StatefulSet</li>
+<li>Job/CronJob</li>
+<li>HorizontalPodAutoscaler</li>
+</ul>
+<h1 id="StatefulSet"><a href="#StatefulSet" class="headerlink" title="StatefulSet"></a>StatefulSet</h1><p>StatefulSet 是用来管理有状态应用的工作负载 API 对象。</p>
+<p>StatefulSet 中的 Pod 拥有一个具有黏性的、独一无二的身份标识。这个标识基于 StatefulSet 控制器分配给每个 Pod 的唯一顺序索引。<font color="red">Pod 的名称的形式为<statefulset name>-<ordinal index> </ordinal></statefulset></font>。例如：web的StatefulSet 拥有两个副本，所以它创建了两个 Pod：web-0和web-1。</p>
+<p>和 Deployment 相同的是，StatefulSet 管理了基于相同容器定义的一组 Pod。但和 Deployment 不同的是，StatefulSet 为它们的每个 Pod 维护了一个固定的 ID。这些 Pod 是基于相同的声明来创建的，但是不能相互替换：无论怎么调度，<font color="red">每个 Pod 都有一个永久不变的 ID</font>。</p>
+<p>【使用场景】StatefulSets 对于需要满足以下一个或多个需求的应用程序很有价值：</p>
+<ul>
+<li>稳定的、唯一的网络标识符，即Pod重新调度后其PodName和HostName不变【当然IP是会变的】</li>
+<li>稳定的、持久的存储，即Pod重新调度后还是能访问到相同的持久化数据，基于PVC实现</li>
+<li>有序的、优雅的部署和缩放</li>
+<li>有序的、自动的滚动更新</li>
+</ul>
+<p>如上面，稳定意味着 Pod 调度或重调度的整个过程是有持久性的。</p>
+<p>如果应用程序不需要任何稳定的标识符或有序的部署、删除或伸缩，则应该使用由一组无状态的副本控制器提供的工作负载来部署应用程序，比如使用 Deployment 或者 ReplicaSet 可能更适用于无状态应用部署需要。</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><ul>
+<li>给定 <font color="red">Pod 的存储必须由 PersistentVolume 驱动</font> 基于所请求的 storage class 来提供，或者由管理员预先提供。</li>
+<li>删除或者收缩 StatefulSet 并不会删除它关联的存储卷。这样做是为了保证数据安全，它通常比自动清除 StatefulSet 所有相关的资源更有价值。</li>
+<li><font color="red">StatefulSet 当前需要 headless 服务 来负责 Pod 的网络标识</font>。你需要负责创建此服务。</li>
+<li>当删除 StatefulSets 时，StatefulSet 不提供任何终止 Pod 的保证。为了实现 StatefulSet 中的 Pod 可以有序和优雅的终止，可以在删除之前将 StatefulSet 缩放为 0。</li>
+<li>在默认 Pod 管理策略(OrderedReady) 时使用滚动更新，可能进入需要人工干预才能修复的损坏状态。</li>
+</ul>
+<h2 id="有序索引"><a href="#有序索引" class="headerlink" title="有序索引"></a>有序索引</h2><p>对于具有 N 个副本的 StatefulSet，StatefulSet 中的每个 Pod 将被分配一个整数序号，从 0 到 N-1，该序号在 StatefulSet 上是唯一的。</p>
+<p>StatefulSet 中的每个 Pod 根据 StatefulSet 中的名称和 Pod 的序号来派生出它的主机名。组合主机名的格式为$(StatefulSet 名称)-$(序号)。</p>
+<h2 id="部署和扩缩保证"><a href="#部署和扩缩保证" class="headerlink" title="部署和扩缩保证"></a>部署和扩缩保证</h2><ul>
+<li>对于包含 N 个 副本的 StatefulSet，当部署 Pod 时，它们是依次创建的，顺序为 0~(N-1)。</li>
+<li>当删除 Pod 时，它们是逆序终止的，顺序为 (N-1)~0。</li>
+<li>在将缩放操作应用到 Pod 之前，它前面的所有 Pod 必须是 Running 和 Ready 状态。</li>
+<li>在 Pod 终止之前，所有的继任者必须完全关闭。</li>
+</ul>
+<p>StatefulSet 不应将 pod.Spec.TerminationGracePeriodSeconds 设置为 0。这种做法是不安全的，要强烈阻止。</p>
+<div style="font-size:17px"><b>部署顺序</b></div>
 
-<p>url       网址<br>root       网站根目录<br>permalink    文章的永久链接格式    默认格式 :year/:month/:day/:title/<br>permalink_defaults    永久链接中各部分的默认值</p>
-<p><strong>网站存放在子目录</strong><br>如果您的网站存放在子目录中，例如 <a href="http://yoursite.com/blog，则请将您的" target="_blank" rel="noopener">http://yoursite.com/blog，则请将您的</a> url 设为 <a href="http://yoursite.com/blog" target="_blank" rel="noopener">http://yoursite.com/blog</a> 并把 root 设为 /blog/。</p>
-<h2 id="目录设置部分"><a href="#目录设置部分" class="headerlink" title="目录设置部分"></a>目录设置部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml</span><br><span class="line"># Directory</span><br><span class="line">source_dir: source</span><br><span class="line">public_dir: public</span><br><span class="line">tag_dir: tags</span><br><span class="line">archive_dir: archives</span><br><span class="line">category_dir: categories</span><br><span class="line">code_dir: downloads/code</span><br><span class="line">i18n_dir: :lang</span><br><span class="line">skip_render:</span><br></pre></td></tr></table></figure>
+<p>在下面的 nginx 示例被创建后，会按照 web-0、web-1、web-2 的顺序部署三个 Pod。在 web-0 进入 Running 和 Ready 状态前不会部署 web-1。在 web-1 进入 Running 和 Ready 状态前不会部署 web-2。</p>
+<p>如果 web-1 已经处于 Running 和 Ready 状态，而 web-2 尚未部署，在此期间发生了 web-0 运行失败，那么 web-2 将不会被部署，要等到 web-0 部署完成并进入 Running 和 Ready 状态后，才会部署 web-2。</p>
+<div style="font-size:17px"><b>收缩顺序</b></div>
 
-<p>目录一般不需要修改。<br>source_dir   资源文件夹，这个文件夹用来存放内容。默认：source<br>public_dir   公共文件夹，这个文件夹用于存放生成的站点文件。默认：public<br>tag_dir      标签文件夹。默认：tags<br>archive_dir   归档文件夹。默认：archives<br>category_dir  分类文件夹。默认：categories<br>code_dir     Include code 文件夹    downloads/code<br>i18n_dir     国际化（i18n）文件夹。默认  :lang<br>skip_render  跳过指定文件的渲染</p>
-<h2 id="文章设置部分"><a href="#文章设置部分" class="headerlink" title="文章设置部分"></a>文章设置部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml</span><br><span class="line"># Writing</span><br><span class="line">new_post_name: :title.md # File name of new posts</span><br><span class="line">default_layout: post</span><br><span class="line">titlecase: false # Transform title into titlecase</span><br><span class="line">external_link: true # Open external links in new tab</span><br><span class="line">filename_case: 0</span><br><span class="line">render_drafts: false</span><br><span class="line">post_asset_folder: false</span><br><span class="line">relative_link: false</span><br><span class="line">future: true</span><br><span class="line">highlight:</span><br><span class="line">  enable: true</span><br><span class="line">  line_number: true</span><br><span class="line">  auto_detect: false</span><br><span class="line">  tab_replace:</span><br></pre></td></tr></table></figure>
+<p>如果想将示例中的 StatefulSet 收缩为 replicas=1，首先被终止的是 web-2。在 web-2 没有被完全停止和删除前，web-1 不会被终止。当 web-2 已被终止和删除；但web-1 尚未被终止，如果在此期间发生 web-0 运行失败，那么就不会终止 web-1，必须等到 web-0 进入 Running 和 Ready 状态后才会终止 web-1。</p>
+<h1 id="StatefulSet示例"><a href="#StatefulSet示例" class="headerlink" title="StatefulSet示例"></a>StatefulSet示例</h1><p><font color="red">说明：本次示例不涉及存储，StatefulSet的存储示例会在「Kubernetes K8S之存储PV-PVC详解」文章中演示。</font></p>
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master controller]# pwd</span><br><span class="line">/root/k8s_practice/controller</span><br><span class="line">[root@k8s-master controller]# cat statefulset.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx</span><br><span class="line">  labels:</span><br><span class="line">    app: nginx</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80</span><br><span class="line">    name: http</span><br><span class="line">  clusterIP: None</span><br><span class="line">  selector:</span><br><span class="line">    app: nginx</span><br><span class="line">---</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: StatefulSet</span><br><span class="line">metadata:</span><br><span class="line">  name: web</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: nginx # has to match .spec.template.metadata.labels</span><br><span class="line">  serviceName: &quot;nginx&quot;</span><br><span class="line">  replicas: 3 # by default is 1</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: nginx # has to match .spec.selector.matchLabels</span><br><span class="line">    spec:</span><br><span class="line">      terminationGracePeriodSeconds: 10   # 默认30秒</span><br><span class="line">      containers:</span><br><span class="line">      - name: nginx</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/nginx:1.17</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 80</span><br><span class="line">          name: http</span><br></pre></td></tr></table></figure>
 
-<p>一般不用修改<br>new_post_name  新文章的文件名称。默认  :title.md<br>default_layout   预设布局，默认  post<br>auto_spacing    在中文和英文之间加入空格，默认  false<br>titlecase        把标题转换为 title case，默认  false<br>external_link    在新标签中打开链接，默认  true<br>filename_case   把文件名称转换为 (1) 小写或 (2) 大写，默认  0<br>render_drafts    显示草稿，默认  false<br>post_asset_folder 启动 Asset 文件夹，默认  false<br>relative_link     把链接改为与根目录的相对位址，默认  false<br>future          显示未来的文章，默认  true<br>highlight       代码块的设置</p>
-<h2 id="分页设置部分"><a href="#分页设置部分" class="headerlink" title="分页设置部分"></a>分页设置部分</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml </span><br><span class="line"># Pagination</span><br><span class="line">## Set per_page to 0 to disable pagination</span><br><span class="line">per_page: 10</span><br><span class="line">pagination_dir: page</span><br></pre></td></tr></table></figure>
+<p>启动StatefulSet和Service，并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master controller]# kubectl apply -f statefulset.yaml </span><br><span class="line">service/nginx created</span><br><span class="line">statefulset.apps/web created</span><br><span class="line">[root@k8s-master controller]# kubectl get service -o wide</span><br><span class="line">NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE   SELECTOR</span><br><span class="line">kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   17d   &lt;none&gt;</span><br><span class="line">nginx        ClusterIP   None         &lt;none&gt;        80/TCP    87s   app=nginx</span><br><span class="line">[root@k8s-master controller]# </span><br><span class="line">[root@k8s-master controller]# kubectl get statefulset -o wide</span><br><span class="line">NAME   READY   AGE   CONTAINERS   IMAGES</span><br><span class="line">web    3/3     15m   nginx        registry.cn-beijing.aliyuncs.com/google_registry/nginx:1.17</span><br><span class="line">[root@k8s-master controller]# </span><br><span class="line">[root@k8s-master controller]# kubectl get pod -o wide</span><br><span class="line">NAME    READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">web-0   1/1     Running   0          16m   10.244.2.95    k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">web-1   1/1     Running   0          16m   10.244.3.103   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">web-2   1/1     Running   0          16m   10.244.3.104   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
 
-<p>per_page    每页显示的文章量 (0 = 关闭分页功能)，默认  10<br>pagination_dir  分页目录，默认  page</p>
-<h2 id="扩展部分设置"><a href="#扩展部分设置" class="headerlink" title="扩展部分设置"></a>扩展部分设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml </span><br><span class="line"># Extensions</span><br><span class="line"># 使用主题</span><br><span class="line">theme: next</span><br></pre></td></tr></table></figure>
+<p><font color="red">由上可见，StatefulSet 中的pod是有序的。有N个副本，那么序列号为0~(N-1)。</font></p>
+<h1 id="查看StatefulSet相关的域名信息"><a href="#查看StatefulSet相关的域名信息" class="headerlink" title="查看StatefulSet相关的域名信息"></a>查看StatefulSet相关的域名信息</h1><p>启动一个pod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master test]# pwd</span><br><span class="line">/root/k8s_practice/test</span><br><span class="line">[root@k8s-master test]# cat myapp_demo.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-demo</span><br><span class="line">  namespace: default</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: myapp</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: myapp</span><br><span class="line">    image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">    imagePullPolicy: IfNotPresent</span><br><span class="line">    ports:</span><br><span class="line">    - name: httpd</span><br><span class="line">      containerPort: 80</span><br><span class="line">      protocol: TCP</span><br><span class="line">[root@k8s-master test]# </span><br><span class="line">[root@k8s-master test]# kubectl apply -f myapp_demo.yaml</span><br><span class="line">pod/myapp-demo created</span><br><span class="line">[root@k8s-master test]# </span><br><span class="line">[root@k8s-master test]# kubectl get pod -o wide | grep &apos;myapp&apos;</span><br><span class="line">myapp-demo   1/1     Running   0          3m24s   10.244.2.101   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
 
-<p>theme  当前使用主题名称。值为false时禁用主题</p>
-<h2 id="部署部分设置"><a href="#部署部分设置" class="headerlink" title="部署部分设置"></a>部署部分设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@zhangblog hexo]# vim _config.yml</span><br><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:zhanglianghhh/zhanglianghhh.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+<p>进入pod并查看StatefulSet域名信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># 进入一个k8s管理的myapp镜像容器。</span><br><span class="line">[root@k8s-master test]# kubectl exec -it myapp-demo sh</span><br><span class="line">/ # nslookup 10.244.2.95</span><br><span class="line">nslookup: can&apos;t resolve &apos;(null)&apos;: Name does not resolve</span><br><span class="line"></span><br><span class="line">Name:      10.244.2.95</span><br><span class="line">Address 1: 10.244.2.95 web-0.nginx.default.svc.cluster.local</span><br><span class="line">/ # </span><br><span class="line">/ # </span><br><span class="line">/ # nslookup 10.244.3.103</span><br><span class="line">nslookup: can&apos;t resolve &apos;(null)&apos;: Name does not resolve</span><br><span class="line"></span><br><span class="line">Name:      10.244.3.103</span><br><span class="line">Address 1: 10.244.3.103 web-1.nginx.default.svc.cluster.local</span><br><span class="line">/ # </span><br><span class="line">/ # </span><br><span class="line">/ # nslookup 10.244.3.104</span><br><span class="line">nslookup: can&apos;t resolve &apos;(null)&apos;: Name does not resolve</span><br><span class="line"></span><br><span class="line">Name:      10.244.3.104</span><br><span class="line">Address 1: 10.244.3.104 web-2.nginx.default.svc.cluster.local</span><br><span class="line">/ # </span><br><span class="line">/ # </span><br><span class="line">##### nginx.default.svc.cluster.local   为service的域名信息</span><br><span class="line">/ # nslookup nginx.default.svc.cluster.local</span><br><span class="line">nslookup: can&apos;t resolve &apos;(null)&apos;: Name does not resolve</span><br><span class="line"></span><br><span class="line">Name:      nginx.default.svc.cluster.local</span><br><span class="line">Address 1: 10.244.3.104 web-2.nginx.default.svc.cluster.local</span><br><span class="line">Address 2: 10.244.3.103 web-1.nginx.default.svc.cluster.local</span><br><span class="line">Address 3: 10.244.2.95 web-0.nginx.default.svc.cluster.local</span><br></pre></td></tr></table></figure>
 
-<p>deploy    部署部分的设置</p>
-<br>
-
-<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p><b><a href="http://www.zhangblog.com/2019/06/11/hexo01/">Linux下使用 github+hexo 搭建个人博客01-hexo搭建</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/12/hexo02/">Linux下使用 github+hexo 搭建个人博客02-hexo部署到Github Pages</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/14/hexo03/">Linux下使用 github+hexo 搭建个人博客03-hexo配置优化</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo04/">Linux下使用 github+hexo 搭建个人博客04-next主题优化</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo05/">Linux下使用 github+hexo 搭建个人博客05-next主题接入评论系统</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/16/hexo06/">Linux下使用 github+hexo 搭建个人博客06-next主题接入数据统计</a></b></p>
-<p><b><a href="http://www.zhangblog.com/2019/06/17/hexo07/">Linux下使用 github+hexo 搭建个人博客07-next主题接入搜索和站点管理</a></b></p>
+<h1 id="StatefulSet网络标识与PVC"><a href="#StatefulSet网络标识与PVC" class="headerlink" title="StatefulSet网络标识与PVC"></a>StatefulSet网络标识与PVC</h1><p>有上文可得如下信息：</p>
+<p>1、匹配StatefulSet的<font color="red">Pod name(网络标识)</font>的模式为：$(statefulset名称)-$(序号)，比如StatefulSet名称为web，副本数为3。则为：web-0、web-1、web-2</p>
+<p>2、StatefulSet<font color="red">为每个Pod副本创建了一个DNS域名</font>，这个域名的格式为：$(podname).(headless service name)，也就意味着服务之间是通过Pod域名来通信而非Pod IP。当Pod所在Node发生故障时，Pod会被漂移到其他Node上，Pod IP会发生改变，但Pod域名不会变化</p>
+<p>3、StatefulSet使用<font color="red">Headless服务来控制Pod的域名</font>，这个Headless服务域名的为：$(service name).$(namespace).svc.cluster.local，其中 cluster.local 指定的集群的域名</p>
+<p>4、根据volumeClaimTemplates，为每个Pod创建一个PVC，PVC的命令规则为：$(volumeClaimTemplates name)-$(pod name)，比如volumeClaimTemplates为www，pod name为web-0、web-1、web-2；那么创建出来的PVC为：www-web-0、www-web-1、www-web-2</p>
+<p>5、删除Pod不会删除对应的PVC，手动删除PVC将自动释放PV。</p>
+<h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="http://www.zhangblog.com/2020/08/23/kubernetes09/">Kubernetes K8S之资源控制器RC、RS、Deployment详解</a></p>
+<p>完毕！</p>
 <hr>
 
       
@@ -569,7 +641,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangblog.com/2019/06/14/hexo03/" title="Linux下使用 github+hexo 搭建个人博客03-hexo配置优化">http://www.zhangblog.com/2019/06/14/hexo03/</a>
+    <a href="http://www.zhangblog.com/2020/08/26/kubernetes10/" title="Kubernetes K8S之资源控制器StatefulSets详解">http://www.zhangblog.com/2020/08/26/kubernetes10/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -584,9 +656,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
           
-            <a href="/tags/Next/" rel="tag"># Next</a>
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
           
         </div>
       
@@ -599,8 +677,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/12/hexo02/" rel="next" title="Linux下使用 github+hexo 搭建个人博客02-hexo部署到Github Pages">
-                <i class="fa fa-chevron-left"></i> Linux下使用 github+hexo 搭建个人博客02-hexo部署到Github Pages
+              <a href="/2020/08/23/kubernetes09/" rel="next" title="Kubernetes K8S之资源控制器RC、RS、Deployment详解">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S之资源控制器RC、RS、Deployment详解
               </a>
             
           </div>
@@ -608,10 +686,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/16/hexo04/" rel="prev" title="Linux下使用 github+hexo 搭建个人博客04-next主题优化">
-                Linux下使用 github+hexo 搭建个人博客04-next主题优化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -789,7 +863,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo-的-config-yml优化"><span class="nav-number">2.</span> <span class="nav-text">hexo 的 _config.yml优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网站设置部分"><span class="nav-number">2.1.</span> <span class="nav-text">网站设置部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网址设置部分"><span class="nav-number">2.2.</span> <span class="nav-text">网址设置部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录设置部分"><span class="nav-number">2.3.</span> <span class="nav-text">目录设置部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章设置部分"><span class="nav-number">2.4.</span> <span class="nav-text">文章设置部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页设置部分"><span class="nav-number">2.5.</span> <span class="nav-text">分页设置部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展部分设置"><span class="nav-number">2.6.</span> <span class="nav-text">扩展部分设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署部分设置"><span class="nav-number">2.7.</span> <span class="nav-text">部署部分设置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">3.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机配置规划"><span class="nav-number">1.</span> <span class="nav-text">主机配置规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是控制器"><span class="nav-number">2.</span> <span class="nav-text">什么是控制器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#StatefulSet"><span class="nav-number">3.</span> <span class="nav-text">StatefulSet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#限制"><span class="nav-number">3.1.</span> <span class="nav-text">限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有序索引"><span class="nav-number">3.2.</span> <span class="nav-text">有序索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署和扩缩保证"><span class="nav-number">3.3.</span> <span class="nav-text">部署和扩缩保证</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#StatefulSet示例"><span class="nav-number">4.</span> <span class="nav-text">StatefulSet示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看StatefulSet相关的域名信息"><span class="nav-number">5.</span> <span class="nav-text">查看StatefulSet相关的域名信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#StatefulSet网络标识与PVC"><span class="nav-number">6.</span> <span class="nav-text">StatefulSet网络标识与PVC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读"><span class="nav-number">7.</span> <span class="nav-text">相关阅读</span></a></li></ol></div>
             
 
           </div>
