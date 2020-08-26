@@ -92,7 +92,7 @@
 <meta property="og:description" content="Kubernetes的资源控制器StatefulSet详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
-<meta property="og:updated_time" content="2020-08-26T15:19:08.206Z">
+<meta property="og:updated_time" content="2020-08-26T15:32:00.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes K8S之资源控制器StatefulSets详解">
 <meta name="twitter:description" content="Kubernetes的资源控制器StatefulSet详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
@@ -512,7 +512,7 @@
 <li>HorizontalPodAutoscaler</li>
 </ul>
 <h1 id="StatefulSet"><a href="#StatefulSet" class="headerlink" title="StatefulSet"></a>StatefulSet</h1><p>StatefulSet 是用来管理有状态应用的工作负载 API 对象。</p>
-<p>StatefulSet 中的 Pod 拥有一个具有黏性的、独一无二的身份标识。这个标识基于 StatefulSet 控制器分配给每个 Pod 的唯一顺序索引。<font color="red">Pod 的名称的形式为<statefulset name>-<ordinal index> </ordinal></statefulset></font>。例如：web的StatefulSet 拥有两个副本，所以它创建了两个 Pod：web-0和web-1。</p>
+<p>StatefulSet 中的 Pod 拥有一个具有黏性的、独一无二的身份标识。这个标识基于 StatefulSet 控制器分配给每个 Pod 的唯一顺序索引。<font color="red">Pod 的名称的形式为&lt;statefulset name&gt;-&lt;ordinal index&gt; </font>。例如：web的StatefulSet 拥有两个副本，所以它创建了两个 Pod：web-0和web-1。</p>
 <p>和 Deployment 相同的是，StatefulSet 管理了基于相同容器定义的一组 Pod。但和 Deployment 不同的是，StatefulSet 为它们的每个 Pod 维护了一个固定的 ID。这些 Pod 是基于相同的声明来创建的，但是不能相互替换：无论怎么调度，<font color="red">每个 Pod 都有一个永久不变的 ID</font>。</p>
 <p>【使用场景】StatefulSets 对于需要满足以下一个或多个需求的应用程序很有价值：</p>
 <ul>
