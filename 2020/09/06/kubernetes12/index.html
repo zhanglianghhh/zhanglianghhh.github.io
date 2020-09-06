@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="SLB,">
+  <meta name="keywords" content="Docker,Kubernetes,K8S,CI/CD,DevOps,">
 
 
 
@@ -83,25 +83,20 @@
 
 
 
-<meta name="description" content="文章转载自微信公众号：「架构师之路」，作者： 58沈剑  什么是负载均衡？负载均衡（Load Balance）是分布式系统架构设计中必须考虑的因素之一，它通常是指，将请求/数据均匀分摊到多个操作单元上执行，负载均衡的关键在于均匀。 常见的负载均衡方案有哪些？ 常见互联网分布式架构如上，分为：  客户端层 反向代理层 站点层 服务层 数据层  可以看到，每一个下游都有多个上游调用，只需要做到，每一">
-<meta name="keywords" content="SLB">
+<meta name="description" content="Kubernetes的资源控制器Job和CronJob详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
+<meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
 <meta property="og:type" content="article">
-<meta property="og:title" content="负载均衡，必须要知道的 5 件事">
-<meta property="og:url" content="http://www.zhangblog.com/2019/08/12/slb01/index.html">
+<meta property="og:title" content="Kubernetes K8S之资源控制器Job和CronJob详解">
+<meta property="og:url" content="http://www.zhangblog.com/2020/09/06/kubernetes12/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="文章转载自微信公众号：「架构师之路」，作者： 58沈剑  什么是负载均衡？负载均衡（Load Balance）是分布式系统架构设计中必须考虑的因素之一，它通常是指，将请求/数据均匀分摊到多个操作单元上执行，负载均衡的关键在于均匀。 常见的负载均衡方案有哪些？ 常见互联网分布式架构如上，分为：  客户端层 反向代理层 站点层 服务层 数据层  可以看到，每一个下游都有多个上游调用，只需要做到，每一">
+<meta property="og:description" content="Kubernetes的资源控制器Job和CronJob详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-01.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-02.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-03.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-04.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-05.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/SLB/slb-06.png">
-<meta property="og:updated_time" content="2019-08-12T02:54:20.820Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+<meta property="og:updated_time" content="2020-09-06T12:01:03.627Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="负载均衡，必须要知道的 5 件事">
-<meta name="twitter:description" content="文章转载自微信公众号：「架构师之路」，作者： 58沈剑  什么是负载均衡？负载均衡（Load Balance）是分布式系统架构设计中必须考虑的因素之一，它通常是指，将请求/数据均匀分摊到多个操作单元上执行，负载均衡的关键在于均匀。 常见的负载均衡方案有哪些？ 常见互联网分布式架构如上，分为：  客户端层 反向代理层 站点层 服务层 数据层  可以看到，每一个下游都有多个上游调用，只需要做到，每一">
-<meta name="twitter:image" content="http://www.zhangblog.com/uploads/SLB/slb-01.png">
+<meta name="twitter:title" content="Kubernetes K8S之资源控制器Job和CronJob详解">
+<meta name="twitter:description" content="Kubernetes的资源控制器Job和CronJob详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
 
 
 
@@ -131,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/2019/08/12/slb01/">
+  <link rel="canonical" href="http://www.zhangblog.com/2020/09/06/kubernetes12/">
 
 
 
 
 
-  <title>负载均衡，必须要知道的 5 件事 | lightzhang博客</title>
+  <title>Kubernetes K8S之资源控制器Job和CronJob详解 | lightzhang博客</title>
   
 
 
@@ -316,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2019/08/12/slb01/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/09/06/kubernetes12/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lightzhang">
@@ -333,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">负载均衡，必须要知道的 5 件事</h1>
+          <h1 class="post-title" itemprop="name headline">Kubernetes K8S之资源控制器Job和CronJob详解</h1>
         
 
         <div class="post-meta">
@@ -345,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-12T10:38:59+08:00">
-                2019-08-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-06T19:57:58+08:00">
+                2020-09-06
               </time>
             
 
@@ -369,8 +364,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SLB/" itemprop="url" rel="index">
-                    <span itemprop="name">SLB</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/K8S/" itemprop="url" rel="index">
+                    <span itemprop="name">K8S</span>
                   </a>
                 </span>
 
@@ -387,8 +393,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/08/12/slb01/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/12/slb01/" itemprop="commentCount"></span>
+                <a href="/2020/09/06/kubernetes12/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/09/06/kubernetes12/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,7 +402,7 @@
 
           
           
-             <span id="/2019/08/12/slb01/" class="leancloud_visitors" data-flag-title="负载均衡，必须要知道的 5 件事">
+             <span id="/2020/09/06/kubernetes12/" class="leancloud_visitors" data-flag-title="Kubernetes K8S之资源控制器Job和CronJob详解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -421,7 +427,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  2.7k
                 </span>
               
 
@@ -437,7 +443,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  13
                 </span>
               
             </div>
@@ -458,88 +464,120 @@
       
 
       
-        <blockquote>
-<p>文章转载自微信公众号：「架构师之路」，作者： 58沈剑</p>
+        <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
+<blockquote>
+<p>Kubernetes的资源控制器Job和CronJob详解与示例</p>
 </blockquote>
-<h1 id="什么是负载均衡？"><a href="#什么是负载均衡？" class="headerlink" title="什么是负载均衡？"></a>什么是负载均衡？</h1><p>负载均衡（Load Balance）是分布式系统架构设计中必须考虑的因素之一，它通常是指，将<font color="red">请求/数据均匀分摊</font>到多个操作单元上执行，负载均衡的关键在于<font color="red">均匀</font>。</p>
-<h2 id="常见的负载均衡方案有哪些？"><a href="#常见的负载均衡方案有哪些？" class="headerlink" title="常见的负载均衡方案有哪些？"></a>常见的负载均衡方案有哪些？</h2><p><img src="/uploads/SLB/slb-01.png" alt="image"></p>
-<p><b>常见互联网分布式架构如上，分为：</b></p>
-<ul>
-<li>客户端层</li>
-<li>反向代理层</li>
-<li>站点层</li>
-<li>服务层</li>
-<li>数据层</li>
-</ul>
-<p>可以看到，<font color="red">每一个下游都有多个上游调用</font>，只需要做到，<font color="red">每一个上游都均匀访问每一个下游</font>，就能实现整体的<font color="red">均匀分摊</font>。</p>
-<br>
+<h1 id="主机配置规划"><a href="#主机配置规划" class="headerlink" title="主机配置规划"></a>主机配置规划</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>系统版本</th>
+<th>配置</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.110</td>
+<td>10.0.0.110</td>
+</tr>
+<tr>
+<td>k8s-node01</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.111</td>
+<td>10.0.0.111</td>
+</tr>
+<tr>
+<td>k8s-node02</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.112</td>
+<td>10.0.0.112</td>
+</tr>
+</tbody></table>
+<h1 id="什么是控制器"><a href="#什么是控制器" class="headerlink" title="什么是控制器"></a>什么是控制器</h1><p>kubernetes中内建了很多controller（控制器），这些相当于一个状态机，用来控制pod的具体状态和行为。</p>
+<div style="font-size:17px"><b>部分控制器类型如下：</b></div>
 
-<h1 id="第一层：客户端层到反向代理层"><a href="#第一层：客户端层到反向代理层" class="headerlink" title="第一层：客户端层到反向代理层"></a>第一层：客户端层到反向代理层</h1><p><img src="/uploads/SLB/slb-02.png" alt="image"></p>
-<p>客户端层到反向代理层的负载均衡，是通过“<font color="red">DNS轮询</font>”实现的。</p>
-<p>DNS-server 对于一个域名配置了多个解析 ip，每次 DNS 解析请求来访问 DNS-server，会轮询返回这些 ip，保证每个 ip 的解析概率是相同的。这些 ip 就是 nginx 的外网 ip，以做到每台 nginx 的请求分配也是均衡的。</p>
-<br>
+<ul>
+<li>ReplicationController 和 ReplicaSet</li>
+<li>Deployment</li>
+<li>DaemonSet</li>
+<li>StatefulSet</li>
+<li>Job/CronJob</li>
+<li>HorizontalPodAutoscaler</li>
+</ul>
+<h1 id="Job"><a href="#Job" class="headerlink" title="Job"></a>Job</h1><p><font color="red">负责批处理任务</font></p>
+<p>Job创建一个或多个Pod，并确保指定数量的Pod成功终止。Pod成功完成后，Job将跟踪成功完成的情况。当达到指定的成功完成次数时，任务（即Job）就完成了。删除Job将清除其创建的Pod。</p>
+<p>一个简单的情况是创建一个Job对象，以便可靠地运行一个Pod来完成。如果第一个Pod发生故障或被删除（例如，由于节点硬件故障或节点重启），则Job对象将启动一个新的Pod。</p>
+<p>当然还可以使用Job并行运行多个Pod。</p>
+<h2 id="Job终止和清理"><a href="#Job终止和清理" class="headerlink" title="Job终止和清理"></a>Job终止和清理</h2><p>Job完成后，不会再创建其他Pod，但是Pod也不会被删除。这样使我们仍然可以查看已完成容器的日志，以检查是否有错误、警告或其他诊断输出。Job对象在完成后也将保留下来，以便您查看其状态。</p>
+<p>当我们删除Job对象时，对应的pod也会被删除。</p>
+<h2 id="特殊说明"><a href="#特殊说明" class="headerlink" title="特殊说明"></a>特殊说明</h2><ul>
+<li>单个Pod时，默认Pod成功运行后Job即结束</li>
+<li>restartPolicy 仅支持Never和OnFailure</li>
+<li>.spec.completions 标识Job结束所需要成功运行的Pod个数，默认为1</li>
+<li>.spec.parallelism 标识并行运行的Pod个数，默认为1</li>
+<li>.spec.activeDeadlineSeconds 为Job的持续时间，不管有多少Pod创建。一旦工作到指定时间，所有的运行pod都会终止且工作状态将成为type: Failed与reason: DeadlineExceeded。</li>
+</ul>
+<h1 id="CronJob"><a href="#CronJob" class="headerlink" title="CronJob"></a>CronJob</h1><p><font color="red">Cron Job 创建是基于时间调度的 Jobs</font></p>
+<p>一个 CronJob 对象就像 crontab (cron table) 文件中的一行。它用 Cron 格式进行编写，并周期性地在给定的调度时间执行 Job。</p>
+<h2 id="CronJob-限制"><a href="#CronJob-限制" class="headerlink" title="CronJob 限制"></a>CronJob 限制</h2><p>CronJob 创建 Job 对象，每个 Job 的执行次数大约为一次。 之所以说 “大约” ，是因为在某些情况下，可能会创建两个 Job，或者不会创建任何 Job。虽然试图使这些情况尽量少发生，但不能完全杜绝。因此，Job 应该是幂等的。</p>
+<p><font color="red">CronJob 仅负责创建与其调度时间相匹配的 Job，而 Job 又负责管理其代表的 Pod。</font></p>
+<p><b>使用案例：</b></p>
+<p>1、在给定时间点调度Job</p>
+<p>2、创建周期性运行的Job。如：数据备份、数仓导数、执行任务、邮件发送、数据拉取、数据推送</p>
+<h2 id="特殊说明-1"><a href="#特殊说明-1" class="headerlink" title="特殊说明"></a>特殊说明</h2><p>.spec.schedule 必选，任务被创建和执行的调度时间。同Cron格式串，例如 0 * * * *。</p>
+<ul>
+<li>.spec.jobTemplate 必选，任务模版。它和 Job的语法完全一样</li>
+<li>.spec.startingDeadlineSeconds 可选的。默认未设置。它表示任务如果由于某种原因错过了调度时间，开始该任务的截止时间的秒数。过了截止时间，CronJob 就不会开始任务。不满足这种最后期限的任务会被统计为失败任务。如果没有该声明，那任务就没有最后期限。</li>
+<li>.spec.concurrencyPolicy 可选的。它声明了 CronJob 创建的任务执行时发生重叠如何处理。spec 仅能声明下列规则中的一种：</li>
+</ul>
+<p><code>Allow (默认)：CronJob 允许并发任务执行。</code></p>
+<p><code>Forbid：CronJob 不允许并发任务执行；如果新任务的执行时间到了而老任务没有执行完，CronJob 会忽略新任务的执行。</code></p>
+<p><code>Replace：如果新任务的执行时间到了而老任务没有执行完，CronJob 会用新任务替换当前正在运行的任务。</code></p>
+<p><font color="red">请注意，并发性规则仅适用于相同 CronJob 创建的任务。如果有多个 CronJob，它们相应的任务总是允许并发执行的。</font></p>
+<ul>
+<li>.spec.suspend 可选的。如果设置为 true ，后续发生的执行都会挂起。这个设置对已经开始执行的Job不起作用。默认是关闭的false。<br>备注：在调度时间内挂起的执行都会被统计为错过的任务。当 .spec.suspend 从 true 改为 false 时，且没有开始的最后期限，错过的任务会被立即调度。</li>
+<li>.spec.successfulJobsHistoryLimit 和 .spec.failedJobsHistoryLimit 可选的。 这两个声明了有多少执行完成和失败的任务会被保留。默认设置为3和1。限制设置为0代表相应类型的任务完成后不会保留。</li>
+</ul>
+<p><font color="red">说明：如果 startingDeadlineSeconds 设置为很大的数值或未设置（默认），并且 concurrencyPolicy 设置为 Allow，则作业将始终至少运行一次。</font></p>
+<h1 id="Job示例"><a href="#Job示例" class="headerlink" title="Job示例"></a>Job示例</h1><p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master controller]# pwd</span><br><span class="line">/root/k8s_practice/controller</span><br><span class="line">[root@k8s-master controller]# cat job.yaml </span><br><span class="line">apiVersion: batch/v1</span><br><span class="line">kind: Job</span><br><span class="line">metadata:</span><br><span class="line">  name: pi</span><br><span class="line">spec:</span><br><span class="line">  #completions: 3  # 标识Job结束所需要成功运行的Pod个数，默认为1</span><br><span class="line">  template:</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: pi</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/perl:5.26</span><br><span class="line">        command: [&quot;perl&quot;,  &quot;-Mbignum=bpi&quot;, &quot;-wle&quot;, &quot;print bpi(2000)&quot;]</span><br><span class="line">      restartPolicy: Never</span><br><span class="line">  backoffLimit: 4</span><br></pre></td></tr></table></figure>
 
-<h1 id="第二层：反向代理层到站点层"><a href="#第二层：反向代理层到站点层" class="headerlink" title="第二层：反向代理层到站点层"></a>第二层：反向代理层到站点层</h1><p><img src="/uploads/SLB/slb-03.png" alt="image"></p>
-<p>反向代理层到站点层的负载均衡，是通过“<font color="red">nginx</font>”实现的。</p>
-<p>PS：nginx 是反向代理的泛指。</p>
-<p><b>修改nginx.conf，可以实现多种均衡策略：</b></p>
-<p>(1) <b>请求轮询</b>：和DNS轮询类似，请求依次路由到各个 web-server；</p>
-<p>(2) <b>最少连接路由</b>：哪个web-server的连接少，路由到哪个 web-server；</p>
-<p>(3) <b>ip 哈希</b>：按照访问用户的ip哈希值来路由 web-server，只要用户的 ip 分布是均匀的，请求理论上也是均匀的，<font color="red">ip  哈希均衡方法</font>可以做到，<font color="red">同一个用户的请求固定落到同一台 web-server 上</font>，此策略适合有状态服务，例如 session；</p>
-<p><font color="grenn">PS：站点层可以存储 session，但强烈不建议这么做，站点层无状态是分布式架构设计的基本原则之一，session最好放到数据层存储。</font></p>
-<p>(4) …</p>
-<br>
+<p>创建job，与状态查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master controller]# kubectl apply -f job.yaml </span><br><span class="line">job.batch/pi created</span><br><span class="line">[root@k8s-master controller]# kubectl get job -o wide</span><br><span class="line">NAME   COMPLETIONS   DURATION   AGE   CONTAINERS   IMAGES                                                       SELECTOR</span><br><span class="line">pi     0/1           16s        16s   pi           registry.cn-beijing.aliyuncs.com/google_registry/perl:5.26   controller-uid=77004357-fd5e-4395-9bbb-cd0698e19cb9</span><br><span class="line">[root@k8s-master controller]# kubectl get pod -o wide</span><br><span class="line">NAME       READY   STATUS              RESTARTS   AGE   IP       NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">pi-6zvm5   0/1     ContainerCreating   0          85s   &lt;none&gt;   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
 
-<h1 id="第三层：站点层到服务层"><a href="#第三层：站点层到服务层" class="headerlink" title="第三层：站点层到服务层"></a>第三层：站点层到服务层</h1><p><img src="/uploads/SLB/slb-04.png" alt="image"></p>
-<p>站点层到服务层的负载均衡，是通过“<font color="red">服务连接池</font>”实现的。</p>
-<p>上游连接池会建立与下游服务多个连接，每次请求会“随机”选取连接来访问下游服务。除了<b>负载均衡</b>，服务连接池还能够实现<b>故障转移</b>、<b>超时处理</b>、<b>限流限速</b>、<b>ID串行化</b>等诸多功能。</p>
-<br>
+<p>之后再次查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master controller]# kubectl get job -o wide</span><br><span class="line">NAME   COMPLETIONS   DURATION   AGE   CONTAINERS   IMAGES                                                       SELECTOR</span><br><span class="line">pi     1/1           14m        44m   pi           registry.cn-beijing.aliyuncs.com/google_registry/perl:5.26   controller-uid=77004357-fd5e-4395-9bbb-cd0698e19cb9</span><br><span class="line">[root@k8s-master controller]# kubectl get pod -o wide</span><br><span class="line">NAME       READY   STATUS      RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">pi-6zvm5   0/1     Completed   0          44m   10.244.4.63   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">[root@k8s-master controller]# </span><br><span class="line">[root@k8s-master controller]# kubectl describe job pi</span><br><span class="line">Name:           pi</span><br><span class="line">Namespace:      default</span><br><span class="line">Selector:       controller-uid=76680f6f-442c-4a09-91dc-c3d4c18465b0</span><br><span class="line">Labels:         controller-uid=76680f6f-442c-4a09-91dc-c3d4c18465b0</span><br><span class="line">                job-name=pi</span><br><span class="line">Annotations:    kubectl.kubernetes.io/last-applied-configuration:</span><br><span class="line">                  &#123;&quot;apiVersion&quot;:&quot;batch/v1&quot;,&quot;kind&quot;:&quot;Job&quot;,&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&#125;,&quot;name&quot;:&quot;pi&quot;,&quot;namespace&quot;:&quot;default&quot;&#125;,&quot;spec&quot;:&#123;&quot;backoffLimit&quot;:4,&quot;</span><br><span class="line">Parallelism:    1</span><br><span class="line">Completions:    1</span><br><span class="line">Start Time:     Tue, 11 Aug 2020 23:34:44 +0800</span><br><span class="line">Completed At:   Tue, 11 Aug 2020 23:35:02 +0800</span><br><span class="line">Duration:       18s</span><br><span class="line">Pods Statuses:  0 Running / 1 Succeeded / 0 Failed</span><br><span class="line">Pod Template:</span><br><span class="line">  Labels:  controller-uid=76680f6f-442c-4a09-91dc-c3d4c18465b0</span><br><span class="line">           job-name=pi</span><br><span class="line">  Containers:</span><br><span class="line">   pi:</span><br><span class="line">    Image:      registry.cn-beijing.aliyuncs.com/google_registry/perl:5.26</span><br><span class="line">    Port:       &lt;none&gt;</span><br><span class="line">    Host Port:  &lt;none&gt;</span><br><span class="line">    Command:</span><br><span class="line">      perl</span><br><span class="line">      -Mbignum=bpi</span><br><span class="line">      -wle</span><br><span class="line">      print bpi(2000)</span><br><span class="line">    Environment:  &lt;none&gt;</span><br><span class="line">    Mounts:       &lt;none&gt;</span><br><span class="line">  Volumes:        &lt;none&gt;</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason            Age    From            Message</span><br><span class="line">  ----    ------            ----   ----            -------</span><br><span class="line">  Normal  SuccessfulCreate  2m33s  job-controller  Created pod: pi-6zvm5</span><br></pre></td></tr></table></figure>
 
-<h1 id="第四层：访问数据层"><a href="#第四层：访问数据层" class="headerlink" title="第四层：访问数据层"></a>第四层：访问数据层</h1><p>在数据量很大的情况下，由于数据层（db/cache）涉及数据的水平切分，所以数据层的负载均衡更为复杂一些，它分为“<font color="red">数据的均衡</font>”，与“<font color="red">请求的均衡</font>”。</p>
-<p><b>数据的均衡</b>是指：水平切分后的<font color="red">每个服务</font>（db/cache），<font color="red">数据量是均匀的</font>。</p>
-<p><b>请求的均衡</b>是指：水平切分后的<font color="red">每个服务</font>（db/cache），<font color="red">请求量是均匀的</font>。</p>
-<p>业内常见的<b>水平切分方式</b>有这么几种：</p>
-<h2 id="按照range水平切分"><a href="#按照range水平切分" class="headerlink" title="按照range水平切分"></a>按照range水平切分</h2><p><img src="/uploads/SLB/slb-05.png" alt="image"></p>
-<p><font color="red">每一个数据服务，存储一定范围的数据</font>：</p>
-<ul>
-<li>user0 服务：存储 uid 范围 1-1kw</li>
-<li>user1 服务：存储 uid 范围 1kw-2kw</li>
-</ul>
-<p>这个方案的<b>好处</b>是：</p>
-<ul>
-<li><font color="red">规则简单</font>，service只需判断一下uid范围就能路由到对应的存储服务</li>
-<li><font color="red">数据均衡</font>性较好</li>
-<li><font color="red">比较容易扩展</font>，可以随时加一个uid[2kw,3kw]的数据服务</li>
-</ul>
-<p><b>不足</b>是：</p>
-<ul>
-<li><font color="red">请求的负载不一定均衡</font>，一般来说，新注册的用户会比老用户更活跃，大range的服务请求压力会更大</li>
-</ul>
-<h2 id="按照-id-哈希水平切分"><a href="#按照-id-哈希水平切分" class="headerlink" title="按照 id 哈希水平切分"></a>按照 id 哈希水平切分</h2><p><img src="/uploads/SLB/slb-06.png" alt="image"></p>
-<p>每一个数据服务，存储某个key值hash后的部分数据：</p>
-<ul>
-<li>user0服务：存储偶数uid数据</li>
-<li>user1服务：存储奇数uid数据</li>
-</ul>
-<p>这个方案的<b>好处</b>是：</p>
-<ul>
-<li><font color="red">规则简单</font>，service只需对uid进行hash能路由到对应的存储服务</li>
-<li><font color="red">数据均衡</font>性较好</li>
-<li><font color="red">请求均匀</font>性较好</li>
-</ul>
-<p><b>不足</b>是：</p>
-<ul>
-<li><font color="red">不容易扩展</font>，扩展一个数据服务，hash方法改变时候，可能需要进行数据迁移</li>
-</ul>
-<br>
+<p>并查看 Pod 的标准输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master controller]# kubectl logs --tail 500 pi-6zvm5</span><br><span class="line">3.141592653589793238462643383279502884197169399375105820974944592307816406………………</span><br></pre></td></tr></table></figure>
 
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>负载均衡（Load Balance）是分布式系统架构设计中必须考虑的因素之一，它通常是指，将请求/数据<font color="red">均匀分摊</font>到多个操作单元上执行，其的关键在于均匀：</p>
-<ul>
-<li><b>反向代理层</b>的负载均衡，是通过“<font color="red">DNS轮询</font>”实现的</li>
-<li><b>站点层</b>的负载均衡，是通过“<font color="red">nginx</font>”实现的</li>
-<li><b>服务层</b>的负载均衡，是通过“<font color="red">服务连接池</font>”实现的</li>
-<li><b>数据层</b>的负载均衡，要考虑“<b>数据的均衡</b>”与“<b>请求的均衡</b>”两个点，常见的方式有“<font color="red">按照范围水平切分</font>”与“<font color="red">hash水平切分</font>”</li>
-</ul>
+<h1 id="CronJob示例"><a href="#CronJob示例" class="headerlink" title="CronJob示例"></a>CronJob示例</h1><p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master controller]# pwd</span><br><span class="line">/root/k8s_practice/controller</span><br><span class="line">[root@k8s-master controller]# cat cronjob.yaml </span><br><span class="line">apiVersion: batch/v1beta1</span><br><span class="line">kind: CronJob</span><br><span class="line">metadata:</span><br><span class="line">  name: hello</span><br><span class="line">spec:</span><br><span class="line">  schedule: &quot;*/1 * * * *&quot;</span><br><span class="line">  jobTemplate:</span><br><span class="line">    spec:</span><br><span class="line">      template:</span><br><span class="line">        spec:</span><br><span class="line">          containers:</span><br><span class="line">          - name: hello</span><br><span class="line">            image: registry.cn-beijing.aliyuncs.com/google_registry/busybox:1.24</span><br><span class="line">            args:</span><br><span class="line">            - /bin/sh</span><br><span class="line">            - -c</span><br><span class="line">            - date; echo Hello from the Kubernetes cluster</span><br><span class="line">          restartPolicy: OnFailure</span><br></pre></td></tr></table></figure>
+
+<p>启动cronjob并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master controller]# kubectl apply -f cronjob.yaml </span><br><span class="line">cronjob.batch/hello created</span><br><span class="line">[root@k8s-master controller]# kubectl get cronjob -o wide</span><br><span class="line">NAME    SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE   CONTAINERS   IMAGES                                                          SELECTOR</span><br><span class="line">hello   */1 * * * *   False     1        8s              27s   hello        registry.cn-beijing.aliyuncs.com/google_registry/busybox:1.24   &lt;none&gt;</span><br><span class="line">[root@k8s-master controller]# </span><br><span class="line">[root@k8s-master controller]# kubectl get job -o wide</span><br><span class="line">NAME               COMPLETIONS   DURATION   AGE   CONTAINERS   IMAGES                                                          SELECTOR</span><br><span class="line">hello-1590721020   1/1           2s         21s   hello        registry.cn-beijing.aliyuncs.com/google_registry/busybox:1.24   controller-uid=9e0180e8-8362-4a58-8b93-089b92774b5e</span><br><span class="line">[root@k8s-master controller]# </span><br><span class="line">[root@k8s-master controller]# kubectl get pod -o wide</span><br><span class="line">NAME                     READY   STATUS      RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">hello-1590721020-m4fr8   0/1     Completed   0          36s   10.244.4.66   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>几分钟之后的状态信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master controller]# kubectl get cronjob -o wide</span><br><span class="line">NAME    SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE     CONTAINERS   IMAGES                                                          SELECTOR</span><br><span class="line">hello   */1 * * * *   False     0        55s             7m14s   hello        registry.cn-beijing.aliyuncs.com/google_registry/busybox:1.24   &lt;none&gt;</span><br><span class="line">[root@k8s-master controller]# </span><br><span class="line">[root@k8s-master controller]# </span><br><span class="line">[root@k8s-master controller]# kubectl get job -o wide</span><br><span class="line">NAME               COMPLETIONS   DURATION   AGE    CONTAINERS   IMAGES                                                          SELECTOR</span><br><span class="line">hello-1590721260   1/1           1s         3m1s   hello        registry.cn-beijing.aliyuncs.com/google_registry/busybox:1.24   controller-uid=0676bd6d-861b-440b-945b-4b2704872728</span><br><span class="line">hello-1590721320   1/1           2s         2m1s   hello        registry.cn-beijing.aliyuncs.com/google_registry/busybox:1.24   controller-uid=09c1902e-76ef-4731-b3b4-3188961c13e9</span><br><span class="line">hello-1590721380   1/1           2s         61s    hello        registry.cn-beijing.aliyuncs.com/google_registry/busybox:1.24   controller-uid=f30dc159-8905-4cfc-b06b-f950c8dcfc28</span><br><span class="line">[root@k8s-master controller]# </span><br><span class="line">[root@k8s-master controller]# kubectl get pod -o wide</span><br><span class="line">NAME                     READY   STATUS      RESTARTS   AGE    IP            NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">hello-1590721320-m4pxf   0/1     Completed   0          2m6s   10.244.4.70   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">hello-1590721380-wk7jh   0/1     Completed   0          66s    10.244.2.77   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">hello-1590721440-rcx7v   0/1     Completed   0          6s     10.244.4.72   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">[root@k8s-master controller]# </span><br><span class="line">[root@k8s-master controller]# kubectl describe cronjob hello</span><br><span class="line">Name:                          hello</span><br><span class="line">Namespace:                     default</span><br><span class="line">Labels:                        &lt;none&gt;</span><br><span class="line">Annotations:                   kubectl.kubernetes.io/last-applied-configuration:</span><br><span class="line">                                 &#123;&quot;apiVersion&quot;:&quot;batch/v1beta1&quot;,&quot;kind&quot;:&quot;CronJob&quot;,&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&#125;,&quot;name&quot;:&quot;hello&quot;,&quot;namespace&quot;:&quot;default&quot;&#125;,&quot;spec&quot;:&#123;&quot;jobTemplate&quot;:&#123;&quot;...</span><br><span class="line">Schedule:                      */1 * * * *</span><br><span class="line">Concurrency Policy:            Allow</span><br><span class="line">Suspend:                       False</span><br><span class="line">Successful Job History Limit:  3</span><br><span class="line">Failed Job History Limit:      1</span><br><span class="line">Starting Deadline Seconds:     &lt;unset&gt;</span><br><span class="line">Selector:                      &lt;unset&gt;</span><br><span class="line">Parallelism:                   &lt;unset&gt;</span><br><span class="line">Completions:                   &lt;unset&gt;</span><br><span class="line">Pod Template:</span><br><span class="line">  Labels:  &lt;none&gt;</span><br><span class="line">  Containers:</span><br><span class="line">   hello:</span><br><span class="line">    Image:      registry.cn-beijing.aliyuncs.com/google_registry/busybox:1.24</span><br><span class="line">    Port:       &lt;none&gt;</span><br><span class="line">    Host Port:  &lt;none&gt;</span><br><span class="line">    Args:</span><br><span class="line">      /bin/sh</span><br><span class="line">      -c</span><br><span class="line">      date; echo Hello from the Kubernetes cluster</span><br><span class="line">    Environment:     &lt;none&gt;</span><br><span class="line">    Mounts:          &lt;none&gt;</span><br><span class="line">  Volumes:           &lt;none&gt;</span><br><span class="line">Last Schedule Time:  Wed, 12 Aug 2020 00:01:00 +0800</span><br><span class="line">Active Jobs:         &lt;none&gt;</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason            Age                  From                Message</span><br><span class="line">  ----    ------            ----                 ----                -------</span><br><span class="line">  Normal  SuccessfulCreate  19m                  cronjob-controller  Created job hello-1597160520</span><br><span class="line">  Normal  SawCompletedJob   19m                  cronjob-controller  Saw completed job: hello-1597160520, status: Complete</span><br><span class="line">  Normal  SuccessfulCreate  18m                  cronjob-controller  Created job hello-1597160580</span><br><span class="line">  Normal  SawCompletedJob   18m                  cronjob-controller  Saw completed job: hello-1597160580, status: Complete</span><br><span class="line">  Normal  SuccessfulCreate  17m                  cronjob-controller  Created job hello-1597160640</span><br><span class="line">  Normal  SawCompletedJob   17m                  cronjob-controller  Saw completed job: hello-1597160640, status: Complete</span><br><span class="line">  Normal  SuccessfulCreate  16m                  cronjob-controller  Created job hello-1597160700</span><br><span class="line">  Normal  SuccessfulDelete  16m                  cronjob-controller  Deleted job hello-1597160520</span><br><span class="line">  Normal  SawCompletedJob   16m                  cronjob-controller  Saw completed job: hello-1597160700, status: Complete</span><br><span class="line">  Normal  SuccessfulCreate  15m                  cronjob-controller  Created job hello-1597160760</span><br><span class="line">  Normal  SawCompletedJob   15m                  cronjob-controller  Saw completed job: hello-1597160760, status: Complete</span><br><span class="line">  Normal  SuccessfulDelete  15m                  cronjob-controller  Deleted job hello-1597160580</span><br><span class="line">  Normal  SuccessfulCreate  14m                  cronjob-controller  Created job hello-1597160820</span><br><span class="line">  Normal  SuccessfulDelete  14m                  cronjob-controller  Deleted job hello-1597160640</span><br><span class="line">  Normal  SawCompletedJob   14m                  cronjob-controller  Saw completed job: hello-1597160820, status: Complete</span><br><span class="line">  Normal  SuccessfulCreate  13m                  cronjob-controller  Created job hello-1597160880</span><br><span class="line">  Normal  SawCompletedJob   13m                  cronjob-controller  Saw completed job: hello-1597160880, status: Complete</span><br><span class="line">………………</span><br><span class="line">  Normal  SawCompletedJob   11m                  cronjob-controller  Saw completed job: hello-1597161000, status: Complete</span><br><span class="line">  Normal  SuccessfulDelete  11m                  cronjob-controller  Deleted job hello-1597160820</span><br><span class="line">  Normal  SawCompletedJob   10m                  cronjob-controller  (combined from similar events): Saw completed job: hello-1597161060, status: Complete</span><br><span class="line">  Normal  SuccessfulCreate  4m13s (x7 over 10m)  cronjob-controller  (combined from similar events): Created job hello-1597161420</span><br></pre></td></tr></table></figure>
+
+<p>找到最后一次调度任务创建的 Pod， 并查看 Pod 的标准输出。请注意任务名称和 Pod 名称是不同的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master controller]#  kubectl logs pod/hello-1590721740-rcx7v   # 或者 kubectl logs hello-1590721740-rcx7v</span><br><span class="line">Fri May 29 03:09:04 UTC 2020</span><br><span class="line">Hello from the Kubernetes cluster</span><br></pre></td></tr></table></figure>
+
+<p>删除 CronJob</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master controller]# kubectl get cronjob</span><br><span class="line">NAME    SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE</span><br><span class="line">hello   */1 * * * *   False     0        32s             19m</span><br><span class="line">[root@k8s-master controller]# </span><br><span class="line">[root@k8s-master controller]# kubectl delete cronjob hello  # 或者 kubectl delete -f cronjob.yaml</span><br><span class="line">cronjob.batch &quot;hello&quot; deleted</span><br><span class="line">[root@k8s-master controller]# kubectl get cronjob   # 可见已删除</span><br><span class="line">No resources found in default namespace.</span><br></pre></td></tr></table></figure>
+
+<h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><h1 id="相关阅读-1"><a href="#相关阅读-1" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="http://www.zhangblog.com/2020/08/23/kubernetes09/">Kubernetes K8S之资源控制器RC、RS、Deployment详解</a></p>
+<p>2、<a href="http://www.zhangblog.com/2020/08/26/kubernetes10/">Kubernetes K8S之资源控制器StatefulSets详解</a></p>
+<p>3、<a href="http://www.zhangblog.com/2020/09/02/kubernetes11/">Kubernetes K8S之资源控制器Daemonset详解</a></p>
+<p>4、<a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/job/" target="_blank" rel="noopener">官网：Jobs</a></p>
+<p>5、<a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/cron-jobs/" target="_blank" rel="noopener">官网：CronJob</a></p>
 <hr>
 
       
@@ -613,7 +651,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangblog.com/2019/08/12/slb01/" title="负载均衡，必须要知道的 5 件事">http://www.zhangblog.com/2019/08/12/slb01/</a>
+    <a href="http://www.zhangblog.com/2020/09/06/kubernetes12/" title="Kubernetes K8S之资源控制器Job和CronJob详解">http://www.zhangblog.com/2020/09/06/kubernetes12/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -628,7 +666,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SLB/" rel="tag"># SLB</a>
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
           
         </div>
       
@@ -641,8 +687,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/08/docker-swarm01/" rel="next" title="Docker Swarm 常用操作">
-                <i class="fa fa-chevron-left"></i> Docker Swarm 常用操作
+              <a href="/2020/09/02/kubernetes11/" rel="next" title="Kubernetes K8S之资源控制器Daemonset详解">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S之资源控制器Daemonset详解
               </a>
             
           </div>
@@ -650,10 +696,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/12/proxy_dns01/" rel="prev" title="“反向代理层”绝不能替代“DNS轮询”！">
-                “反向代理层”绝不能替代“DNS轮询”！ <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -831,7 +873,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是负载均衡？"><span class="nav-number">1.</span> <span class="nav-text">什么是负载均衡？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的负载均衡方案有哪些？"><span class="nav-number">1.1.</span> <span class="nav-text">常见的负载均衡方案有哪些？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一层：客户端层到反向代理层"><span class="nav-number">2.</span> <span class="nav-text">第一层：客户端层到反向代理层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二层：反向代理层到站点层"><span class="nav-number">3.</span> <span class="nav-text">第二层：反向代理层到站点层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三层：站点层到服务层"><span class="nav-number">4.</span> <span class="nav-text">第三层：站点层到服务层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四层：访问数据层"><span class="nav-number">5.</span> <span class="nav-text">第四层：访问数据层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#按照range水平切分"><span class="nav-number">5.1.</span> <span class="nav-text">按照range水平切分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#按照-id-哈希水平切分"><span class="nav-number">5.2.</span> <span class="nav-text">按照 id 哈希水平切分</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机配置规划"><span class="nav-number">1.</span> <span class="nav-text">主机配置规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是控制器"><span class="nav-number">2.</span> <span class="nav-text">什么是控制器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Job"><span class="nav-number">3.</span> <span class="nav-text">Job</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Job终止和清理"><span class="nav-number">3.1.</span> <span class="nav-text">Job终止和清理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊说明"><span class="nav-number">3.2.</span> <span class="nav-text">特殊说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CronJob"><span class="nav-number">4.</span> <span class="nav-text">CronJob</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CronJob-限制"><span class="nav-number">4.1.</span> <span class="nav-text">CronJob 限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊说明-1"><span class="nav-number">4.2.</span> <span class="nav-text">特殊说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Job示例"><span class="nav-number">5.</span> <span class="nav-text">Job示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CronJob示例"><span class="nav-number">6.</span> <span class="nav-text">CronJob示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读"><span class="nav-number">7.</span> <span class="nav-text">相关阅读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读-1"><span class="nav-number">8.</span> <span class="nav-text">相关阅读</span></a></li></ol></div>
             
 
           </div>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-09-02T13:09:53.516Z</updated>
+  <updated>2020-09-06T12:01:03.627Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S之资源控制器Job和CronJob详解</title>
+    <link href="http://www.zhangblog.com/2020/09/06/kubernetes12/"/>
+    <id>http://www.zhangblog.com/2020/09/06/kubernetes12/</id>
+    <published>2020-09-06T11:57:58.000Z</published>
+    <updated>2020-09-06T12:01:03.627Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Kubernetes的资源控制器Job和CronJob详解与示例&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S之资源控制器Daemonset详解</title>
@@ -672,34 +712,6 @@
 &lt;p&gt;Docker镜像加速配置；Docker镜像常用操作；Dcoker容器常用操作。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1
-        
-      
-    
-    </summary>
-    
-      <category term="docker" scheme="http://www.zhangblog.com/categories/docker/"/>
-    
-    
-      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
-    
-      <category term="docker" scheme="http://www.zhangblog.com/tags/docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker简介与安装</title>
-    <link href="http://www.zhangblog.com/2020/04/24/docker01/"/>
-    <id>http://www.zhangblog.com/2020/04/24/docker01/</id>
-    <published>2020-04-24T03:02:32.000Z</published>
-    <updated>2020-05-18T14:07:48.548Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/docker/docker-00.jpg&quot;
         
       
     
