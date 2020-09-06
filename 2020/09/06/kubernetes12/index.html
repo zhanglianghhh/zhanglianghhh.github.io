@@ -92,7 +92,7 @@
 <meta property="og:description" content="Kubernetes的资源控制器Job和CronJob详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
-<meta property="og:updated_time" content="2020-09-06T12:01:03.627Z">
+<meta property="og:updated_time" content="2020-09-06T12:08:14.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes K8S之资源控制器Job和CronJob详解">
 <meta name="twitter:description" content="Kubernetes的资源控制器Job和CronJob详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
@@ -543,7 +543,7 @@
 <p><font color="red">请注意，并发性规则仅适用于相同 CronJob 创建的任务。如果有多个 CronJob，它们相应的任务总是允许并发执行的。</font></p>
 <ul>
 <li>.spec.suspend 可选的。如果设置为 true ，后续发生的执行都会挂起。这个设置对已经开始执行的Job不起作用。默认是关闭的false。<br>备注：在调度时间内挂起的执行都会被统计为错过的任务。当 .spec.suspend 从 true 改为 false 时，且没有开始的最后期限，错过的任务会被立即调度。</li>
-<li>.spec.successfulJobsHistoryLimit 和 .spec.failedJobsHistoryLimit 可选的。 这两个声明了有多少执行完成和失败的任务会被保留。默认设置为3和1。限制设置为0代表相应类型的任务完成后不会保留。</li>
+<li>.spec.successfulJobsHistoryLimit 和 .spec.failedJobsHistoryLimit 可选的。 这两个声明了<font color="red">有多少执行完成和失败的任务会被保留。默认设置为3和1。</font>限制设置为0代表相应类型的任务完成后不会保留。</li>
 </ul>
 <p><font color="red">说明：如果 startingDeadlineSeconds 设置为很大的数值或未设置（默认），并且 concurrencyPolicy 设置为 Allow，则作业将始终至少运行一次。</font></p>
 <h1 id="Job示例"><a href="#Job示例" class="headerlink" title="Job示例"></a>Job示例</h1><p>yaml文件</p>
