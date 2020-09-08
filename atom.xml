@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-09-06T12:10:38.718Z</updated>
+  <updated>2020-09-08T13:48:30.506Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S在IPVS代理模式下Service服务的ClusterIP类型访问失败处理</title>
+    <link href="http://www.zhangblog.com/2020/09/08/kubernetes13/"/>
+    <id>http://www.zhangblog.com/2020/09/08/kubernetes13/</id>
+    <published>2020-09-08T13:46:13.000Z</published>
+    <updated>2020-09-08T13:48:30.506Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Kubernetes
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S之资源控制器Job和CronJob详解</title>
@@ -680,38 +718,6 @@
           &lt;p&gt;&lt;img src=&quot;/uploads/docker/docker-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;介绍如何在 Docker 内部以及容器之间管理数据；在容器中管理数据主要有两种方式：数据卷（Volumes）、挂载主机目录
-        
-      
-    
-    </summary>
-    
-      <category term="docker" scheme="http://www.zhangblog.com/categories/docker/"/>
-    
-    
-      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
-    
-      <category term="docker" scheme="http://www.zhangblog.com/tags/docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker镜像与容器的常用操作</title>
-    <link href="http://www.zhangblog.com/2020/04/25/docker02/"/>
-    <id>http://www.zhangblog.com/2020/04/25/docker02/</id>
-    <published>2020-04-25T13:17:22.000Z</published>
-    <updated>2020-04-26T13:18:10.618Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/docker/docker-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Docker镜像加速配置；Docker镜像常用操作；Dcoker容器常用操作。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1
         
       
     
