@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-09-08T13:48:30.506Z</updated>
+  <updated>2020-09-13T13:05:59.145Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S之Pod跨namespace名称空间访问Service服务</title>
+    <link href="http://www.zhangblog.com/2020/09/13/kubernetes14/"/>
+    <id>http://www.zhangblog.com/2020/09/13/kubernetes14/</id>
+    <published>2020-09-13T13:03:09.000Z</published>
+    <updated>2020-09-13T13:05:59.145Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S在IPVS代理模式下Service服务的ClusterIP类型访问失败处理</title>
@@ -688,36 +724,6 @@
           &lt;p&gt;&lt;img src=&quot;/uploads/docker/docker-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Dockerfile介绍及常用指令，包括FROM，RUN，还提及了 COPY，ADD，EXPOSE，WORKDIR等，其实
-        
-      
-    
-    </summary>
-    
-      <category term="docker" scheme="http://www.zhangblog.com/categories/docker/"/>
-    
-    
-      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
-    
-      <category term="docker" scheme="http://www.zhangblog.com/tags/docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker数据管理与挂载</title>
-    <link href="http://www.zhangblog.com/2020/04/26/docker03/"/>
-    <id>http://www.zhangblog.com/2020/04/26/docker03/</id>
-    <published>2020-04-26T13:32:05.000Z</published>
-    <updated>2020-04-26T13:35:32.770Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/docker/docker-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;介绍如何在 Docker 内部以及容器之间管理数据；在容器中管理数据主要有两种方式：数据卷（Volumes）、挂载主机目录
         
       
     

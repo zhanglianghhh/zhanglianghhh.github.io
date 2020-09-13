@@ -83,23 +83,19 @@
 
 
 
-<meta name="description" content="Kubernetes K8S 概述、特性与架构说明，以及核心技术概念和API对象详解  Kubernetes概述Kubernetes是一个开源的，用于管理云平台中多个主机上的容器化的应用，Kubernetes的目标是让部署容器化的应用简单并且高效（powerful），Kubernetes提供了应用部署、规划、更新、维护的一种机制。 在所有的容器编排工具中（类似的还有 docker swarm">
+<meta name="description" content="Kubernetes的两个Service（ServiceA、ServiceB）和对应的Pod（PodA、PodB）分别属于不同的namespace名称空间，现需要PodA和PodB跨namespace名称空间并通过Service实现互访。应该如何实现？  场景需求Kubernetes的两个Service（ServiceA、ServiceB）和对应的Pod（PodA、PodB）分别属于不同的na">
 <meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kubernetes K8S 基本概述、设计架构和设计理念">
-<meta property="og:url" content="http://www.zhangblog.com/2020/07/27/kubernetes01/index.html">
+<meta property="og:title" content="Kubernetes K8S之Pod跨namespace名称空间访问Service服务">
+<meta property="og:url" content="http://www.zhangblog.com/2020/09/13/kubernetes14/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="Kubernetes K8S 概述、特性与架构说明，以及核心技术概念和API对象详解  Kubernetes概述Kubernetes是一个开源的，用于管理云平台中多个主机上的容器化的应用，Kubernetes的目标是让部署容器化的应用简单并且高效（powerful），Kubernetes提供了应用部署、规划、更新、维护的一种机制。 在所有的容器编排工具中（类似的还有 docker swarm">
+<meta property="og:description" content="Kubernetes的两个Service（ServiceA、ServiceB）和对应的Pod（PodA、PodB）分别属于不同的namespace名称空间，现需要PodA和PodB跨namespace名称空间并通过Service实现互访。应该如何实现？  场景需求Kubernetes的两个Service（ServiceA、ServiceB）和对应的Pod（PodA、PodB）分别属于不同的na">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-01-01.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-01-02.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-01-03.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-01-04.png">
-<meta property="og:updated_time" content="2020-08-12T13:54:54.540Z">
+<meta property="og:updated_time" content="2020-09-13T13:05:59.145Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kubernetes K8S 基本概述、设计架构和设计理念">
-<meta name="twitter:description" content="Kubernetes K8S 概述、特性与架构说明，以及核心技术概念和API对象详解  Kubernetes概述Kubernetes是一个开源的，用于管理云平台中多个主机上的容器化的应用，Kubernetes的目标是让部署容器化的应用简单并且高效（powerful），Kubernetes提供了应用部署、规划、更新、维护的一种机制。 在所有的容器编排工具中（类似的还有 docker swarm">
+<meta name="twitter:title" content="Kubernetes K8S之Pod跨namespace名称空间访问Service服务">
+<meta name="twitter:description" content="Kubernetes的两个Service（ServiceA、ServiceB）和对应的Pod（PodA、PodB）分别属于不同的namespace名称空间，现需要PodA和PodB跨namespace名称空间并通过Service实现互访。应该如何实现？  场景需求Kubernetes的两个Service（ServiceA、ServiceB）和对应的Pod（PodA、PodB）分别属于不同的na">
 <meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
 
 
@@ -130,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/2020/07/27/kubernetes01/">
+  <link rel="canonical" href="http://www.zhangblog.com/2020/09/13/kubernetes14/">
 
 
 
 
 
-  <title>Kubernetes K8S 基本概述、设计架构和设计理念 | lightzhang博客</title>
+  <title>Kubernetes K8S之Pod跨namespace名称空间访问Service服务 | lightzhang博客</title>
   
 
 
@@ -315,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/07/27/kubernetes01/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/09/13/kubernetes14/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lightzhang">
@@ -332,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Kubernetes K8S 基本概述、设计架构和设计理念</h1>
+          <h1 class="post-title" itemprop="name headline">Kubernetes K8S之Pod跨namespace名称空间访问Service服务</h1>
         
 
         <div class="post-meta">
@@ -344,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-27T23:31:12+08:00">
-                2020-07-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-13T21:03:09+08:00">
+                2020-09-13
               </time>
             
 
@@ -397,8 +393,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/07/27/kubernetes01/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2020/07/27/kubernetes01/" itemprop="commentCount"></span>
+                <a href="/2020/09/13/kubernetes14/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/09/13/kubernetes14/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -406,7 +402,7 @@
 
           
           
-             <span id="/2020/07/27/kubernetes01/" class="leancloud_visitors" data-flag-title="Kubernetes K8S 基本概述、设计架构和设计理念">
+             <span id="/2020/09/13/kubernetes14/" class="leancloud_visitors" data-flag-title="Kubernetes K8S之Pod跨namespace名称空间访问Service服务">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -431,7 +427,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5.6k
+                  2.2k
                 </span>
               
 
@@ -447,7 +443,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  19
+                  12
                 </span>
               
             </div>
@@ -470,112 +466,78 @@
       
         <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
 <blockquote>
-<p>Kubernetes K8S 概述、特性与架构说明，以及核心技术概念和API对象详解</p>
+<p>Kubernetes的两个Service（ServiceA、ServiceB）和对应的Pod（PodA、PodB）分别属于不同的namespace名称空间，现需要PodA和PodB跨namespace名称空间并通过Service实现互访。应该如何实现？</p>
 </blockquote>
-<h1 id="Kubernetes概述"><a href="#Kubernetes概述" class="headerlink" title="Kubernetes概述"></a>Kubernetes概述</h1><p>Kubernetes是一个开源的，用于管理云平台中多个主机上的容器化的应用，Kubernetes的目标是让部署容器化的应用简单并且高效（powerful），Kubernetes提供了应用部署、规划、更新、维护的一种机制。</p>
-<p>在所有的容器编排工具中（类似的还有 docker swarm / mesos等），Kubernetes的生态系统更大、增长更快，有更多的支持、服务和工具可供用户选择。</p>
-<p>Kubernetes是Google开源的<font color="red">容器集群管理系统</font>。最初源于谷歌内部的Borg，是Google基于Borg开源的<font color="red">容器编排调度引擎</font>。它构建在Docker技术之上，为跨主机的容器化应用提供<font color="red">资源调度、服务发现、高可用管理和弹性伸缩</font>等一整套功能，它提供完善的管理工具，涵盖开发、部署测试、运维监控等各个环节。</p>
-<p>它的目标不仅仅是一个编排系统，而是提供一个规范，可以让你来描述集群的架构，定义服务的最终状态，Kubernetes可以帮你将系统自动的达到和维持在这个状态。</p>
-<p><font color="red">重点：跨机器、跨平台；协调资源使用</font></p>
-<div style="font-size:17px"><b>容器化越来越流行，主要原因是它带来的诸多好处：</b></div>
+<h1 id="场景需求"><a href="#场景需求" class="headerlink" title="场景需求"></a>场景需求</h1><p>Kubernetes的两个Service（ServiceA、ServiceB）和对应的Pod（PodA、PodB）分别属于不同的namespace名称空间，现<font color="red">需要PodA和PodB跨namespace名称空间并通过Service实现互访</font>。如何实现？</p>
+<p><font color="red">说明：这里是指通过Service的Name进行通信访问，而不是通过Service的IP【因因为每次重启Service，NAME不会改变，而IP是会改变的】。</font></p>
+<h1 id="主机配置规划"><a href="#主机配置规划" class="headerlink" title="主机配置规划"></a>主机配置规划</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>系统版本</th>
+<th>配置</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.110</td>
+<td>10.0.0.110</td>
+</tr>
+<tr>
+<td>k8s-node01</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.111</td>
+<td>10.0.0.111</td>
+</tr>
+<tr>
+<td>k8s-node02</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.112</td>
+<td>10.0.0.112</td>
+</tr>
+</tbody></table>
+<h1 id="创建Service和Pod"><a href="#创建Service和Pod" class="headerlink" title="创建Service和Pod"></a>创建Service和Pod</h1><p>相关yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master cross_ns]# pwd</span><br><span class="line">/root/k8s_practice/cross_ns</span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# cat deply_service_myns.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Namespace</span><br><span class="line">metadata:</span><br><span class="line">  name: myns</span><br><span class="line">---</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-deploy1</span><br><span class="line">  namespace: myns</span><br><span class="line">spec:</span><br><span class="line">  replicas: 2</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">      release: v1</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">        release: v1</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">        - name: http</span><br><span class="line">          containerPort: 80</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-clusterip1</span><br><span class="line">  namespace: myns</span><br><span class="line">spec:</span><br><span class="line">  type: ClusterIP  # 默认类型</span><br><span class="line">  selector:</span><br><span class="line">    app: myapp</span><br><span class="line">    release: v1</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: 80</span><br><span class="line">    targetPort: 80</span><br><span class="line"></span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# cat deply_service_mytest.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Namespace</span><br><span class="line">metadata:</span><br><span class="line">  name: mytest</span><br><span class="line">---</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-deploy2</span><br><span class="line">  namespace: mytest</span><br><span class="line">spec:</span><br><span class="line">  replicas: 2</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">      release: v2</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">        release: v2</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v2</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">        - name: http</span><br><span class="line">          containerPort: 80</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-clusterip2</span><br><span class="line">  namespace: mytest</span><br><span class="line">spec:</span><br><span class="line">  type: ClusterIP  # 默认类型</span><br><span class="line">  selector:</span><br><span class="line">    app: myapp</span><br><span class="line">    release: v2</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: 80</span><br><span class="line">    targetPort: 80</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li><font color="red">敏捷地创建和部署应用程序：</font>相较于创建虚拟机镜像，创建容器镜像更加容易和快速</li>
-<li><font color="red">持续构建集成：</font>可以更快更频繁地构建容器镜像、部署容器化的应用程序、并且轻松地回滚应用程序</li>
-<li><font color="red">分离开发和运维的关注点：</font>在开发构建阶段就完成容器镜像的构建，构建好的镜像可以部署到多种基础设施上。这种做法将开发阶段需要关注的内容包含在如何构建容器镜像的过程中，将部署阶段需要关注的内容聚焦在如何提供基础设施以及如何使用容器镜像的过程中。降低了开发和运维的耦合度</li>
-<li><font color="red">可监控性：</font>不仅可以查看操作系统级别的资源监控信息，还可以查看应用程序健康状态以及其他信号的监控信息</li>
-<li><font color="red">开发、测试、生产不同阶段的环境一致性：</font>开发阶段在笔记本上运行的容器与测试、生产环境中运行的容器一致</li>
-<li><font color="red">跨云服务商、跨操作系统发行版的可移植性</font>：容器可运行在 Ubuntu、RHEL、CoreOS、CentOS等不同的操作系统发行版上，可以运行在私有化部署、Google Kubernetes Engine、AWS、阿里云等不同的云供应商的环境中</li>
-<li><font color="red">以应用程序为中心的管理：</font>虚拟机时代的考虑的问题是在虚拟硬件上运行一个操作系统，而容器化时代，问题的焦点则是在操作系统的逻辑资源上运行一个应用程序</li>
-<li><font color="red">松耦合、分布式、弹性、无约束的微服务</font>应用程序被切分成更小的、独立的微服务，并可以动态部署和管理，而不是一个部署在专属机器上的庞大的单片应用程序</li>
-<li><font color="red">资源隔离：</font>确保应用程序性能不受干扰</li>
-<li><font color="red">资源利用：</font>资源高效、高密度利用</li>
-</ul>
-<h1 id="Kubernetes特性"><a href="#Kubernetes特性" class="headerlink" title="Kubernetes特性"></a>Kubernetes特性</h1><p>1、自动化部署：yaml部署到K8S，会根据应用程序计算资源需求，自动分配到node。</p>
-<p>2、系统自愈：重启已经停机的容器；替换、kill 那些不满足自定义健康检查条件的容器；在容器就绪之前，避免调用者发现该容器。</p>
-<p>3、水平扩展：HPA周期调度RC的副本数量，将用户定义的resource值匹配。</p>
-<p>4、服务发现和负载均衡：内置服务发现功能。可以通过 DNS 名称或 IP 地址暴露容器的访问方式；并且可以在同组容器内分发负载以实现负载均衡。</p>
-<p>5、存储编排：可以自动挂载指定的存储系统，例如 local stroage/nfs/云存储等。</p>
-<p>6、自动更新和回滚：可以在 K8S 中声明你期望应用程序容器应该达到的状态，Kubernetes将以合适的速率调整容器的实际状态，并逐步达到最终期望的结果，不会同时杀掉应用。更新出错，自动恢复到原先状态。</p>
-<h1 id="Kubernetes架构设计"><a href="#Kubernetes架构设计" class="headerlink" title="Kubernetes架构设计"></a>Kubernetes架构设计</h1><p><img src="/uploads/kubernetes/k8s-01-01.png" alt="image"></p>
-<h2 id="Master说明"><a href="#Master说明" class="headerlink" title="Master说明"></a>Master说明</h2><p>Master：集群控制节点，负责整个集群的管理和控制。</p>
-<p>API Server：提供接口，资源增删改查入口。并提供认证、授权、访问控制、API注册和发现等机制。</p>
-<p>Controller Manager：所有资源对象的自动化控制中心；负责维护集群的状态，比如故障检测、自动扩展、滚动更新等。</p>
-<p>Scheduler：负责资源调度，按照预定的调度策略将Pod调度到相应的机器上。</p>
-<p>Etcd：保存整个集群的状态。</p>
-<h2 id="Node说明"><a href="#Node说明" class="headerlink" title="Node说明"></a>Node说明</h2><p>Node：工作节点，听从master的工作分配</p>
-<p>Kubelet：Pod容器创建、启停、集群管理等任务；同时也负责Volume（CVI）和网络（CNI）的管理。</p>
-<p>Kube-proxy：实现service的通信与负载均衡组件。</p>
-<p>Docker：docker引擎，负责本机容器的创建和管理工作。</p>
-<h2 id="其他组件说明"><a href="#其他组件说明" class="headerlink" title="其他组件说明"></a>其他组件说明</h2><p>除了核心组件，还有一些推荐的Add-ons：</p>
-<ul>
-<li>kube-dns：负责为整个集群提供DNS服务</li>
-<li>Ingress Controller：为服务提供外网入口</li>
-<li>Heapster/metrics-server：提供资源监控</li>
-<li>Dashboard：提供GUI</li>
-<li>Federation：提供跨可用区的集群</li>
-<li>Fluentd-elasticsearch：提供集群日志采集、存储与查询</li>
-</ul>
-<h2 id="示意图"><a href="#示意图" class="headerlink" title="示意图"></a>示意图</h2><p>kubernetes master</p>
-<p><img src="/uploads/kubernetes/k8s-01-02.png" alt="image"></p>
-<p>kubernetes node</p>
-<p><img src="/uploads/kubernetes/k8s-01-03.png" alt="image"></p>
-<h2 id="分层架构"><a href="#分层架构" class="headerlink" title="分层架构"></a>分层架构</h2><p>Kubernetes设计理念和功能其实就是一个类似Linux的分层架构，如下图所示：</p>
-<p><img src="/uploads/kubernetes/k8s-01-04.png" alt="image"></p>
-<ul>
-<li>核心层：Kubernetes最核心的功能，对外提供API构建高层的应用，对内提供插件式应用执行环境</li>
-<li>应用层：部署（无状态应用、有状态应用、批处理任务、集群应用等）和路由（服务发现、DNS解析等）</li>
-<li>管理层：系统度量（如基础设施、容器和网络的度量），自动化（如自动扩展、动态Provision等）以及策略管理（RBAC、Quota、PSP、NetworkPolicy等）</li>
-<li>接口层：kubectl命令行工具、客户端SDK以及集群联邦</li>
-<li>生态系统：在接口层之上的庞大容器集群管理调度的生态系统，可以<font color="red">划分为两个范畴</font></li>
-</ul>
-<p>「Kubernetes外部：日志、监控、配置管理、CI、CD、Workflow、FaaS、OTS应用、ChatOps等」</p>
-<p>「Kubernetes内部：CRI、CNI、CVI、镜像仓库、Cloud Provider、集群自身的配置和管理等」</p>
-<h1 id="Kubernetes的核心技术概念和API对象"><a href="#Kubernetes的核心技术概念和API对象" class="headerlink" title="Kubernetes的核心技术概念和API对象"></a>Kubernetes的核心技术概念和API对象</h1><p><font color="red">API对象是K8s集群中的管理操作单元。</font>K8s集群系统每支持一项新功能，引入一项新技术，一定会新引入对应的API对象，支持对该功能的管理操作。例如副本集Replica Set对应的API对象是RS。</p>
-<p><font color="red">每个API对象都有3大类属性：元数据metadata、规范spec和状态status。</font>元数据是用来标识API对象的，每个对象都至少有3个元数据：namespace，name和uid；除此以外还有各种各样的标签labels用来标识和匹配不同的对象，例如用户可以用标签env来标识区分不同的服务部署环境，分别用env=dev、env=testing、env=production来标识开发、测试、生产的不同服务。规范描述了用户期望K8s集群中的分布式系统达到的理想状态（Desired State），例如用户可以通过复制控制器Replication Controller设置期望的Pod副本数为3；status描述了系统实际当前达到的状态（Status），例如系统当前实际的Pod副本数为2；那么复制控制器当前的程序逻辑就是自动启动新的Pod，争取达到副本数为3。</p>
-<p>K8s中所有的配置都是通过API对象的spec去设置的，也就是用户通过配置系统的理想状态来改变系统，这是k8s重要设计理念之一，即所有的操作都是声明式（Declarative）的而不是命令式（Imperative）的。声明式操作在分布式系统中的好处是稳定，不怕丢操作或运行多次，例如设置副本数为3的操作运行多次也还是一个结果，而给副本数加1的操作就不是声明式的，运行多次结果就错了。</p>
-<h2 id="微服实例-Pod"><a href="#微服实例-Pod" class="headerlink" title="微服实例-Pod"></a>微服实例-Pod</h2><p>K8s有很多技术概念，同时对应很多API对象，最重要的也是最基础的是微服务Pod。</p>
-<p>Pod是在K8s集群中运行部署应用或服务的最小单元，它是可以支持多容器的。Pod的设计理念是<font color="red">支持多个容器在一个Pod中共享网络地址和文件系统</font>，可以通过进程间通信和文件共享这种简单高效的方式组合完成服务。</p>
-<p>Pod是K8s集群中所有业务类型的基础，可以看作运行在K8s集群中的小机器人，不同类型的业务就需要不同类型的小机器人去执行。目前K8s中的业务主要可以分为长期伺服型（long-running）、批处理型（batch）、节点后台支撑型（node-daemon）和有状态应用型（stateful application）；分别对应的小机器人控制器为Deployment、Job、DaemonSet和StatefulSet，本文后面会一一介绍。</p>
-<h2 id="复制控制器-Replication-Controller，RC"><a href="#复制控制器-Replication-Controller，RC" class="headerlink" title="复制控制器-Replication Controller，RC"></a>复制控制器-Replication Controller，RC</h2><p>RC是K8s集群中最早的保证Pod高可用的API对象。通过监控运行中的Pod来保证集群中运行指定数目的Pod副本。指定的数目可以是多个也可以是1个；<font color="red">少于指定数目，RC就会启动运行新的Pod副本；多于指定数目，RC就会杀死多余的Pod副本</font>。</p>
-<p>即使在指定数目为1的情况下，通过RC运行Pod也比直接运行Pod更明智，因为RC也可以发挥它高可用的能力，保证永远有1个Pod在运行。</p>
-<p>RC是K8s较早期的技术概念，<font color="red">只适用于长期伺服型</font>的业务类型，比如控制小机器人提供高可用的Web服务。</p>
-<h2 id="副本集-设置-Replica-Set，RS"><a href="#副本集-设置-Replica-Set，RS" class="headerlink" title="副本集(设置)- Replica Set，RS"></a>副本集(设置)- Replica Set，RS</h2><p>RS是新一代RC，提供同样的高可用能力，区别主要在于<font color="red">RS后来居上，能支持更多种类的匹配模式</font>。副本集对象一般不单独使用，而是作为Deployment的理想状态参数使用。</p>
-<h2 id="部署-Deployment"><a href="#部署-Deployment" class="headerlink" title="部署- Deployment"></a>部署- Deployment</h2><p>Deployment表示用户对K8s集群的一次更新操作。Deployment是一个比RS应用模式更广的API对象，<font color="red">可以是创建一个新的服务，更新一个新的服务，也可以是滚动升级一个服务</font>。</p>
-<p>滚动升级一个服务，实际是创建一个新的RS，然后逐渐将新RS中副本数增加到理想状态，将旧RS中的副本数减小到0的复合操作；这样一个复合操作用一个RS是不太好描述的，所以用一个更通用的Deployment来描述。</p>
-<p>以K8s的发展方向，未来对所有长期伺服型的的业务的管理，都会通过Deployment来管理。</p>
-<h2 id="服务-Service"><a href="#服务-Service" class="headerlink" title="服务-Service"></a>服务-Service</h2><p>RC、RS和Deployment只是保证了支撑服务的微服务Pod的数量，但是没有解决如何访问这些服务的问题。</p>
-<p>一个Pod只是一个运行服务的实例，随时可能在一个节点上停止，在另一个节点以一个新的IP启动一个新的Pod，因此不能以固定的IP和端口号提供服务。<font color="red">要稳定地提供服务需要服务发现和负载均衡能力</font>。服务发现完成的工作，是针对客户端访问的服务，找到对应的的后端服务实例。</p>
-<p>在<font color="red">K8s集群中，客户端需要访问的服务就是Service对象</font>。每个Service会对应一个集群内部有效的虚拟IP，集群内部通过虚拟IP访问一个服务。在<font color="red">K8s集群中微服务的负载均衡是由Kube-proxy实现的</font>。Kube-proxy是K8s集群内部的负载均衡器。</p>
-<p>它是一个分布式代理服务器，在K8s的每个节点上都有一个；这一设计体现了它的伸缩性优势，需要访问服务的节点越多，提供负载均衡能力的Kube-proxy就越多，高可用节点也随之增多。与之相比，我们平时在服务器端做个反向代理做负载均衡，还要进一步解决反向代理的负载均衡和高可用问题。</p>
-<h2 id="任务-Job"><a href="#任务-Job" class="headerlink" title="任务-Job"></a>任务-Job</h2><p>Job是K8s用来控制批处理型任务的API对象。批处理业务与长期伺服业务的主要区别是<font color="red">批处理业务的运行有头有尾</font>，而长期伺服业务在用户不停止的情况下永远运行。</p>
-<p>Job管理的Pod根据用户的设置把任务成功执行完成就自动退出了。成功完成的标志根据不同的spec.completions策略而不同：单Pod型任务有一个Pod成功就标志完成；定数成功型任务保证有N个任务全部成功；工作队列型任务根据应用确认的全局成功而标志成功。</p>
-<h2 id="后台支撑服务集-DaemonSet"><a href="#后台支撑服务集-DaemonSet" class="headerlink" title="后台支撑服务集-DaemonSet"></a>后台支撑服务集-DaemonSet</h2><p>长期伺服型和批处理型服务的核心在业务应用，可能有些节点运行多个同类业务的Pod，有些节点上又没有这类Pod运行；而<font color="red">后台支撑型服务的核心关注点是在K8s集群中的节点（物理机或虚拟机），要保证每个节点上都有一个此类Pod运行</font>。</p>
-<p>节点可能是所有集群节点也可能是通过nodeSelector选定的一些特定节点。<font color="red">典型的后台支撑型服务包括：存储，日志和监控等在每个节点上支持K8s集群运行的服务</font>。</p>
-<h2 id="有状态服务集-StatefulSet"><a href="#有状态服务集-StatefulSet" class="headerlink" title="有状态服务集-StatefulSet"></a>有状态服务集-StatefulSet</h2><p>K8s在1.3版本里发布了Alpha版的PetSet功能。在云原生应用的体系里，有下面两组近义词；第一组是无状态（stateless）、牲畜（cattle）、无名（nameless）、可丢弃（disposable）；第二组是有状态（stateful）、宠物（pet）、有名（having name）、不可丢弃（non-disposable）。</p>
-<p>RC和RS主要是控制提供无状态服务的，其所控制的Pod的名字是随机设置的，一个Pod出故障了就被丢弃掉，在另一个地方重启一个新的Pod，名字变了；名字和启动在哪儿都不重要，重要的只是Pod总数；而<font color="red">StatefulSet是用来控制有状态服务，StatefulSet中的每个Pod的名字都是事先确定的，不能更改</font>。StatefulSet中Pod的名字的作用，是关联与该Pod对应的状态。</p>
-<p>对于RC和RS中的Pod，一般不挂载存储或者挂载共享存储，保存的是所有Pod共享的状态，Pod和普通物品一样没有什么分别；<font color="red">对于StatefulSet中的Pod，每个Pod挂载自己独立的存储，如果一个Pod出现故障，从其他节点启动一个同样名字的Pod，要挂载上原来Pod的存储继续以它的状态提供服务</font>。</p>
-<p>适合于StatefulSet的业务包括数据库服务MySQL和PostgreSQL，集群化管理服务Zookeeper、etcd等有状态服务。StatefulSet的另一种典型应用场景是作为一种比普通容器更稳定可靠的模拟虚拟机的机制。传统的虚拟机正是一种有状态的物品，运维人员需要不断地维护它，容器刚开始流行时，我们用容器来模拟虚拟机使用，所有状态都保存在容器里，而这已被证明是非常不安全、不可靠的。使用StatefulSet，Pod仍然可以通过漂移到不同节点提供高可用，而存储也可以通过外挂的存储来提供高可靠性，<font color="red">StatefulSet做的只是将确定的Pod与确定的存储关联起来保证状态的连续性</font>。</p>
-<h2 id="集群联邦-Federation"><a href="#集群联邦-Federation" class="headerlink" title="集群联邦-Federation"></a>集群联邦-Federation</h2><p>K8s在1.3版本里发布了beta版的Federation功能。在云计算环境中，服务的作用距离范围从近到远一般可以有：同主机（Host，Node）、跨主机同可用区（Available Zone）、跨可用区同地区（Region）、跨地区同服务商（Cloud Service Provider）、跨云平台。K8s的设计定位是单一集群在同一个地域内，因为同一个地区的网络性能才能满足K8s的调度和计算存储连接要求。而联合集群服务就是为提供跨Region跨服务商K8s集群服务而设计的。</p>
-<p>每个K8s Federation有自己的分布式存储、API Server和Controller Manager。用户可以通过Federation的API Server注册该Federation的成员K8s Cluster。当用户通过Federation的API Server创建、更改API对象时，Federation API Server会在自己所有注册的子K8s Cluster都创建一份对应的API对象。在提供业务请求服务时，K8s Federation会先在自己的各个子Cluster之间做负载均衡，而对于发送到某个具体K8s Cluster的业务请求，会依照这个K8s Cluster独立提供服务时一样的调度模式去做K8s Cluster内部的负载均衡。而Cluster之间的负载均衡是通过域名服务的负载均衡来实现的。</p>
-<p>所有的设计都尽量不影响K8s Cluster现有的工作机制，这样对于每个子K8s集群来说，并不需要更外层的有一个K8s Federation，也就是意味着所有现有的K8s代码和机制不需要因为Federation功能有任何变化。</p>
-<h2 id="存储卷-Volume"><a href="#存储卷-Volume" class="headerlink" title="存储卷-Volume"></a>存储卷-Volume</h2><p>K8s集群中的存储卷跟Docker的存储卷有些类似，<font color="red">只不过Docker的存储卷作用范围为一个容器，而K8s的存储卷的生命周期和作用范围是一个Pod。每个Pod中声明的存储卷由Pod中的所有容器共享</font>。</p>
-<p>K8s支持非常多的存储卷类型，特别是支持多种公有云平台的存储，包括AWS，Google和Azure云；支持多种分布式存储包括GlusterFS和Ceph；也支持较容易使用的主机本地目录hostPath和NFS。</p>
-<p>K8s还支持使用Persistent Volume Claim即PVC这种逻辑存储，使用这种存储，使得存储的使用者可以忽略后台的实际存储技术（例如AWS，Google或GlusterFS和Ceph），而将<font color="red">有关存储实际技术的配置交给存储管理员通过Persistent Volume来配置</font>。</p>
-<h2 id="持久存储卷-Persistent-Volume，PV和持久存储卷声明-Persistent-Volume-Claim，PVC"><a href="#持久存储卷-Persistent-Volume，PV和持久存储卷声明-Persistent-Volume-Claim，PVC" class="headerlink" title="持久存储卷-Persistent Volume，PV和持久存储卷声明-Persistent Volume Claim，PVC"></a>持久存储卷-Persistent Volume，PV和持久存储卷声明-Persistent Volume Claim，PVC</h2><p><font color="red">PV和PVC使得K8s集群具备了存储的逻辑抽象能力，使得在配置Pod的逻辑里可以忽略对实际后台存储技术的配置</font>，而把这项配置的工作交给PV的配置者，即集群的管理者。</p>
-<p>存储的PV和PVC的这种关系，跟计算的Node和Pod的关系是非常类似的；PV和Node是资源的提供者，根据集群的基础设施变化而变化，由K8s集群管理员配置；而PVC和Pod是资源的使用者，根据业务服务的需求变化而变化，由K8s集群的使用者即服务管理员来配置。</p>
-<h2 id="节点-Node"><a href="#节点-Node" class="headerlink" title="节点-Node"></a>节点-Node</h2><p>K8s集群中的计算能力由Node提供，最初Node称为服务节点Minion，后来改名为Node。K8s集群中的Node也就等同于Mesos集群中的Slave节点，是所有Pod运行所在的工作主机，可以是物理机也可以是虚拟机。</p>
-<p>无论是物理机还是虚拟机，工作主机的统一特征是上面要运行kubelet管理节点。</p>
-<h2 id="密钥对象-Secret"><a href="#密钥对象-Secret" class="headerlink" title="密钥对象-Secret"></a>密钥对象-Secret</h2><p><font color="red">Secret是用来保存和传递密码、密钥、认证凭证这些敏感信息的对象</font>。使用Secret的好处是可以避免把敏感信息明文写在配置文件里。</p>
-<p>在K8s集群中配置和使用服务不可避免的要用到各种敏感信息实现登录、认证等功能，例如访问AWS存储的用户名密码。</p>
-<p>为了避免将类似的敏感信息明文写在所有需要使用的配置文件中，可以将这些信息存入一个Secret对象，而在配置文件中通过Secret对象引用这些敏感信息。这种方式的好处包括：意图明确，避免重复，减少暴漏机会。</p>
-<h2 id="用户帐户-User-Account和服务帐户-Service-Account"><a href="#用户帐户-User-Account和服务帐户-Service-Account" class="headerlink" title="用户帐户-User Account和服务帐户-Service Account"></a>用户帐户-User Account和服务帐户-Service Account</h2><p>顾名思义，用户帐户为人提供账户标识，而服务账户为计算机进程和K8s集群中运行的Pod提供账户标识。</p>
-<p>用户帐户和服务帐户的一个区别是作用范围；用户帐户对应的是人的身份，人的身份与服务的namespace无关，所以用户账户是跨namespace的；而服务帐户对应的是一个运行中程序的身份，与特定namespace是相关的。</p>
-<h2 id="名称空间-Namespace"><a href="#名称空间-Namespace" class="headerlink" title="名称空间-Namespace"></a>名称空间-Namespace</h2><p><font color="red">名称空间为K8s集群提供虚拟的隔离作用</font>，K8s集群初始有两个名称空间，分别是<font color="red">默认名称空间default和系统名称空间kube-system</font>，除此以外，管理员可以创建新的名称空间满足需要。</p>
-<h2 id="RBAC访问授权"><a href="#RBAC访问授权" class="headerlink" title="RBAC访问授权"></a>RBAC访问授权</h2><p>K8s在1.3版本中发布了alpha版的基于角色的访问控制（Role-based Access Control，RBAC）的授权模式。相对于基于属性的访问控制（Attribute-based Access Control，ABAC），RBAC主要是引入了角色（Role）和角色绑定（RoleBinding）的抽象概念。<font color="red">在ABAC中，K8s集群中的访问策略只能跟用户直接关联；而在RBAC中，访问策略可以跟某个角色关联，具体的用户再跟一个或多个角色相关联</font>。</p>
-<p>显然，RBAC像其他新功能一样，每次引入新功能，都会引入新的API对象，从而引入新的概念抽象，而这一新的概念抽象一定会使集群服务管理和使用变得更容易扩展和重用。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>从K8s的系统架构、技术概念和设计理念，我们可以看到K8s系统<font color="red">最核心的两个设计理念：一个是容错性，一个是易扩展性</font>。</p>
-<p>容错性实际是保证K8s系统稳定性和安全性的基础；易扩展性是保证K8s对变更友好，可以快速迭代增加新功能的基础。</p>
+<p>运行yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f deply_service_myns.yaml </span><br><span class="line">kubectl apply -f deply_service_mytest.yaml</span><br></pre></td></tr></table></figure>
+
+<p>查看myns名称空间信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master cross_ns]# kubectl get svc -n myns -o wide</span><br><span class="line">NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE   SELECTOR</span><br><span class="line">myapp-clusterip1   ClusterIP   10.100.61.11   &lt;none&gt;        80/TCP    3m    app=myapp,release=v1</span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# kubectl get deploy -n myns -o wide</span><br><span class="line">NAME            READY   UP-TO-DATE   AVAILABLE   AGE    CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">myapp-deploy1   2/2     2            2           3m7s   myapp        registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp,release=v1</span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# kubectl get rs -n myns -o wide</span><br><span class="line">NAME                       DESIRED   CURRENT   READY   AGE     CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">myapp-deploy1-5b9d78576c   2         2         2       3m15s   myapp        registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp,pod-template-hash=5b9d78576c,release=v1</span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# kubectl get pod -n myns -o wide</span><br><span class="line">NAME                             READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">myapp-deploy1-5b9d78576c-wfw4n   1/1     Running   0          3m20s   10.244.2.136   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">myapp-deploy1-5b9d78576c-zsfjl   1/1     Running   0          3m20s   10.244.3.193   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>查看mytest名称空间信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master cross_ns]# kubectl get svc -n mytest -o wide</span><br><span class="line">NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE    SELECTOR</span><br><span class="line">myapp-clusterip2   ClusterIP   10.100.201.103   &lt;none&gt;        80/TCP    4m9s   app=myapp,release=v2</span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# kubectl get deploy -n mytest -o wide</span><br><span class="line">NAME            READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">myapp-deploy2   2/2     2            2           4m15s   myapp        registry.cn-beijing.aliyuncs.com/google_registry/myapp:v2   app=myapp,release=v2</span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# kubectl get rs -n mytest -o wide</span><br><span class="line">NAME                      DESIRED   CURRENT   READY   AGE     CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">myapp-deploy2-dc8f96497   2         2         2       4m22s   myapp        registry.cn-beijing.aliyuncs.com/google_registry/myapp:v2   app=myapp,pod-template-hash=dc8f96497,release=v2</span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# kubectl get pod -n mytest -o wide</span><br><span class="line">NAME                            READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">myapp-deploy2-dc8f96497-nnkqn   1/1     Running   0          4m27s   10.244.3.194   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">myapp-deploy2-dc8f96497-w47dt   1/1     Running   0          4m27s   10.244.2.137   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>只看Service和Pod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master cross_ns]# kubectl get pod -A -o wide | grep -E &apos;(my)|(NAME)&apos;</span><br><span class="line">NAMESPACE              NAME                                         READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">myns                   myapp-deploy1-5b9d78576c-wfw4n               1/1     Running   0          41m   10.244.2.136   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">myns                   myapp-deploy1-5b9d78576c-zsfjl               1/1     Running   0          41m   10.244.3.193   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">mytest                 myapp-deploy2-dc8f96497-nnkqn                1/1     Running   0          41m   10.244.3.194   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">mytest                 myapp-deploy2-dc8f96497-w47dt                1/1     Running   0          41m   10.244.2.137   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# kubectl get svc -A -o wide | grep -E &apos;(my)|(NAME)&apos;</span><br><span class="line">NAMESPACE              NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                  AGE   SELECTOR</span><br><span class="line">myns                   myapp-clusterip1            ClusterIP   10.100.61.11     &lt;none&gt;        80/TCP                   41m   app=myapp,release=v1</span><br><span class="line">mytest                 myapp-clusterip2            ClusterIP   10.100.201.103   &lt;none&gt;        80/TCP                   41m   app=myapp,release=v2</span><br></pre></td></tr></table></figure>
+
+<h2 id="pod跨名称空间namespace与Service通信"><a href="#pod跨名称空间namespace与Service通信" class="headerlink" title="pod跨名称空间namespace与Service通信"></a>pod跨名称空间namespace与Service通信</h2><p><font color="red">说明：是通过Service的NAME进行通信，而不是Service的IP【因为每次重启Service，NAME不会改变，而IP是会改变的】。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 进入ns名称空间下的一个Pod容器</span><br><span class="line">[root@k8s-master cross_ns]# kubectl exec -it -n myns myapp-deploy1-5b9d78576c-wfw4n sh</span><br><span class="line">/ # cd /root/</span><br><span class="line">### 如下说明在同一名称空间下，通信无问题</span><br><span class="line">~ # ping myapp-clusterip1 </span><br><span class="line">PING myapp-clusterip1 (10.100.61.11): 56 data bytes</span><br><span class="line">64 bytes from 10.100.61.11: seq=0 ttl=64 time=0.046 ms</span><br><span class="line">64 bytes from 10.100.61.11: seq=1 ttl=64 time=0.081 ms</span><br><span class="line">~ # </span><br><span class="line">~ # wget myapp-clusterip1 -O myns.html</span><br><span class="line">Connecting to myapp-clusterip1 (10.100.61.11:80)</span><br><span class="line">myns.html            100%</span><br><span class="line">~ # </span><br><span class="line">~ # cat myns.html </span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">### 如下说明在不同的名称空间下，通过Service的NAME进行通信存在问题</span><br><span class="line">~ # ping myapp-clusterip2</span><br><span class="line">ping: bad address &apos;myapp-clusterip2&apos;</span><br><span class="line">~ # </span><br><span class="line">~ # wget myapp-clusterip2 -O mytest.html</span><br><span class="line">wget: bad address &apos;myapp-clusterip2&apos;</span><br></pre></td></tr></table></figure>
+
+<h1 id="实现跨namespace与Service通信"><a href="#实现跨namespace与Service通信" class="headerlink" title="实现跨namespace与Service通信"></a>实现跨namespace与Service通信</h1><p>通过Service的ExternalName类型即可实现跨namespace名称空间与Service通信。</p>
+<p>相关yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master cross_ns]# pwd</span><br><span class="line">/root/k8s_practice/cross_ns</span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# cat svc_ExternalName_visit.yaml </span><br><span class="line"># 实现 myns 名称空间的pod，访问 mytest 名称空间的Service：myapp-clusterip2</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-clusterip1-externalname</span><br><span class="line">  namespace: myns</span><br><span class="line">spec:</span><br><span class="line">  type: ExternalName</span><br><span class="line">  externalName: myapp-clusterip2.mytest.svc.cluster.local</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: 80</span><br><span class="line">    targetPort: 80</span><br><span class="line">---</span><br><span class="line"># 实现 mytest 名称空间的Pod，访问 myns 名称空间的Service：myapp-clusterip1</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-clusterip2-externalname</span><br><span class="line">  namespace: mytest</span><br><span class="line">spec:</span><br><span class="line">  type: ExternalName</span><br><span class="line">  externalName: myapp-clusterip1.myns.svc.cluster.local</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: 80</span><br><span class="line">    targetPort: 80</span><br></pre></td></tr></table></figure>
+
+<p>运行yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master cross_ns]# kubectl apply -f svc_ExternalName_visit.yaml</span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# kubectl get svc -A -o wide | grep -E &apos;(ExternalName)|(NAME)&apos; </span><br><span class="line">NAMESPACE              NAME                            TYPE           CLUSTER-IP       EXTERNAL-IP                                 PORT(S)                  AGE   SELECTOR</span><br><span class="line">myns                   myapp-clusterip1-externalname   ExternalName   &lt;none&gt;           myapp-clusterip2.mytest.svc.cluster.local   80/TCP                   28s   &lt;none&gt;</span><br><span class="line">mytest                 myapp-clusterip2-externalname   ExternalName   &lt;none&gt;           myapp-clusterip1.myns.svc.cluster.local     80/TCP                   28s   &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="pod跨名称空间namespace与Service通信-1"><a href="#pod跨名称空间namespace与Service通信-1" class="headerlink" title="pod跨名称空间namespace与Service通信"></a>pod跨名称空间namespace与Service通信</h2><p>到目前所有service和pod信息查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master cross_ns]# kubectl get svc -A -o wide | grep -E &apos;(my)|(NAME)&apos;</span><br><span class="line">NAMESPACE              NAME                            TYPE           CLUSTER-IP       EXTERNAL-IP                                 PORT(S)                  AGE   SELECTOR</span><br><span class="line">myns                   myapp-clusterip1                ClusterIP      10.100.61.11     &lt;none&gt;                                      80/TCP                   62m   app=myapp,release=v1</span><br><span class="line">myns                   myapp-clusterip1-externalname   ExternalName   &lt;none&gt;           myapp-clusterip2.mytest.svc.cluster.local   80/TCP                   84s   &lt;none&gt;</span><br><span class="line">mytest                 myapp-clusterip2                ClusterIP      10.100.201.103   &lt;none&gt;                                      80/TCP                   62m   app=myapp,release=v2</span><br><span class="line">mytest                 myapp-clusterip2-externalname   ExternalName   &lt;none&gt;           myapp-clusterip1.myns.svc.cluster.local     80/TCP                   84s   &lt;none&gt;</span><br><span class="line">[root@k8s-master cross_ns]# </span><br><span class="line">[root@k8s-master cross_ns]# kubectl get pod -A -o wide | grep -E &apos;(my)|(NAME)&apos;</span><br><span class="line">NAMESPACE              NAME                                         READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">myns                   myapp-deploy1-5b9d78576c-wfw4n               1/1     Running   0          62m   10.244.2.136   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">myns                   myapp-deploy1-5b9d78576c-zsfjl               1/1     Running   0          62m   10.244.3.193   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">mytest                 myapp-deploy2-dc8f96497-nnkqn                1/1     Running   0          62m   10.244.3.194   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">mytest                 myapp-deploy2-dc8f96497-w47dt                1/1     Running   0          62m   10.244.2.137   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>myns 名称空间的pod，访问 mytest 名称空间的Service：myapp-clusterip2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master cross_ns]# kubectl exec -it -n myns myapp-deploy1-5b9d78576c-wfw4n sh</span><br><span class="line">/ # cd /root/</span><br><span class="line">### 如下说明在同一名称空间下，通信无问题</span><br><span class="line">~ # ping myapp-clusterip1 </span><br><span class="line">PING myapp-clusterip1 (10.100.61.11): 56 data bytes</span><br><span class="line">64 bytes from 10.100.61.11: seq=0 ttl=64 time=0.057 ms</span><br><span class="line">64 bytes from 10.100.61.11: seq=1 ttl=64 time=0.071 ms</span><br><span class="line">………………</span><br><span class="line">~ # </span><br><span class="line">~ # wget myapp-clusterip1 -O myns.html</span><br><span class="line">Connecting to myapp-clusterip1 (10.100.61.11:80)</span><br><span class="line">myns.html            100%</span><br><span class="line">~ # </span><br><span class="line">~ # cat myns.html </span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">### 如下说明通过Service externalname类型，实现了Pod跨namespace名称空间与Service访问</span><br><span class="line">~ # ping myapp-clusterip1-externalname</span><br><span class="line">PING myapp-clusterip1-externalname (10.100.201.103): 56 data bytes</span><br><span class="line">64 bytes from 10.100.201.103: seq=0 ttl=64 time=0.050 ms</span><br><span class="line">64 bytes from 10.100.201.103: seq=1 ttl=64 time=0.311 ms</span><br><span class="line">………………</span><br><span class="line">~ # </span><br><span class="line">~ # wget myapp-clusterip1-externalname -O mytest.html</span><br><span class="line">Connecting to myapp-clusterip1-externalname (10.100.201.103:80)</span><br><span class="line">mytest.html          100%</span><br><span class="line">~ # </span><br><span class="line">~ # cat mytest.html </span><br><span class="line">Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>mytest 名称空间的Pod，访问 myns 名称空间的Service：myapp-clusterip1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master cross_ns]# kubectl exec -it -n mytest myapp-deploy2-dc8f96497-w47dt sh</span><br><span class="line">/ # cd /root/</span><br><span class="line">### 如下说明在同一名称空间下，通信无问题</span><br><span class="line">~ # ping myapp-clusterip2 </span><br><span class="line">PING myapp-clusterip2 (10.100.201.103): 56 data bytes</span><br><span class="line">64 bytes from 10.100.201.103: seq=0 ttl=64 time=0.087 ms</span><br><span class="line">64 bytes from 10.100.201.103: seq=1 ttl=64 time=0.073 ms</span><br><span class="line">………………</span><br><span class="line">~ # </span><br><span class="line">~ # wget myapp-clusterip2 -O mytest.html</span><br><span class="line">Connecting to myapp-clusterip2 (10.100.201.103:80)</span><br><span class="line">mytest.html          100%</span><br><span class="line">~ # </span><br><span class="line">~ # cat mytest.html </span><br><span class="line">Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">### 如下说明通过Service externalname类型，实现了Pod跨namespace名称空间与Service访问</span><br><span class="line">~ # ping myapp-clusterip2-externalname</span><br><span class="line">PING myapp-clusterip2-externalname (10.100.61.11): 56 data bytes</span><br><span class="line">64 bytes from 10.100.61.11: seq=0 ttl=64 time=0.089 ms</span><br><span class="line">64 bytes from 10.100.61.11: seq=1 ttl=64 time=0.071 ms</span><br><span class="line">………………</span><br><span class="line">~ # </span><br><span class="line">~ # wget myapp-clusterip2-externalname -O myns.html</span><br><span class="line">Connecting to myapp-clusterip2-externalname (10.100.61.11:80)</span><br><span class="line">myns.html            100%</span><br><span class="line">~ # </span><br><span class="line">~ # cat myns.html </span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，实现了Pod跨namespace名称空间与Service访问。</font></p>
+<p>完毕！</p>
 <hr>
 
       
@@ -649,7 +611,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangblog.com/2020/07/27/kubernetes01/" title="Kubernetes K8S 基本概述、设计架构和设计理念">http://www.zhangblog.com/2020/07/27/kubernetes01/</a>
+    <a href="http://www.zhangblog.com/2020/09/13/kubernetes14/" title="Kubernetes K8S之Pod跨namespace名称空间访问Service服务">http://www.zhangblog.com/2020/09/13/kubernetes14/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -685,8 +647,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/17/yaml01/" rel="next" title="YAML 语言教程与使用案例">
-                <i class="fa fa-chevron-left"></i> YAML 语言教程与使用案例
+              <a href="/2020/09/08/kubernetes13/" rel="next" title="Kubernetes K8S在IPVS代理模式下Service服务的ClusterIP类型访问失败处理">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S在IPVS代理模式下Service服务的ClusterIP类型访问失败处理
               </a>
             
           </div>
@@ -694,10 +656,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/07/29/kubernetes02/" rel="prev" title="基于kubeadm快速部署kubernetes K8S V1.17.4集群-无坑完整版">
-                基于kubeadm快速部署kubernetes K8S V1.17.4集群-无坑完整版 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -875,7 +833,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes概述"><span class="nav-number">1.</span> <span class="nav-text">Kubernetes概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes特性"><span class="nav-number">2.</span> <span class="nav-text">Kubernetes特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes架构设计"><span class="nav-number">3.</span> <span class="nav-text">Kubernetes架构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Master说明"><span class="nav-number">3.1.</span> <span class="nav-text">Master说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node说明"><span class="nav-number">3.2.</span> <span class="nav-text">Node说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他组件说明"><span class="nav-number">3.3.</span> <span class="nav-text">其他组件说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示意图"><span class="nav-number">3.4.</span> <span class="nav-text">示意图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分层架构"><span class="nav-number">3.5.</span> <span class="nav-text">分层架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes的核心技术概念和API对象"><span class="nav-number">4.</span> <span class="nav-text">Kubernetes的核心技术概念和API对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#微服实例-Pod"><span class="nav-number">4.1.</span> <span class="nav-text">微服实例-Pod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制控制器-Replication-Controller，RC"><span class="nav-number">4.2.</span> <span class="nav-text">复制控制器-Replication Controller，RC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#副本集-设置-Replica-Set，RS"><span class="nav-number">4.3.</span> <span class="nav-text">副本集(设置)- Replica Set，RS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署-Deployment"><span class="nav-number">4.4.</span> <span class="nav-text">部署- Deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务-Service"><span class="nav-number">4.5.</span> <span class="nav-text">服务-Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务-Job"><span class="nav-number">4.6.</span> <span class="nav-text">任务-Job</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后台支撑服务集-DaemonSet"><span class="nav-number">4.7.</span> <span class="nav-text">后台支撑服务集-DaemonSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有状态服务集-StatefulSet"><span class="nav-number">4.8.</span> <span class="nav-text">有状态服务集-StatefulSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群联邦-Federation"><span class="nav-number">4.9.</span> <span class="nav-text">集群联邦-Federation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储卷-Volume"><span class="nav-number">4.10.</span> <span class="nav-text">存储卷-Volume</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持久存储卷-Persistent-Volume，PV和持久存储卷声明-Persistent-Volume-Claim，PVC"><span class="nav-number">4.11.</span> <span class="nav-text">持久存储卷-Persistent Volume，PV和持久存储卷声明-Persistent Volume Claim，PVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#节点-Node"><span class="nav-number">4.12.</span> <span class="nav-text">节点-Node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#密钥对象-Secret"><span class="nav-number">4.13.</span> <span class="nav-text">密钥对象-Secret</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户帐户-User-Account和服务帐户-Service-Account"><span class="nav-number">4.14.</span> <span class="nav-text">用户帐户-User Account和服务帐户-Service Account</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#名称空间-Namespace"><span class="nav-number">4.15.</span> <span class="nav-text">名称空间-Namespace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RBAC访问授权"><span class="nav-number">4.16.</span> <span class="nav-text">RBAC访问授权</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#场景需求"><span class="nav-number">1.</span> <span class="nav-text">场景需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主机配置规划"><span class="nav-number">2.</span> <span class="nav-text">主机配置规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建Service和Pod"><span class="nav-number">3.</span> <span class="nav-text">创建Service和Pod</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pod跨名称空间namespace与Service通信"><span class="nav-number">3.1.</span> <span class="nav-text">pod跨名称空间namespace与Service通信</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现跨namespace与Service通信"><span class="nav-number">4.</span> <span class="nav-text">实现跨namespace与Service通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pod跨名称空间namespace与Service通信-1"><span class="nav-number">4.1.</span> <span class="nav-text">pod跨名称空间namespace与Service通信</span></a></li></ol></li></ol></div>
             
 
           </div>
