@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-14-02.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-14-03.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-14-04.png">
-<meta property="og:updated_time" content="2020-09-16T15:26:06.610Z">
+<meta property="og:updated_time" content="2020-09-16T15:34:52.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes K8S之Service服务详解与示例">
 <meta name="twitter:description" content="K8S之Service概述与代理说明，并详解所有的service服务类型与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0">
@@ -550,7 +550,7 @@
 <h1 id="Service服务类型"><a href="#Service服务类型" class="headerlink" title="Service服务类型"></a>Service服务类型</h1><p>Kubernetes 中Service有以下4中类型：</p>
 <ul>
 <li>ClusterIP：<font color="red">默认类型</font>，自动分配一个仅Cluster内部可以访问的虚拟IP</li>
-<li>NodePort：通过每个 Node 上的 IP 和静态端口（NodePort）暴露服务。以ClusterIP为基础，NodePort 服务会路由到 ClusterIP 服务。通过请求 <nodeip>:<nodeport>，可以从集群的外部访问一个集群内部的 NodePort 服务。</nodeport></nodeip></li>
+<li>NodePort：通过每个 Node 上的 IP 和静态端口（NodePort）暴露服务。以ClusterIP为基础，NodePort 服务会路由到 ClusterIP 服务。通过请求 <code>&lt;NodeIP&gt;:&lt;NodePort&gt;</code>，可以从集群的外部访问一个集群内部的 NodePort 服务。</li>
 <li>LoadBalancer：使用云提供商的负载均衡器，可以向外部暴露服务。外部的负载均衡器可以路由到 NodePort 服务和 ClusterIP 服务。</li>
 <li>ExternalName：通过返回 CNAME 和它的值，可以将服务映射到 externalName 字段的内容（例如，foo.bar.example.com）。没有任何类型代理被创建。</li>
 </ul>
