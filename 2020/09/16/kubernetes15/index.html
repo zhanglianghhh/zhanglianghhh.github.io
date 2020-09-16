@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-14-02.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-14-03.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-14-04.png">
-<meta property="og:updated_time" content="2020-09-16T15:36:25.618Z">
+<meta property="og:updated_time" content="2020-09-16T15:48:16.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes K8S之Service服务详解与示例">
 <meta name="twitter:description" content="K8S之Service概述与代理说明，并详解所有的service服务类型与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0">
@@ -665,10 +665,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# curl 10.0.0.240</span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.0.0.240/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-2866m</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.0.0.240/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-dcfw7</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.0.0.240/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-n2b5w</span><br></pre></td></tr></table></figure>
 
 <h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="http://www.zhangblog.com/2020/09/08/kubernetes13/">Kubernetes K8S在IPVS代理模式下svc服务的ClusterIP类型访问失败处理</a></p>
-<p>2<a href="http://www.zhangblog.com/2020/09/13/kubernetes14/">、Kubernetes K8S之跨namespace名称空间访问Service服务</a></p>
-<p>3、<a href="https://note.youdao.com/" target="_blank" rel="noopener">Kubernetes K8S之资源控制器StatefulSets详解</a></p>
-<p>4、<a href="https://www.cnblogs.com/chadiandianwenrou/p/11937041.html" target="_blank" rel="noopener">kubernetes学习Service之headless和statefulSet结合</a></p>
-<p>5、<a href="https://www.linuxea.com/1969.html" target="_blank" rel="noopener">linuxea:kubernetes Headless Service无头服务</a></p>
+<p>2、<a href="http://www.zhangblog.com/2020/09/13/kubernetes14/">Kubernetes K8S之跨namespace名称空间访问Service服务</a></p>
+<p>3、<a href="https://www.cnblogs.com/chadiandianwenrou/p/11937041.html" target="_blank" rel="noopener">kubernetes学习Service之headless和statefulSet结合</a></p>
+<p>4、<a href="https://www.linuxea.com/1969.html" target="_blank" rel="noopener">linuxea:kubernetes Headless Service无头服务</a></p>
 <hr>
 
       
