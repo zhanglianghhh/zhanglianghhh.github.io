@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker,Kubernetes,K8S,CI/CD,DevOps,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="K8S之Service概述与代理说明，并详解所有的service服务类型与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0">
+<meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes K8S之Service服务详解与示例">
+<meta property="og:url" content="http://www.zhangblog.com/2020/09/16/kubernetes15/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="K8S之Service概述与代理说明，并详解所有的service服务类型与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-14-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-14-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-14-03.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-14-04.png">
+<meta property="og:updated_time" content="2020-09-16T15:26:06.610Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kubernetes K8S之Service服务详解与示例">
+<meta name="twitter:description" content="K8S之Service概述与代理说明，并详解所有的service服务类型与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2020/09/16/kubernetes15/">
+
+
+
+
+
+  <title>Kubernetes K8S之Service服务详解与示例 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/09/16/kubernetes15/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kubernetes K8S之Service服务详解与示例</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-16T23:17:54+08:00">
+                2020-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/K8S/" itemprop="url" rel="index">
+                    <span itemprop="name">K8S</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/09/16/kubernetes15/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/09/16/kubernetes15/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/09/16/kubernetes15/" class="leancloud_visitors" data-flag-title="Kubernetes K8S之Service服务详解与示例">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  25
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
+<blockquote>
+<p>K8S之Service概述与代理说明，并详解所有的service服务类型与示例</p>
+</blockquote>
+<h1 id="主机配置规划"><a href="#主机配置规划" class="headerlink" title="主机配置规划"></a>主机配置规划</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>系统版本</th>
+<th>配置</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.110</td>
+<td>10.0.0.110</td>
+</tr>
+<tr>
+<td>k8s-node01</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.111</td>
+<td>10.0.0.111</td>
+</tr>
+<tr>
+<td>k8s-node02</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.112</td>
+<td>10.0.0.112</td>
+</tr>
+</tbody></table>
+<h1 id="Service概述"><a href="#Service概述" class="headerlink" title="Service概述"></a>Service概述</h1><p><font color="red">Kubernetes Service定义了这样一种抽象：逻辑上的一组 Pod，一种可以访问它们的策略 —— 通常被称为微服务</font>。这一组 Pod 能够被 Service 访问到，<font color="red">通常是通过 selector实现</font>的。</p>
+<p>举例：考虑一个图片处理 backend，它运行了3个副本。这些副本是可互换的 —— frontend 不需要关心它们调用了哪个 backend 副本。 然而组成这一组 backend 程序的 Pod 实际上可能会发生变化，frontend 客户端不应该也没必要知道，而且也不需要跟踪这一组 backend 的状态。Service 定义的抽象能够解耦这种关联。</p>
+<p>Service可以提供负载均衡的能力，但是使用上存在如下限制：</p>
+<ul>
+<li>只能提供4层负载均衡能力，而没有7层功能。有时我们可能需要更多的匹配规则来转发请求，这点上4层负载均衡是不支持的、</li>
+</ul>
+<p>如web访问的service服务示例图：</p>
+<p><img src="/uploads/kubernetes/k8s-14-01.png" alt="image"></p>
+<h1 id="VIP和Service代理"><a href="#VIP和Service代理" class="headerlink" title="VIP和Service代理"></a>VIP和Service代理</h1><p>在 Kubernetes 集群中，每个 Node 运行一个 kube-proxy 进程。kube-proxy 负责为 Service 实现了一种 VIP（虚拟 IP）的形式，而不是 ExternalName 的形式。</p>
+<p>从Kubernetes v1.0开始，已经可以使用 userspace代理模式。Kubernetes v1.1添加了 iptables 代理模式，在 Kubernetes v1.2 中kube-proxy 的 iptables 模式成为默认设置。Kubernetes v1.8添加了 ipvs 代理模式。</p>
+<div style="font-size:17px"><b>为什么不使用 DNS 轮询？</b></div>
+
+<p>原因如下：</p>
+<ul>
+<li>DNS 实现的历史由来已久，它不遵守记录 TTL，并且在名称查找到结果后会对其进行缓存。</li>
+<li>有些应用程序仅执行一次 DNS 查找，并无限期地缓存结果。</li>
+<li>即使应用和库进行了适当的重新解析，DNS 记录上的 TTL 值低或为零也可能会给 DNS 带来高负载，从而使管理变得困难。</li>
+</ul>
+<p><font color="red">总之就是因为有缓存，因此不合适。</font></p>
+<h2 id="userspace代理模式"><a href="#userspace代理模式" class="headerlink" title="userspace代理模式"></a>userspace代理模式</h2><p>这种模式，kube-proxy 会监视 Kubernetes master 对 Service 对象和 Endpoints 对象的添加和移除。 对每个 Service，它会在本地 Node 上打开一个端口（随机选择）。 任何连接到“代理端口”的请求，都会被代理到 Service 的backend Pods 中的某个上面（如 Endpoints 所报告的一样）。 使用哪个 backend Pod，是 kube-proxy 基于 SessionAffinity 来确定的。</p>
+<p>最后，它配置 iptables 规则，捕获到达该 Service 的 clusterIP（是虚拟 IP）和 Port 的请求，并重定向到代理端口，代理端口再代理请求到 backend Pod。</p>
+<p>默认情况下，userspace模式下的kube-proxy通过循环算法选择后端。</p>
+<p>默认的策略是，通过 round-robin 算法来选择 backend Pod。</p>
+<p><img src="/uploads/kubernetes/k8s-14-02.png" alt="image"></p>
+<h2 id="iptables-代理模式"><a href="#iptables-代理模式" class="headerlink" title="iptables 代理模式"></a>iptables 代理模式</h2><p>这种模式，kube-proxy 会监视 Kubernetes 控制节点对 Service 对象和 Endpoints 对象的添加和移除。 对每个 Service，它会配置 iptables 规则，从而捕获到达该 Service 的 clusterIP 和端口的请求，进而将请求重定向到 Service 的一组 backend 中的某个上面。对于每个 Endpoints 对象，它也会配置 iptables 规则，这个规则会选择一个 backend 组合。</p>
+<p>默认的策略是，kube-proxy 在 iptables 模式下随机选择一个 backend。</p>
+<p>使用 iptables 处理流量具有较低的系统开销，因为流量由 Linux netfilter 处理，而无需在用户空间和内核空间之间切换。 这种方法也可能更可靠。</p>
+<p>如果 kube-proxy 在 iptables模式下运行，并且所选的第一个 Pod 没有响应，则连接失败。 这与userspace模式不同：在这种情况下，kube-proxy 将检测到与第一个 Pod 的连接已失败，并会自动使用其他后端 Pod 重试。</p>
+<p>我们可以使用 Pod readiness 探测器 验证后端 Pod 是否可以正常工作，以便 iptables 模式下的 kube-proxy 仅看到测试正常的后端。这样做意味着可以避免将流量通过 kube-proxy 发送到已知已失败的Pod。</p>
+<p><img src="/uploads/kubernetes/k8s-14-03.png" alt="image"></p>
+<h2 id="IPVS-代理模式"><a href="#IPVS-代理模式" class="headerlink" title="IPVS 代理模式"></a>IPVS 代理模式</h2><p>在 ipvs 模式下，kube-proxy监视Kubernetes服务(Service)和端点(Endpoints)，调用 netlink 接口相应地创建 IPVS 规则， 并定期将 IPVS 规则与 Kubernetes服务(Service)和端点(Endpoints)同步。该控制循环可确保 IPVS 状态与所需状态匹配。访问服务(Service)时，IPVS　将流量定向到后端Pod之一。</p>
+<p>IPVS代理模式基于类似于 iptables 模式的 netfilter 挂钩函数，但是使用哈希表作为基础数据结构，并且在内核空间中工作。 这意味着，与 iptables 模式下的 kube-proxy 相比，IPVS 模式下的 kube-proxy 重定向通信的延迟要短，并且在同步代理规则时具有更好的性能。<font color="red">与其他代理模式相比，IPVS 模式还支持更高的网络流量吞吐量</font>。</p>
+<p>IPVS提供了更多选项来平衡后端Pod的流量。这些是：</p>
+<ul>
+<li>rr: round-robin</li>
+<li>lc: least connection (smallest number of open connections)</li>
+<li>dh: destination hashing</li>
+<li>sh: source hashing</li>
+<li>sed: shortest expected delay</li>
+<li>nq: never queue</li>
+</ul>
+<p><font color="red">注意：要在 IPVS 模式下运行 kube-proxy，必须在启动 kube-proxy 之前使 IPVS Linux 在节点上可用。 当 kube-proxy 以 IPVS 代理模式启动时，它将验证 IPVS 内核模块是否可用。 如果未检测到 IPVS 内核模块，则 kube-proxy 将退回到以 iptables 代理模式运行。</font></p>
+<p><img src="/uploads/kubernetes/k8s-14-04.png" alt="image"></p>
+<h1 id="Service服务类型"><a href="#Service服务类型" class="headerlink" title="Service服务类型"></a>Service服务类型</h1><p>Kubernetes 中Service有以下4中类型：</p>
+<ul>
+<li>ClusterIP：<font color="red">默认类型</font>，自动分配一个仅Cluster内部可以访问的虚拟IP</li>
+<li>NodePort：通过每个 Node 上的 IP 和静态端口（NodePort）暴露服务。以ClusterIP为基础，NodePort 服务会路由到 ClusterIP 服务。通过请求 <nodeip>:<nodeport>，可以从集群的外部访问一个集群内部的 NodePort 服务。</nodeport></nodeip></li>
+<li>LoadBalancer：使用云提供商的负载均衡器，可以向外部暴露服务。外部的负载均衡器可以路由到 NodePort 服务和 ClusterIP 服务。</li>
+<li>ExternalName：通过返回 CNAME 和它的值，可以将服务映射到 externalName 字段的内容（例如，foo.bar.example.com）。没有任何类型代理被创建。</li>
+</ul>
+<p><font color="red">需要注意的是：Service 能够将一个接收 port 映射到任意的 targetPort。默认情况下，targetPort 将被设置为与 port 字段相同的值。</font></p>
+<p><font color="red">Service域名格式：$(service name).$(namespace).svc.cluster.local，其中 cluster.local 为指定的集群的域名</font></p>
+<h2 id="Deployment的yaml信息"><a href="#Deployment的yaml信息" class="headerlink" title="Deployment的yaml信息"></a>Deployment的yaml信息</h2><p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# pwd</span><br><span class="line">/root/k8s_practice/service</span><br><span class="line">[root@k8s-master service]# cat myapp-deploy.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-deploy</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">      release: v1</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">        release: v1</span><br><span class="line">        env: test</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">        - name: http</span><br><span class="line">          containerPort: 80</span><br></pre></td></tr></table></figure>
+
+<p>启动Deployment并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# kubectl apply -f myapp-deploy.yaml </span><br><span class="line">deployment.apps/myapp-deploy created</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# kubectl get deploy -o wide</span><br><span class="line">NAME           READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">myapp-deploy   3/3     3            3           31h   myapp        registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp,release=v1</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# kubectl get rs -o wide</span><br><span class="line">NAME                      DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">myapp-deploy-5695bb5658   3         3         3       31h   myapp        registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp,pod-template-hash=5695bb5658,release=v1</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# kubectl get pod -o wide --show-labels</span><br><span class="line">NAME                            READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES   LABELS</span><br><span class="line">myapp-deploy-5695bb5658-2866m   1/1     Running   2          31h   10.244.2.116   k8s-node02   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=5695bb5658,release=v1</span><br><span class="line">myapp-deploy-5695bb5658-dcfw7   1/1     Running   2          31h   10.244.4.105   k8s-node01   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=5695bb5658,release=v1</span><br><span class="line">myapp-deploy-5695bb5658-n2b5w   1/1     Running   2          31h   10.244.2.115   k8s-node02   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=5695bb5658,release=v1</span><br></pre></td></tr></table></figure>
+
+<p>curl访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# curl 10.244.2.116</span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.244.2.116/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-2866m</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.244.4.105</span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.244.4.105/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-dcfw7</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.244.2.115</span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.244.2.115/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-n2b5w</span><br></pre></td></tr></table></figure>
+
+<h2 id="ClusterIP类型示例"><a href="#ClusterIP类型示例" class="headerlink" title="ClusterIP类型示例"></a>ClusterIP类型示例</h2><p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# pwd</span><br><span class="line">/root/k8s_practice/service</span><br><span class="line">[root@k8s-master service]# cat myapp-svc-ClusterIP.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-clusterip</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  type: ClusterIP  # 可以不写，为默认类型</span><br><span class="line">  selector:</span><br><span class="line">    app: myapp</span><br><span class="line">    release: v1</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: 80</span><br><span class="line">    targetPort: 80</span><br></pre></td></tr></table></figure>
+
+<p>启动Service并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# kubectl apply -f myapp-svc-ClusterIP.yaml </span><br><span class="line">service/myapp-clusterip created</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# kubectl get svc -o wide</span><br><span class="line">NAME              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   SELECTOR</span><br><span class="line">kubernetes        ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP   22d   &lt;none&gt;</span><br><span class="line">myapp-clusterip   ClusterIP   10.106.66.120   &lt;none&gt;        80/TCP    15s   app=myapp,release=v1</span><br></pre></td></tr></table></figure>
+
+<p>查看pod信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# kubectl get pod -o wide --show-labels</span><br><span class="line">NAME                            READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES   LABELS</span><br><span class="line">myapp-deploy-5695bb5658-2866m   1/1     Running   2          31h   10.244.2.116   k8s-node02   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=5695bb5658,release=v1</span><br><span class="line">myapp-deploy-5695bb5658-dcfw7   1/1     Running   2          31h   10.244.4.105   k8s-node01   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=5695bb5658,release=v1</span><br><span class="line">myapp-deploy-5695bb5658-n2b5w   1/1     Running   2          31h   10.244.2.115   k8s-node02   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=5695bb5658,release=v1</span><br></pre></td></tr></table></figure>
+
+<p>查看ipvs信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# ipvsadm -Ln</span><br><span class="line">IP Virtual Server version 1.2.1 (size=4096)</span><br><span class="line">Prot LocalAddress:Port Scheduler Flags</span><br><span class="line">  -&gt; RemoteAddress:Port           Forward Weight ActiveConn InActConn</span><br><span class="line">……………… </span><br><span class="line">TCP  10.106.66.120:80 rr</span><br><span class="line">  -&gt; 10.244.2.115:80              Masq    1      0          0         </span><br><span class="line">  -&gt; 10.244.2.116:80              Masq    1      0          0         </span><br><span class="line">  -&gt; 10.244.4.105:80              Masq    1      0          0</span><br></pre></td></tr></table></figure>
+
+<p>curl访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# curl 10.106.66.120</span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.106.66.120/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-2866m</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.106.66.120/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-n2b5w</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.106.66.120/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-dcfw7</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.106.66.120/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-2866m</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">备注：如果访问失败，请参考如下文章：</font></p>
+<p>「<a href="http://www.zhangblog.com/2020/09/08/kubernetes13/">Kubernetes K8S在IPVS代理模式下svc服务的ClusterIP类型访问失败处理</a>」</p>
+<h2 id="Headless-Services"><a href="#Headless-Services" class="headerlink" title="Headless Services"></a>Headless Services</h2><p>有时不需要或不想要负载均衡，以及单独的 Service IP。遇到这种情况，可以通过指定 Cluster IP（spec.clusterIP）的值为 “None” 来创建 Headless Service。</p>
+<p>这对headless Service 并不会分配 Cluster IP，kube-proxy 不会处理它们，而且平台也不会为它们进行负载均衡和路由。</p>
+<div style="font-size:17px"><b>使用场景</b></div>
+
+<ul>
+<li>第一种：自主选择权，有时候client想自己来决定使用哪个Real Server，可以通过查询DNS来获取Real Server的信息。</li>
+<li>第二种：Headless Services还有一个用处（PS：也就是我们需要的那个特性）。Headless Service对应的每一个Endpoints，即每一个Pod，都会有对应的DNS域名；这样Pod之间就可以互相访问。【<font color="red">结合statefulset有状态服务使用，如Web、MySQL集群</font>】</li>
+</ul>
+<div style="font-size:17px"><b>示例</b></div>
+
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# pwd</span><br><span class="line">/root/k8s_practice/service</span><br><span class="line">[root@k8s-master service]# cat myapp-svc-headless.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-headless</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: myapp</span><br><span class="line">    release: v1</span><br><span class="line">  clusterIP: &quot;None&quot;</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80</span><br><span class="line">    targetPort: 80</span><br></pre></td></tr></table></figure>
+
+<p>启动Service并查看状态和详情</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# kubectl apply -f myapp-svc-headless.yaml </span><br><span class="line">service/myapp-headless created</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# kubectl get svc -o wide</span><br><span class="line">NAME             TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE   SELECTOR</span><br><span class="line">kubernetes       ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   22d   &lt;none&gt;</span><br><span class="line">myapp-headless   ClusterIP   None         &lt;none&gt;        80/TCP    6s    app=myapp,release=v1</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# kubectl describe svc/myapp-headless</span><br><span class="line">Name:              myapp-headless</span><br><span class="line">Namespace:         default</span><br><span class="line">Labels:            &lt;none&gt;</span><br><span class="line">Annotations:       kubectl.kubernetes.io/last-applied-configuration:</span><br><span class="line">                     &#123;&quot;apiVersion&quot;:&quot;v1&quot;,&quot;kind&quot;:&quot;Service&quot;,&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&#125;,&quot;name&quot;:&quot;myapp-headless&quot;,&quot;namespace&quot;:&quot;default&quot;&#125;,&quot;spec&quot;:&#123;&quot;clusterIP&quot;:&quot;None&quot;...</span><br><span class="line">Selector:          app=myapp,release=v1</span><br><span class="line">Type:              ClusterIP</span><br><span class="line">IP:                None</span><br><span class="line">Port:              &lt;unset&gt;  80/TCP</span><br><span class="line">TargetPort:        80/TCP</span><br><span class="line">Endpoints:         10.244.2.115:80,10.244.2.116:80,10.244.4.105:80  # 后端的Pod信息</span><br><span class="line">Session Affinity:  None</span><br><span class="line">Events:            &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>service只要创建成功就会写入到coredns。我们得到coredns IP的命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# kubectl get pod -o wide -A | grep &apos;coredns&apos;</span><br><span class="line">kube-system            coredns-6955765f44-c9zfh                     1/1     Running   29         22d    10.244.0.62    k8s-master   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">kube-system            coredns-6955765f44-lrz5q                     1/1     Running   29         22d    10.244.0.61    k8s-master   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在宿主机安装nslookup、dig命令安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y bind-utils</span><br></pre></td></tr></table></figure>
+
+<p>coredns记录信息如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"># 其中 10.244.0.61 为 coredns IP</span><br><span class="line"># myapp-headless.default.svc.cluster.local 为Headless Service域名。格式为:$(service name).$(namespace).svc.cluster.local，其中 cluster.local 指定的集群的域名</span><br><span class="line">[root@k8s-master service]# nslookup myapp-headless.default.svc.cluster.local 10.244.0.61</span><br><span class="line">Server:		10.244.0.61</span><br><span class="line">Address:	10.244.0.61#53</span><br><span class="line"></span><br><span class="line">Name:	myapp-headless.default.svc.cluster.local</span><br><span class="line">Address: 10.244.2.116</span><br><span class="line">Name:	myapp-headless.default.svc.cluster.local</span><br><span class="line">Address: 10.244.4.105</span><br><span class="line">Name:	myapp-headless.default.svc.cluster.local</span><br><span class="line">Address: 10.244.2.115</span><br><span class="line"></span><br><span class="line">[root@k8s-master service]#</span><br><span class="line">### 或使用如下命令</span><br><span class="line">[root@k8s-master service]# dig -t A myapp-headless.default.svc.cluster.local. @10.244.0.61</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.6 &lt;&lt;&gt;&gt; -t A myapp-headless.default.svc.cluster.local. @10.244.0.61</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; WARNING: .local is reserved for Multicast DNS</span><br><span class="line">;; You are currently testing what happens when an mDNS query is leaked to DNS</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 7089</span><br><span class="line">;; flags: qr aa rd; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1</span><br><span class="line">;; WARNING: recursion requested but not available</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 4096</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;myapp-headless.default.svc.cluster.local. IN A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">myapp-headless.default.svc.cluster.local. 14 IN	A 10.244.2.116</span><br><span class="line">myapp-headless.default.svc.cluster.local. 14 IN	A 10.244.4.105</span><br><span class="line">myapp-headless.default.svc.cluster.local. 14 IN	A 10.244.2.115</span><br><span class="line"></span><br><span class="line">;; Query time: 0 msec</span><br><span class="line">;; SERVER: 10.244.0.61#53(10.244.0.61)</span><br><span class="line">;; WHEN: Wed Jun 03 22:34:46 CST 2020</span><br><span class="line">;; MSG SIZE  rcvd: 237</span><br></pre></td></tr></table></figure>
+
+<h2 id="NodePort类型示例"><a href="#NodePort类型示例" class="headerlink" title="NodePort类型示例"></a>NodePort类型示例</h2><p><font color="red">如果将 type 字段设置为 NodePort，则 Kubernetes 控制层面将在 --service-node-port-range 标志指定的范围内分配端口（默认值：30000-32767）。</font></p>
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# pwd</span><br><span class="line">/root/k8s_practice/service</span><br><span class="line">[root@k8s-master service]# cat myapp-svc-NodePort.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-nodeport</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  type: NodePort</span><br><span class="line">  selector:</span><br><span class="line">    app: myapp</span><br><span class="line">    release: v1</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    # 默认情况下，为了方便起见，`targetPort` 被设置为与 `port` 字段相同的值。</span><br><span class="line">    port: 80         # Service对外提供服务端口</span><br><span class="line">    targetPort: 80   # 请求转发后端Pod使用的端口</span><br><span class="line">    nodePort: 31682  # 可选字段，默认情况下，为了方便起见，Kubernetes 控制层面会从某个范围内分配一个端口号（默认：30000-32767）</span><br></pre></td></tr></table></figure>
+
+<p>启动Service并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# kubectl apply -f myapp-svc-NodePort.yaml </span><br><span class="line">service/myapp-nodeport created</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# kubectl get svc -o wide</span><br><span class="line">NAME             TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE   SELECTOR</span><br><span class="line">kubernetes       ClusterIP   10.96.0.1     &lt;none&gt;        443/TCP        22d   &lt;none&gt;</span><br><span class="line">myapp-nodeport   NodePort    10.99.50.81   &lt;none&gt;        80:31682/TCP   6s    app=myapp,release=v1</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，类型变为了NodePort</font></p>
+<p>查看ipvs信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# ipvsadm -Ln</span><br><span class="line">IP Virtual Server version 1.2.1 (size=4096)</span><br><span class="line">Prot LocalAddress:Port Scheduler Flags</span><br><span class="line">  -&gt; RemoteAddress:Port           Forward Weight ActiveConn InActConn</span><br><span class="line">………………</span><br><span class="line">TCP  10.99.50.81:80 rr</span><br><span class="line">  -&gt; 10.244.2.115:80              Masq    1      0          0         </span><br><span class="line">  -&gt; 10.244.2.116:80              Masq    1      0          0         </span><br><span class="line">  -&gt; 10.244.4.105:80              Masq    1      0          0</span><br></pre></td></tr></table></figure>
+
+<p>端口查看，可见在本地宿主机监听了相应的端口（备注：集群所有机器都监听了该端口）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 集群所有机器都可以执行查看</span><br><span class="line">[root@k8s-master service]# netstat -lntp | grep &apos;31682&apos;</span><br><span class="line">tcp6       0      0 :::31682                :::*                    LISTEN      3961/kube-proxy</span><br></pre></td></tr></table></figure>
+
+<p>curl通过ClusterIP访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 通过ClusterIP访问</span><br><span class="line">[root@k8s-master service]# curl 10.99.50.81</span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.99.50.81/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-2866m</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.99.50.81/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-n2b5w</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.99.50.81/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-dcfw7</span><br></pre></td></tr></table></figure>
+
+<p>curl通过节点IP访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 通过集群节点IP访问</span><br><span class="line">[root@k8s-master service]# curl 172.16.1.110:31682</span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 172.16.1.110:31682/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-2866m</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 172.16.1.110:31682/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-n2b5w</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 172.16.1.110:31682/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-dcfw7</span><br><span class="line"># 访问集群其他节点。每台机器都有LVS，和相关调度</span><br><span class="line">[root@k8s-master service]# curl 172.16.1.111:31682/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-dcfw7</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 172.16.1.112:31682/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-dcfw7</span><br></pre></td></tr></table></figure>
+
+<p>访问日志查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl logs -f svc/myapp-nodeport</span><br></pre></td></tr></table></figure>
+
+<h2 id="LoadBalancer类型示例"><a href="#LoadBalancer类型示例" class="headerlink" title="LoadBalancer类型示例"></a>LoadBalancer类型示例</h2><p>需要相关云厂商服务支持，这里就不表述了。</p>
+<h2 id="ExternalName类型示例"><a href="#ExternalName类型示例" class="headerlink" title="ExternalName类型示例"></a>ExternalName类型示例</h2><p>这种类型的Service通过返回CNAME和它的值，<font color="red">可以将服务映射到externalName字段的内容</font>（例如：my.k8s.example.com；可以实现跨namespace名称空间访问）。ExternalName Service是Service的特例，<font color="red">它没有selector</font>，也没有定义任何的端口和Endpoint。相反的，对于运行在集群外部的服务，它通过返回该外部服务的别名这种方式提供服务。</p>
+<p>具体使用参见：「<a href="http://www.zhangblog.com/2020/09/13/kubernetes14/">Kubernetes K8S之跨namespace名称空间访问Service服务</a>」</p>
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# pwd</span><br><span class="line">/root/k8s_practice/service</span><br><span class="line">[root@k8s-master service]# cat myapp-svc-ExternalName.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-externalname</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  type: ExternalName</span><br><span class="line">  externalName: my.k8s.example.com</span><br></pre></td></tr></table></figure>
+
+<p>启动Service并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# kubectl apply -f myapp-svc-ExternalName.yaml </span><br><span class="line">service/myapp-externalname created</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# kubectl get svc -o wide</span><br><span class="line">NAME                 TYPE           CLUSTER-IP   EXTERNAL-IP          PORT(S)   AGE   SELECTOR</span><br><span class="line">kubernetes           ClusterIP      10.96.0.1    &lt;none&gt;               443/TCP   21d   &lt;none&gt;</span><br><span class="line">myapp-externalname   ExternalName   &lt;none&gt;       my.k8s.example.com   &lt;none&gt;    21s   &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，类型变为了ExternalName</font></p>
+<p>宿主机dig命令安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y bind-utils</span><br></pre></td></tr></table></figure>
+
+<p>coredns记录信息如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># 其中 10.244.0.61 为 coredns IP</span><br><span class="line"># myapp-externalname.default.svc.cluster.local 为Service域名。格式为:$(service name).$(namespace).svc.cluster.local，其中 cluster.local 指定的集群的域名</span><br><span class="line">##### 通过 nslookup 访问</span><br><span class="line">[root@k8s-master service]# nslookup myapp-externalname.default.svc.cluster.local 10.244.0.61</span><br><span class="line">Server:		10.244.0.61</span><br><span class="line">Address:	10.244.0.61#53</span><br><span class="line"></span><br><span class="line">myapp-externalname.default.svc.cluster.local	canonical name = my.k8s.example.com.</span><br><span class="line">** server can&apos;t find my.k8s.example.com: NXDOMAIN</span><br><span class="line"></span><br><span class="line">[root@k8s-master service]#</span><br><span class="line">##### 通过 dig 访问</span><br><span class="line">[root@k8s-master service]# dig -t A myapp-externalname.default.svc.cluster.local. @10.244.0.61</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.6 &lt;&lt;&gt;&gt; -t A myapp-externalname.default.svc.cluster.local. @10.244.0.61</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; WARNING: .local is reserved for Multicast DNS</span><br><span class="line">;; You are currently testing what happens when an mDNS query is leaked to DNS</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 39541</span><br><span class="line">;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1</span><br><span class="line">;; WARNING: recursion requested but not available</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 4096</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;myapp-externalname.default.svc.cluster.local. IN A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">myapp-externalname.default.svc.cluster.local. 30 IN CNAME my.k8s.example.com.</span><br><span class="line"></span><br><span class="line">;; Query time: 2072 msec</span><br><span class="line">;; SERVER: 10.244.0.61#53(10.244.0.61)</span><br><span class="line">;; WHEN: Wed Jun 03 23:15:47 CST 2020</span><br><span class="line">;; MSG SIZE  rcvd: 149</span><br></pre></td></tr></table></figure>
+
+<h2 id="ExternalIP示例"><a href="#ExternalIP示例" class="headerlink" title="ExternalIP示例"></a>ExternalIP示例</h2><p>如果外部的 IP 路由到集群中一个或多个 Node 上，Kubernetes Service 会被暴露给这些 externalIPs。通过外部 IP（作为目的 IP 地址）进入到集群，打到 Service 端口上的流量，将会被路由到 Service 的 Endpoint 上。</p>
+<p><font color="red">externalIPs 不会被 Kubernetes 管理，它属于集群管理员的职责范畴。</font></p>
+<p>根据 Service 的规定，externalIPs 可以<font color="red">同任意的 ServiceType 来一起指定</font>。在下面的例子中，my-service 可以在【模拟外网IP】“10.0.0.240”(externalIP:port) 上被客户端访问。</p>
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# pwd</span><br><span class="line">/root/k8s_practice/service</span><br><span class="line">[root@k8s-master service]# cat  myapp-svc-externalIP.yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-externalip</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: myapp</span><br><span class="line">    release: v1</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: 80</span><br><span class="line">    targetPort: 80</span><br><span class="line">  externalIPs:</span><br><span class="line">    - 10.0.0.240</span><br></pre></td></tr></table></figure>
+
+<p>启动Service并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# kubectl apply -f myapp-svc-externalIP.yaml </span><br><span class="line">service/myapp-externalip created</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# kubectl get svc -o wide</span><br><span class="line">NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE   SELECTOR</span><br><span class="line">kubernetes         ClusterIP   10.96.0.1        &lt;none&gt;        443/TCP   22d   &lt;none&gt;</span><br><span class="line">myapp-externalip   ClusterIP   10.107.186.167   10.0.0.240    80/TCP    8s    app=myapp,release=v1</span><br></pre></td></tr></table></figure>
+
+<p>查看ipvs信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# ipvsadm -Ln</span><br><span class="line">IP Virtual Server version 1.2.1 (size=4096)</span><br><span class="line">Prot LocalAddress:Port Scheduler Flags</span><br><span class="line">  -&gt; RemoteAddress:Port           Forward Weight ActiveConn InActConn</span><br><span class="line">………………</span><br><span class="line">TCP  10.107.186.167:80 rr</span><br><span class="line">  -&gt; 10.244.2.115:80              Masq    1      0          0         </span><br><span class="line">  -&gt; 10.244.2.116:80              Masq    1      0          0         </span><br><span class="line">  -&gt; 10.244.4.105:80              Masq    1      0          0         </span><br><span class="line">………………</span><br><span class="line">TCP  10.0.0.240:80 rr</span><br><span class="line">  -&gt; 10.244.2.115:80              Masq    1      0          0         </span><br><span class="line">  -&gt; 10.244.2.116:80              Masq    1      0          0         </span><br><span class="line">  -&gt; 10.244.4.105:80              Masq    1      0          0</span><br></pre></td></tr></table></figure>
+
+<p>curl访问，通过ClusterIP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# curl 10.107.186.167</span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.107.186.167/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-n2b5w</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.107.186.167/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-2866m</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.107.186.167/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-dcfw7</span><br></pre></td></tr></table></figure>
+
+<p>curl访问，通过ExternalIP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master service]# curl 10.0.0.240</span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.0.0.240/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-2866m</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.0.0.240/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-dcfw7</span><br><span class="line">[root@k8s-master service]# </span><br><span class="line">[root@k8s-master service]# curl 10.0.0.240/hostname.html</span><br><span class="line">myapp-deploy-5695bb5658-n2b5w</span><br></pre></td></tr></table></figure>
+
+<h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="http://www.zhangblog.com/2020/09/08/kubernetes13/">Kubernetes K8S在IPVS代理模式下svc服务的ClusterIP类型访问失败处理</a></p>
+<p>2<a href="http://www.zhangblog.com/2020/09/13/kubernetes14/">、Kubernetes K8S之跨namespace名称空间访问Service服务</a></p>
+<p>3、<a href="https://note.youdao.com/" target="_blank" rel="noopener">Kubernetes K8S之资源控制器StatefulSets详解</a></p>
+<p>4、<a href="https://www.cnblogs.com/chadiandianwenrou/p/11937041.html" target="_blank" rel="noopener">kubernetes学习Service之headless和statefulSet结合</a></p>
+<p>5、<a href="https://www.linuxea.com/1969.html" target="_blank" rel="noopener">linuxea:kubernetes Headless Service无头服务</a></p>
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/09/16/kubernetes15/" title="Kubernetes K8S之Service服务详解与示例">http://www.zhangblog.com/2020/09/16/kubernetes15/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/13/kubernetes14/" rel="next" title="Kubernetes K8S之Pod跨namespace名称空间访问Service服务">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S之Pod跨namespace名称空间访问Service服务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机配置规划"><span class="nav-number">1.</span> <span class="nav-text">主机配置规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Service概述"><span class="nav-number">2.</span> <span class="nav-text">Service概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VIP和Service代理"><span class="nav-number">3.</span> <span class="nav-text">VIP和Service代理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#userspace代理模式"><span class="nav-number">3.1.</span> <span class="nav-text">userspace代理模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables-代理模式"><span class="nav-number">3.2.</span> <span class="nav-text">iptables 代理模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPVS-代理模式"><span class="nav-number">3.3.</span> <span class="nav-text">IPVS 代理模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Service服务类型"><span class="nav-number">4.</span> <span class="nav-text">Service服务类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Deployment的yaml信息"><span class="nav-number">4.1.</span> <span class="nav-text">Deployment的yaml信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ClusterIP类型示例"><span class="nav-number">4.2.</span> <span class="nav-text">ClusterIP类型示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Headless-Services"><span class="nav-number">4.3.</span> <span class="nav-text">Headless Services</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NodePort类型示例"><span class="nav-number">4.4.</span> <span class="nav-text">NodePort类型示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LoadBalancer类型示例"><span class="nav-number">4.5.</span> <span class="nav-text">LoadBalancer类型示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ExternalName类型示例"><span class="nav-number">4.6.</span> <span class="nav-text">ExternalName类型示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ExternalIP示例"><span class="nav-number">4.7.</span> <span class="nav-text">ExternalIP示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读"><span class="nav-number">5.</span> <span class="nav-text">相关阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  蜀ICP备16019247号</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">193k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
