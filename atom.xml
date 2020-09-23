@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-09-16T15:53:29.338Z</updated>
+  <updated>2020-09-23T13:09:06.902Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S之Ingress详解与示例</title>
+    <link href="http://www.zhangblog.com/2020/09/23/kubernetes16/"/>
+    <id>http://www.zhangblog.com/2020/09/23/kubernetes16/</id>
+    <published>2020-09-23T13:05:06.000Z</published>
+    <updated>2020-09-23T13:09:06.902Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;K8S之Ingress概述与说明，并详解Ingress常用示例&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S之Service服务详解与示例</title>
@@ -696,38 +736,6 @@
           &lt;p&gt;&lt;img src=&quot;/uploads/docker/docker-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;通过runlike去查看一个容器的docker run启动参数&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1
-        
-      
-    
-    </summary>
-    
-      <category term="docker" scheme="http://www.zhangblog.com/categories/docker/"/>
-    
-    
-      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
-    
-      <category term="docker" scheme="http://www.zhangblog.com/tags/docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Dcoker如何搭建私有registry镜像仓库</title>
-    <link href="http://www.zhangblog.com/2020/04/29/docker05/"/>
-    <id>http://www.zhangblog.com/2020/04/29/docker05/</id>
-    <published>2020-04-29T04:43:52.000Z</published>
-    <updated>2020-06-06T00:49:59.613Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/docker/docker-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Docker如何搭建私有镜像仓库，与如何访问私有镜像仓库，删除私有镜像仓库镜像&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1
         

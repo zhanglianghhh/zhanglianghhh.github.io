@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker,Kubernetes,K8S,CI/CD,DevOps,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="K8S之Ingress概述与说明，并详解Ingress常用示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111   k">
+<meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes K8S之Ingress详解与示例">
+<meta property="og:url" content="http://www.zhangblog.com/2020/09/23/kubernetes16/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="K8S之Ingress概述与说明，并详解Ingress常用示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111   k">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-16-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-16-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-16-03.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-16-04.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-16-05.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-16-06.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-16-07.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-16-08.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-16-09.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-16-10.png">
+<meta property="og:updated_time" content="2020-09-23T13:09:06.902Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kubernetes K8S之Ingress详解与示例">
+<meta name="twitter:description" content="K8S之Ingress概述与说明，并详解Ingress常用示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111   k">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2020/09/23/kubernetes16/">
+
+
+
+
+
+  <title>Kubernetes K8S之Ingress详解与示例 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/09/23/kubernetes16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kubernetes K8S之Ingress详解与示例</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-23T21:05:06+08:00">
+                2020-09-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/K8S/" itemprop="url" rel="index">
+                    <span itemprop="name">K8S</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/09/23/kubernetes16/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/09/23/kubernetes16/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/09/23/kubernetes16/" class="leancloud_visitors" data-flag-title="Kubernetes K8S之Ingress详解与示例">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
+<blockquote>
+<p>K8S之Ingress概述与说明，并详解Ingress常用示例</p>
+</blockquote>
+<h1 id="主机配置规划"><a href="#主机配置规划" class="headerlink" title="主机配置规划"></a>主机配置规划</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>系统版本</th>
+<th>配置</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.110</td>
+<td>10.0.0.110</td>
+</tr>
+<tr>
+<td>k8s-node01</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.111</td>
+<td>10.0.0.111</td>
+</tr>
+<tr>
+<td>k8s-node02</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.112</td>
+<td>10.0.0.112</td>
+</tr>
+</tbody></table>
+<h1 id="Ingress概述"><a href="#Ingress概述" class="headerlink" title="Ingress概述"></a>Ingress概述</h1><p>Ingress 是对集群中服务的外部访问进行管理的 API 对象，典型的访问方式是 HTTP和HTTPS。</p>
+<p>Ingress 可以提供负载均衡、SSL 和基于名称的虚拟托管。</p>
+<p><font color="red">必须具有 ingress 控制器【例如 ingress-nginx】才能满足 Ingress 的要求。仅创建 Ingress 资源无效。</font></p>
+<h2 id="Ingress-是什么"><a href="#Ingress-是什么" class="headerlink" title="Ingress 是什么"></a>Ingress 是什么</h2><p><font color="red">Ingress 公开了从集群外部到集群内 services 的 HTTP 和 HTTPS 路由。 流量路由由 Ingress 资源上定义的规则控制。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> internet</span><br><span class="line">     |</span><br><span class="line">[ Ingress ]</span><br><span class="line">--|-----|--</span><br><span class="line">[ Services ]</span><br></pre></td></tr></table></figure>
+
+<p>可以将 Ingress 配置为<font color="red">提供服务外部可访问的 URL、负载均衡流量、 SSL / TLS，以及提供基于名称的虚拟主机</font>。Ingress 控制器 通常负责通过负载均衡器来实现 Ingress，尽管它也可以配置边缘路由器或其他前端来帮助处理流量。</p>
+<p><font color="red">Ingress 不会公开任意端口或协议。若将 HTTP 和 HTTPS 以外的服务公开到 Internet 时，通常使用 Service.Type=NodePort 或者 Service.Type=LoadBalancer 类型的服务。</font></p>
+<p>以Nginx Ingress为例，图如下</p>
+<p><img src="/uploads/kubernetes/k8s-16-01.png" alt="image"></p>
+<p><img src="/uploads/kubernetes/k8s-16-02.png" alt="image"></p>
+<h1 id="Ingress示例"><a href="#Ingress示例" class="headerlink" title="Ingress示例"></a>Ingress示例</h1><h2 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h2><p><img src="/uploads/kubernetes/k8s-16-03.png" alt="image"></p>
+<h2 id="部署Ingress-Nginx"><a href="#部署Ingress-Nginx" class="headerlink" title="部署Ingress-Nginx"></a>部署Ingress-Nginx</h2><p>该Nginx是经过改造的，而不是传统的Nginx。</p>
+<p>Ingress-Nginx官网地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://kubernetes.github.io/ingress-nginx/</span><br></pre></td></tr></table></figure>
+
+<p>Ingress-Nginx GitHub地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/kubernetes/ingress-nginx</span><br></pre></td></tr></table></figure>
+
+<p>本次下载版本：nginx-0.30.0</p>
+<p><img src="/uploads/kubernetes/k8s-16-04.png" alt="image"></p>
+<p>镜像下载与重命名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry.cn-beijing.aliyuncs.com/google_registry/nginx-ingress-controller:0.30.0</span><br><span class="line">docker tag 89ccad40ce8e quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.30.0</span><br><span class="line">docker rmi  registry.cn-beijing.aliyuncs.com/google_registry/nginx-ingress-controller:0.30.0</span><br></pre></td></tr></table></figure>
+
+<p>ingress-nginx的yaml文件修改后并启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"># 当前目录</span><br><span class="line">[root@k8s-master ingress]# pwd</span><br><span class="line">/root/k8s_practice/ingress</span><br><span class="line"># 获取NGINX: 0.30.0</span><br><span class="line">[root@k8s-master ingress]# wget https://github.com/kubernetes/ingress-nginx/archive/nginx-0.30.0.tar.gz</span><br><span class="line">[root@k8s-master ingress]# tar xf nginx-0.30.0.tar.gz</span><br><span class="line"># yaml文件在下载包中的位置：ingress-nginx-nginx-0.30.0/deploy/static/mandatory.yaml</span><br><span class="line">[root@k8s-master ingress]# cp -a ingress-nginx-nginx-0.30.0/deploy/static/mandatory.yaml ./</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line"># yaml文件配置修改</span><br><span class="line">[root@k8s-master ingress]# vim mandatory.yaml</span><br><span class="line">………………</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: DaemonSet   # 从Deployment改为DaemonSet</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-ingress-controller</span><br><span class="line">  namespace: ingress-nginx</span><br><span class="line">  labels:</span><br><span class="line">    app.kubernetes.io/name: ingress-nginx</span><br><span class="line">    app.kubernetes.io/part-of: ingress-nginx</span><br><span class="line">spec:</span><br><span class="line">  #replicas: 1   # 注释掉</span><br><span class="line">………………</span><br><span class="line">      nodeSelector:</span><br><span class="line">        kubernetes.io/hostname: k8s-master   # 修改处</span><br><span class="line">      # 如下几行为新加行  作用【允许在master节点运行】</span><br><span class="line">      tolerations:</span><br><span class="line">      - key: node-role.kubernetes.io/master</span><br><span class="line">        effect: NoSchedule</span><br><span class="line">………………</span><br><span class="line">          ports:</span><br><span class="line">            - name: http</span><br><span class="line">              containerPort: 80</span><br><span class="line">              hostPort: 80    # 添加处【可在宿主机通过该端口访问Pod】</span><br><span class="line">              protocol: TCP</span><br><span class="line">            - name: https</span><br><span class="line">              containerPort: 443</span><br><span class="line">              hostPort: 443   # 添加处【可在宿主机通过该端口访问Pod】</span><br><span class="line">              protocol: TCP</span><br><span class="line">………………</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl apply -f mandatory.yaml</span><br><span class="line">namespace/ingress-nginx created</span><br><span class="line">configmap/nginx-configuration created</span><br><span class="line">configmap/tcp-services created</span><br><span class="line">configmap/udp-services created</span><br><span class="line">serviceaccount/nginx-ingress-serviceaccount created</span><br><span class="line">clusterrole.rbac.authorization.k8s.io/nginx-ingress-clusterrole created</span><br><span class="line">role.rbac.authorization.k8s.io/nginx-ingress-role created</span><br><span class="line">rolebinding.rbac.authorization.k8s.io/nginx-ingress-role-nisa-binding created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/nginx-ingress-clusterrole-nisa-binding created</span><br><span class="line">daemonset.apps/nginx-ingress-controller created</span><br><span class="line">limitrange/ingress-nginx created</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl get ds -n ingress-nginx -o wide</span><br><span class="line">NAME                       DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                       AGE     CONTAINERS                 IMAGES                                                                  SELECTOR</span><br><span class="line">nginx-ingress-controller   1         1         1       1            1           kubernetes.io/hostname=k8s-master   9m47s   nginx-ingress-controller   quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.30.0   app.kubernetes.io/name=ingress-nginx,app.kubernetes.io/part-of=ingress-nginx</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl get pod -n ingress-nginx -o wide</span><br><span class="line">NAME                             READY   STATUS    RESTARTS   AGE     IP            NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">nginx-ingress-controller-rrbh9   1/1     Running   0          9m55s   10.244.0.46   k8s-master   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="deply-service1的yaml信息"><a href="#deply-service1的yaml信息" class="headerlink" title="deply_service1的yaml信息"></a>deply_service1的yaml信息</h2><p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# pwd</span><br><span class="line">/root/k8s_practice/ingress</span><br><span class="line">[root@k8s-master ingress]# cat deply_service1.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-deploy1</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">      release: v1</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">        release: v1</span><br><span class="line">        env: test</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">        - name: http</span><br><span class="line">          containerPort: 80</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-clusterip1</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  type: ClusterIP  # 默认类型</span><br><span class="line">  selector:</span><br><span class="line">    app: myapp</span><br><span class="line">    release: v1</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: 80</span><br><span class="line">    targetPort: 80</span><br></pre></td></tr></table></figure>
+
+<p>启动Deployment和Service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# kubectl apply -f deply_service1.yaml </span><br><span class="line">deployment.apps/myapp-deploy1 created</span><br><span class="line">service/myapp-clusterip1 created</span><br></pre></td></tr></table></figure>
+
+<p>查看Deploy状态和信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# kubectl get deploy -o wide</span><br><span class="line">NAME            READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">myapp-deploy1   3/3     3            3           28s   myapp        registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp,release=v1</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl get rs -o wide</span><br><span class="line">NAME                       DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">myapp-deploy1-5695bb5658   3         3         3       30s   myapp        registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp,pod-template-hash=5695bb5658,release=v1</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl get pod -o wide --show-labels</span><br><span class="line">NAME                             READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES   LABELS</span><br><span class="line">myapp-deploy1-5695bb5658-n6548   1/1     Running   0          36s   10.244.2.144   k8s-node02   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=5695bb5658,release=v1</span><br><span class="line">myapp-deploy1-5695bb5658-rqcpb   1/1     Running   0          36s   10.244.2.143   k8s-node02   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=5695bb5658,release=v1</span><br><span class="line">myapp-deploy1-5695bb5658-vv6gm   1/1     Running   0          36s   10.244.3.200   k8s-node01   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=5695bb5658,release=v1</span><br></pre></td></tr></table></figure>
+
+<p>curl访问pod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# curl 10.244.2.144</span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# curl 10.244.2.144/hostname.html</span><br><span class="line">myapp-deploy1-5695bb5658-n6548</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# curl 10.244.2.143/hostname.html</span><br><span class="line">myapp-deploy1-5695bb5658-rqcpb</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# curl 10.244.3.200/hostname.html</span><br><span class="line">myapp-deploy1-5695bb5658-vv6gm</span><br></pre></td></tr></table></figure>
+
+<p>查看Service状态和信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# kubectl get svc -o wide</span><br><span class="line">NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE     SELECTOR</span><br><span class="line">kubernetes         ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP   19d     &lt;none&gt;</span><br><span class="line">myapp-clusterip1   ClusterIP   10.104.146.14   &lt;none&gt;        80/TCP    5m38s   app=myapp,release=v1</span><br></pre></td></tr></table></figure>
+
+<p>curl访问svc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# curl 10.104.146.14</span><br><span class="line">Hello MyApp | Version: v1 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# curl 10.104.146.14/hostname.html</span><br><span class="line">myapp-deploy1-5695bb5658-n6548</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# curl 10.104.146.14/hostname.html</span><br><span class="line">myapp-deploy1-5695bb5658-vv6gm</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# curl 10.104.146.14/hostname.html</span><br><span class="line">myapp-deploy1-5695bb5658-rqcpb</span><br></pre></td></tr></table></figure>
+
+<h2 id="deply-service2的yaml信息"><a href="#deply-service2的yaml信息" class="headerlink" title="deply_service2的yaml信息"></a>deply_service2的yaml信息</h2><p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# pwd</span><br><span class="line">/root/k8s_practice/ingress</span><br><span class="line">[root@k8s-master ingress]# cat deply_service2.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-deploy2</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">      release: v2</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">        release: v2</span><br><span class="line">        env: test</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v2</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">        - name: http</span><br><span class="line">          containerPort: 80</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-clusterip2</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  type: ClusterIP  # 默认类型</span><br><span class="line">  selector:</span><br><span class="line">    app: myapp</span><br><span class="line">    release: v2</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: 80</span><br><span class="line">    targetPort: 80</span><br></pre></td></tr></table></figure>
+
+<p>启动Deployment和Service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# kubectl apply -f deply_service2.yaml </span><br><span class="line">deployment.apps/myapp-deploy2 created</span><br><span class="line">service/myapp-clusterip2 created</span><br></pre></td></tr></table></figure>
+
+<p>查看Deploy状态和信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# kubectl get deploy myapp-deploy2 -o wide</span><br><span class="line">NAME            READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">myapp-deploy2   3/3     3            3           9s    myapp        registry.cn-beijing.aliyuncs.com/google_registry/myapp:v2   app=myapp,release=v2</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl get rs  -o wide</span><br><span class="line">NAME                       DESIRED   CURRENT   READY   AGE     CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">myapp-deploy1-5695bb5658   3         3         3       7m23s   myapp        registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp,pod-template-hash=5695bb5658,release=v1   # 之前创建的</span><br><span class="line">myapp-deploy2-54f48f879b   3         3         3       15s     myapp        registry.cn-beijing.aliyuncs.com/google_registry/myapp:v2   app=myapp,pod-template-hash=54f48f879b,release=v2   # 当前deploy创建的</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl get pod -o wide --show-labels -l &quot;release=v2&quot;</span><br><span class="line">NAME                             READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES   LABELS</span><br><span class="line">myapp-deploy2-54f48f879b-7pxwp   1/1     Running   0          25s   10.244.3.201   k8s-node01   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=54f48f879b,release=v2</span><br><span class="line">myapp-deploy2-54f48f879b-lqlh2   1/1     Running   0          25s   10.244.2.146   k8s-node02   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=54f48f879b,release=v2</span><br><span class="line">myapp-deploy2-54f48f879b-pfvnn   1/1     Running   0          25s   10.244.2.145   k8s-node02   &lt;none&gt;           &lt;none&gt;            app=myapp,env=test,pod-template-hash=54f48f879b,release=v2</span><br></pre></td></tr></table></figure>
+
+<p>查看Service状态和信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# kubectl get svc -o wide  </span><br><span class="line">NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE    SELECTOR</span><br><span class="line">kubernetes         ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP   19d    &lt;none&gt;</span><br><span class="line">myapp-clusterip1   ClusterIP   10.104.146.14   &lt;none&gt;        80/TCP    8m9s   app=myapp,release=v1</span><br><span class="line">myapp-clusterip2   ClusterIP   10.110.181.62   &lt;none&gt;        80/TCP    61s    app=myapp,release=v2</span><br></pre></td></tr></table></figure>
+
+<p>curl访问svc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# curl 10.110.181.62</span><br><span class="line">Hello MyApp | Version: v2 | &lt;a href=&quot;hostname.html&quot;&gt;Pod Name&lt;/a&gt;</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# curl 10.110.181.62/hostname.html</span><br><span class="line">myapp-deploy2-54f48f879b-lqlh2</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# curl 10.110.181.62/hostname.html</span><br><span class="line">myapp-deploy2-54f48f879b-7pxwp</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# curl 10.110.181.62/hostname.html</span><br><span class="line">myapp-deploy2-54f48f879b-pfvnn</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ingress-HTTP代理访问"><a href="#Ingress-HTTP代理访问" class="headerlink" title="Ingress HTTP代理访问"></a>Ingress HTTP代理访问</h2><p>yaml文件【由于自建的service在默认default名称空间，因此这里也是default名称空间】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# pwd</span><br><span class="line">/root/k8s_practice/ingress</span><br><span class="line">[root@k8s-master ingress]# cat ingress-http.yaml</span><br><span class="line">apiVersion: networking.k8s.io/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-http</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  rules:</span><br><span class="line">    - host: www.zhangtest.com</span><br><span class="line">      http:</span><br><span class="line">        paths:</span><br><span class="line">        - path: /</span><br><span class="line">          backend:</span><br><span class="line">            serviceName: myapp-clusterip1</span><br><span class="line">            servicePort: 80</span><br><span class="line">    - host: blog.zhangtest.com</span><br><span class="line">      http:</span><br><span class="line">        paths:</span><br><span class="line">        - path: /</span><br><span class="line">          backend:</span><br><span class="line">            serviceName: myapp-clusterip2</span><br><span class="line">            servicePort: 80</span><br></pre></td></tr></table></figure>
+
+<p>启动ingress http并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# kubectl apply -f ingress-http.yaml </span><br><span class="line">ingress.networking.k8s.io/nginx-http created</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl get ingress -o wide</span><br><span class="line">NAME         HOSTS                                  ADDRESS   PORTS   AGE</span><br><span class="line">nginx-http   www.zhangtest.com,blog.zhangtest.com             80      9s</span><br></pre></td></tr></table></figure>
+
+<p>查看nginx配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl get pod -A | grep &apos;ingre&apos;</span><br><span class="line">ingress-nginx          nginx-ingress-controller-rrbh9               1/1     Running   0          27m</span><br><span class="line">[root@k8s-master ~]# </span><br><span class="line">[root@k8s-master ~]# kubectl exec -it -n ingress-nginx nginx-ingress-controller-rrbh9 bash</span><br><span class="line">bash-5.0$ cat /etc/nginx/nginx.conf</span><br><span class="line">…………</span><br><span class="line">##### 可见server www.zhangtest.com 和 server blog.zhangtest.com的配置</span><br></pre></td></tr></table></figure>
+
+<h3 id="浏览器访问"><a href="#浏览器访问" class="headerlink" title="浏览器访问"></a>浏览器访问</h3><p>hosts文件修改，添加如下信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">文件位置：C:\WINDOWS\System32\drivers\etc\hosts</span><br><span class="line">添加信息如下：</span><br><span class="line"># K8S ingress学习</span><br><span class="line">10.0.0.110  www.zhangtest.com  blog.zhangtest.com</span><br></pre></td></tr></table></figure>
+
+<p>浏览器访问<a href="http://www.zhangtest.com" target="_blank" rel="noopener">www.zhangtest.com</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://www.zhangtest.com/</span><br><span class="line">http://www.zhangtest.com/hostname.html</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-16-05.png" alt="image"></p>
+<p>浏览器访问blog.zhangtest.com</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://blog.zhangtest.com/</span><br><span class="line">http://blog.zhangtest.com/hostname.html</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-16-06.png" alt="image"></p>
+<p><font color="red">当然：除了用浏览器访问外，也可以在Linux使用curl访问。前提是修改/etc/hosts文件，对上面的两个域名进行解析。</font></p>
+<h2 id="Ingress-HTTPS代理访问"><a href="#Ingress-HTTPS代理访问" class="headerlink" title="Ingress HTTPS代理访问"></a>Ingress HTTPS代理访问</h2><h3 id="SSL证书创建"><a href="#SSL证书创建" class="headerlink" title="SSL证书创建"></a>SSL证书创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master cert]# pwd</span><br><span class="line">/root/k8s_practice/ingress/cert</span><br><span class="line">[root@k8s-master cert]# openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj &quot;/C=CN/ST=BJ/L=BeiJing/O=BTC/OU=MOST/CN=zhang/emailAddress=ca@test.com&quot;</span><br><span class="line">Generating a 2048 bit RSA private key</span><br><span class="line">......................................................+++</span><br><span class="line">........................+++</span><br><span class="line">writing new private key to &apos;tls.key&apos;</span><br><span class="line">-----</span><br><span class="line">[root@k8s-master cert]# kubectl create secret tls tls-secret --key tls.key --cert tls.crt</span><br><span class="line">secret/tls-secret created</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建ingress-https"><a href="#创建ingress-https" class="headerlink" title="创建ingress https"></a>创建ingress https</h3><p>yaml文件【由于自建的service在默认default名称空间，因此这里也是default名称空间】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# pwd</span><br><span class="line">/root/k8s_practice/ingress</span><br><span class="line">[root@k8s-master ingress]# cat ingress-https.yaml </span><br><span class="line">apiVersion: networking.k8s.io/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-https</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  tls:</span><br><span class="line">    - hosts:</span><br><span class="line">      - www.zhangtest.com</span><br><span class="line">      - blog.zhangtest.com</span><br><span class="line">      secretName: tls-secret</span><br><span class="line">  rules:</span><br><span class="line">    - host: www.zhangtest.com</span><br><span class="line">      http:</span><br><span class="line">        paths:</span><br><span class="line">        - path: /</span><br><span class="line">          backend:</span><br><span class="line">            serviceName: myapp-clusterip1</span><br><span class="line">            servicePort: 80</span><br><span class="line">    - host: blog.zhangtest.com</span><br><span class="line">      http:</span><br><span class="line">        paths:</span><br><span class="line">        - path: /</span><br><span class="line">          backend:</span><br><span class="line">            serviceName: myapp-clusterip2</span><br><span class="line">            servicePort: 80</span><br></pre></td></tr></table></figure>
+
+<p>启动ingress https并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# kubectl apply -f ingress-https.yaml </span><br><span class="line">ingress.networking.k8s.io/nginx-https created</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl get ingress -o wide</span><br><span class="line">NAME          HOSTS                                  ADDRESS   PORTS     AGE</span><br><span class="line">nginx-https   www.zhangtest.com,blog.zhangtest.com             80, 443   8s</span><br></pre></td></tr></table></figure>
+
+<h3 id="浏览器访问-1"><a href="#浏览器访问-1" class="headerlink" title="浏览器访问"></a>浏览器访问</h3><p>hosts文件修改，添加如下信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">文件位置：C:\WINDOWS\System32\drivers\etc\hosts</span><br><span class="line">添加信息如下：</span><br><span class="line"># K8S ingress学习</span><br><span class="line">10.0.0.110  www.zhangtest.com  blog.zhangtest.com</span><br></pre></td></tr></table></figure>
+
+<p>浏览器访问<a href="http://www.zhangtest.com" target="_blank" rel="noopener">www.zhangtest.com</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://www.zhangtest.com/</span><br><span class="line">https://www.zhangtest.com/hostname.html</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-16-07.png" alt="image"></p>
+<p>浏览器访问blog.zhangtest.com</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://blog.zhangtest.com/</span><br><span class="line">https://blog.zhangtest.com/hostname.html</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-16-08.png" alt="image"></p>
+<h1 id="Ingress-Nginx实现BasicAuth认证"><a href="#Ingress-Nginx实现BasicAuth认证" class="headerlink" title="Ingress-Nginx实现BasicAuth认证"></a>Ingress-Nginx实现BasicAuth认证</h1><p>官网地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://kubernetes.github.io/ingress-nginx/examples/auth/basic/</span><br></pre></td></tr></table></figure>
+
+<p>准备工作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# pwd</span><br><span class="line">/root/k8s_practice/ingress</span><br><span class="line">[root@k8s-master ingress]# yum install -y httpd</span><br><span class="line">[root@k8s-master ingress]# htpasswd -c auth foo</span><br><span class="line">New password: #输入密码</span><br><span class="line">Re-type new password: #重复输入的密码</span><br><span class="line">Adding password for user foo   ##### 此时会生成一个 auth文件</span><br><span class="line">[root@k8s-master ingress]# kubectl create secret generic basic-auth --from-file=auth</span><br><span class="line">secret/basic-auth created</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl get secret basic-auth -o yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  auth: Zm9vOiRhcHIxJFpaSUJUMDZOJDVNZ3hxdkpFNWVRTi9NdnZCcVpHaC4K</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  creationTimestamp: &quot;2020-08-17T09:42:04Z&quot;</span><br><span class="line">  name: basic-auth</span><br><span class="line">  namespace: default</span><br><span class="line">  resourceVersion: &quot;775573&quot;</span><br><span class="line">  selfLink: /api/v1/namespaces/default/secrets/basic-auth</span><br><span class="line">  uid: eef0853b-a52b-4684-922a-817e4cd9e9ca</span><br><span class="line">type: Opaque</span><br></pre></td></tr></table></figure>
+
+<p>ingress yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# pwd</span><br><span class="line">/root/k8s_practice/ingress</span><br><span class="line">[root@k8s-master ingress]# cat nginx_basicauth.yaml </span><br><span class="line">apiVersion: networking.k8s.io/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  name: ingress-with-auth</span><br><span class="line">  annotations:</span><br><span class="line">    # type of authentication</span><br><span class="line">    nginx.ingress.kubernetes.io/auth-type: basic</span><br><span class="line">    # name of the secret that contains the user/password definitions</span><br><span class="line">    nginx.ingress.kubernetes.io/auth-secret: basic-auth</span><br><span class="line">    # message to display with an appropriate context why the authentication is required</span><br><span class="line">    nginx.ingress.kubernetes.io/auth-realm: &apos;Authentication Required - foo&apos;</span><br><span class="line">spec:</span><br><span class="line">  rules:</span><br><span class="line">  - host: auth.zhangtest.com</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - path: /</span><br><span class="line">        backend:</span><br><span class="line">          serviceName: myapp-clusterip1</span><br><span class="line">          servicePort: 80</span><br></pre></td></tr></table></figure>
+
+<p>启动ingress并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# kubectl apply -f nginx_basicauth.yaml </span><br><span class="line">ingress.networking.k8s.io/ingress-with-auth created</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl get ingress -o wide</span><br><span class="line">NAME                HOSTS                                  ADDRESS   PORTS     AGE</span><br><span class="line">ingress-with-auth   auth.zhangtest.com                               80        6s</span><br></pre></td></tr></table></figure>
+
+<h2 id="浏览器访问-2"><a href="#浏览器访问-2" class="headerlink" title="浏览器访问"></a>浏览器访问</h2><p>hosts文件修改，添加如下信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">文件位置：C:\WINDOWS\System32\drivers\etc\hosts</span><br><span class="line">添加信息如下：</span><br><span class="line"># K8S ingress学习</span><br><span class="line">10.0.0.110  www.zhangtest.com  blog.zhangtest.com auth.zhangtest.com</span><br></pre></td></tr></table></figure>
+
+<p>浏览器访问auth.zhangtest.com</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://auth.zhangtest.com/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-16-09.png" alt="image"></p>
+<h1 id="Ingress-Nginx实现Rewrite重写"><a href="#Ingress-Nginx实现Rewrite重写" class="headerlink" title="Ingress-Nginx实现Rewrite重写"></a>Ingress-Nginx实现Rewrite重写</h1><p>官网地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://kubernetes.github.io/ingress-nginx/examples/rewrite/</span><br></pre></td></tr></table></figure>
+
+<p>重写可以使用以下<font color="red">注解控制</font>：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nginx.ingress.kubernetes.io/rewrite-target</td>
+<td>必须重定向的目标URL</td>
+<td>String</td>
+</tr>
+<tr>
+<td>nginx.ingress.kubernetes.io/ssl-redirect</td>
+<td>指示位置部分是否只能由SSL访问(当Ingress包含证书时，默认为True)</td>
+<td>Bool</td>
+</tr>
+<tr>
+<td>nginx.ingress.kubernetes.io/force-ssl-redirect</td>
+<td>即使Ingress没有启用TLS，也强制重定向到HTTPS</td>
+<td>Bool</td>
+</tr>
+<tr>
+<td>nginx.ingress.kubernetes.io/app-root</td>
+<td>定义应用程序根目录，Controller在“/”上下文中必须重定向该根目录</td>
+<td>String</td>
+</tr>
+<tr>
+<td>nginx.ingress.kubernetes.io/use-regex</td>
+<td>指示Ingress上定义的路径是否使用正则表达式</td>
+<td>Bool</td>
+</tr>
+</tbody></table>
+<p>ingress yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# pwd</span><br><span class="line">/root/k8s_practice/ingress</span><br><span class="line">[root@k8s-master ingress]# cat nginx_rewrite.yaml </span><br><span class="line">apiVersion: networking.k8s.io/v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    nginx.ingress.kubernetes.io/rewrite-target: https://www.baidu.com</span><br><span class="line">  name: rewrite</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  rules:</span><br><span class="line">  - host: rewrite.zhangtest.com</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - backend:</span><br><span class="line">          serviceName: myapp-clusterip1</span><br><span class="line">          servicePort: 80</span><br></pre></td></tr></table></figure>
+
+<p>启动ingress并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ingress]# kubectl apply -f nginx_rewrite.yaml </span><br><span class="line">ingress.networking.k8s.io/rewrite created</span><br><span class="line">[root@k8s-master ingress]# </span><br><span class="line">[root@k8s-master ingress]# kubectl get ingress -o wide</span><br><span class="line">NAME                HOSTS                   ADDRESS          PORTS     AGE</span><br><span class="line">rewrite             rewrite.zhangtest.com                    80        13s</span><br></pre></td></tr></table></figure>
+
+<h2 id="浏览器访问-3"><a href="#浏览器访问-3" class="headerlink" title="浏览器访问"></a>浏览器访问</h2><p>hosts文件修改，添加如下信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">文件位置：C:\WINDOWS\System32\drivers\etc\hosts</span><br><span class="line">添加信息如下：</span><br><span class="line"># K8S ingress学习</span><br><span class="line">10.0.0.110  www.zhangtest.com  blog.zhangtest.com auth.zhangtest.com  rewrite.zhangtest.com</span><br></pre></td></tr></table></figure>
+
+<p>浏览器访问rewrite.zhangtest.com</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://rewrite.zhangtest.com/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-16-10.png" alt="image"></p>
+<p>之后，可见重定向到了<a href="https://www.baidu.com百度页面" target="_blank" rel="noopener">https://www.baidu.com百度页面</a></p>
+<h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="https://kubernetes.io/zh/docs/concepts/services-networking/ingress/" target="_blank" rel="noopener">k8s 官方 Ingress</a></p>
+<p>2、<a href="https://kubernetes.github.io/ingress-nginx/" target="_blank" rel="noopener">Ingress-Nginx官网地址</a></p>
+<p>3、<a href="https://github.com/kubernetes/ingress-nginx" target="_blank" rel="noopener">Ingress-Nginx GitHub地址</a></p>
+<p>4、<a href="https://kubernetes.github.io/ingress-nginx/examples/auth/basic/" target="_blank" rel="noopener">Ingress-Nginx实现BasicAuth认证</a></p>
+<p>5、<a href="https://kubernetes.github.io/ingress-nginx/examples/rewrite/" target="_blank" rel="noopener">Ingress-Nginx实现Rewrite重写</a></p>
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/09/23/kubernetes16/" title="Kubernetes K8S之Ingress详解与示例">http://www.zhangblog.com/2020/09/23/kubernetes16/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/16/kubernetes15/" rel="next" title="Kubernetes K8S之Service服务详解与示例">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S之Service服务详解与示例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机配置规划"><span class="nav-number">1.</span> <span class="nav-text">主机配置规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ingress概述"><span class="nav-number">2.</span> <span class="nav-text">Ingress概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ingress-是什么"><span class="nav-number">2.1.</span> <span class="nav-text">Ingress 是什么</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ingress示例"><span class="nav-number">3.</span> <span class="nav-text">Ingress示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构图"><span class="nav-number">3.1.</span> <span class="nav-text">架构图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署Ingress-Nginx"><span class="nav-number">3.2.</span> <span class="nav-text">部署Ingress-Nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deply-service1的yaml信息"><span class="nav-number">3.3.</span> <span class="nav-text">deply_service1的yaml信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deply-service2的yaml信息"><span class="nav-number">3.4.</span> <span class="nav-text">deply_service2的yaml信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ingress-HTTP代理访问"><span class="nav-number">3.5.</span> <span class="nav-text">Ingress HTTP代理访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器访问"><span class="nav-number">3.5.1.</span> <span class="nav-text">浏览器访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ingress-HTTPS代理访问"><span class="nav-number">3.6.</span> <span class="nav-text">Ingress HTTPS代理访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL证书创建"><span class="nav-number">3.6.1.</span> <span class="nav-text">SSL证书创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建ingress-https"><span class="nav-number">3.6.2.</span> <span class="nav-text">创建ingress https</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器访问-1"><span class="nav-number">3.6.3.</span> <span class="nav-text">浏览器访问</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ingress-Nginx实现BasicAuth认证"><span class="nav-number">4.</span> <span class="nav-text">Ingress-Nginx实现BasicAuth认证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器访问-2"><span class="nav-number">4.1.</span> <span class="nav-text">浏览器访问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ingress-Nginx实现Rewrite重写"><span class="nav-number">5.</span> <span class="nav-text">Ingress-Nginx实现Rewrite重写</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器访问-3"><span class="nav-number">5.1.</span> <span class="nav-text">浏览器访问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读"><span class="nav-number">6.</span> <span class="nav-text">相关阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  蜀ICP备16019247号</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">196.3k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
