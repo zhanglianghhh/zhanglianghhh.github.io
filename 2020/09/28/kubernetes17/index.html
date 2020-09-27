@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker,Kubernetes,K8S,CI/CD,DevOps,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="K8S之存储Secret概述与类型说明，并详解常用Secret示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
+<meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes K8S之存储Secret详解">
+<meta property="og:url" content="http://www.zhangblog.com/2020/09/28/kubernetes17/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="K8S之存储Secret概述与类型说明，并详解常用Secret示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-17-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-17-02.png">
+<meta property="og:updated_time" content="2020-09-27T23:56:34.503Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kubernetes K8S之存储Secret详解">
+<meta name="twitter:description" content="K8S之存储Secret概述与类型说明，并详解常用Secret示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2020/09/28/kubernetes17/">
+
+
+
+
+
+  <title>Kubernetes K8S之存储Secret详解 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/09/28/kubernetes17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kubernetes K8S之存储Secret详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-28T07:54:35+08:00">
+                2020-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/K8S/" itemprop="url" rel="index">
+                    <span itemprop="name">K8S</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/09/28/kubernetes17/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/09/28/kubernetes17/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/09/28/kubernetes17/" class="leancloud_visitors" data-flag-title="Kubernetes K8S之存储Secret详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
+<blockquote>
+<p>K8S之存储Secret概述与类型说明，并详解常用Secret示例</p>
+</blockquote>
+<h1 id="主机配置规划"><a href="#主机配置规划" class="headerlink" title="主机配置规划"></a>主机配置规划</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>系统版本</th>
+<th>配置</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.110</td>
+<td>10.0.0.110</td>
+</tr>
+<tr>
+<td>k8s-node01</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.111</td>
+<td>10.0.0.111</td>
+</tr>
+<tr>
+<td>k8s-node02</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.112</td>
+<td>10.0.0.112</td>
+</tr>
+</tbody></table>
+<h1 id="Secret概述"><a href="#Secret概述" class="headerlink" title="Secret概述"></a>Secret概述</h1><p>Secret解决了密码、token、秘钥等敏感数据的配置问题，而不需要把这些敏感数据暴露到镜像或者Pod Spec中。<font color="red">Secret可以以Volume或者环境变量的方式使用</font>。</p>
+<p>用户可以创建 secret，同时系统也创建了一些 secret。</p>
+<p>要使用 secret，pod 需要引用 secret。Pod 可以用两种方式使用 secret：作为 volume 中的文件被挂载到 pod 中的一个或者多个容器里，或者当 kubelet 为 pod 拉取镜像时使用。</p>
+<h2 id="Secret类型"><a href="#Secret类型" class="headerlink" title="Secret类型"></a>Secret类型</h2><ul>
+<li>Service Account：用来访问Kubernetes API，由Kubernetes自动创建，并且会自动挂载到Pod的 /run/secrets/kubernetes.io/serviceaccount 目录中。</li>
+<li>Opaque：base64编码格式的Secret，用来存储密码、秘钥等。</li>
+<li>kubernetes.io/dockerconfigjson：用来存储私有docker registry的认证信息。</li>
+</ul>
+<h1 id="Service-Account"><a href="#Service-Account" class="headerlink" title="Service Account"></a>Service Account</h1><p>通过kube-proxy查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl get pod -A | grep &apos;kube-proxy&apos; </span><br><span class="line">kube-system            kube-proxy-6bfh7                             1/1     Running   12         7d3h</span><br><span class="line">kube-system            kube-proxy-6vfkf                             1/1     Running   11         7d3h</span><br><span class="line">kube-system            kube-proxy-bvl9n                             1/1     Running   11         7d3h</span><br><span class="line">[root@k8s-master ~]# </span><br><span class="line">[root@k8s-master ~]# kubectl exec -it -n kube-system kube-proxy-6bfh7 -- /bin/sh </span><br><span class="line"># ls -l /run/secrets/kubernetes.io/serviceaccount</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 13 Jun  8 13:39 ca.crt -&gt; ..data/ca.crt</span><br><span class="line">lrwxrwxrwx 1 root root 16 Jun  8 13:39 namespace -&gt; ..data/namespace</span><br><span class="line">lrwxrwxrwx 1 root root 12 Jun  8 13:39 token -&gt; ..data/token</span><br></pre></td></tr></table></figure>
+
+<h1 id="Opaque-Secret"><a href="#Opaque-Secret" class="headerlink" title="Opaque Secret"></a>Opaque Secret</h1><h2 id="创建secret"><a href="#创建secret" class="headerlink" title="创建secret"></a>创建secret</h2><p>手动加密，基于base64加密</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# echo -n &apos;admin&apos; | base64</span><br><span class="line">YWRtaW4=</span><br><span class="line">[root@k8s-master ~]# echo -n &apos;1f2d1e2e67df&apos; | base64</span><br><span class="line">MWYyZDFlMmU2N2Rm</span><br></pre></td></tr></table></figure>
+
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# pwd</span><br><span class="line">/root/k8s_practice/secret</span><br><span class="line">[root@k8s-master secret]# cat secret.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  name: mysecret</span><br><span class="line">type: Opaque</span><br><span class="line">data:</span><br><span class="line">  username: YWRtaW4=</span><br><span class="line">  password: MWYyZDFlMmU2N2Rm</span><br></pre></td></tr></table></figure>
+
+<p>或者通过如下命令行创建【secret名称故意设置不一样，以方便查看对比】，生成secret后会自动加密，而非明文存储。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create secret generic db-user-pass --from-literal=username=admin --from-literal=password=1f2d1e2e67df</span><br></pre></td></tr></table></figure>
+
+<p>生成secret，并查看状态 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# kubectl apply -f secret.yaml </span><br><span class="line">secret/mysecret created</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl get secret   ### 查看默认名称空间的secret简要信息</span><br><span class="line">NAME                  TYPE                                  DATA   AGE</span><br><span class="line">basic-auth            Opaque                                1      2d12h</span><br><span class="line">default-token-v48g4   kubernetes.io/service-account-token   3      27d</span><br><span class="line">mysecret              Opaque                                2      23s  ### 可见已创建</span><br><span class="line">tls-secret            kubernetes.io/tls                     2      3d2h</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl get secret mysecret -o yaml     ### 查看mysecret详细信息</span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  password: MWYyZDFlMmU2N2Rm</span><br><span class="line">  username: YWRtaW4=</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    kubectl.kubernetes.io/last-applied-configuration: |</span><br><span class="line">      &#123;&quot;apiVersion&quot;:&quot;v1&quot;,&quot;data&quot;:&#123;&quot;password&quot;:&quot;MWYyZDFlMmU2N2Rm&quot;,&quot;username&quot;:&quot;YWRtaW4=&quot;&#125;,&quot;kind&quot;:&quot;Secret&quot;,&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&#125;,&quot;name&quot;:&quot;mysecret&quot;,&quot;namespace&quot;:&quot;default&quot;&#125;,&quot;type&quot;:&quot;Opaque&quot;&#125;</span><br><span class="line">  creationTimestamp: &quot;2020-06-08T14:08:59Z&quot;</span><br><span class="line">  name: mysecret</span><br><span class="line">  namespace: default</span><br><span class="line">  resourceVersion: &quot;987419&quot;</span><br><span class="line">  selfLink: /api/v1/namespaces/default/secrets/mysecret</span><br><span class="line">  uid: 27b58929-71c4-495b-99a5-0d411910a529</span><br><span class="line">type: Opaque</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl describe secret mysecret     ### 查看描述信息</span><br><span class="line">Name:         mysecret</span><br><span class="line">Namespace:    default</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  </span><br><span class="line">Type:         Opaque</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">====</span><br><span class="line">password:  12 bytes</span><br><span class="line">username:  5 bytes</span><br></pre></td></tr></table></figure>
+
+<h2 id="将Secret挂载到Volume中"><a href="#将Secret挂载到Volume中" class="headerlink" title="将Secret挂载到Volume中"></a>将Secret挂载到Volume中</h2><p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# pwd</span><br><span class="line">/root/k8s_practice/secret</span><br><span class="line">[root@k8s-master secret]# cat pod_secret_volume.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-secret-volume</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: myapp</span><br><span class="line">    image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">    volumeMounts:</span><br><span class="line">    - name: secret-volume</span><br><span class="line">      mountPath: /etc/secret</span><br><span class="line">      readOnly: true</span><br><span class="line">  volumes:</span><br><span class="line">  - name: secret-volume</span><br><span class="line">    secret:</span><br><span class="line">      secretName: mysecret</span><br></pre></td></tr></table></figure>
+
+<p>启动pod并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# kubectl apply -f pod_secret_volume.yaml </span><br><span class="line">pod/pod-secret-volume created</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl get pod -o wide</span><br><span class="line">NAME                READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">pod-secret-volume   1/1     Running   0          16s   10.244.2.159   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>查看secret信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# kubectl exec -it pod-secret-volume -- /bin/sh</span><br><span class="line">/ # ls /etc/secret</span><br><span class="line">password  username</span><br><span class="line">/ # </span><br><span class="line">/ # cat /etc/secret/username</span><br><span class="line">admin/ # </span><br><span class="line">/ # </span><br><span class="line">/ # cat /etc/secret/password</span><br><span class="line">1f2d1e2e67df/ #</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，在pod中的secret信息实际已经被解密。</font></p>
+<h2 id="将Secret导入到环境变量中"><a href="#将Secret导入到环境变量中" class="headerlink" title="将Secret导入到环境变量中"></a>将Secret导入到环境变量中</h2><p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# pwd</span><br><span class="line">/root/k8s_practice/secret</span><br><span class="line">[root@k8s-master secret]# cat pod_secret_env.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-secret-env</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: myapp</span><br><span class="line">    image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">    env:</span><br><span class="line">    - name: SECRET_USERNAME</span><br><span class="line">      valueFrom:</span><br><span class="line">        secretKeyRef:</span><br><span class="line">          name: mysecret</span><br><span class="line">          key: username</span><br><span class="line">    - name: SECRET_PASSWORD</span><br><span class="line">      valueFrom:</span><br><span class="line">        secretKeyRef:</span><br><span class="line">          name: mysecret</span><br><span class="line">          key: password</span><br><span class="line">  restartPolicy: Never</span><br></pre></td></tr></table></figure>
+
+<p>启动pod并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# kubectl apply -f pod_secret_env.yaml </span><br><span class="line">pod/pod-secret-env created</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl get pod -o wide</span><br><span class="line">NAME             READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">pod-secret-env   1/1     Running   0          6s    10.244.2.160   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>查看secret信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# kubectl exec -it pod-secret-env -- /bin/sh</span><br><span class="line">/ # env</span><br><span class="line">………………</span><br><span class="line">HOME=/root</span><br><span class="line">SECRET_PASSWORD=1f2d1e2e67df    ### secret信息</span><br><span class="line">MYAPP_SVC_PORT_80_TCP=tcp://10.98.57.156:80</span><br><span class="line">TERM=xterm</span><br><span class="line">NGINX_VERSION=1.12.2</span><br><span class="line">KUBERNETES_PORT_443_TCP_ADDR=10.96.0.1</span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">KUBERNETES_PORT_443_TCP_PORT=443</span><br><span class="line">KUBERNETES_PORT_443_TCP_PROTO=tcp</span><br><span class="line">MYAPP_SVC_SERVICE_HOST=10.98.57.156</span><br><span class="line">SECRET_USERNAME=admin    ### secret信息</span><br><span class="line">KUBERNETES_PORT_443_TCP=tcp://10.96.0.1:443</span><br><span class="line">………………</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，在pod中的secret信息实际已经被解密。</font></p>
+<h1 id="docker-registry-Secret"><a href="#docker-registry-Secret" class="headerlink" title="docker-registry Secret"></a>docker-registry Secret</h1><h2 id="harbor镜像仓库"><a href="#harbor镜像仓库" class="headerlink" title="harbor镜像仓库"></a>harbor镜像仓库</h2><p>首先使用harbor搭建镜像仓库，搭建部署过程参考：「<a href="http://www.zhangblog.com/2020/05/13/docker06/">Harbor企业级私有Docker镜像仓库部署</a>」</p>
+<div style="font-size:17px"><b>harbor部分配置文件信息</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master harbor]# pwd</span><br><span class="line">/root/App/harbor</span><br><span class="line">[root@k8s-master harbor]# vim harbor.yml </span><br><span class="line"># Configuration file of Harbor</span><br><span class="line">hostname: 172.16.1.110</span><br><span class="line"></span><br><span class="line"># http related config</span><br><span class="line">http:</span><br><span class="line">  # port for http, default is 80. If https enabled, this port will redirect to https port</span><br><span class="line">  port: 5000</span><br><span class="line"></span><br><span class="line"># https related config</span><br><span class="line">https:</span><br><span class="line">  # https port for harbor, default is 443</span><br><span class="line">  port: 443</span><br><span class="line">  # The path of cert and key files for nginx</span><br><span class="line">  certificate: /etc/harbor/cert/httpd.crt</span><br><span class="line">  private_key: /etc/harbor/cert/httpd.key</span><br><span class="line">harbor_admin_password: Harbor12345</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>启动harbor后客户端http设置</b></div>
+
+<p><font color="red">集群所有机器都要操作</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# vim /etc/docker/daemon.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],</span><br><span class="line">  &quot;log-driver&quot;: &quot;json-file&quot;,</span><br><span class="line">  &quot;log-opts&quot;: &#123;</span><br><span class="line">    &quot;max-size&quot;: &quot;100m&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;insecure-registries&quot;: [&quot;172.16.1.110:5000&quot;]</span><br><span class="line">&#125;</span><br><span class="line">[root@k8s-master ~]# </span><br><span class="line">[root@k8s-master ~]# systemctl restart docker   # 重启docker服务</span><br></pre></td></tr></table></figure>
+
+<p>添加了 “insecure-registries”: [“172.16.1.110:5000”] 这行，其中172.16.1.110为内网IP地址。该文件必须符合 json 规范，否则 Docker 将不能启动。</p>
+<p>如果在Harbor所在的机器重启了docker服务，记得要重新启动Harbor。</p>
+<div style="font-size:17px"><b>创建「私有」仓库</b></div>
+
+<p><img src="/uploads/kubernetes/k8s-17-01.png" alt="image"></p>
+<div style="font-size:17px"><b>镜像上传</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">docker tag registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1 172.16.1.110:5000/k8s-secret/myapp:v1</span><br><span class="line"># 登录</span><br><span class="line">docker login 172.16.1.110:5000 -u admin -p Harbor12345</span><br><span class="line"># 上传</span><br><span class="line">docker push 172.16.1.110:5000/k8s-secret/myapp:v1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-17-02.png" alt="image"></p>
+<div style="font-size:17px"><b>退出登录</b></div>
+
+<p>之后在操作机上退出harbor登录，便于后面演示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">### 退出harbor登录</span><br><span class="line">[root@k8s-node02 ~]# docker logout 172.16.1.110:5000  </span><br><span class="line">Removing login credentials for 172.16.1.110:5000</span><br><span class="line">### 拉取失败，需要先登录。表明完成准备工作</span><br><span class="line">[root@k8s-master secret]# docker pull 172.16.1.110:5000/k8s-secret/myapp:v1</span><br><span class="line">Error response from daemon: pull access denied for 172.16.1.110:5000/k8s-secret/myapp, repository does not exist or may require &apos;docker login&apos;: denied: requested access to the resource is denied</span><br></pre></td></tr></table></figure>
+
+<h2 id="pod直接下载镜像"><a href="#pod直接下载镜像" class="headerlink" title="pod直接下载镜像"></a>pod直接下载镜像</h2><p>在yaml文件中指定image后，直接启动pod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# pwd</span><br><span class="line">/root/k8s_practice/secret</span><br><span class="line">[root@k8s-master secret]# cat pod_secret_registry.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-secret-registry</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: myapp</span><br><span class="line">    image: 172.16.1.110:5000/k8s-secret/myapp:v1</span><br></pre></td></tr></table></figure>
+
+<p>启动pod并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# kubectl apply -f pod_secret_registry.yaml </span><br><span class="line">pod/pod-secret-registry created</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl get pod -o wide     ### 可见镜像下载失败</span><br><span class="line">NAME                  READY   STATUS             RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">pod-secret-registry   0/1     ImagePullBackOff   0          7s    10.244.2.161   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl describe pod pod-secret-registry     ### 查看pod详情</span><br><span class="line">Name:         pod-secret-registry</span><br><span class="line">Namespace:    default</span><br><span class="line">Priority:     0</span><br><span class="line">Node:         k8s-node02/172.16.1.112</span><br><span class="line">Start Time:   Mon, 08 Jun 2020 23:59:07 +0800</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  kubectl.kubernetes.io/last-applied-configuration:</span><br><span class="line">                &#123;&quot;apiVersion&quot;:&quot;v1&quot;,&quot;kind&quot;:&quot;Pod&quot;,&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&#125;,&quot;name&quot;:&quot;pod-secret-registry&quot;,&quot;namespace&quot;:&quot;default&quot;&#125;,&quot;spec&quot;:&#123;&quot;containers&quot;:[&#123;&quot;i...</span><br><span class="line">Status:       Pending</span><br><span class="line">IP:           10.244.2.161</span><br><span class="line">IPs:</span><br><span class="line">  IP:  10.244.2.161</span><br><span class="line">Containers:</span><br><span class="line">  myapp:</span><br><span class="line">    Container ID:   </span><br><span class="line">    Image:          172.16.1.110:5000/k8s-secret/myapp:v1</span><br><span class="line">    Image ID:       </span><br><span class="line">………………</span><br><span class="line">Events:</span><br><span class="line">  Type     Reason     Age                From                 Message</span><br><span class="line">  ----     ------     ----               ----                 -------</span><br><span class="line">  Normal   Scheduled  23s                default-scheduler    Successfully assigned default/pod-secret-registry to k8s-node02</span><br><span class="line">  Normal   BackOff    19s (x2 over 20s)  kubelet, k8s-node02  Back-off pulling image &quot;172.16.1.110:5000/k8s-secret/myapp:v1&quot;</span><br><span class="line">  Warning  Failed     19s (x2 over 20s)  kubelet, k8s-node02  Error: ImagePullBackOff</span><br><span class="line">  Normal   Pulling    9s (x2 over 21s)   kubelet, k8s-node02  Pulling image &quot;172.16.1.110:5000/k8s-secret/myapp:v1&quot;</span><br><span class="line">  Warning  Failed     9s (x2 over 21s)   kubelet, k8s-node02  Failed to pull image &quot;172.16.1.110:5000/k8s-secret/myapp:v1&quot;: rpc error: code = Unknown desc = Error response from daemon: pull access denied for 172.16.1.110:5000/k8s-secret/myapp, repository does not exist or may require &apos;docker login&apos;: denied: requested access to the resource is denied</span><br><span class="line">  Warning  Failed     9s (x2 over 21s)   kubelet, k8s-node02  Error: ErrImagePull</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl delete -f pod_secret_registry.yaml</span><br></pre></td></tr></table></figure>
+
+<p>可见拉取私有镜像失败。</p>
+<h2 id="pod通过Secret下载镜像"><a href="#pod通过Secret下载镜像" class="headerlink" title="pod通过Secret下载镜像"></a>pod通过Secret下载镜像</h2><p>通过命令行创建Secret，并查看其描述信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# kubectl create secret docker-registry myregistrysecret --docker-server=&apos;172.16.1.110:5000&apos; --docker-username=&apos;admin&apos; --docker-password=&apos;Harbor12345&apos; </span><br><span class="line">secret/myregistrysecret created</span><br><span class="line">[root@k8s-master secret]#</span><br><span class="line">[root@k8s-master secret]# kubectl get secret </span><br><span class="line">NAME                  TYPE                                  DATA   AGE</span><br><span class="line">basic-auth            Opaque                                1      2d14h</span><br><span class="line">default-token-v48g4   kubernetes.io/service-account-token   3      27d</span><br><span class="line">myregistrysecret      kubernetes.io/dockerconfigjson        1      8s    # 刚刚创建的</span><br><span class="line">mysecret              Opaque                                2      118m</span><br><span class="line">tls-secret            kubernetes.io/tls                     2      3d4h</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl get secret myregistrysecret -o yaml     ### 查看详细信息</span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  .dockerconfigjson: eyJhdXRocyI6eyIxMC4wLjAuMTEwOjUwMDAiOnsidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoiSGFyYm9yMTIzNDUiLCJhdXRoIjoiWVdSdGFXNDZTR0Z5WW05eU1USXpORFU9In19fQ==</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  creationTimestamp: &quot;2020-06-08T16:07:32Z&quot;</span><br><span class="line">  name: myregistrysecret</span><br><span class="line">  namespace: default</span><br><span class="line">  resourceVersion: &quot;1004582&quot;</span><br><span class="line">  selfLink: /api/v1/namespaces/default/secrets/myregistrysecret</span><br><span class="line">  uid: b95f4386-64bc-4ba3-b43a-08afb1c1eb9d</span><br><span class="line">type: kubernetes.io/dockerconfigjson</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl describe secret myregistrysecret     ### 查看描述信息</span><br><span class="line">Name:         myregistrysecret</span><br><span class="line">Namespace:    default</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  &lt;none&gt;</span><br><span class="line"></span><br><span class="line">Type:  kubernetes.io/dockerconfigjson</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">====</span><br><span class="line">.dockerconfigjson:  109 bytes</span><br></pre></td></tr></table></figure>
+
+<p>修改之前的yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# cat pod_secret_registry.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: pod-secret-registry</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: myapp</span><br><span class="line">    image: 172.16.1.110:5000/k8s-secret/myapp:v1</span><br><span class="line">  imagePullSecrets:</span><br><span class="line">  - name: myregistrysecret</span><br></pre></td></tr></table></figure>
+
+<p>启动pod并查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master secret]# kubectl apply -f pod_secret_registry.yaml </span><br><span class="line">pod/pod-secret-registry created</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl get pod -o wide</span><br><span class="line">NAME                  READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">pod-secret-registry   1/1     Running   0          8s    10.244.2.162   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">[root@k8s-master secret]# </span><br><span class="line">[root@k8s-master secret]# kubectl describe pod pod-secret-registry</span><br><span class="line">Name:         pod-secret-registry</span><br><span class="line">Namespace:    default</span><br><span class="line">Priority:     0</span><br><span class="line">Node:         k8s-node02/172.16.1.112</span><br><span class="line">Start Time:   Tue, 09 Jun 2020 00:22:40 +0800</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  kubectl.kubernetes.io/last-applied-configuration:</span><br><span class="line">                &#123;&quot;apiVersion&quot;:&quot;v1&quot;,&quot;kind&quot;:&quot;Pod&quot;,&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&#125;,&quot;name&quot;:&quot;pod-secret-registry&quot;,&quot;namespace&quot;:&quot;default&quot;&#125;,&quot;spec&quot;:&#123;&quot;containers&quot;:[&#123;&quot;i...</span><br><span class="line">Status:       Running</span><br><span class="line">IP:           10.244.2.162</span><br><span class="line">IPs:</span><br><span class="line">  IP:  10.244.2.162</span><br><span class="line">Containers:</span><br><span class="line">  myapp:</span><br><span class="line">    Container ID:   docker://ef4d42f1f1616a44c2a6c0a5a71333b27f46dfe76eb392962813a28d69150c00</span><br><span class="line">    Image:          172.16.1.110:5000/k8s-secret/myapp:v1</span><br><span class="line">    Image ID:       docker-pullable://172.16.1.110:5000/k8s-secret/myapp@sha256:9eeca44ba2d410e54fccc54cbe9c021802aa8b9836a0bcf3d3229354e4c8870e</span><br><span class="line">    Port:           &lt;none&gt;</span><br><span class="line">    Host Port:      &lt;none&gt;</span><br><span class="line">    State:          Running</span><br><span class="line">      Started:      Tue, 09 Jun 2020 00:22:41 +0800</span><br><span class="line">    Ready:          True</span><br><span class="line">    Restart Count:  0</span><br><span class="line">    Environment:    &lt;none&gt;</span><br><span class="line">    Mounts:</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-v48g4 (ro)</span><br><span class="line">Conditions:</span><br><span class="line">  Type              Status</span><br><span class="line">  Initialized       True </span><br><span class="line">  Ready             True </span><br><span class="line">  ContainersReady   True </span><br><span class="line">  PodScheduled      True </span><br><span class="line">Volumes:</span><br><span class="line">  default-token-v48g4:</span><br><span class="line">    Type:        Secret (a volume populated by a Secret)</span><br><span class="line">    SecretName:  default-token-v48g4</span><br><span class="line">    Optional:    false</span><br><span class="line">QoS Class:       BestEffort</span><br><span class="line">Node-Selectors:  &lt;none&gt;</span><br><span class="line">Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s</span><br><span class="line">                 node.kubernetes.io/unreachable:NoExecute for 300s</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason     Age   From                 Message</span><br><span class="line">  ----    ------     ----  ----                 -------</span><br><span class="line">  Normal  Scheduled  22s   default-scheduler    Successfully assigned default/pod-secret-registry to k8s-node02</span><br><span class="line">  Normal  Pulling    22s   kubelet, k8s-node02  Pulling image &quot;172.16.1.110:5000/k8s-secret/myapp:v1&quot;</span><br><span class="line">  Normal  Pulled     22s   kubelet, k8s-node02  Successfully pulled image &quot;172.16.1.110:5000/k8s-secret/myapp:v1&quot;</span><br><span class="line">  Normal  Created    22s   kubelet, k8s-node02  Created container myapp</span><br><span class="line">  Normal  Started    21s   kubelet, k8s-node02  Started container myapp</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，通过secret认证后pod拉取私有镜像是可以的。</font></p>
+<h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="http://www.zhangblog.com/2020/05/13/docker06/">Harbor企业级私有Docker镜像仓库部署</a></p>
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/09/28/kubernetes17/" title="Kubernetes K8S之存储Secret详解">http://www.zhangblog.com/2020/09/28/kubernetes17/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/23/kubernetes16/" rel="next" title="Kubernetes K8S之Ingress详解与示例">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S之Ingress详解与示例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机配置规划"><span class="nav-number">1.</span> <span class="nav-text">主机配置规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Secret概述"><span class="nav-number">2.</span> <span class="nav-text">Secret概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Secret类型"><span class="nav-number">2.1.</span> <span class="nav-text">Secret类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Service-Account"><span class="nav-number">3.</span> <span class="nav-text">Service Account</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Opaque-Secret"><span class="nav-number">4.</span> <span class="nav-text">Opaque Secret</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建secret"><span class="nav-number">4.1.</span> <span class="nav-text">创建secret</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将Secret挂载到Volume中"><span class="nav-number">4.2.</span> <span class="nav-text">将Secret挂载到Volume中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将Secret导入到环境变量中"><span class="nav-number">4.3.</span> <span class="nav-text">将Secret导入到环境变量中</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-registry-Secret"><span class="nav-number">5.</span> <span class="nav-text">docker-registry Secret</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#harbor镜像仓库"><span class="nav-number">5.1.</span> <span class="nav-text">harbor镜像仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pod直接下载镜像"><span class="nav-number">5.2.</span> <span class="nav-text">pod直接下载镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pod通过Secret下载镜像"><span class="nav-number">5.3.</span> <span class="nav-text">pod通过Secret下载镜像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读"><span class="nav-number">6.</span> <span class="nav-text">相关阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  蜀ICP备16019247号</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">199k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
