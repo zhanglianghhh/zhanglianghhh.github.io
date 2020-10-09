@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-09-27T23:56:34.503Z</updated>
+  <updated>2020-10-09T12:26:23.094Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux系统如何在离线环境或内网环境安装部署Docker服务和其他服务</title>
+    <link href="http://www.zhangblog.com/2020/10/09/linux-yum/"/>
+    <id>http://www.zhangblog.com/2020/10/09/linux-yum/</id>
+    <published>2020-10-09T12:19:55.000Z</published>
+    <updated>2020-10-09T12:26:23.094Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/linux_yum/linux_yum-00.jpg&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://www.zhangblog.com/categories/Linux/"/>
+    
+      <category term="Yum" scheme="http://www.zhangblog.com/categories/Linux/Yum/"/>
+    
+    
+      <category term="Linux" scheme="http://www.zhangblog.com/tags/Linux/"/>
+    
+      <category term="Yum" scheme="http://www.zhangblog.com/tags/Yum/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S之存储Secret详解</title>
@@ -727,36 +757,6 @@
       <category term="docker" scheme="http://www.zhangblog.com/tags/docker/"/>
     
       <category term="Harbor" scheme="http://www.zhangblog.com/tags/Harbor/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在Linux CentOS 7搭建OpenVPN服务与管理</title>
-    <link href="http://www.zhangblog.com/2020/05/09/openvpn01/"/>
-    <id>http://www.zhangblog.com/2020/05/09/openvpn01/</id>
-    <published>2020-05-09T15:45:20.000Z</published>
-    <updated>2020-05-09T15:50:23.365Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/openvpn/openvpn-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;在CentOS
-        
-      
-    
-    </summary>
-    
-      <category term="OpenVPN" scheme="http://www.zhangblog.com/categories/OpenVPN/"/>
-    
-    
-      <category term="linux" scheme="http://www.zhangblog.com/tags/linux/"/>
-    
-      <category term="OpenVPN" scheme="http://www.zhangblog.com/tags/OpenVPN/"/>
     
   </entry>
   
