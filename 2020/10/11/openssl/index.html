@@ -92,16 +92,16 @@
 <meta property="og:description" content="在Linux下如何根据域名自签发各种SSL证书，这里我们以Apache、Tomcat、Nginx为例。  openssl自签发泛域名（通配符）证书首先要有openssl工具，如果没有那么使用如下命令安装： 1yum install -y openssl openssl-devel  修改openssl.cnf配置文件具体修改如下 12345678910111213141516171819[ro">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-00.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-01.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-02.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-03.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-04.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-05.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-06.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-07.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-08.jpg">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-09.jpg">
-<meta property="og:updated_time" content="2020-10-11T15:25:44.049Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-03.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-04.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-05.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-06.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-07.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-08.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-09.png">
+<meta property="og:updated_time" content="2020-10-11T15:36:04.808Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在Linux下如何根据域名自签发OpenSSL证书与常用证书转换">
 <meta name="twitter:description" content="在Linux下如何根据域名自签发各种SSL证书，这里我们以Apache、Tomcat、Nginx为例。  openssl自签发泛域名（通配符）证书首先要有openssl工具，如果没有那么使用如下命令安装： 1yum install -y openssl openssl-devel  修改openssl.cnf配置文件具体修改如下 12345678910111213141516171819[ro">
@@ -518,7 +518,7 @@
 <p><font color="red"><b>异常问题1：</b></font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Using configuration from /etc/pki/tls/openssl.cnf</span><br><span class="line">/etc/pki/CA/index.txt: No such file or directory</span><br><span class="line">unable to open &apos;/etc/pki/CA/index.txt&apos;</span><br><span class="line">140652962035600:error:02001002:system library:fopen:No such file or directory:bss_file.c:402:fopen(&apos;/etc/pki/CA/index.txt&apos;,&apos;r&apos;)</span><br><span class="line">140652962035600:error:20074002:BIO routines:FILE_CTRL:system lib:bss_file.c:404:</span><br></pre></td></tr></table></figure>
 
-<p><img src="/uploads/openssl/ssl-01-01.jpg" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-01.png" alt="image"></p>
 <p><font style="background-color:yellow;">处理：这时我们创建该文件即可</font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch /etc/pki/CA/index.txt</span><br></pre></td></tr></table></figure>
 
@@ -526,7 +526,7 @@
 <p>然后我们继续使用 【自签署的CA，签署zhangbook.com.crt】；结果又出现新问题</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Using configuration from /etc/pki/tls/openssl.cnf</span><br><span class="line">/etc/pki/CA/serial: No such file or directory</span><br><span class="line">error while loading serial number</span><br><span class="line">140087163742096:error:02001002:system library:fopen:No such file or directory:bss_file.c:402:fopen(&apos;/etc/pki/CA/serial&apos;,&apos;r&apos;)</span><br><span class="line">140087163742096:error:20074002:BIO routines:FILE_CTRL:system lib:bss_file.c:404:</span><br></pre></td></tr></table></figure>
 
-<p><img src="/uploads/openssl/ssl-01-02.jpg" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-02.png" alt="image"></p>
 <p><font style="background-color:yellow;">处理：使用如下命令即可。表示：用来跟踪最后一次颁发证书的序列号。</font></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;01&quot; &gt; /etc/pki/CA/serial</span><br></pre></td></tr></table></figure>
 
@@ -600,9 +600,9 @@
 <p>6、浏览器访问</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https://172.16.1.32/</span><br><span class="line">https://www.zhangbook.com/</span><br><span class="line">https://blog.zhangbook.com </span><br><span class="line">https://auth.zhangbook.com</span><br></pre></td></tr></table></figure>
 
-<p><img src="/uploads/openssl/ssl-01-03.jpg" alt="image"></p>
-<p><img src="/uploads/openssl/ssl-01-04.jpg" alt="image"></p>
-<p><img src="/uploads/openssl/ssl-01-05.jpg" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-03.png" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-04.png" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-05.png" alt="image"></p>
 <p>7、验证完毕，停止httpd服务</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop httpd</span><br></pre></td></tr></table></figure>
 
@@ -625,8 +625,8 @@
 <p>6、浏览器访问</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://www.zhangbook.com/</span><br><span class="line">https://blog.zhangbook.com </span><br><span class="line">https://auth.zhangbook.com</span><br></pre></td></tr></table></figure>
 
-<p><img src="/uploads/openssl/ssl-01-06.jpg" alt="image"></p>
-<p><img src="/uploads/openssl/ssl-01-07.jpg" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-06.png" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-07.png" alt="image"></p>
 <p>7、验证完毕，停止nginx服务</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop nginx</span><br></pre></td></tr></table></figure>
 
@@ -649,8 +649,8 @@
 <p>6、浏览器访问</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https://172.16.1.32/</span><br><span class="line">https://www.zhangbook.com/</span><br><span class="line">https://blog.zhangbook.com </span><br><span class="line">https://auth.zhangbook.com</span><br></pre></td></tr></table></figure>
 
-<p><img src="/uploads/openssl/ssl-01-08.jpg" alt="image"></p>
-<p><img src="/uploads/openssl/ssl-01-09.jpg" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-08.png" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-09.png" alt="image"></p>
 <p>7、验证完毕，停止Tomcat服务</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 bin]# pwd</span><br><span class="line">/root/App/apache-tomcat-8.5.58/bin</span><br><span class="line">[root@docker02 bin]# </span><br><span class="line">[root@docker02 bin]# sh shutdown.sh</span><br></pre></td></tr></table></figure>
 
