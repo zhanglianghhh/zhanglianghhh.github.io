@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,openssl,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="在Linux下如何根据域名自签发各种SSL证书，这里我们以Apache、Tomcat、Nginx为例。  openssl自签发泛域名（通配符）证书首先要有openssl工具，如果没有那么使用如下命令安装： 1yum install -y openssl openssl-devel  修改openssl.cnf配置文件具体修改如下 12345678910111213141516171819[ro">
+<meta name="keywords" content="linux,openssl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Linux下如何根据域名自签发OpenSSL证书与常用证书转换">
+<meta property="og:url" content="http://www.zhangblog.com/2020/10/11/openssl/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="在Linux下如何根据域名自签发各种SSL证书，这里我们以Apache、Tomcat、Nginx为例。  openssl自签发泛域名（通配符）证书首先要有openssl工具，如果没有那么使用如下命令安装： 1yum install -y openssl openssl-devel  修改openssl.cnf配置文件具体修改如下 12345678910111213141516171819[ro">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-00.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-01.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-02.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-03.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-04.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-05.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-06.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-07.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-08.jpg">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-09.jpg">
+<meta property="og:updated_time" content="2020-10-11T15:25:44.049Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在Linux下如何根据域名自签发OpenSSL证书与常用证书转换">
+<meta name="twitter:description" content="在Linux下如何根据域名自签发各种SSL证书，这里我们以Apache、Tomcat、Nginx为例。  openssl自签发泛域名（通配符）证书首先要有openssl工具，如果没有那么使用如下命令安装： 1yum install -y openssl openssl-devel  修改openssl.cnf配置文件具体修改如下 12345678910111213141516171819[ro">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/openssl/ssl-01-00.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2020/10/11/openssl/">
+
+
+
+
+
+  <title>在Linux下如何根据域名自签发OpenSSL证书与常用证书转换 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/10/11/openssl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在Linux下如何根据域名自签发OpenSSL证书与常用证书转换</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-11T23:21:49+08:00">
+                2020-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/openssl/" itemprop="url" rel="index">
+                    <span itemprop="name">openssl</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/10/11/openssl/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/10/11/openssl/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/10/11/openssl/" class="leancloud_visitors" data-flag-title="在Linux下如何根据域名自签发OpenSSL证书与常用证书转换">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/openssl/ssl-01-00.jpg" alt="image"></p>
+<blockquote>
+<p>在Linux下如何根据域名自签发各种SSL证书，这里我们以Apache、Tomcat、Nginx为例。</p>
+</blockquote>
+<h1 id="openssl自签发泛域名（通配符）证书"><a href="#openssl自签发泛域名（通配符）证书" class="headerlink" title="openssl自签发泛域名（通配符）证书"></a>openssl自签发泛域名（通配符）证书</h1><p>首先要有openssl工具，如果没有那么使用如下命令安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openssl openssl-devel</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改openssl-cnf配置文件"><a href="#修改openssl-cnf配置文件" class="headerlink" title="修改openssl.cnf配置文件"></a>修改openssl.cnf配置文件</h2><p>具体修改如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ~]# vim /etc/pki/tls/openssl.cnf</span><br><span class="line">[ req ]</span><br><span class="line">………………</span><br><span class="line"># 将如下配置的注释放开</span><br><span class="line">req_extensions = v3_req # The extensions to add to a certificate request</span><br><span class="line">………………</span><br><span class="line">[ v3_req ]</span><br><span class="line"></span><br><span class="line"># Extensions to add to a certificate request</span><br><span class="line"></span><br><span class="line">basicConstraints = CA:FALSE</span><br><span class="line">keyUsage = nonRepudiation, digitalSignature, keyEncipherment</span><br><span class="line"># 添加如下行</span><br><span class="line">subjectAltName = @SubjectAlternativeName</span><br><span class="line"></span><br><span class="line"># 同时增加如下信息</span><br><span class="line">[SubjectAlternativeName]</span><br><span class="line">DNS.1 = zhangbook.com</span><br><span class="line">DNS.2 = *.zhangbook.com</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">说明：本次我们以 <code>*.zhangbook.com</code> 泛域名为例。</font></p>
+<h2 id="创建根证书"><a href="#创建根证书" class="headerlink" title="创建根证书"></a>创建根证书</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ssl]# pwd</span><br><span class="line">/root/software/ssl</span><br><span class="line">[root@docker02 ssl]# </span><br><span class="line">## 创建CA私钥</span><br><span class="line">[root@docker02 ssl]# openssl genrsa -out CA.key 2048</span><br><span class="line">## 制作CA公钥</span><br><span class="line">[root@docker02 ssl]# openssl req -sha256 -new -x509 -days 36500 -key CA.key -out CA.crt -config /etc/pki/tls/openssl.cnf </span><br><span class="line">………………</span><br><span class="line">Country Name (2 letter code) [XX]:CN</span><br><span class="line">State or Province Name (full name) []:BJ</span><br><span class="line">Locality Name (eg, city) [Default City]:BeiJing</span><br><span class="line">Organization Name (eg, company) [Default Company Ltd]:BTC</span><br><span class="line">Organizational Unit Name (eg, section) []:MOST</span><br><span class="line">Common Name (eg, your name or your server&apos;s hostname) []:Light Zhang   # 这里就是证书上的：颁发者</span><br><span class="line">Email Address []:ca@test.com</span><br></pre></td></tr></table></figure>
+
+<p>当然上述的公钥制作方式需要交互式输入信息，如果不想频繁输入，那么可以使用如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 免交互式制作CA公钥</span><br><span class="line">openssl req -sha256 -new -x509 -days 36500 -key CA.key -out CA.crt -config /etc/pki/tls/openssl.cnf -subj &quot;/C=CN/ST=BJ/L=BeiJing/O=BTC/OU=MOST/CN=Light Zhang/emailAddress=ca@test.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p><b>subj内容详解：</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C             = Country Name (2 letter code)</span><br><span class="line">ST            = State or Province Name (full name)</span><br><span class="line">L             = Locality Name (eg, city) [Default City]</span><br><span class="line">O             = Organization Name (eg, company) [Default Company Ltd]</span><br><span class="line">OU            = Organizational Unit Name (eg, section)</span><br><span class="line">CN            = Common Name (eg, your name or your server&apos;s hostname)</span><br><span class="line">emailAddress  = Email Address</span><br></pre></td></tr></table></figure>
+
+<p>此时的的文件有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ssl]# ll</span><br><span class="line">total 32</span><br><span class="line">-rw-r--r-- 1 root root 1387 Oct  2 10:25 CA.crt</span><br><span class="line">-rw-r--r-- 1 root root 1679 Oct  2 10:04 CA.key</span><br></pre></td></tr></table></figure>
+
+<h2 id="自签发泛域名证书"><a href="#自签发泛域名证书" class="headerlink" title="自签发泛域名证书"></a>自签发泛域名证书</h2><p>操作步骤为：</p>
+<ol>
+<li>生成域名私钥</li>
+<li>生成证书签发请求文件</li>
+<li>使用自签署的CA，生成域名公钥</li>
+</ol>
+<p>具体如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">### 当前目录 /root/software/ssl</span><br><span class="line"># 生成 zhangbook.com.key 密钥</span><br><span class="line">openssl genrsa -out zhangbook.com.key 2048</span><br><span class="line"># 生成 zhangbook.com.csr 证书签发请求  交互式</span><br><span class="line">openssl req -new -sha256 -key zhangbook.com.key -out zhangbook.com.csr -config /etc/pki/tls/openssl.cnf</span><br><span class="line">………………</span><br><span class="line">##### 产生的交互式内容与填写如下</span><br><span class="line">Country Name (2 letter code) [XX]:CN</span><br><span class="line">State or Province Name (full name) []:BJ</span><br><span class="line">Locality Name (eg, city) [Default City]:BeiJing</span><br><span class="line">Organization Name (eg, company) [Default Company Ltd]:BTC</span><br><span class="line">Organizational Unit Name (eg, section) []:MOST</span><br><span class="line">Common Name (eg, your name or your server&apos;s hostname) []:*.zhangbook.com   # 这里就是证书上的：颁发给</span><br><span class="line">Email Address []:ca@test.com</span><br><span class="line"></span><br><span class="line">Please enter the following &apos;extra&apos; attributes</span><br><span class="line">to be sent with your certificate request</span><br><span class="line">A challenge password []:123456</span><br><span class="line">An optional company name []:BTC</span><br><span class="line">………………</span><br><span class="line"># 生成 zhangbook.com.csr 证书签发请求  非交互式</span><br><span class="line">openssl req -new -sha256 -key zhangbook.com.key -out zhangbook.com.csr -config /etc/pki/tls/openssl.cnf -subj &quot;/C=CN/ST=BJ/L=BeiJing/O=BTC/OU=MOST/CN=*.zhangbook.com/emailAddress=ca@test.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">PS1：上面的Common Name 就是在这步填写 <code>*.zhangbook.com</code> ，表示的就是该证书支持泛域名，common name一定要在SubjectAlternativeName中包含</font></p>
+<p><font color="red">PS2：进行CA签名获取证书时，需要注意国家、省、单位需要与CA证书相同，否则会报异常</font></p>
+<p><b>查看签名请求文件信息</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -in zhangbook.com.csr -text</span><br></pre></td></tr></table></figure>
+
+<p><b>使用自签署的CA，签署zhangbook.com.crt </b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl ca -in zhangbook.com.csr -md sha256 -days 36500 -out zhangbook.com.crt -cert CA.crt -keyfile CA.key -extensions v3_req -config /etc/pki/tls/openssl.cnf</span><br></pre></td></tr></table></figure>
+
+<p>这里证书有效时间为100年。</p>
+<p><font color="red">PS1：即便是你前面是sha256的根证书和sha256的请求文件，如果这里不加 <code>-md sha256</code>，那么默认是按照sha1进行签名的</font></p>
+<p><font color="red">PS2：在执行时，可能出现如下错误</font></p>
+<p><font color="red"><b>异常问题1：</b></font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Using configuration from /etc/pki/tls/openssl.cnf</span><br><span class="line">/etc/pki/CA/index.txt: No such file or directory</span><br><span class="line">unable to open &apos;/etc/pki/CA/index.txt&apos;</span><br><span class="line">140652962035600:error:02001002:system library:fopen:No such file or directory:bss_file.c:402:fopen(&apos;/etc/pki/CA/index.txt&apos;,&apos;r&apos;)</span><br><span class="line">140652962035600:error:20074002:BIO routines:FILE_CTRL:system lib:bss_file.c:404:</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/openssl/ssl-01-01.jpg" alt="image"></p>
+<p><font style="background-color:yellow;">处理：这时我们创建该文件即可</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch /etc/pki/CA/index.txt</span><br></pre></td></tr></table></figure>
+
+<p><font color="red"><b>异常问题2：</b></font></p>
+<p>然后我们继续使用 【自签署的CA，签署zhangbook.com.crt】；结果又出现新问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Using configuration from /etc/pki/tls/openssl.cnf</span><br><span class="line">/etc/pki/CA/serial: No such file or directory</span><br><span class="line">error while loading serial number</span><br><span class="line">140087163742096:error:02001002:system library:fopen:No such file or directory:bss_file.c:402:fopen(&apos;/etc/pki/CA/serial&apos;,&apos;r&apos;)</span><br><span class="line">140087163742096:error:20074002:BIO routines:FILE_CTRL:system lib:bss_file.c:404:</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/openssl/ssl-01-02.jpg" alt="image"></p>
+<p><font style="background-color:yellow;">处理：使用如下命令即可。表示：用来跟踪最后一次颁发证书的序列号。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;01&quot; &gt; /etc/pki/CA/serial</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">之后我们再次执行 【自签署的CA，签署zhangbook.com.crt 】 就正常了。详情如下：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ssl]# openssl ca -in zhangbook.com.csr -md sha256 -days 36500 -out zhangbook.com.crt -cert CA.crt -keyfile CA.key -extensions v3_req -config /etc/pki/tls/openssl.cnf</span><br><span class="line">Using configuration from /etc/pki/tls/openssl.cnf</span><br><span class="line">Check that the request matches the signature</span><br><span class="line">Signature ok</span><br><span class="line">Certificate Details:</span><br><span class="line">        Serial Number: 1 (0x1)</span><br><span class="line">        Validity</span><br><span class="line">            Not Before: Oct  2 03:42:39 2020 GMT</span><br><span class="line">            Not After : Sep  8 03:42:39 2120 GMT</span><br><span class="line">        Subject:</span><br><span class="line">            countryName               = CN</span><br><span class="line">            stateOrProvinceName       = BJ</span><br><span class="line">            organizationName          = BTC</span><br><span class="line">            organizationalUnitName    = MOST</span><br><span class="line">            commonName                = *.zhangbook.com</span><br><span class="line">            emailAddress              = ca@test.com</span><br><span class="line">        X509v3 extensions:</span><br><span class="line">            X509v3 Basic Constraints: </span><br><span class="line">                CA:FALSE</span><br><span class="line">            X509v3 Key Usage: </span><br><span class="line">                Digital Signature, Non Repudiation, Key Encipherment</span><br><span class="line">            X509v3 Subject Alternative Name: </span><br><span class="line">                DNS:zhangbook.com, DNS:*.zhangbook.com</span><br><span class="line">Certificate is to be certified until Sep  8 03:42:39 2120 GMT (36500 days)</span><br><span class="line">Sign the certificate? [y/n]:y &lt;== 需要输入的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1 out of 1 certificate requests certified, commit? [y/n]y &lt;== 需要输入的</span><br><span class="line">Write out database with 1 new entries</span><br><span class="line">Data Base Updated</span><br></pre></td></tr></table></figure>
+
+<p>说明：此时我们再看，<code>/etc/pki/CA/index.txt</code> 和 <code>/etc/pki/CA/serial</code> 文件信息。如下： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ~]# cat /etc/pki/CA/index.txt</span><br><span class="line">V	21200908034239Z		01	unknown	/C=CN/ST=BJ/O=BTC/OU=MOST/CN=*.zhangbook.com/emailAddress=ca@test.com</span><br><span class="line">[root@docker02 ~]# </span><br><span class="line">[root@docker02 ~]# cat /etc/pki/CA/serial</span><br><span class="line">02</span><br></pre></td></tr></table></figure>
+
+<p>由上可知：域名签署信息已经保存到index.txt文件；并且证书序列serial文件已经更新【从01变为了02】。</p>
+<p>PS：</p>
+<ol>
+<li>同一个域名不能签署多次；由于签署了<code>*.zhangbook.com</code>，且已经被记录，因此不能再次被签署。除非删除该记录。</li>
+<li>注意index.txt文件和serial文件的关系。serial文件内容为index.txt文件内容行数加1。</li>
+</ol>
+<p><b>查看证书信息</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -in zhangbook.com.crt -text</span><br></pre></td></tr></table></figure>
+
+<p><b>验证签发证书是否有效</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ssl]# openssl verify -CAfile CA.crt zhangbook.com.crt</span><br><span class="line">zhangbook.com.crt: OK</span><br></pre></td></tr></table></figure>
+
+<p>此时的文件有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ssl]# ll</span><br><span class="line">total 32</span><br><span class="line">-rw-r--r-- 1 root root 1387 Oct  2 10:25 CA.crt</span><br><span class="line">-rw-r--r-- 1 root root 1679 Oct  2 10:04 CA.key</span><br><span class="line">-rw-r--r-- 1 root root 4364 Oct  2 11:42 zhangbook.com.crt</span><br><span class="line">-rw-r--r-- 1 root root 1151 Oct  2 10:48 zhangbook.com.csr</span><br><span class="line">-rw-r--r-- 1 root root 1679 Oct  2 10:44 zhangbook.com.key</span><br></pre></td></tr></table></figure>
+
+<p>此时我们已经完成自签发证书。</p>
+<h1 id="证书格式转换"><a href="#证书格式转换" class="headerlink" title="证书格式转换"></a>证书格式转换</h1><p>实际工作和生产环境中，可能需要各种各样的证书格式。下面我们将证书转换为常用的其他证书格式。</p>
+<h2 id="将crt转pem格式"><a href="#将crt转pem格式" class="headerlink" title="将crt转pem格式"></a>将crt转pem格式</h2><p>命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -in zhangbook.com.crt -out zhangbook.com.pem -outform PEM</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成-p12-格式的证书"><a href="#生成-p12-格式的证书" class="headerlink" title="生成 p12 格式的证书"></a>生成 p12 格式的证书</h2><p>利用生成的CA根证书和服务证书的crt 和 key 文件生成 p12 文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -export -in zhangbook.com.crt -inkey zhangbook.com.key -passin pass:CS2i1QkR -name *.zhangbook.com -chain -CAfile CA.crt -password pass:CS2i1QkR -caname *.zhangbook.com -out zhangbook.com.p12</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">PS：p12证书的password为<code>CS2i1QkR</code></font></p>
+<p><b>查看p12证书信息</b>【keytool命令依赖于Java，因此需要先安装Java】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ssl]# keytool -rfc -list -keystore zhangbook.com.p12 -storetype pkcs12  </span><br><span class="line">Enter keystore password:   &lt;== 输入：CS2i1QkR</span><br><span class="line">Keystore type: PKCS12</span><br><span class="line">Keystore provider: SunJSSE</span><br><span class="line"></span><br><span class="line">Your keystore contains 1 entry</span><br><span class="line">………………</span><br></pre></td></tr></table></figure>
+
+<h2 id="转换-p12-证书为-jks-证书文件"><a href="#转换-p12-证书为-jks-证书文件" class="headerlink" title="转换 p12 证书为 jks 证书文件"></a>转换 p12 证书为 jks 证书文件</h2><p>使用jdk keytool工具进而生成tomcat/jboss端使用的证书文件【需要安装 Java】。</p>
+<p>具体如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ssl]# keytool -importkeystore -srckeystore zhangbook.com.p12 -srcstoretype PKCS12 -deststoretype JKS -destkeystore zhangbook.com.jks</span><br><span class="line">Importing keystore zhangbook.com.p12 to zhangbook.com.jks...</span><br><span class="line">Enter destination keystore password:  &lt;== 输入 jks 证书的密码，如：CS2i1QkR</span><br><span class="line">Re-enter new password: &lt;== 重复输入 jks 证书的密码，如：CS2i1QkR</span><br><span class="line">Enter source keystore password:  &lt;== 输入 p12 证书的密码，这里是：CS2i1QkR</span><br><span class="line">Entry for alias *.zhangbook.com successfully imported.</span><br><span class="line">Import command completed:  1 entries successfully imported, 0 entries failed or cancelled</span><br><span class="line"></span><br><span class="line">Warning:</span><br><span class="line">The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using &quot;keytool -importkeystore -srckeystore zhangbook.com.jks -destkeystore zhangbook.com.jks -deststoretype pkcs12&quot;.</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">PS：p12证书和jks证书的密码相同，防止出现各种异常情况。</font></p>
+<h2 id="利用-jks-证书生成-cer-证书"><a href="#利用-jks-证书生成-cer-证书" class="headerlink" title="利用 jks 证书生成 cer 证书"></a>利用 jks 证书生成 cer 证书</h2><p>具体如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -export -alias *.zhangbook.com -keystore zhangbook.com.jks -storepass CS2i1QkR -file zhangbook.com.cer</span><br></pre></td></tr></table></figure>
+
+<p><code>-storepass CS2i1QkR</code> 为jks证书密码</p>
+<h2 id="利用-cer-证书文件生成-jdk-所使用的文件"><a href="#利用-cer-证书文件生成-jdk-所使用的文件" class="headerlink" title="利用 cer 证书文件生成 jdk 所使用的文件"></a>利用 cer 证书文件生成 jdk 所使用的文件</h2><p>具体如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -import -alias *.zhangbook.com -keystore cacerts -file zhangbook.com.cer</span><br></pre></td></tr></table></figure>
+
+<h2 id="目前存在文件说明"><a href="#目前存在文件说明" class="headerlink" title="目前存在文件说明"></a>目前存在文件说明</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ssl]# pwd</span><br><span class="line">/root/software/ssl</span><br><span class="line">[root@docker02 ssl]# </span><br><span class="line">[root@docker02 ssl]# ll</span><br><span class="line">total 52</span><br><span class="line">-rw-r--r-- 1 root root 1018 Oct  2 14:24 cacerts ## jdk 所使用的文件</span><br><span class="line">-rw-r--r-- 1 root root 1387 Oct  2 10:25 CA.crt  ## CA公钥</span><br><span class="line">-rw-r--r-- 1 root root 1679 Oct  2 10:04 CA.key  ## CA私钥</span><br><span class="line">-rw-r--r-- 1 root root  946 Oct  2 14:21 zhangbook.com.cer  ## cer证书</span><br><span class="line">-rw-r--r-- 1 root root 4364 Oct  2 11:42 zhangbook.com.crt  ## zhangbook.com域名 CA签发公钥</span><br><span class="line">-rw-r--r-- 1 root root 1151 Oct  2 10:48 zhangbook.com.csr  ## zhangbook.com域名 证书签发请求</span><br><span class="line">-rw-r--r-- 1 root root 3303 Oct  2 14:13 zhangbook.com.jks  ## jks证书</span><br><span class="line">-rw-r--r-- 1 root root 1679 Oct  2 10:44 zhangbook.com.key  ## zhangbook.com域名 私钥</span><br><span class="line">-rw-r--r-- 1 root root 3716 Oct  2 14:02 zhangbook.com.p12  ## p12格式证书</span><br><span class="line">-rw-r--r-- 1 root root 1338 Oct  2 13:56 zhangbook.com.pem  ## zhangbook.com域名 PEM文件</span><br></pre></td></tr></table></figure>
+
+<h1 id="SSL证书使用"><a href="#SSL证书使用" class="headerlink" title="SSL证书使用"></a>SSL证书使用</h1><p>修改本地Windows的hosts文件，用于域名解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">文件位置：C:\WINDOWS\System32\drivers\etc\hosts   追加如下信息</span><br><span class="line"># zhangbook.com</span><br><span class="line">172.16.1.32    www.zhangbook.com  blog.zhangbook.com  auth.zhangbook.com</span><br></pre></td></tr></table></figure>
+
+<p>其中172.16.1.32为测试使用的Linux机器，后面会部署WEB服务。由于自签发的是泛域名证书，因此可以有多个二级域名。</p>
+<p><font color="red">后面访问的时候，既可以使用域名访问，也可以使用IP访问。【推荐】使用域名访问。</font></p>
+<h2 id="Apache服务的SSL证书使用"><a href="#Apache服务的SSL证书使用" class="headerlink" title="Apache服务的SSL证书使用"></a>Apache服务的SSL证书使用</h2><p>1、将Apache httpd用到的证书拷贝到指定目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ssl]# pwd</span><br><span class="line">/root/software/ssl</span><br><span class="line">[root@docker02 ssl]# </span><br><span class="line">[root@docker02 ssl]# cp -a zhangbook.com.crt zhangbook.com.key zhangbook.com.pem /etc/pki/tls/certs</span><br></pre></td></tr></table></figure>
+
+<p>2、在Linux机器安装httpd服务并添加ssl插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y httpd</span><br><span class="line">yum install -y mod_ssl openssl    # 执行后，会增加 /etc/httpd/conf.d/ssl.conf 文件</span><br></pre></td></tr></table></figure>
+
+<p>3、在httpd添加SSL配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 conf.d]# pwd</span><br><span class="line">/etc/httpd/conf.d</span><br><span class="line">[root@docker02 conf.d]# </span><br><span class="line">[root@docker02 conf.d]# vim ssl.conf</span><br><span class="line">&lt;VirtualHost _default_:443&gt;</span><br><span class="line"># General setup for the virtual host, inherited from global configuration</span><br><span class="line">#DocumentRoot &quot;/var/www/html&quot;</span><br><span class="line">………………</span><br><span class="line"># 修改如下3行</span><br><span class="line">SSLCertificateFile /etc/pki/tls/certs/zhangbook.com.crt</span><br><span class="line">SSLCertificateKeyFile /etc/pki/tls/certs/zhangbook.com.key</span><br><span class="line"># 如下行可以注释掉，也可以取消注释</span><br><span class="line">#SSLCertificateChainFile /etc/pki/tls/certs/zhangbook.com.pem</span><br><span class="line">………………</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+
+<p>4、向VirtualHost的默认目录添加文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;Apache web&quot; &gt; /var/www/html/index.html</span><br></pre></td></tr></table></figure>
+
+<p>5、启动httpd服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start httpd</span><br></pre></td></tr></table></figure>
+
+<p>6、浏览器访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https://172.16.1.32/</span><br><span class="line">https://www.zhangbook.com/</span><br><span class="line">https://blog.zhangbook.com </span><br><span class="line">https://auth.zhangbook.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/openssl/ssl-01-03.jpg" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-04.jpg" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-05.jpg" alt="image"></p>
+<p>7、验证完毕，停止httpd服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop httpd</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nginx服务的SSL证书使用"><a href="#Nginx服务的SSL证书使用" class="headerlink" title="Nginx服务的SSL证书使用"></a>Nginx服务的SSL证书使用</h2><p>1、在Linux机器安装nginx服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>nginx -V</code> 可见，<code>--with-http_ssl_module</code> 已安装。</p>
+<p>2、将nginx用到的证书拷贝到指定目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ssl]# pwd</span><br><span class="line">/root/software/ssl</span><br><span class="line">[root@docker02 ssl]# </span><br><span class="line">[root@docker02 ssl]# cp -a zhangbook.com.key zhangbook.com.crt /etc/nginx/cert</span><br></pre></td></tr></table></figure>
+
+<p>3、在nginx添加SSL配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 nginx]# pwd</span><br><span class="line">/etc/nginx</span><br><span class="line">[root@docker02 nginx]# </span><br><span class="line">[root@docker02 nginx]# vim nginx.conf</span><br><span class="line">………………</span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        listen       [::]:80;</span><br><span class="line">        server_name  www.zhangbook.com  blog.zhangbook.com  auth.zhangbook.com;</span><br><span class="line">        return 301 https://$server_name$request_uri;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"># Settings for a TLS enabled server.</span><br><span class="line">    server &#123;</span><br><span class="line">        listen       443 ssl http2 default_server;</span><br><span class="line">        listen       [::]:443 ssl http2 default_server;</span><br><span class="line">        server_name  www.zhangbook.com  blog.zhangbook.com  auth.zhangbook.com;</span><br><span class="line">        root         /usr/share/nginx/html;</span><br><span class="line"></span><br><span class="line">        ssl_certificate &quot;/etc/nginx/cert/zhangbook.com.crt&quot;;</span><br><span class="line">        ssl_certificate_key &quot;/etc/nginx/cert/zhangbook.com.key&quot;;</span><br><span class="line">        ssl_session_cache shared:SSL:1m;</span><br><span class="line">        ssl_session_timeout  10m;</span><br><span class="line">        ssl_ciphers HIGH:!aNULL:!MD5;</span><br><span class="line">        ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">        # Load configuration files for the default server block.</span><br><span class="line">        include /etc/nginx/default.d/*.conf;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">          index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">………………</span><br></pre></td></tr></table></figure>
+
+<p>4、向WEB站点添加html文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;Nginx web&quot; &gt; /usr/share/nginx/html/index.html</span><br></pre></td></tr></table></figure>
+
+<p>5、启动nginx服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start nginx.service</span><br></pre></td></tr></table></figure>
+
+<p>6、浏览器访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://www.zhangbook.com/</span><br><span class="line">https://blog.zhangbook.com </span><br><span class="line">https://auth.zhangbook.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/openssl/ssl-01-06.jpg" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-07.jpg" alt="image"></p>
+<p>7、验证完毕，停止nginx服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="Tomcat服务的SSL证书使用"><a href="#Tomcat服务的SSL证书使用" class="headerlink" title="Tomcat服务的SSL证书使用"></a>Tomcat服务的SSL证书使用</h2><p>1、下载Tomcat。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 App]# pwd</span><br><span class="line">/root/App</span><br><span class="line">[root@docker02 App]# </span><br><span class="line">[root@docker02 App]# wget https://mirrors.bfsu.edu.cn/apache/tomcat/tomcat-8/v8.5.58/bin/apache-tomcat-8.5.58.tar.gz</span><br><span class="line">[root@docker02 App]# </span><br><span class="line">[root@docker02 App]# tar xf apache-tomcat-8.5.58.tar.gz</span><br><span class="line">### 查看Java版本信息</span><br><span class="line">[root@docker02 App]# java -version</span><br><span class="line">java version &quot;1.8.0_231&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_231-b11)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.231-b11, mixed mode)</span><br><span class="line">### 查看Tomcat版本信息</span><br><span class="line">[root@docker02 bin]# pwd</span><br><span class="line">/root/App/apache-tomcat-8.5.58/bin</span><br><span class="line">[root@docker02 bin]# </span><br><span class="line">[root@docker02 bin]# ./version.sh</span><br><span class="line">………………</span><br></pre></td></tr></table></figure>
+
+<p>2、将Tomcat用到的证书拷贝到指定目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ssl]# pwd</span><br><span class="line">/root/software/ssl</span><br><span class="line">[root@docker02 ssl]# </span><br><span class="line">[root@docker02 ssl]# cp -a zhangbook.com.jks /root/App/apache-tomcat-8.5.58/conf/cert/</span><br></pre></td></tr></table></figure>
+
+<p>3、在Tomcat添加SSL配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 conf]# pwd</span><br><span class="line">/root/App/apache-tomcat-8.5.58/conf</span><br><span class="line">[root@docker02 conf]# </span><br><span class="line">[root@docker02 conf]# vim server.xml</span><br><span class="line">………………</span><br><span class="line">    &lt;Connector port=&quot;80&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">               connectionTimeout=&quot;20000&quot;</span><br><span class="line">               redirectPort=&quot;443&quot; /&gt;</span><br><span class="line">………………</span><br><span class="line">### 其中Connector标签中的子标签 SSLHostConfig 已去掉</span><br><span class="line">    &lt;Connector port=&quot;443&quot; protocol=&quot;org.apache.coyote.http11.Http11NioProtocol&quot;</span><br><span class="line">               maxThreads=&quot;600&quot; SSLEnabled=&quot;true&quot; clientAuth=&quot;false&quot; keystoreFile=&quot;/root/App/apache-tomcat-8.5.58/conf/cert/zhangbook.com.jks&quot; </span><br><span class="line">                           keystorePass=&quot;CS2i1QkR&quot; keystoreType=&quot;JKS&quot; scheme=&quot;https&quot; secure=&quot;true&quot; </span><br><span class="line">                           sslProtocol=&quot;TLS&quot; compression=&quot;on&quot; acceptorThreadCount=&quot;2&quot; connectionTimeout=&quot;20000&quot;&gt;</span><br><span class="line">    &lt;/Connector&gt;</span><br><span class="line">………………</span><br></pre></td></tr></table></figure>
+
+<p>4、向WEB站点添加html文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 ROOT]# pwd</span><br><span class="line">/root/App/apache-tomcat-8.5.58/webapps/ROOT</span><br><span class="line">[root@docker02 ROOT]# </span><br><span class="line">[root@docker02 ROOT]# echo &apos;Tomcat web&apos; &gt; index.html</span><br></pre></td></tr></table></figure>
+
+<p>PS：原ROOT目录下的文件已移走。</p>
+<p>5、启动Tomcat服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 bin]# pwd</span><br><span class="line">/root/App/apache-tomcat-8.5.58/bin</span><br><span class="line">[root@docker02 bin]# </span><br><span class="line">[root@docker02 bin]# sh startup.sh</span><br></pre></td></tr></table></figure>
+
+<p>6、浏览器访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https://172.16.1.32/</span><br><span class="line">https://www.zhangbook.com/</span><br><span class="line">https://blog.zhangbook.com </span><br><span class="line">https://auth.zhangbook.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/openssl/ssl-01-08.jpg" alt="image"></p>
+<p><img src="/uploads/openssl/ssl-01-09.jpg" alt="image"></p>
+<p>7、验证完毕，停止Tomcat服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@docker02 bin]# pwd</span><br><span class="line">/root/App/apache-tomcat-8.5.58/bin</span><br><span class="line">[root@docker02 bin]# </span><br><span class="line">[root@docker02 bin]# sh shutdown.sh</span><br></pre></td></tr></table></figure>
+
+<h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="https://blog.csdn.net/qq_21359467/article/details/102731032" target="_blank" rel="noopener">openssl生成自签名泛域名（通配符）证书</a></p>
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/10/11/openssl/" title="在Linux下如何根据域名自签发OpenSSL证书与常用证书转换">http://www.zhangblog.com/2020/10/11/openssl/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/openssl/" rel="tag"># openssl</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/09/linux-yum/" rel="next" title="Linux系统如何在离线环境或内网环境安装部署Docker服务和其他服务">
+                <i class="fa fa-chevron-left"></i> Linux系统如何在离线环境或内网环境安装部署Docker服务和其他服务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#openssl自签发泛域名（通配符）证书"><span class="nav-number">1.</span> <span class="nav-text">openssl自签发泛域名（通配符）证书</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改openssl-cnf配置文件"><span class="nav-number">1.1.</span> <span class="nav-text">修改openssl.cnf配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建根证书"><span class="nav-number">1.2.</span> <span class="nav-text">创建根证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自签发泛域名证书"><span class="nav-number">1.3.</span> <span class="nav-text">自签发泛域名证书</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#证书格式转换"><span class="nav-number">2.</span> <span class="nav-text">证书格式转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#将crt转pem格式"><span class="nav-number">2.1.</span> <span class="nav-text">将crt转pem格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成-p12-格式的证书"><span class="nav-number">2.2.</span> <span class="nav-text">生成 p12 格式的证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转换-p12-证书为-jks-证书文件"><span class="nav-number">2.3.</span> <span class="nav-text">转换 p12 证书为 jks 证书文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用-jks-证书生成-cer-证书"><span class="nav-number">2.4.</span> <span class="nav-text">利用 jks 证书生成 cer 证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用-cer-证书文件生成-jdk-所使用的文件"><span class="nav-number">2.5.</span> <span class="nav-text">利用 cer 证书文件生成 jdk 所使用的文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目前存在文件说明"><span class="nav-number">2.6.</span> <span class="nav-text">目前存在文件说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSL证书使用"><span class="nav-number">3.</span> <span class="nav-text">SSL证书使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache服务的SSL证书使用"><span class="nav-number">3.1.</span> <span class="nav-text">Apache服务的SSL证书使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx服务的SSL证书使用"><span class="nav-number">3.2.</span> <span class="nav-text">Nginx服务的SSL证书使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat服务的SSL证书使用"><span class="nav-number">3.3.</span> <span class="nav-text">Tomcat服务的SSL证书使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读"><span class="nav-number">4.</span> <span class="nav-text">相关阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  蜀ICP备16019247号</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">204.2k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
