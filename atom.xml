@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-10-11T15:36:04.808Z</updated>
+  <updated>2020-10-14T15:42:14.687Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S之存储ConfigMap详解</title>
+    <link href="http://www.zhangblog.com/2020/10/14/kubernetes18/"/>
+    <id>http://www.zhangblog.com/2020/10/14/kubernetes18/</id>
+    <published>2020-10-14T15:41:21.000Z</published>
+    <updated>2020-10-14T15:42:14.687Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>在Linux下如何根据域名自签发OpenSSL证书与常用证书转换</title>
@@ -725,38 +761,6 @@
       <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
     
       <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>YAML 语言教程与使用案例</title>
-    <link href="http://www.zhangblog.com/2020/05/17/yaml01/"/>
-    <id>http://www.zhangblog.com/2020/05/17/yaml01/</id>
-    <published>2020-05-17T09:33:29.000Z</published>
-    <updated>2020-05-17T09:46:44.118Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/yaml/yaml-00.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;YAML语言教程与使用案例，如何编与读懂写YAML文件。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;YAML概要&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-      <category term="YAML" scheme="http://www.zhangblog.com/categories/YAML/"/>
-    
-    
-      <category term="Linux" scheme="http://www.zhangblog.com/tags/Linux/"/>
-    
-      <category term="YAML" scheme="http://www.zhangblog.com/tags/YAML/"/>
     
   </entry>
   
