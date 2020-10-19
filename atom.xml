@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-10-19T15:36:44.739Z</updated>
+  <updated>2020-10-19T15:38:23.525Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.zhangblog.com/2020/10/19/kubernetes19/"/>
     <id>http://www.zhangblog.com/2020/10/19/kubernetes19/</id>
     <published>2020-10-19T15:30:52.000Z</published>
-    <updated>2020-10-19T15:36:44.739Z</updated>
+    <updated>2020-10-19T15:38:23.525Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,7 @@
       
         
         
-          &lt;p&gt;&lt;img src=&quot;70C88A3CA7C2431A8D5CDA0933FFFD26&quot; alt=&quot;k8s-00-00&quot;&gt;&lt;/p&gt;
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;K8S之存储Volume概述与说明，并详解常用Volume示例&lt;/p&gt;
 &lt;/blockquote&gt;
