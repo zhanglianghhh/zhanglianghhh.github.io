@@ -92,7 +92,7 @@
 <meta property="og:description" content="K8S之存储Volume概述与说明，并详解常用Volume示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111   k">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/2020/10/19/kubernetes19/70C88A3CA7C2431A8D5CDA0933FFFD26">
-<meta property="og:updated_time" content="2020-10-19T15:31:47.200Z">
+<meta property="og:updated_time" content="2020-10-19T15:36:44.739Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes K8S之存储Volume详解">
 <meta name="twitter:description" content="K8S之存储Volume概述与说明，并详解常用Volume示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111   k">
@@ -510,8 +510,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">awsElasticBlockStore</span><br><span class="line">azureDisk</span><br><span class="line">azureFile</span><br><span class="line">cephfs</span><br><span class="line">cinder</span><br><span class="line">configMap</span><br><span class="line">csi</span><br><span class="line">downwardAPI</span><br><span class="line">emptyDir</span><br><span class="line">fc (fibre channel)</span><br><span class="line">flexVolume</span><br><span class="line">flocker</span><br><span class="line">gcePersistentDisk</span><br><span class="line">gitRepo (deprecated)</span><br><span class="line">glusterfs</span><br><span class="line">hostPath</span><br><span class="line">iscsi</span><br><span class="line">local</span><br><span class="line">nfs</span><br><span class="line">persistentVolumeClaim</span><br><span class="line">projected</span><br><span class="line">portworxVolume</span><br><span class="line">quobyte</span><br><span class="line">rbd</span><br><span class="line">scaleIO</span><br><span class="line">secret</span><br><span class="line">storageos</span><br><span class="line">vsphereVolume</span><br></pre></td></tr></table></figure>
 
 <p>这里我们只介绍常用的存储，包括：Secret、ConfigMap、emptyDir、hostPath。</p>
-<p>其中Secret参考文章：「<a href="https://note.youdao.com/" target="_blank" rel="noopener">Kubernetes K8S之存储Secret详解</a>」</p>
-<p>ConfigMap参考文章：「<a href="https://note.youdao.com/" target="_blank" rel="noopener">Kubernetes K8S之存储ConfigMap详解</a>」</p>
+<p>其中Secret参考文章：「<a href="http://www.zhangblog.com/2020/09/28/kubernetes17/">Kubernetes K8S之存储Secret详解</a>」</p>
+<p>ConfigMap参考文章：「<a href="http://www.zhangblog.com/2020/10/14/kubernetes18/">Kubernetes K8S之存储ConfigMap详解</a>」</p>
 <p>本文只说emptyDir和hostPath存储。</p>
 <h1 id="emptyDir卷"><a href="#emptyDir卷" class="headerlink" title="emptyDir卷"></a>emptyDir卷</h1><p>当 Pod 指定到某个节点上时，首先创建的是一个 emptyDir 卷，并且只要 Pod 在该节点上运行，卷就一直存在。就像它的名称表示的那样，卷最初是空的。</p>
 <p>尽管 Pod 中每个容器挂载 emptyDir 卷的<font color="red">路径可能相同也可能不同</font>，但是这些容器都可以读写 emptyDir 卷中相同的文件。</p>
