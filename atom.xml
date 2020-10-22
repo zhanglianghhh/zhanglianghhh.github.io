@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-10-19T15:38:23.525Z</updated>
+  <updated>2020-10-22T15:47:27.352Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S之存储PV-PVC详解</title>
+    <link href="http://www.zhangblog.com/2020/10/22/kubernetes20/"/>
+    <id>http://www.zhangblog.com/2020/10/22/kubernetes20/</id>
+    <published>2020-10-22T15:44:52.000Z</published>
+    <updated>2020-10-22T15:47:27.352Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;K8S之存储PV-PVC概述与说明，并详解常用PV-PVC示例&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S之存储Volume详解</title>
@@ -706,44 +746,6 @@
 &lt;p&gt;如何修改Kubernetes的SSL证书有效期&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1
-        
-      
-    
-    </summary>
-    
-      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
-    
-      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
-    
-    
-      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
-    
-      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
-    
-      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
-    
-      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
-    
-      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基于kubeadm快速部署kubernetes K8S V1.17.4集群-无坑完整版</title>
-    <link href="http://www.zhangblog.com/2020/07/29/kubernetes02/"/>
-    <id>http://www.zhangblog.com/2020/07/29/kubernetes02/</id>
-    <published>2020-07-29T12:55:32.000Z</published>
-    <updated>2020-08-12T13:55:01.596Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;基于kubeadm快速部署kubernetes K8S V1.17.4集群，并部署Dashboard
         
       
     
