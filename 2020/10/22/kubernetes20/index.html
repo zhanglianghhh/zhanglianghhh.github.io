@@ -93,7 +93,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-20-01.png">
-<meta property="og:updated_time" content="2020-10-22T15:47:27.352Z">
+<meta property="og:updated_time" content="2020-10-22T15:56:03.181Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes K8S之存储PV-PVC详解">
 <meta name="twitter:description" content="K8S之存储PV-PVC概述与说明，并详解常用PV-PVC示例  概述与管理计算实例相比，管理存储是一个明显的问题。PersistentVolume子系统为用户和管理员提供了一个API，该API从如何使用存储中抽象出如何提供存储的详细信息。为此，我们引入了两个新的API资源：PersistentVolume和PersistentVolumeClaim。 PV概述PersistentVolume">
@@ -758,10 +758,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node03 ~]# rm -fr /data/nfs6/*</span><br></pre></td></tr></table></figure>
 
 <p>到此，手动回收资源操作成功！</p>
-<h1 id="StatefulSet网络标识与PVC"><a href="#StatefulSet网络标识与PVC" class="headerlink" title="StatefulSet网络标识与PVC"></a>StatefulSet网络标识与PVC</h1><p>1、匹配StatefulSet的Pod name(网络标识)的模式为：$(statefulset名称)-$(序号)，比如StatefulSet名称为web，副本数为3。则为：web-0、web-1、web-2</p>
-<p>2、StatefulSet为每个Pod副本创建了一个DNS域名，这个域名的格式为：$(podname).(headless service name)，也就意味着服务之间是通过Pod域名来通信而非Pod IP。当Pod所在Node发生故障时，Pod会被漂移到其他Node上，Pod IP会发生改变，但Pod域名不会变化</p>
-<p>3、StatefulSet使用Headless服务来控制Pod的域名，这个Headless服务域名的为：$(service name).$(namespace).svc.cluster.local，其中 cluster.local 指定的集群的域名</p>
-<p>4、根据volumeClaimTemplates，为每个Pod创建一个PVC，PVC的命令规则为：$(volumeClaimTemplates name)-$(pod name)，比如volumeClaimTemplates为www，pod name为web-0、web-1、web-2；那么创建出来的PVC为：www-web-0、www-web-1、www-web-2</p>
+<h1 id="StatefulSet网络标识与PVC"><a href="#StatefulSet网络标识与PVC" class="headerlink" title="StatefulSet网络标识与PVC"></a>StatefulSet网络标识与PVC</h1><p>1、匹配StatefulSet的Pod name(网络标识)的模式为：<code>$(statefulset名称)-$(序号)</code>，比如StatefulSet名称为web，副本数为3。则为：web-0、web-1、web-2</p>
+<p>2、StatefulSet为每个Pod副本创建了一个DNS域名，这个域名的格式为：<code>$(podname).(headless service name)</code>，也就意味着服务之间是通过Pod域名来通信而非Pod IP。当Pod所在Node发生故障时，Pod会被漂移到其他Node上，Pod IP会发生改变，但Pod域名不会变化</p>
+<p>3、StatefulSet使用Headless服务来控制Pod的域名，这个Headless服务域名的为：<code>$(service name).$(namespace).svc.cluster.local</code>，其中 cluster.local 指定的集群的域名</p>
+<p>4、根据volumeClaimTemplates，为每个Pod创建一个PVC，PVC的命令规则为：<code>$(volumeClaimTemplates name)-$(pod name)</code>，比如volumeClaimTemplates为www，pod name为web-0、web-1、web-2；那么创建出来的PVC为：www-web-0、www-web-1、www-web-2</p>
 <p>5、删除Pod不会删除对应的PVC，手动删除PVC将自动释放PV。</p>
 <h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="http://www.zhangblog.com/2019/07/05/nfs1/">NFS 服务搭建与配置</a></p>
 <p>2、<a href="http://www.zhangblog.com/2020/08/26/kubernetes10/">Kubernetes K8S 资源控制器StatefulSets详解</a></p>
