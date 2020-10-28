@@ -93,9 +93,9 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-22-01.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-22-01.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-22-01.png">
-<meta property="og:updated_time" content="2020-10-28T15:47:25.599Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-22-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-22-03.png">
+<meta property="og:updated_time" content="2020-10-28T16:05:56.658Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes K8S之affinity亲和性与反亲和性详解与示例">
 <meta name="twitter:description" content="Kubernetes K8S之Node节点亲和性与反亲和性以及Pod亲和性与反亲和性详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.11">
@@ -530,9 +530,9 @@
 <p>3、如果在<font color="red">nodeSelectorTerms下指定了多个matchExpressions列表</font>，那么只要能满足其中一个matchExpressions，就可以将pod调度到某个节点上【针对节点硬亲和】。</p>
 <p><img src="/uploads/kubernetes/k8s-22-01.png" alt="image"></p>
 <p>4、如果在matchExpressions下有多个key列表，那么只有当所有key满足时，才能将pod调度到某个节点【针对硬亲和】。</p>
-<p><img src="/uploads/kubernetes/k8s-22-01.png" alt="image"></p>
+<p><img src="/uploads/kubernetes/k8s-22-02.png" alt="image"></p>
 <p>5、在key下的values只要有一个满足条件，那么当前的key就满足条件</p>
-<p><img src="/uploads/kubernetes/k8s-22-01.png" alt="image"></p>
+<p><img src="/uploads/kubernetes/k8s-22-03.png" alt="image"></p>
 <p>6、如果pod已经调度在该节点，当我们删除或修该节点的标签时，pod不会被移除。换句话说，亲和性选择只有在pod调度期间有效。</p>
 <p>7、preferredDuringSchedulingIgnoredDuringExecution中的<font color="red">weight（权重）字段在1-100范围内</font>。对于每个满足所有调度需求的节点(资源请求、RequiredDuringScheduling亲和表达式等)，调度器将通过迭代该字段的元素来计算一个总和，如果节点与相应的匹配表达式匹配，则向该总和添加“权重”。然后将该分数与节点的其他优先级函数的分数结合起来。总得分最高的节点是最受欢迎的。</p>
 <h1 id="node节点亲和性示例"><a href="#node节点亲和性示例" class="headerlink" title="node节点亲和性示例"></a>node节点亲和性示例</h1><h2 id="准备事项"><a href="#准备事项" class="headerlink" title="准备事项"></a>准备事项</h2><p>给node节点打label标签</p>
