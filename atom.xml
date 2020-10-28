@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-10-25T12:48:04.798Z</updated>
+  <updated>2020-10-28T15:47:25.599Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S之affinity亲和性与反亲和性详解与示例</title>
+    <link href="http://www.zhangblog.com/2020/10/28/kubernetes22/"/>
+    <id>http://www.zhangblog.com/2020/10/28/kubernetes22/</id>
+    <published>2020-10-28T15:42:22.000Z</published>
+    <updated>2020-10-28T15:47:25.599Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Kubernetes
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S之调度器kube-scheduler详解</title>
@@ -706,44 +744,6 @@
           &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Kubernetes kubectl命令详解与常用示例，基于k8s
-        
-      
-    
-    </summary>
-    
-      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
-    
-      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
-    
-    
-      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
-    
-      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
-    
-      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
-    
-      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
-    
-      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kubernetes K8S之通过yaml文件创建Pod与Pod常用字段详解</title>
-    <link href="http://www.zhangblog.com/2020/08/05/kubernetes04/"/>
-    <id>http://www.zhangblog.com/2020/08/05/kubernetes04/</id>
-    <published>2020-08-05T13:55:53.000Z</published>
-    <updated>2020-08-15T02:43:37.536Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;YAML语法规范；在kubernetes
         
       
     
