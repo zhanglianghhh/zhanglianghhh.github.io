@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker,Kubernetes,K8S,CI/CD,DevOps,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Kubernetes K8S之Taints污点与Tolerations容忍详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.">
+<meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes K8S之Taints污点与Tolerations容忍详解">
+<meta property="og:url" content="http://www.zhangblog.com/2020/11/20/kubernetes23/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="Kubernetes K8S之Taints污点与Tolerations容忍详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-23-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-23-02.png">
+<meta property="og:updated_time" content="2020-11-20T01:33:43.651Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kubernetes K8S之Taints污点与Tolerations容忍详解">
+<meta name="twitter:description" content="Kubernetes K8S之Taints污点与Tolerations容忍详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2020/11/20/kubernetes23/">
+
+
+
+
+
+  <title>Kubernetes K8S之Taints污点与Tolerations容忍详解 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/11/20/kubernetes23/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kubernetes K8S之Taints污点与Tolerations容忍详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-20T09:31:37+08:00">
+                2020-11-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/K8S/" itemprop="url" rel="index">
+                    <span itemprop="name">K8S</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/11/20/kubernetes23/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/11/20/kubernetes23/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/11/20/kubernetes23/" class="leancloud_visitors" data-flag-title="Kubernetes K8S之Taints污点与Tolerations容忍详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  24
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
+<blockquote>
+<p>Kubernetes K8S之Taints污点与Tolerations容忍详解与示例</p>
+</blockquote>
+<h1 id="主机配置规划"><a href="#主机配置规划" class="headerlink" title="主机配置规划"></a>主机配置规划</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>系统版本</th>
+<th>配置</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.110</td>
+<td>10.0.0.110</td>
+</tr>
+<tr>
+<td>k8s-node01</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.111</td>
+<td>10.0.0.111</td>
+</tr>
+<tr>
+<td>k8s-node02</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.112</td>
+<td>10.0.0.112</td>
+</tr>
+</tbody></table>
+<h1 id="Taints污点和Tolerations容忍概述"><a href="#Taints污点和Tolerations容忍概述" class="headerlink" title="Taints污点和Tolerations容忍概述"></a>Taints污点和Tolerations容忍概述</h1><p>节点和Pod亲和力，是将Pod吸引到一组节点【根据拓扑域】（作为优选或硬性要求）。污点（Taints）则相反，它们允许一个节点排斥一组Pod。</p>
+<p><font color="red">容忍（Tolerations）应用于pod，允许（但不强制要求）pod调度到具有匹配污点的节点上。</font></p>
+<p>污点（Taints）和容忍（Tolerations）共同作用，确保pods不会被调度到不适当的节点。一个或多个污点应用于节点；这标志着该节点不应该接受任何不容忍污点的Pod。</p>
+<p><font color="red">说明：我们在平常使用中发现pod不会调度到k8s的master节点，就是因为master节点存在污点。</font></p>
+<h1 id="Taints污点"><a href="#Taints污点" class="headerlink" title="Taints污点"></a>Taints污点</h1><h2 id="Taints污点的组成"><a href="#Taints污点的组成" class="headerlink" title="Taints污点的组成"></a>Taints污点的组成</h2><p>使用kubectl taint命令可以给某个Node节点设置污点，Node被设置污点之后就和Pod之间存在一种相斥的关系，可以让Node拒绝Pod的调度执行，甚至将Node上已经存在的Pod驱逐出去。</p>
+<p>每个污点的组成如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">key=value:effect</span><br></pre></td></tr></table></figure>
+
+<p>每个污点有一个key和value作为污点的标签，effect描述污点的作用。<font color="red">当前taint effect支持如下选项</font>：</p>
+<ul>
+<li>NoSchedule：表示K8S将不会把Pod调度到具有该污点的Node节点上</li>
+<li>PreferNoSchedule：表示K8S将尽量避免把Pod调度到具有该污点的Node节点上</li>
+<li>NoExecute：表示K8S将不会把Pod调度到具有该污点的Node节点上，同时会将Node上已经存在的Pod驱逐出去</li>
+</ul>
+<h2 id="污点taint的NoExecute详解"><a href="#污点taint的NoExecute详解" class="headerlink" title="污点taint的NoExecute详解"></a>污点taint的NoExecute详解</h2><p>taint 的 effect 值 NoExecute，它会影响已经在节点上运行的 pod：</p>
+<ul>
+<li>如果 pod 不能容忍 effect 值为 NoExecute 的 taint，那么 pod 将马上被驱逐</li>
+<li>如果 pod 能够容忍 effect 值为 NoExecute 的 taint，且在 toleration 定义中没有指定 tolerationSeconds，则 pod 会一直在这个节点上运行。</li>
+<li>如果 pod 能够容忍 effect 值为 NoExecute 的 taint，但是在toleration定义中指定了 tolerationSeconds，则表示 pod 还能在这个节点上继续运行的时间长度。</li>
+</ul>
+<h2 id="Taints污点设置"><a href="#Taints污点设置" class="headerlink" title="Taints污点设置"></a>Taints污点设置</h2><h3 id="污点（Taints）查看"><a href="#污点（Taints）查看" class="headerlink" title="污点（Taints）查看"></a>污点（Taints）查看</h3><p>k8s master节点查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe node k8s-master</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-23-01.png" alt="image"></p>
+<p>k8s node查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe node k8s-node01</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-23-02.png" alt="image"></p>
+<h3 id="污点（Taints）添加"><a href="#污点（Taints）添加" class="headerlink" title="污点（Taints）添加"></a>污点（Taints）添加</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# kubectl taint nodes k8s-node01 check=zhang:NoSchedule</span><br><span class="line">node/k8s-node01 tainted</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl describe node k8s-node01</span><br><span class="line">Name:               k8s-node01</span><br><span class="line">Roles:              &lt;none&gt;</span><br><span class="line">Labels:             beta.kubernetes.io/arch=amd64</span><br><span class="line">                    beta.kubernetes.io/os=linux</span><br><span class="line">                    cpu-num=12</span><br><span class="line">                    disk-type=ssd</span><br><span class="line">                    kubernetes.io/arch=amd64</span><br><span class="line">                    kubernetes.io/hostname=k8s-node01</span><br><span class="line">                    kubernetes.io/os=linux</span><br><span class="line">                    mem-num=48</span><br><span class="line">Annotations:        flannel.alpha.coreos.com/backend-data: &#123;&quot;VtepMAC&quot;:&quot;3e:15:bb:f8:85:dc&quot;&#125;</span><br><span class="line">                    flannel.alpha.coreos.com/backend-type: vxlan</span><br><span class="line">                    flannel.alpha.coreos.com/kube-subnet-manager: true</span><br><span class="line">                    flannel.alpha.coreos.com/public-ip: 10.0.0.111</span><br><span class="line">                    kubeadm.alpha.kubernetes.io/cri-socket: /var/run/dockershim.sock</span><br><span class="line">                    node.alpha.kubernetes.io/ttl: 0</span><br><span class="line">                    volumes.kubernetes.io/controller-managed-attach-detach: true</span><br><span class="line">CreationTimestamp:  Tue, 12 May 2020 16:50:54 +0800</span><br><span class="line">Taints:             check=zhang:NoSchedule   ### 可见已添加污点</span><br><span class="line">Unschedulable:      false</span><br></pre></td></tr></table></figure>
+
+<p>在k8s-node01节点添加了一个污点（taint），污点的key为check，value为zhang，污点effect为NoSchedule。这意味着没有pod可以调度到k8s-node01节点，除非具有相匹配的容忍。</p>
+<h3 id="污点（Taints）删除"><a href="#污点（Taints）删除" class="headerlink" title="污点（Taints）删除"></a>污点（Taints）删除</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# kubectl taint nodes k8s-node01 check:NoExecute-</span><br><span class="line">##### 或者</span><br><span class="line">[root@k8s-master taint]# kubectl taint nodes k8s-node01 check=zhang:NoSchedule-</span><br><span class="line">node/k8s-node01 untainted</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl describe node k8s-node01</span><br><span class="line">Name:               k8s-node01</span><br><span class="line">Roles:              &lt;none&gt;</span><br><span class="line">Labels:             beta.kubernetes.io/arch=amd64</span><br><span class="line">                    beta.kubernetes.io/os=linux</span><br><span class="line">                    cpu-num=12</span><br><span class="line">                    disk-type=ssd</span><br><span class="line">                    kubernetes.io/arch=amd64</span><br><span class="line">                    kubernetes.io/hostname=k8s-node01</span><br><span class="line">                    kubernetes.io/os=linux</span><br><span class="line">                    mem-num=48</span><br><span class="line">Annotations:        flannel.alpha.coreos.com/backend-data: &#123;&quot;VtepMAC&quot;:&quot;3e:15:bb:f8:85:dc&quot;&#125;</span><br><span class="line">                    flannel.alpha.coreos.com/backend-type: vxlan</span><br><span class="line">                    flannel.alpha.coreos.com/kube-subnet-manager: true</span><br><span class="line">                    flannel.alpha.coreos.com/public-ip: 10.0.0.111</span><br><span class="line">                    kubeadm.alpha.kubernetes.io/cri-socket: /var/run/dockershim.sock</span><br><span class="line">                    node.alpha.kubernetes.io/ttl: 0</span><br><span class="line">                    volumes.kubernetes.io/controller-managed-attach-detach: true</span><br><span class="line">CreationTimestamp:  Tue, 12 May 2020 16:50:54 +0800</span><br><span class="line">Taints:             &lt;none&gt;   ### 可见已删除污点</span><br><span class="line">Unschedulable:      false</span><br></pre></td></tr></table></figure>
+
+<h1 id="Tolerations容忍"><a href="#Tolerations容忍" class="headerlink" title="Tolerations容忍"></a>Tolerations容忍</h1><p>设置了污点的Node将根据taint的effect：NoSchedule、PreferNoSchedule、NoExecute和Pod之间产生互斥的关系，Pod将在一定程度上不会被调度到Node上。</p>
+<p>但我们可以在Pod上设置容忍（Tolerations），意思是设置了容忍的Pod将可以容忍污点的存在，可以被调度到存在污点的Node上。</p>
+<p><b>pod.spec.tolerations示例</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tolerations:</span><br><span class="line">- key: &quot;key&quot;</span><br><span class="line">  operator: &quot;Equal&quot;</span><br><span class="line">  value: &quot;value&quot;</span><br><span class="line">  effect: &quot;NoSchedule&quot;</span><br><span class="line">---</span><br><span class="line">tolerations:</span><br><span class="line">- key: &quot;key&quot;</span><br><span class="line">  operator: &quot;Exists&quot;</span><br><span class="line">  effect: &quot;NoSchedule&quot;</span><br><span class="line">---</span><br><span class="line">tolerations:</span><br><span class="line">- key: &quot;key&quot;</span><br><span class="line">  operator: &quot;Equal&quot;</span><br><span class="line">  value: &quot;value&quot;</span><br><span class="line">  effect: &quot;NoExecute&quot;</span><br><span class="line">  tolerationSeconds: 3600</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">重要说明：</font></p>
+<ul>
+<li>其中key、value、effect要与Node上设置的taint保持一致</li>
+<li>operator的值为Exists时，将会忽略value；只要有key和effect就行</li>
+<li>tolerationSeconds：表示pod 能够容忍 effect 值为 NoExecute 的 taint；当指定了 tolerationSeconds【容忍时间】，则表示 pod 还能在这个节点上继续运行的时间长度。 </li>
+</ul>
+<h2 id="当不指定key值时"><a href="#当不指定key值时" class="headerlink" title="当不指定key值时"></a>当不指定key值时</h2><p>当不指定key值和effect值时，且operator为Exists，表示容忍所有的污点【能匹配污点所有的keys，values和effects】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tolerations:</span><br><span class="line">- operator: &quot;Exists&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="当不指定effect值时"><a href="#当不指定effect值时" class="headerlink" title="当不指定effect值时"></a>当不指定effect值时</h2><p>当不指定effect值时，则能匹配污点key对应的所有effects情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tolerations:</span><br><span class="line">- key: &quot;key&quot;</span><br><span class="line">  operator: &quot;Exists&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="当有多个Master存在时"><a href="#当有多个Master存在时" class="headerlink" title="当有多个Master存在时"></a>当有多个Master存在时</h2><p>当有多个Master存在时，为了防止资源浪费，可以进行如下设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes Node-name node-role.kubernetes.io/master=:PreferNoSchedule</span><br></pre></td></tr></table></figure>
+
+<h1 id="多个Taints污点和多个Tolerations容忍怎么判断"><a href="#多个Taints污点和多个Tolerations容忍怎么判断" class="headerlink" title="多个Taints污点和多个Tolerations容忍怎么判断"></a>多个Taints污点和多个Tolerations容忍怎么判断</h1><p>可以在同一个node节点上设置多个污点（Taints），在同一个pod上设置多个容忍（Tolerations）。Kubernetes处理多个污点和容忍的方式就像一个过滤器：从节点的所有污点开始，然后忽略可以被Pod容忍匹配的污点；保留其余不可忽略的污点，污点的effect对Pod具有显示效果：特别是：</p>
+<ul>
+<li>如果有至少一个不可忽略污点，effect为NoSchedule，那么Kubernetes将不调度Pod到该节点</li>
+<li>如果没有effect为NoSchedule的不可忽视污点，但有至少一个不可忽视污点，effect为PreferNoSchedule，那么Kubernetes将尽量不调度Pod到该节点</li>
+<li>如果有至少一个不可忽视污点，effect为NoExecute，那么Pod将被从该节点驱逐（如果Pod已经在该节点运行），并且不会被调度到该节点（如果Pod还未在该节点运行）</li>
+</ul>
+<h1 id="污点和容忍示例"><a href="#污点和容忍示例" class="headerlink" title="污点和容忍示例"></a>污点和容忍示例</h1><h2 id="Node污点为NoExecute的示例"><a href="#Node污点为NoExecute的示例" class="headerlink" title="Node污点为NoExecute的示例"></a>Node污点为NoExecute的示例</h2><p><font color="red">记得把已有的污点清除，以免影响测验。</font></p>
+<div style="font-size:17px"><b>节点上的污点设置（Taints）</b></div>
+
+<p>实现如下污点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">k8s-master 污点为：node-role.kubernetes.io/master:NoSchedule 【k8s自带污点，直接使用，不必另外操作添加】</span><br><span class="line">k8s-node01 污点为：</span><br><span class="line">k8s-node02 污点为：</span><br></pre></td></tr></table></figure>
+
+<p>污点添加操作如下：<br>「无，本次无污点操作」</p>
+<p>污点查看操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe node k8s-master | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node01 | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node02 | grep &apos;Taints&apos; -A 5</span><br></pre></td></tr></table></figure>
+
+<p>除了k8s-master默认的污点，在k8s-node01、k8s-node02无污点。</p>
+<div style="font-size:17px"><b>污点为NoExecute示例</b></div>
+
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# pwd</span><br><span class="line">/root/k8s_practice/scheduler/taint</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# cat noexecute_tolerations.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: noexec-tolerations-deploy</span><br><span class="line">  labels:</span><br><span class="line">    app: noexectolerations-deploy</span><br><span class="line">spec:</span><br><span class="line">  replicas: 6</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp-pod</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">          - containerPort: 80</span><br><span class="line">       # 有容忍并有 tolerationSeconds 时的格式</span><br><span class="line">#      tolerations:</span><br><span class="line">#      - key: &quot;check-mem&quot;</span><br><span class="line">#        operator: &quot;Equal&quot;</span><br><span class="line">#        value: &quot;memdb&quot;</span><br><span class="line">#        effect: &quot;NoExecute&quot;</span><br><span class="line">#        # 当Pod将被驱逐时，Pod还可以在Node节点上继续保留运行的时间</span><br><span class="line">#        tolerationSeconds: 30</span><br></pre></td></tr></table></figure>
+
+<p>运行yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# kubectl apply -f noexecute_tolerations.yaml </span><br><span class="line">deployment.apps/noexec-tolerations-deploy created</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get deploy -o wide</span><br><span class="line">NAME                        READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">noexec-tolerations-deploy   6/6     6            6           10s   myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get pod -o wide</span><br><span class="line">NAME                                         READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">noexec-tolerations-deploy-85587896f9-2j848   1/1     Running   0          15s   10.244.4.101   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">noexec-tolerations-deploy-85587896f9-jgqkn   1/1     Running   0          15s   10.244.2.141   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">noexec-tolerations-deploy-85587896f9-jmw5w   1/1     Running   0          15s   10.244.2.142   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">noexec-tolerations-deploy-85587896f9-s8x95   1/1     Running   0          15s   10.244.4.102   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">noexec-tolerations-deploy-85587896f9-t82fj   1/1     Running   0          15s   10.244.4.103   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">noexec-tolerations-deploy-85587896f9-wx9pz   1/1     Running   0          15s   10.244.2.143   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，pod是在k8s-node01、k8s-node02平均分布的。</font></p>
+<div style="font-size:17px"><b>添加effect为NoExecute的污点</b></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes k8s-node02 check-mem=memdb:NoExecute</span><br></pre></td></tr></table></figure>
+
+<p>此时所有节点污点为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">k8s-master 污点为：node-role.kubernetes.io/master:NoSchedule 【k8s自带污点，直接使用，不必另外操作添加】</span><br><span class="line">k8s-node01 污点为：</span><br><span class="line">k8s-node02 污点为：check-mem=memdb:NoExecute</span><br></pre></td></tr></table></figure>
+
+<p>之后再次查看pod信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# kubectl get pod -o wide</span><br><span class="line">NAME                                         READY   STATUS    RESTARTS   AGE    IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">noexec-tolerations-deploy-85587896f9-2j848   1/1     Running   0          2m2s   10.244.4.101   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">noexec-tolerations-deploy-85587896f9-ch96j   1/1     Running   0          8s     10.244.4.106   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">noexec-tolerations-deploy-85587896f9-cjrkb   1/1     Running   0          8s     10.244.4.105   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">noexec-tolerations-deploy-85587896f9-qbq6d   1/1     Running   0          7s     10.244.4.104   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">noexec-tolerations-deploy-85587896f9-s8x95   1/1     Running   0          2m2s   10.244.4.102   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">noexec-tolerations-deploy-85587896f9-t82fj   1/1     Running   0          2m2s   10.244.4.103   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，在k8s-node02节点上的pod已被驱逐，驱逐的pod被调度到了k8s-node01节点。</font></p>
+<h2 id="Pod没有容忍时（Tolerations）"><a href="#Pod没有容忍时（Tolerations）" class="headerlink" title="Pod没有容忍时（Tolerations）"></a>Pod没有容忍时（Tolerations）</h2><p><font color="red">记得把已有的污点清除，以免影响测验。</font></p>
+<div style="font-size:17px"><b>节点上的污点设置（Taints）</b></div>
+
+<p>实现如下污点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">k8s-master 污点为：node-role.kubernetes.io/master:NoSchedule 【k8s自带污点，直接使用，不必另外操作添加】</span><br><span class="line">k8s-node01 污点为：check-nginx=web:PreferNoSchedule</span><br><span class="line">k8s-node02 污点为：check-nginx=web:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<p>污点添加操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes k8s-node01 check-nginx=web:PreferNoSchedule</span><br><span class="line">kubectl taint nodes k8s-node02 check-nginx=web:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<p>污点查看操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe node k8s-master | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node01 | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node02 | grep &apos;Taints&apos; -A 5</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>无容忍示例</b></div>
+
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# pwd</span><br><span class="line">/root/k8s_practice/scheduler/taint</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# cat no_tolerations.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: no-tolerations-deploy</span><br><span class="line">  labels:</span><br><span class="line">    app: notolerations-deploy</span><br><span class="line">spec:</span><br><span class="line">  replicas: 5</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp-pod</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">          - containerPort: 80</span><br></pre></td></tr></table></figure>
+
+<p>运行yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# kubectl apply -f no_tolerations.yaml </span><br><span class="line">deployment.apps/no-tolerations-deploy created</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get deploy -o wide</span><br><span class="line">NAME                    READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">no-tolerations-deploy   5/5     5            5           9s    myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get pod -o wide</span><br><span class="line">NAME                                     READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">no-tolerations-deploy-85587896f9-6bjv8   1/1     Running   0          16s   10.244.4.54   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">no-tolerations-deploy-85587896f9-hbbjb   1/1     Running   0          16s   10.244.4.58   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">no-tolerations-deploy-85587896f9-jlmzw   1/1     Running   0          16s   10.244.4.56   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">no-tolerations-deploy-85587896f9-kfh2c   1/1     Running   0          16s   10.244.4.55   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">no-tolerations-deploy-85587896f9-wmp8b   1/1     Running   0          16s   10.244.4.57   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，因为k8s-node02节点的污点check-nginx 的effect为NoSchedule，说明pod不能被调度到该节点。此时k8s-node01节点的污点check-nginx 的effect为PreferNoSchedule【尽量不调度到该节点】；但只有该节点满足调度条件，因此都调度到了k8s-node01节点。</font></p>
+<h2 id="Pod单个容忍时（Tolerations）"><a href="#Pod单个容忍时（Tolerations）" class="headerlink" title="Pod单个容忍时（Tolerations）"></a>Pod单个容忍时（Tolerations）</h2><p><font color="red">记得把已有的污点清除，以免影响测验。</font></p>
+<div style="font-size:17px"><b>节点上的污点设置（Taints）</b></div>
+
+<p>实现如下污点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">k8s-master 污点为：node-role.kubernetes.io/master:NoSchedule 【k8s自带污点，直接使用，不必另外操作添加】</span><br><span class="line">k8s-node01 污点为：check-nginx=web:PreferNoSchedule</span><br><span class="line">k8s-node02 污点为：check-nginx=web:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<p>污点添加操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes k8s-node01 check-nginx=web:PreferNoSchedule</span><br><span class="line">kubectl taint nodes k8s-node02 check-nginx=web:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<p>污点查看操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe node k8s-master | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node01 | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node02 | grep &apos;Taints&apos; -A 5</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>单个容忍示例</b></div>
+
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# pwd</span><br><span class="line">/root/k8s_practice/scheduler/taint</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# cat one_tolerations.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: one-tolerations-deploy</span><br><span class="line">  labels:</span><br><span class="line">    app: onetolerations-deploy</span><br><span class="line">spec:</span><br><span class="line">  replicas: 6</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp-pod</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">          - containerPort: 80</span><br><span class="line">      tolerations:</span><br><span class="line">      - key: &quot;check-nginx&quot;</span><br><span class="line">        operator: &quot;Equal&quot;</span><br><span class="line">        value: &quot;web&quot;</span><br><span class="line">        effect: &quot;NoSchedule&quot;</span><br></pre></td></tr></table></figure>
+
+<p>运行yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# kubectl apply -f one_tolerations.yaml </span><br><span class="line">deployment.apps/one-tolerations-deploy created</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get deploy -o wide</span><br><span class="line">NAME                     READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">one-tolerations-deploy   6/6     6            6           3s    myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get pod -o wide</span><br><span class="line">NAME                                      READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">one-tolerations-deploy-5757d6b559-gbj49   1/1     Running   0          7s    10.244.2.73   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">one-tolerations-deploy-5757d6b559-j9p6r   1/1     Running   0          7s    10.244.2.71   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">one-tolerations-deploy-5757d6b559-kpk9q   1/1     Running   0          7s    10.244.2.72   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">one-tolerations-deploy-5757d6b559-lsppn   1/1     Running   0          7s    10.244.4.65   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">one-tolerations-deploy-5757d6b559-rx72g   1/1     Running   0          7s    10.244.4.66   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">one-tolerations-deploy-5757d6b559-s8qr9   1/1     Running   0          7s    10.244.2.74   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，此时pod会尽量【优先】调度到k8s-node02节点，尽量不调度到k8s-node01节点。如果我们只有一个pod，那么会一直调度到k8s-node02节点。</font></p>
+<h2 id="Pod多个容忍时（Tolerations）"><a href="#Pod多个容忍时（Tolerations）" class="headerlink" title="Pod多个容忍时（Tolerations）"></a>Pod多个容忍时（Tolerations）</h2><p><font color="red">记得把已有的污点清除，以免影响测验。</font></p>
+<div style="font-size:17px"><b>节点上的污点设置（Taints）</b></div>
+
+<p>实现如下污点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">k8s-master 污点为：node-role.kubernetes.io/master:NoSchedule 【k8s自带污点，直接使用，不必另外操作添加】</span><br><span class="line">k8s-node01 污点为：check-nginx=web:PreferNoSchedule, check-redis=memdb:NoSchedule</span><br><span class="line">k8s-node02 污点为：check-nginx=web:NoSchedule, check-redis=database:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<p>污点添加操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes k8s-node01 check-nginx=web:PreferNoSchedule</span><br><span class="line">kubectl taint nodes k8s-node01 check-redis=memdb:NoSchedule</span><br><span class="line">kubectl taint nodes k8s-node02 check-nginx=web:NoSchedule</span><br><span class="line">kubectl taint nodes k8s-node02 check-redis=database:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<p>污点查看操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe node k8s-master | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node01 | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node02 | grep &apos;Taints&apos; -A 5</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>多个容忍示例</b></div>
+
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# pwd</span><br><span class="line">/root/k8s_practice/scheduler/taint</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# cat multi_tolerations.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: multi-tolerations-deploy</span><br><span class="line">  labels:</span><br><span class="line">    app: multitolerations-deploy</span><br><span class="line">spec:</span><br><span class="line">  replicas: 6</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp-pod</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">          - containerPort: 80</span><br><span class="line">      tolerations:</span><br><span class="line">      - key: &quot;check-nginx&quot;</span><br><span class="line">        operator: &quot;Equal&quot;</span><br><span class="line">        value: &quot;web&quot;</span><br><span class="line">        effect: &quot;NoSchedule&quot;</span><br><span class="line">      - key: &quot;check-redis&quot;</span><br><span class="line">        operator: &quot;Exists&quot;</span><br><span class="line">        effect: &quot;NoSchedule&quot;</span><br></pre></td></tr></table></figure>
+
+<p>运行yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# kubectl apply -f multi_tolerations.yaml </span><br><span class="line">deployment.apps/multi-tolerations-deploy created</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get deploy -o wide</span><br><span class="line">NAME                       READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">multi-tolerations-deploy   6/6     6            6           5s    myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get pod -o wide</span><br><span class="line">NAME                                        READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">multi-tolerations-deploy-776ff4449c-2csnk   1/1     Running   0          10s   10.244.2.171   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">multi-tolerations-deploy-776ff4449c-4d9fh   1/1     Running   0          10s   10.244.4.116   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">multi-tolerations-deploy-776ff4449c-c8fz5   1/1     Running   0          10s   10.244.2.173   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">multi-tolerations-deploy-776ff4449c-nj29f   1/1     Running   0          10s   10.244.4.115   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">multi-tolerations-deploy-776ff4449c-r7gsm   1/1     Running   0          10s   10.244.2.172   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">multi-tolerations-deploy-776ff4449c-s8t2n   1/1     Running   0          10s   10.244.2.174   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，示例中的pod容忍为：check-nginx=web:NoSchedule；check-redis=:NoSchedule。因此pod会尽量调度到k8s-node02节点，尽量不调度到k8s-node01节点。</font></p>
+<h2 id="Pod容忍指定污点key的所有effects情况"><a href="#Pod容忍指定污点key的所有effects情况" class="headerlink" title="Pod容忍指定污点key的所有effects情况"></a>Pod容忍指定污点key的所有effects情况</h2><p><font color="red">记得把已有的污点清除，以免影响测验。</font></p>
+<div style="font-size:17px"><b>节点上的污点设置（Taints）</b></div>
+
+<p>实现如下污点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">k8s-master 污点为：node-role.kubernetes.io/master:NoSchedule 【k8s自带污点，直接使用，不必另外操作添加】</span><br><span class="line">k8s-node01 污点为：check-redis=memdb:NoSchedule</span><br><span class="line">k8s-node02 污点为：check-redis=database:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<p>污点添加操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes k8s-node01 check-redis=memdb:NoSchedule</span><br><span class="line">kubectl taint nodes k8s-node02 check-redis=database:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<p>污点查看操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe node k8s-master | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node01 | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node02 | grep &apos;Taints&apos; -A 5</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>多个容忍示例</b></div>
+
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# pwd</span><br><span class="line">/root/k8s_practice/scheduler/taint</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# cat key_tolerations.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: key-tolerations-deploy</span><br><span class="line">  labels:</span><br><span class="line">    app: keytolerations-deploy</span><br><span class="line">spec:</span><br><span class="line">  replicas: 6</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp-pod</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">          - containerPort: 80</span><br><span class="line">      tolerations:</span><br><span class="line">      - key: &quot;check-redis&quot;</span><br><span class="line">        operator: &quot;Exists&quot;</span><br></pre></td></tr></table></figure>
+
+<p>运行yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# kubectl apply -f key_tolerations.yaml </span><br><span class="line">deployment.apps/key-tolerations-deploy created</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get deploy -o wide</span><br><span class="line">NAME                     READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">key-tolerations-deploy   6/6     6            6           21s   myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get pod -o wide</span><br><span class="line">NAME                                     READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">key-tolerations-deploy-db5c4c4db-2zqr8   1/1     Running   0          26s   10.244.2.170   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">key-tolerations-deploy-db5c4c4db-5qb5p   1/1     Running   0          26s   10.244.4.113   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">key-tolerations-deploy-db5c4c4db-7xmt6   1/1     Running   0          26s   10.244.2.169   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">key-tolerations-deploy-db5c4c4db-84rkj   1/1     Running   0          26s   10.244.4.114   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">key-tolerations-deploy-db5c4c4db-gszxg   1/1     Running   0          26s   10.244.2.168   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">key-tolerations-deploy-db5c4c4db-vlgh8   1/1     Running   0          26s   10.244.4.112   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，示例中的pod容忍为：check-nginx=:；仅需匹配node污点的key即可，污点的value和effect不需要关心。因此可以匹配k8s-node01、k8s-node02节点。</font></p>
+<h2 id="Pod容忍所有污点"><a href="#Pod容忍所有污点" class="headerlink" title="Pod容忍所有污点"></a>Pod容忍所有污点</h2><p><font color="red">记得把已有的污点清除，以免影响测验。</font></p>
+<div style="font-size:17px"><b>节点上的污点设置（Taints）</b></div>
+
+<p>实现如下污点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">k8s-master 污点为：node-role.kubernetes.io/master:NoSchedule 【k8s自带污点，直接使用，不必另外操作添加】</span><br><span class="line">k8s-node01 污点为：check-nginx=web:PreferNoSchedule, check-redis=memdb:NoSchedule</span><br><span class="line">k8s-node02 污点为：check-nginx=web:NoSchedule, check-redis=database:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<p>污点添加操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl taint nodes k8s-node01 check-nginx=web:PreferNoSchedule</span><br><span class="line">kubectl taint nodes k8s-node01 check-redis=memdb:NoSchedule</span><br><span class="line">kubectl taint nodes k8s-node02 check-nginx=web:NoSchedule</span><br><span class="line">kubectl taint nodes k8s-node02 check-redis=database:NoSchedule</span><br></pre></td></tr></table></figure>
+
+<p>污点查看操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe node k8s-master | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node01 | grep &apos;Taints&apos; -A 5</span><br><span class="line">kubectl describe node k8s-node02 | grep &apos;Taints&apos; -A 5</span><br></pre></td></tr></table></figure>
+
+<div style="font-size:17px"><b>所有容忍示例</b></div>
+
+<p>yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# pwd</span><br><span class="line">/root/k8s_practice/scheduler/taint</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# cat all_tolerations.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: all-tolerations-deploy</span><br><span class="line">  labels:</span><br><span class="line">    app: alltolerations-deploy</span><br><span class="line">spec:</span><br><span class="line">  replicas: 6</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp-pod</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">          - containerPort: 80</span><br><span class="line">      tolerations:</span><br><span class="line">      - operator: &quot;Exists&quot;</span><br></pre></td></tr></table></figure>
+
+<p>运行yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master taint]# kubectl apply -f all_tolerations.yaml </span><br><span class="line">deployment.apps/all-tolerations-deploy created</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get deploy -o wide</span><br><span class="line">NAME                     READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">all-tolerations-deploy   6/6     6            6           8s    myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp</span><br><span class="line">[root@k8s-master taint]# </span><br><span class="line">[root@k8s-master taint]# kubectl get pod -o wide</span><br><span class="line">NAME                                      READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">all-tolerations-deploy-566cdccbcd-4klc2   1/1     Running   0          12s   10.244.0.116   k8s-master   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">all-tolerations-deploy-566cdccbcd-59vvc   1/1     Running   0          12s   10.244.0.115   k8s-master   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">all-tolerations-deploy-566cdccbcd-cvw4s   1/1     Running   0          12s   10.244.2.175   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">all-tolerations-deploy-566cdccbcd-k8fzl   1/1     Running   0          12s   10.244.2.176   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">all-tolerations-deploy-566cdccbcd-s2pw7   1/1     Running   0          12s   10.244.4.118   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">all-tolerations-deploy-566cdccbcd-xzngt   1/1     Running   0          13s   10.244.4.117   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">后上可见，示例中的pod容忍所有的污点，因此pod可被调度到所有k8s节点。</font></p>
+<h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/" target="_blank" rel="noopener">官网：污点与容忍</a></p>
+<p>2、<a href="http://www.zhangblog.com/2020/10/25/kubernetes21/">Kubernetes K8S调度器kube-scheduler详解</a></p>
+<p>3、<a href="http://www.zhangblog.com/2020/10/28/kubernetes22/">Kubernetes K8S之affinity亲和性与反亲和性详解与示例</a></p>
+<p>完毕！</p>
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2020/11/20/kubernetes23/" title="Kubernetes K8S之Taints污点与Tolerations容忍详解">http://www.zhangblog.com/2020/11/20/kubernetes23/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/28/kubernetes22/" rel="next" title="Kubernetes K8S之affinity亲和性与反亲和性详解与示例">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S之affinity亲和性与反亲和性详解与示例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机配置规划"><span class="nav-number">1.</span> <span class="nav-text">主机配置规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Taints污点和Tolerations容忍概述"><span class="nav-number">2.</span> <span class="nav-text">Taints污点和Tolerations容忍概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Taints污点"><span class="nav-number">3.</span> <span class="nav-text">Taints污点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Taints污点的组成"><span class="nav-number">3.1.</span> <span class="nav-text">Taints污点的组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#污点taint的NoExecute详解"><span class="nav-number">3.2.</span> <span class="nav-text">污点taint的NoExecute详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Taints污点设置"><span class="nav-number">3.3.</span> <span class="nav-text">Taints污点设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#污点（Taints）查看"><span class="nav-number">3.3.1.</span> <span class="nav-text">污点（Taints）查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#污点（Taints）添加"><span class="nav-number">3.3.2.</span> <span class="nav-text">污点（Taints）添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#污点（Taints）删除"><span class="nav-number">3.3.3.</span> <span class="nav-text">污点（Taints）删除</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tolerations容忍"><span class="nav-number">4.</span> <span class="nav-text">Tolerations容忍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#当不指定key值时"><span class="nav-number">4.1.</span> <span class="nav-text">当不指定key值时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当不指定effect值时"><span class="nav-number">4.2.</span> <span class="nav-text">当不指定effect值时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当有多个Master存在时"><span class="nav-number">4.3.</span> <span class="nav-text">当有多个Master存在时</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多个Taints污点和多个Tolerations容忍怎么判断"><span class="nav-number">5.</span> <span class="nav-text">多个Taints污点和多个Tolerations容忍怎么判断</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#污点和容忍示例"><span class="nav-number">6.</span> <span class="nav-text">污点和容忍示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node污点为NoExecute的示例"><span class="nav-number">6.1.</span> <span class="nav-text">Node污点为NoExecute的示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod没有容忍时（Tolerations）"><span class="nav-number">6.2.</span> <span class="nav-text">Pod没有容忍时（Tolerations）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod单个容忍时（Tolerations）"><span class="nav-number">6.3.</span> <span class="nav-text">Pod单个容忍时（Tolerations）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod多个容忍时（Tolerations）"><span class="nav-number">6.4.</span> <span class="nav-text">Pod多个容忍时（Tolerations）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod容忍指定污点key的所有effects情况"><span class="nav-number">6.5.</span> <span class="nav-text">Pod容忍指定污点key的所有effects情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod容忍所有污点"><span class="nav-number">6.6.</span> <span class="nav-text">Pod容忍所有污点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读"><span class="nav-number">7.</span> <span class="nav-text">相关阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  蜀ICP备16019247号</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">229.1k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
