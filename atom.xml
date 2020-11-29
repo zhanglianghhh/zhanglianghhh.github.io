@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-11-29T13:27:14.072Z</updated>
+  <updated>2020-11-29T13:35:58.375Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>kubernetes24</title>
+    <title>Kubernetes K8S之固定节点nodeName和nodeSelector调度详解</title>
     <link href="http://www.zhangblog.com/2020/11/29/kubernetes24/"/>
     <id>http://www.zhangblog.com/2020/11/29/kubernetes24/</id>
     <published>2020-11-29T13:24:55.000Z</published>
-    <updated>2020-11-29T13:27:14.072Z</updated>
+    <updated>2020-11-29T13:35:58.375Z</updated>
     
     <summary type="html">
     
