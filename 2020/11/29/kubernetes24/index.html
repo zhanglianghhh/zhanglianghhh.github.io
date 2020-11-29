@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="ansible,">
+  <meta name="keywords" content="Docker,Kubernetes,K8S,CI/CD,DevOps,">
 
 
 
@@ -83,22 +83,20 @@
 
 
 
-<meta name="description" content="主机规划   序号 主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    0 对外提供访问 CentOS7.5  10.0.0.170 keepalived【无主机，只有一个虚拟VIP】   1 ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181 zabbix-agent、haproxy   2 ansi-haproxy02 CentO">
-<meta name="keywords" content="ansible">
+<meta name="description" content="Kubernetes K8S之固定节点nodeName和nodeSelector调度详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.11">
+<meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ansible-实战指南-LNMP环境部署">
-<meta property="og:url" content="http://www.zhangblog.com/2020/01/12/ansible-lnmp/index.html">
+<meta property="og:title" content="kubernetes24">
+<meta property="og:url" content="http://www.zhangblog.com/2020/11/29/kubernetes24/index.html">
 <meta property="og:site_name" content="lightzhang博客">
-<meta property="og:description" content="主机规划   序号 主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    0 对外提供访问 CentOS7.5  10.0.0.170 keepalived【无主机，只有一个虚拟VIP】   1 ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181 zabbix-agent、haproxy   2 ansi-haproxy02 CentO">
+<meta property="og:description" content="Kubernetes K8S之固定节点nodeName和nodeSelector调度详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.11">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-13-01.png">
-<meta property="og:image" content="http://www.zhangblog.com/uploads/ansible/ansible-13-02.png">
-<meta property="og:updated_time" content="2020-01-12T04:11:59.776Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+<meta property="og:updated_time" content="2020-11-29T13:27:14.072Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ansible-实战指南-LNMP环境部署">
-<meta name="twitter:description" content="主机规划   序号 主机名称 操作系统版本 内网IP 外网IP(模拟) 安装软件    0 对外提供访问 CentOS7.5  10.0.0.170 keepalived【无主机，只有一个虚拟VIP】   1 ansi-haproxy01 CentOS7.5 172.16.1.181 10.0.0.181 zabbix-agent、haproxy   2 ansi-haproxy02 CentO">
-<meta name="twitter:image" content="http://www.zhangblog.com/uploads/ansible/ansible-00-00.png">
+<meta name="twitter:title" content="kubernetes24">
+<meta name="twitter:description" content="Kubernetes K8S之固定节点nodeName和nodeSelector调度详解与示例  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.11">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
 
 
 
@@ -128,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zhangblog.com/2020/01/12/ansible-lnmp/">
+  <link rel="canonical" href="http://www.zhangblog.com/2020/11/29/kubernetes24/">
 
 
 
 
 
-  <title>Ansible-实战指南-LNMP环境部署 | lightzhang博客</title>
+  <title>kubernetes24 | lightzhang博客</title>
   
 
 
@@ -313,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/01/12/ansible-lnmp/">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2020/11/29/kubernetes24/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lightzhang">
@@ -330,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Ansible-实战指南-LNMP环境部署</h1>
+          <h1 class="post-title" itemprop="name headline">kubernetes24</h1>
         
 
         <div class="post-meta">
@@ -342,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-12T12:10:08+08:00">
-                2020-01-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-29T21:24:55+08:00">
+                2020-11-29
               </time>
             
 
@@ -366,8 +364,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ansbile/" itemprop="url" rel="index">
-                    <span itemprop="name">ansbile</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/K8S/" itemprop="url" rel="index">
+                    <span itemprop="name">K8S</span>
                   </a>
                 </span>
 
@@ -384,8 +393,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/01/12/ansible-lnmp/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2020/01/12/ansible-lnmp/" itemprop="commentCount"></span>
+                <a href="/2020/11/29/kubernetes24/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/11/29/kubernetes24/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -393,7 +402,7 @@
 
           
           
-             <span id="/2020/01/12/ansible-lnmp/" class="leancloud_visitors" data-flag-title="Ansible-实战指南-LNMP环境部署">
+             <span id="/2020/11/29/kubernetes24/" class="leancloud_visitors" data-flag-title="kubernetes24">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -418,7 +427,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1k
+                  2.5k
                 </span>
               
 
@@ -434,7 +443,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  13
                 </span>
               
             </div>
@@ -455,104 +464,96 @@
       
 
       
-        <p><img src="/uploads/ansible/ansible-00-00.png" alt="image"></p>
-<h1 id="主机规划"><a href="#主机规划" class="headerlink" title="主机规划"></a>主机规划</h1><table>
+        <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
+<blockquote>
+<p>Kubernetes K8S之固定节点nodeName和nodeSelector调度详解与示例</p>
+</blockquote>
+<h1 id="主机配置规划"><a href="#主机配置规划" class="headerlink" title="主机配置规划"></a>主机配置规划</h1><table>
 <thead>
 <tr>
-<th>序号</th>
-<th>主机名称</th>
-<th>操作系统版本</th>
+<th>服务器名称(hostname)</th>
+<th>系统版本</th>
+<th>配置</th>
 <th>内网IP</th>
 <th>外网IP(模拟)</th>
-<th>安装软件</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>0</td>
-<td>对外提供访问</td>
-<td>CentOS7.5</td>
-<td></td>
-<td>10.0.0.170</td>
-<td>keepalived【无主机，只有一个虚拟VIP】</td>
+<td>k8s-master</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.110</td>
+<td>10.0.0.110</td>
 </tr>
 <tr>
-<td>1</td>
-<td>ansi-haproxy01</td>
-<td>CentOS7.5</td>
-<td>172.16.1.181</td>
-<td>10.0.0.181</td>
-<td>zabbix-agent、haproxy</td>
+<td>k8s-node01</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.111</td>
+<td>10.0.0.111</td>
 </tr>
 <tr>
-<td>2</td>
-<td>ansi-haproxy02</td>
-<td>CentOS7.5</td>
-<td>172.16.1.182</td>
-<td>10.0.0.182</td>
-<td>zabbix-agent、haproxy</td>
-</tr>
-<tr>
-<td>3</td>
-<td>ansi-web01</td>
-<td>CentOS7.5</td>
-<td>172.16.1.183</td>
-<td>10.0.0.183</td>
-<td>zabbix-agent、nginx+php、mysql(master)</td>
-</tr>
-<tr>
-<td>4</td>
-<td>ansi-web02</td>
-<td>CentOS7.5</td>
-<td>172.16.1.184</td>
-<td>10.0.0.184</td>
-<td>zabbix-agent、nginx+php、mysql(slave)</td>
-</tr>
-<tr>
-<td>5</td>
-<td>ansi-web03</td>
-<td>CentOS7.5</td>
-<td>172.16.1.185</td>
-<td>10.0.0.185</td>
-<td>zabbix-agent、nginx+php、mysql(slave)、memcached</td>
-</tr>
-<tr>
-<td>6</td>
-<td>ansi-manager</td>
-<td>CentOS7.5</td>
-<td>172.16.1.180</td>
-<td>10.0.0.180</td>
-<td>Ansible、zabbix-server、zabbix-agent、mariadb「zabbix使用」</td>
+<td>k8s-node02</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.112</td>
+<td>10.0.0.112</td>
 </tr>
 </tbody></table>
-<p>系统初始化：必要的系统初始化</p>
-<p>基础组件包括：zabbix监控，mariadb（用于存放zabbix监控信息）</p>
-<p>业务组件包括：MySQL、memcached、nginx、PHP、haproxy、keepalived</p>
-<h2 id="添加用户账号"><a href="#添加用户账号" class="headerlink" title="添加用户账号"></a>添加用户账号</h2><p><b>说明：</b></p>
-<p>1、    运维人员使用的登录账号；</p>
-<p>2、    所有的业务都放在 /app/ 下「yun用户的家目录」，避免业务数据乱放；</p>
-<p>3、    该用户也被 ansible 使用，因为几乎所有的生产环境都是禁止 root 远程登录的（因此该 yun 用户也进行了 sudo 提权）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 使用一个专门的用户，避免直接使用root用户</span><br><span class="line"># 添加用户、指定家目录并指定用户密码</span><br><span class="line"># sudo提权</span><br><span class="line"># 让其它普通用户可以进入该目录查看信息</span><br><span class="line">useradd -u 1050 -d /app yun &amp;&amp; echo &apos;123456&apos; | /usr/bin/passwd --stdin yun</span><br><span class="line">echo &quot;yun  ALL=(ALL)       NOPASSWD: ALL&quot; &gt;&gt;  /etc/sudoers</span><br><span class="line">chmod 755 /app/</span><br></pre></td></tr></table></figure>
+<h1 id="nodeName调度"><a href="#nodeName调度" class="headerlink" title="nodeName调度"></a>nodeName调度</h1><p>nodeName是节点选择约束的最简单形式，但是由于其限制，通常很少使用它。nodeName是PodSpec的领域。</p>
+<p><font color="red">pod.spec.nodeName将Pod直接调度到指定的Node节点上，会【跳过Scheduler的调度策略】，该匹配规则是【强制】匹配。可以越过Taints污点进行调度。</font></p>
+<p>nodeName用于选择节点的一些限制是：</p>
+<ul>
+<li>如果指定的节点不存在，则容器将不会运行，并且在某些情况下可能会自动删除。</li>
+<li>如果指定的节点没有足够的资源来容纳该Pod，则该Pod将会失败，并且其原因将被指出，例如OutOfmemory或OutOfcpu。</li>
+<li>云环境中的节点名称并非总是可预测或稳定的。</li>
+</ul>
+<h1 id="nodeName示例"><a href="#nodeName示例" class="headerlink" title="nodeName示例"></a>nodeName示例</h1><p>获取当前的节点信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master scheduler]# kubectl get nodes -o wide</span><br><span class="line">NAME         STATUS   ROLES    AGE   VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION           CONTAINER-RUNTIME</span><br><span class="line">k8s-master   Ready    master   42d   v1.17.4   172.16.1.110   &lt;none&gt;        CentOS Linux 7 (Core)   3.10.0-1062.el7.x86_64   docker://19.3.8</span><br><span class="line">k8s-node01   Ready    &lt;none&gt;   42d   v1.17.4   172.16.1.111   &lt;none&gt;        CentOS Linux 7 (Core)   3.10.0-1062.el7.x86_64   docker://19.3.8</span><br><span class="line">k8s-node02   Ready    &lt;none&gt;   42d   v1.17.4   172.16.1.112   &lt;none&gt;        CentOS Linux 7 (Core)   3.10.0-1062.el7.x86_64   docker://19.3.8</span><br></pre></td></tr></table></figure>
 
-<p>备注：记得在管理机 172.16.1.180 上实现对其他机器的免密登录。</p>
-<h2 id="Ansible-配置清单Inventory"><a href="#Ansible-配置清单Inventory" class="headerlink" title="Ansible 配置清单Inventory"></a>Ansible 配置清单Inventory</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">[yun@ansi-manager ansible_info]$ cat hosts_key</span><br><span class="line"># 业务组件分组</span><br><span class="line">[manageservers]</span><br><span class="line">172.16.1.180:22</span><br><span class="line"></span><br><span class="line">[keepalivedserver]</span><br><span class="line">172.16.1.181</span><br><span class="line">172.16.1.182</span><br><span class="line"></span><br><span class="line">[proxyservers]</span><br><span class="line">172.16.1.18[1:2]:22</span><br><span class="line"></span><br><span class="line">[webservers]</span><br><span class="line">172.16.1.183 ansible_ssh_port=22</span><br><span class="line">172.16.1.184 ansible_ssh_port=22</span><br><span class="line">172.16.1.185 ansible_ssh_port=22</span><br><span class="line"></span><br><span class="line">[memservers]</span><br><span class="line">172.16.1.185</span><br><span class="line"></span><br><span class="line">[dbservers]</span><br><span class="line">172.16.1.183</span><br><span class="line">172.16.1.184</span><br><span class="line">172.16.1.185</span><br><span class="line"></span><br><span class="line">[dbservers_master]</span><br><span class="line">172.16.1.183</span><br><span class="line"></span><br><span class="line">[dbservers_slave]</span><br><span class="line">172.16.1.184</span><br><span class="line">172.16.1.185</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 基础组件分组</span><br><span class="line">## 数据库组件分组</span><br><span class="line">[zabbixdbserver]</span><br><span class="line">172.16.1.180</span><br><span class="line"></span><br><span class="line">## 基础业务组件分组</span><br><span class="line">[zabbixserver]</span><br><span class="line">172.16.1.180</span><br></pre></td></tr></table></figure>
+<h2 id="当nodeName指定节点存在"><a href="#当nodeName指定节点存在" class="headerlink" title="当nodeName指定节点存在"></a>当nodeName指定节点存在</h2><p>要运行的yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master scheduler]# pwd</span><br><span class="line">/root/k8s_practice/scheduler</span><br><span class="line">[root@k8s-master scheduler]# cat scheduler_nodeName.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: scheduler-nodename-deploy</span><br><span class="line">  labels:</span><br><span class="line">    app: nodename-deploy</span><br><span class="line">spec:</span><br><span class="line">  replicas: 5</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp-pod</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">          - containerPort: 80</span><br><span class="line">      # 指定节点运行</span><br><span class="line">      nodeName: k8s-master</span><br></pre></td></tr></table></figure>
 
-<h1 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h1><p><img src="/uploads/ansible/ansible-13-01.png" alt="image"></p>
-<h1 id="实战项目GitHub地址"><a href="#实战项目GitHub地址" class="headerlink" title="实战项目GitHub地址"></a>实战项目GitHub地址</h1><p>该项目已经放在了<font color="red">GitHub</font>上，地址如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/zhanglianghhh/ansible-example-lnmp</span><br></pre></td></tr></table></figure>
+<p>运行yaml文件并查看信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master scheduler]# kubectl apply -f scheduler_nodeName.yaml </span><br><span class="line">deployment.apps/scheduler-nodename-deploy created</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get deploy -o wide</span><br><span class="line">NAME                        READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">scheduler-nodename-deploy   0/5     5            0           6s    myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get rs -o wide</span><br><span class="line">NAME                                  DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">scheduler-nodename-deploy-d5c9574bd   5         5         5       15s   myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp,pod-template-hash=d5c9574bd</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get pod -o wide</span><br><span class="line">NAME                                        READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">scheduler-nodename-deploy-d5c9574bd-6l9d8   1/1     Running   0          23s   10.244.0.123   k8s-master   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodename-deploy-d5c9574bd-c82cc   1/1     Running   0          23s   10.244.0.119   k8s-master   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodename-deploy-d5c9574bd-dkkjg   1/1     Running   0          23s   10.244.0.122   k8s-master   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodename-deploy-d5c9574bd-hcn77   1/1     Running   0          23s   10.244.0.121   k8s-master   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodename-deploy-d5c9574bd-zstjx   1/1     Running   0          23s   10.244.0.120   k8s-master   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
 
-<p>如需要请自行访问或下载。<br><img src="/uploads/ansible/ansible-13-02.png" alt="image"></p>
-<h1 id="项目任务分解"><a href="#项目任务分解" class="headerlink" title="项目任务分解"></a>项目任务分解</h1><p>获取需求并拿到机器的时候，这时需要我们做如下分析：</p>
-<p>1、主机规划：每台主机用于部署什么模块【本文第一节实际已经规划好了】</p>
-<p>2、普通用户创建与提权：如果机器是公司统一初始化的，那么可以不创建普通用户，只需提权即可。</p>
-<p>3、ansible管理机到其他机器的免密登录。</p>
-<p>4、具体任务分解：包括机器必要的初始化、基础组件部署与业务组件部署。如果公司对机器做了统一的初始化，那么视情况而定。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">## 系统初始化</span><br><span class="line">1、基础镜像源与epel镜像源</span><br><span class="line">2、必要的包安装</span><br><span class="line">3、指定环境变量，如：为history命令添加时间信息；操作命令记录到系统日志</span><br><span class="line">4、用户名、主机添加背景色，用于生产环境，这样可以减少人为的误操作</span><br><span class="line">5、别名配置，如：alias grep=&apos;grep --color=auto&apos;</span><br><span class="line">6、内核参数修改，生产中视情况而定</span><br><span class="line">7、创建web站点用户 www。</span><br><span class="line">8、创建必要的目录，如：软件包存放目录，后期运维脚本存放目录</span><br><span class="line"></span><br><span class="line">## 基础组件部署</span><br><span class="line">1、yum 安装mariadb，用于存放监控信息</span><br><span class="line">2、yum 安装zabbix server</span><br><span class="line">3、yum 安装zabbix agent</span><br><span class="line"></span><br><span class="line">## 业务组件部署</span><br><span class="line">1、MySQL 数据库部署</span><br><span class="line">2、MySQL 主从实现</span><br><span class="line">3、memcached 部署</span><br><span class="line">4、nginx 部署</span><br><span class="line">5、PHP 部署</span><br><span class="line">6、nginx、PHP整合，nginx、PHP、MySQL整合，nginx、PHP、memcached整合</span><br><span class="line">7、haproxy 部署</span><br><span class="line">8、keepalived 部署</span><br></pre></td></tr></table></figure>
+<p><font color="red">由上可见，yaml文件中nodeName: k8s-master生效，所有pod被调度到了k8s-master节点。如果这里是nodeName: k8s-node02，那么就会直接调度到k8s-node02节点。</font></p>
+<h2 id="当nodeName指定节点不存在"><a href="#当nodeName指定节点不存在" class="headerlink" title="当nodeName指定节点不存在"></a>当nodeName指定节点不存在</h2><p>要运行的yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master scheduler]# pwd</span><br><span class="line">/root/k8s_practice/scheduler</span><br><span class="line">[root@k8s-master scheduler]# cat scheduler_nodeName_02.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: scheduler-nodename-deploy</span><br><span class="line">  labels:</span><br><span class="line">    app: nodename-deploy</span><br><span class="line">spec:</span><br><span class="line">  replicas: 5</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp-pod</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">          - containerPort: 80</span><br><span class="line">      # 指定节点运行，该节点不存在</span><br><span class="line">      nodeName: k8s-node08</span><br></pre></td></tr></table></figure>
 
-<h1 id="项目编写与后续验证步骤"><a href="#项目编写与后续验证步骤" class="headerlink" title="项目编写与后续验证步骤"></a>项目编写与后续验证步骤</h1><p>请参见：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/zhanglianghhh/ansible-example-lnmp</span><br></pre></td></tr></table></figure>
+<p>运行yaml文件并查看信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master scheduler]# kubectl apply -f scheduler_nodeName_02.yaml </span><br><span class="line">deployment.apps/scheduler-nodename-deploy created</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get deploy -o wide</span><br><span class="line">NAME                        READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">scheduler-nodename-deploy   0/5     5            0           4s    myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get rs -o wide</span><br><span class="line">NAME                                   DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">scheduler-nodename-deploy-75944bdc5d   5         5         0       9s    myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp,pod-template-hash=75944bdc5d</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get pod -o wide</span><br><span class="line">NAME                                         READY   STATUS    RESTARTS   AGE   IP       NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">scheduler-nodename-deploy-75944bdc5d-c8f5d   0/1     Pending   0          13s   &lt;none&gt;   k8s-node08   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodename-deploy-75944bdc5d-hfdlv   0/1     Pending   0          13s   &lt;none&gt;   k8s-node08   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodename-deploy-75944bdc5d-q9qgt   0/1     Pending   0          13s   &lt;none&gt;   k8s-node08   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodename-deploy-75944bdc5d-q9zl7   0/1     Pending   0          13s   &lt;none&gt;   k8s-node08   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodename-deploy-75944bdc5d-wxsnv   0/1     Pending   0          13s   &lt;none&gt;   k8s-node08   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
 
-<p>这里包含：涉及目录与文件说明；服务部署；停止服务【因为是个人电脑通过虚拟机实现的】；服务验证。</p>
-<p>为了避免重复这里就不单独说了，参见上面地址即可。</p>
+<p><font color="red">由上可见，如果指定的节点不存在，则容器将不会运行，一直处于Pending 状态。</font></p>
+<h1 id="nodeSelector调度"><a href="#nodeSelector调度" class="headerlink" title="nodeSelector调度"></a>nodeSelector调度</h1><p>nodeSelector是节点选择约束的<font color="red">最简单推荐形式</font>。nodeSelector是PodSpec的领域。它指定键值对的映射。</p>
+<p>Pod.spec.nodeSelector是<font color="red">通过Kubernetes的label-selector机制选择节点，由调度器调度策略匹配label，而后调度Pod到目标节点，该匹配规则属于【强制】约束。由于是调度器调度，因此不能越过Taints污点进行调度。</font></p>
+<h1 id="nodeSelector示例"><a href="#nodeSelector示例" class="headerlink" title="nodeSelector示例"></a>nodeSelector示例</h1><p>获取当前的节点信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl get node -o wide --show-labels</span><br><span class="line">NAME         STATUS   ROLES    AGE   VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION           CONTAINER-RUNTIME   LABELS</span><br><span class="line">k8s-master   Ready    master   42d   v1.17.4   172.16.1.110   &lt;none&gt;        CentOS Linux 7 (Core)   3.10.0-1062.el7.x86_64   docker://19.3.8     beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-master,kubernetes.io/os=linux,node-role.kubernetes.io/master=</span><br><span class="line">k8s-node01   Ready    &lt;none&gt;   42d   v1.17.4   172.16.1.111   &lt;none&gt;        CentOS Linux 7 (Core)   3.10.0-1062.el7.x86_64   docker://19.3.8     beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-node01,kubernetes.io/os=linux</span><br><span class="line">k8s-node02   Ready    &lt;none&gt;   42d   v1.17.4   172.16.1.112   &lt;none&gt;        CentOS Linux 7 (Core)   3.10.0-1062.el7.x86_64   docker://19.3.8     beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-node02,kubernetes.io/os=linux</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加label标签"><a href="#添加label标签" class="headerlink" title="添加label标签"></a>添加label标签</h2><p>运行kubectl get nodes以获取群集节点的名称。然后可以对指定节点添加标签。比如：k8s-node01的磁盘为SSD，那么添加disk-type=ssd；k8s-node02的CPU核数高，那么添加cpu-type=hight；如果为Web机器，那么添加service-type=web。怎么添加标签可以根据实际规划情况而定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">### 给k8s-node01 添加指定标签</span><br><span class="line">[root@k8s-master ~]# kubectl label nodes k8s-node01 disk-type=ssd</span><br><span class="line">node/k8s-node01 labeled</span><br><span class="line">#### 删除标签命令 kubectl label nodes k8s-node01 disk-type-</span><br><span class="line">[root@k8s-master ~]# </span><br><span class="line">[root@k8s-master ~]# kubectl get node --show-labels</span><br><span class="line">NAME         STATUS   ROLES    AGE   VERSION   LABELS</span><br><span class="line">k8s-master   Ready    master   42d   v1.17.4   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-master,kubernetes.io/os=linux,node-role.kubernetes.io/master=</span><br><span class="line">k8s-node01   Ready    &lt;none&gt;   42d   v1.17.4   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,disk-type=ssd,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-node01,kubernetes.io/os=linux</span><br><span class="line">k8s-node02   Ready    &lt;none&gt;   42d   v1.17.4   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=k8s-node02,kubernetes.io/os=linux</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，已经为k8s-node01节点添加了disk-type=ssd 标签。</font></p>
+<h2 id="当nodeSelector标签存在"><a href="#当nodeSelector标签存在" class="headerlink" title="当nodeSelector标签存在"></a>当nodeSelector标签存在</h2><p>要运行的yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master scheduler]# pwd</span><br><span class="line">/root/k8s_practice/scheduler</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# cat scheduler_nodeSelector.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: scheduler-nodeselector-deploy</span><br><span class="line">  labels:</span><br><span class="line">    app: nodeselector-deploy</span><br><span class="line">spec:</span><br><span class="line">  replicas: 5</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp-pod</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">          - containerPort: 80</span><br><span class="line">      # 指定节点标签选择，且标签存在</span><br><span class="line">      nodeSelector:</span><br><span class="line">        disk-type: ssd</span><br></pre></td></tr></table></figure>
+
+<p>运行yaml文件并查看信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master scheduler]# kubectl apply -f scheduler_nodeSelector.yaml </span><br><span class="line">deployment.apps/scheduler-nodeselector-deploy created</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get deploy -o wide</span><br><span class="line">NAME                            READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">scheduler-nodeselector-deploy   5/5     5            5           10s   myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get rs -o wide</span><br><span class="line">NAME                                       DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">scheduler-nodeselector-deploy-79455db454   5         5         5       14s   myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp,pod-template-hash=79455db454</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get pod -o wide</span><br><span class="line">NAME                                             READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">scheduler-nodeselector-deploy-79455db454-745ph   1/1     Running   0          19s   10.244.4.154   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodeselector-deploy-79455db454-bmjvd   1/1     Running   0          19s   10.244.4.151   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodeselector-deploy-79455db454-g5cg2   1/1     Running   0          19s   10.244.4.153   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodeselector-deploy-79455db454-hw8jv   1/1     Running   0          19s   10.244.4.152   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodeselector-deploy-79455db454-zrt8d   1/1     Running   0          19s   10.244.4.155   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，所有pod都被调度到了k8s-node01节点。当然如果其他节点也有disk-type=ssd 标签，那么pod也会调度到这些节点上。</font></p>
+<h2 id="当nodeSelector标签不存在"><a href="#当nodeSelector标签不存在" class="headerlink" title="当nodeSelector标签不存在"></a>当nodeSelector标签不存在</h2><p>要运行的yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master scheduler]# pwd</span><br><span class="line">/root/k8s_practice/scheduler</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# cat scheduler_nodeSelector_02.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: scheduler-nodeselector-deploy</span><br><span class="line">  labels:</span><br><span class="line">    app: nodeselector-deploy</span><br><span class="line">spec:</span><br><span class="line">  replicas: 5</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: myapp</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: myapp</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: myapp-pod</span><br><span class="line">        image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">        imagePullPolicy: IfNotPresent</span><br><span class="line">        ports:</span><br><span class="line">          - containerPort: 80</span><br><span class="line">      # 指定节点标签选择，且标签不存在</span><br><span class="line">      nodeSelector:</span><br><span class="line">        service-type: web</span><br></pre></td></tr></table></figure>
+
+<p>运行yaml文件并查看信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master scheduler]# kubectl apply -f scheduler_nodeSelector_02.yaml </span><br><span class="line">deployment.apps/scheduler-nodeselector-deploy created</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get deploy -o wide</span><br><span class="line">NAME                            READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">scheduler-nodeselector-deploy   0/5     5            0           26s   myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get rs -o wide</span><br><span class="line">NAME                                       DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES                                                      SELECTOR</span><br><span class="line">scheduler-nodeselector-deploy-799d748db6   5         5         0       30s   myapp-pod    registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1   app=myapp,pod-template-hash=799d748db6</span><br><span class="line">[root@k8s-master scheduler]# </span><br><span class="line">[root@k8s-master scheduler]# kubectl get pod -o wide</span><br><span class="line">NAME                                             READY   STATUS    RESTARTS   AGE   IP       NODE     NOMINATED NODE   READINESS GATES</span><br><span class="line">scheduler-nodeselector-deploy-799d748db6-92mqj   0/1     Pending   0          40s   &lt;none&gt;   &lt;none&gt;   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodeselector-deploy-799d748db6-c2w25   0/1     Pending   0          40s   &lt;none&gt;   &lt;none&gt;   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodeselector-deploy-799d748db6-c8tlx   0/1     Pending   0          40s   &lt;none&gt;   &lt;none&gt;   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodeselector-deploy-799d748db6-tc5n7   0/1     Pending   0          40s   &lt;none&gt;   &lt;none&gt;   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">scheduler-nodeselector-deploy-799d748db6-z8c57   0/1     Pending   0          40s   &lt;none&gt;   &lt;none&gt;   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可见，如果nodeSelector匹配的标签不存在，则容器将不会运行，一直处于Pending 状态。</font></p>
+<h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="https://kubernetes.io/zh/docs/concepts/scheduling-eviction/assign-pod-node/" target="_blank" rel="noopener">官网：Pod分配调度</a></p>
+<p>2、<a href="http://www.zhangblog.com/2020/10/25/kubernetes21/">Kubernetes K8S之调度器kube-scheduler详解</a></p>
+<p>3、<a href="http://www.zhangblog.com/2020/10/28/kubernetes22/">Kubernetes K8S之affinity亲和性与反亲和性详解与示例</a></p>
+<p>4、<a href="http://www.zhangblog.com/2020/11/20/kubernetes23/">Kubernetes K8S之Taints污点与Tolerations容忍详解</a></p>
+<p>完毕！</p>
+<hr>
 
       
     </div>
@@ -625,7 +626,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.zhangblog.com/2020/01/12/ansible-lnmp/" title="Ansible-实战指南-LNMP环境部署">http://www.zhangblog.com/2020/01/12/ansible-lnmp/</a>
+    <a href="http://www.zhangblog.com/2020/11/29/kubernetes24/" title="kubernetes24">http://www.zhangblog.com/2020/11/29/kubernetes24/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -640,7 +641,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ansible/" rel="tag"># ansible</a>
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
           
         </div>
       
@@ -653,8 +662,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/01/09/ansible-12/" rel="next" title="Ansible Roles详解">
-                <i class="fa fa-chevron-left"></i> Ansible Roles详解
+              <a href="/2020/11/20/kubernetes23/" rel="next" title="Kubernetes K8S之Taints污点与Tolerations容忍详解">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S之Taints污点与Tolerations容忍详解
               </a>
             
           </div>
@@ -662,10 +671,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/02/04/disk-io/" rel="prev" title="Linux 查看磁盘IO并找出占用IO读写很高的进程">
-                Linux 查看磁盘IO并找出占用IO读写很高的进程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -843,7 +848,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机规划"><span class="nav-number">1.</span> <span class="nav-text">主机规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户账号"><span class="nav-number">1.1.</span> <span class="nav-text">添加用户账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-配置清单Inventory"><span class="nav-number">1.2.</span> <span class="nav-text">Ansible 配置清单Inventory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统架构"><span class="nav-number">2.</span> <span class="nav-text">系统架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实战项目GitHub地址"><span class="nav-number">3.</span> <span class="nav-text">实战项目GitHub地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目任务分解"><span class="nav-number">4.</span> <span class="nav-text">项目任务分解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目编写与后续验证步骤"><span class="nav-number">5.</span> <span class="nav-text">项目编写与后续验证步骤</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机配置规划"><span class="nav-number">1.</span> <span class="nav-text">主机配置规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nodeName调度"><span class="nav-number">2.</span> <span class="nav-text">nodeName调度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nodeName示例"><span class="nav-number">3.</span> <span class="nav-text">nodeName示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#当nodeName指定节点存在"><span class="nav-number">3.1.</span> <span class="nav-text">当nodeName指定节点存在</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当nodeName指定节点不存在"><span class="nav-number">3.2.</span> <span class="nav-text">当nodeName指定节点不存在</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nodeSelector调度"><span class="nav-number">4.</span> <span class="nav-text">nodeSelector调度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nodeSelector示例"><span class="nav-number">5.</span> <span class="nav-text">nodeSelector示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加label标签"><span class="nav-number">5.1.</span> <span class="nav-text">添加label标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当nodeSelector标签存在"><span class="nav-number">5.2.</span> <span class="nav-text">当nodeSelector标签存在</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当nodeSelector标签不存在"><span class="nav-number">5.3.</span> <span class="nav-text">当nodeSelector标签不存在</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读"><span class="nav-number">6.</span> <span class="nav-text">相关阅读</span></a></li></ol></div>
             
 
           </div>

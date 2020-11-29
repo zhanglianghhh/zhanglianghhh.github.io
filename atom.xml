@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-11-20T01:33:43.651Z</updated>
+  <updated>2020-11-29T13:27:14.072Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>kubernetes24</title>
+    <link href="http://www.zhangblog.com/2020/11/29/kubernetes24/"/>
+    <id>http://www.zhangblog.com/2020/11/29/kubernetes24/</id>
+    <published>2020-11-29T13:24:55.000Z</published>
+    <updated>2020-11-29T13:27:14.072Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Kubernetes
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S之Taints污点与Tolerations容忍详解</title>
@@ -704,46 +742,6 @@
         
         
           &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
-    
-      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
-    
-    
-      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
-    
-      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
-    
-      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
-    
-      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
-    
-      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kubernetes K8S之Pod 生命周期与init container初始化容器详解</title>
-    <link href="http://www.zhangblog.com/2020/08/12/kubernetes06/"/>
-    <id>http://www.zhangblog.com/2020/08/12/kubernetes06/</id>
-    <published>2020-08-12T13:51:31.000Z</published>
-    <updated>2020-08-12T13:56:01.143Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;K8S中Pod的生命周期与init container初始化容器详解&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1
         
       
     
