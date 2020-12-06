@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-11-29T13:35:58.375Z</updated>
+  <updated>2020-12-06T12:19:54.775Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S之鉴权RBAC详解</title>
+    <link href="http://www.zhangblog.com/2020/12/06/kubernetes25/"/>
+    <id>http://www.zhangblog.com/2020/12/06/kubernetes25/</id>
+    <published>2020-12-06T12:17:31.000Z</published>
+    <updated>2020-12-06T12:19:54.775Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Kubernetes K8S之鉴权概述与RBAC详解&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S之固定节点nodeName和nodeSelector调度详解</title>
@@ -706,42 +746,6 @@
           &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Kubernetes 支持 postStart 和 preStop 事件。当一个主容器启动后，Kubernetes
-        
-      
-    
-    </summary>
-    
-      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
-    
-      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
-    
-    
-      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
-    
-      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
-    
-      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
-    
-      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
-    
-      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kubernetes K8S之Pod生命周期与探针检测</title>
-    <link href="http://www.zhangblog.com/2020/08/16/kubernetes07/"/>
-    <id>http://www.zhangblog.com/2020/08/16/kubernetes07/</id>
-    <published>2020-08-16T14:51:53.000Z</published>
-    <updated>2020-08-16T15:02:50.720Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot;
         
       
     
