@@ -92,7 +92,7 @@
 <meta property="og:description" content="Kubernetes K8S之通过helm部署metrics-server与 Horizontal Pod Autoscaling (HPA)详解  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentO">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
-<meta property="og:updated_time" content="2020-12-20T15:27:31.606Z">
+<meta property="og:updated_time" content="2020-12-20T15:30:38.020Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes K8S之通过helm部署metrics-server与HPA详解">
 <meta name="twitter:description" content="Kubernetes K8S之通过helm部署metrics-server与 Horizontal Pod Autoscaling (HPA)详解  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentO">
@@ -503,7 +503,7 @@
 <h1 id="使用Helm部署metrics-server"><a href="#使用Helm部署metrics-server" class="headerlink" title="使用Helm部署metrics-server"></a>使用Helm部署metrics-server</h1><p>正常情况下，如果没有部署metrics-server那么我们使用如下命令是收集不到信息的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl top node</span><br><span class="line">kubectl top pod -A</span><br></pre></td></tr></table></figure>
 
-<p>首先完成「<a href="https://note.youdao.com/" target="_blank" rel="noopener">Kubernetes K8S之Helm部署、使用与示例</a>」。</p>
+<p>首先完成「<a href="http://www.zhangblog.com/2020/12/14/kubernetes26/">Kubernetes K8S之Helm部署、使用与示例</a>」。</p>
 <p>从Heapster的 <code>GitHub地址：https://github.com/kubernetes-retired/heapster</code> 中可以看到，heapster 已经 RETIRED【过时】。从Kubernetes 1.12开始将从Kubernetes各种安装脚本中移除。Kubernetes推荐使用metrics-server。我们这里使用Helm来部署metrics-server。</p>
 <p>GitHub地址：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/kubernetes-sigs/metrics-server</span><br></pre></td></tr></table></figure>
