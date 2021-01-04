@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhangblog.com/"/>
-  <updated>2020-12-20T15:30:38.020Z</updated>
+  <updated>2021-01-04T13:23:56.561Z</updated>
   <id>http://www.zhangblog.com/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kubernetes K8S之CPU和内存资源限制详解</title>
+    <link href="http://www.zhangblog.com/2021/01/04/kubernetes28/"/>
+    <id>http://www.zhangblog.com/2021/01/04/kubernetes28/</id>
+    <published>2021-01-04T13:22:57.000Z</published>
+    <updated>2021-01-04T13:23:56.561Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Kubernetes K8S之CPU和内存资源限制详解&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1
+        
+      
+    
+    </summary>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
+    
+    
+      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
+    
+      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
+    
+      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
+    
+      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
+    
+  </entry>
   
   <entry>
     <title>Kubernetes K8S之通过helm部署metrics-server与HPA详解</title>
@@ -708,46 +748,6 @@
           &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Kubernetes的资源控制器Daemonset详解与示例&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1
-        
-      
-    
-    </summary>
-    
-      <category term="Kubernetes" scheme="http://www.zhangblog.com/categories/Kubernetes/"/>
-    
-      <category term="K8S" scheme="http://www.zhangblog.com/categories/Kubernetes/K8S/"/>
-    
-    
-      <category term="Docker" scheme="http://www.zhangblog.com/tags/Docker/"/>
-    
-      <category term="Kubernetes" scheme="http://www.zhangblog.com/tags/Kubernetes/"/>
-    
-      <category term="K8S" scheme="http://www.zhangblog.com/tags/K8S/"/>
-    
-      <category term="CI/CD" scheme="http://www.zhangblog.com/tags/CI-CD/"/>
-    
-      <category term="DevOps" scheme="http://www.zhangblog.com/tags/DevOps/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kubernetes K8S之资源控制器StatefulSets详解</title>
-    <link href="http://www.zhangblog.com/2020/08/26/kubernetes10/"/>
-    <id>http://www.zhangblog.com/2020/08/26/kubernetes10/</id>
-    <published>2020-08-26T15:17:59.000Z</published>
-    <updated>2020-08-26T15:40:24.890Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;/uploads/kubernetes/k8s-00-00.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Kubernetes的资源控制器StatefulSet详解与示例&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1
         
