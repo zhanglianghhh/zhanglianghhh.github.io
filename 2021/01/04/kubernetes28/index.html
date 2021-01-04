@@ -92,8 +92,8 @@
 <meta property="og:description" content="Kubernetes K8S之CPU和内存资源限制详解  Pod资源限制备注：CPU单位换算：100m CPU，100 milliCPU 和 0.1 CPU 都相同；精度不能超过 1m。1000m CPU = 1 CPU。 官网地址： 12https://kubernetes.io/zh/docs/tasks/configure-pod-container/assign-cpu-resourc">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
-<meta property="og:image" content="http://www.zhangblog.com/2021/01/04/kubernetes28/3874C4CC9AD2452FA32F0EEE11C41673">
-<meta property="og:updated_time" content="2021-01-04T13:23:56.561Z">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-28-01.png">
+<meta property="og:updated_time" content="2021-01-04T13:30:03.021Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes K8S之CPU和内存资源限制详解">
 <meta name="twitter:description" content="Kubernetes K8S之CPU和内存资源限制详解  Pod资源限制备注：CPU单位换算：100m CPU，100 milliCPU 和 0.1 CPU 都相同；精度不能超过 1m。1000m CPU = 1 CPU。 官网地址： 12https://kubernetes.io/zh/docs/tasks/configure-pod-container/assign-cpu-resourc">
@@ -489,7 +489,7 @@
 <p>官网地址：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://kubernetes.io/zh/docs/tasks/administer-cluster/manage-resources/</span><br></pre></td></tr></table></figure>
 
-<p><img src="3874C4CC9AD2452FA32F0EEE11C41673" alt="k8s-28-01"></p>
+<p><img src="/uploads/kubernetes/k8s-28-01.png" alt="image"></p>
 <h2 id="为命名空间配置内存和-CPU-配额"><a href="#为命名空间配置内存和-CPU-配额" class="headerlink" title="为命名空间配置内存和 CPU 配额"></a>为命名空间配置内存和 CPU 配额</h2><p>怎么<font color="red">为命名空间设置容器可用的内存和 CPU 总量。你可以通过 ResourceQuota 对象设置配额</font>，使用 ResourceQuota <font color="red">限制命名空间中所有容器的内存请求总量、内存限制总量、CPU 请求总量和CPU 限制总量</font>。</p>
 <p><font color="red">如果你想对单个容器而不是所有容器进行限制，就请使用 LimitRange。</font></p>
 <p>示例：</p>
