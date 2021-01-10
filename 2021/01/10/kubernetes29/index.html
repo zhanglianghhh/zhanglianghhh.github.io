@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker,Kubernetes,K8S,CI/CD,DevOps,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Kubernetes K8S之kube-prometheus概述与部署  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
+<meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes K8S之kube-prometheus概述与部署">
+<meta property="og:url" content="http://www.zhangblog.com/2021/01/10/kubernetes29/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="Kubernetes K8S之kube-prometheus概述与部署  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-03.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-04.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-05.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-06.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-07.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-08.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-09.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-10.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-11.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-12.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-13.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-14.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-15.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-16.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-29-17.png">
+<meta property="og:updated_time" content="2021-01-10T13:01:48.752Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kubernetes K8S之kube-prometheus概述与部署">
+<meta name="twitter:description" content="Kubernetes K8S之kube-prometheus概述与部署  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 CentOS7.7 2C/4G/20G 172.16.1.111 10.0.0.111">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2021/01/10/kubernetes29/">
+
+
+
+
+
+  <title>Kubernetes K8S之kube-prometheus概述与部署 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2021/01/10/kubernetes29/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kubernetes K8S之kube-prometheus概述与部署</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-10T20:17:23+08:00">
+                2021-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/K8S/" itemprop="url" rel="index">
+                    <span itemprop="name">K8S</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/01/10/kubernetes29/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2021/01/10/kubernetes29/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2021/01/10/kubernetes29/" class="leancloud_visitors" data-flag-title="Kubernetes K8S之kube-prometheus概述与部署">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
+<blockquote>
+<p>Kubernetes K8S之kube-prometheus概述与部署</p>
+</blockquote>
+<h1 id="主机配置规划"><a href="#主机配置规划" class="headerlink" title="主机配置规划"></a>主机配置规划</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>系统版本</th>
+<th>配置</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.110</td>
+<td>10.0.0.110</td>
+</tr>
+<tr>
+<td>k8s-node01</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.111</td>
+<td>10.0.0.111</td>
+</tr>
+<tr>
+<td>k8s-node02</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.112</td>
+<td>10.0.0.112</td>
+</tr>
+</tbody></table>
+<h1 id="prometheus概述"><a href="#prometheus概述" class="headerlink" title="prometheus概述"></a>prometheus概述</h1><p>Prometheus是一个开源的系统监控和警报工具包，自2012成立以来，许多公司和组织采用了Prometheus。它现在是一个独立的开源项目，并独立于任何公司维护。在2016年，Prometheus加入云计算基金会作为Kubernetes之后的第二托管项目。</p>
+<p><font color="red">Prometheus性能也足够支撑上万台规模的集群。</font></p>
+<h2 id="Prometheus的关键特性"><a href="#Prometheus的关键特性" class="headerlink" title="Prometheus的关键特性"></a>Prometheus的关键特性</h2><ul>
+<li>多维度数据模型</li>
+<li>灵活的查询语言</li>
+<li>不依赖于分布式存储；单服务器节点是自治的</li>
+<li>通过基于HTTP的pull方式采集时序数据</li>
+<li>可以通过中间网关进行时序列数据推送</li>
+<li>通过服务发现或者静态配置来发现目标服务对象</li>
+<li>支持多种多样的图表和界面展示，比如Grafana等</li>
+</ul>
+<h2 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h2><p><img src="/uploads/kubernetes/k8s-29-01.png" alt="image"></p>
+<h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><p><font color="red">Prometheus的基本原理是通过HTTP协议周期性抓取被监控组件的状态，任意组件只要提供对应的HTTP接口就可以接入监控。不需要任何SDK或者其他的集成过程。</font></p>
+<p>这样做非常适合做虚拟化环境监控系统，比如VM、Docker、Kubernetes等。输出被监控组件信息的HTTP接口被叫做exporter 。目前互联网公司常用的组件大部分都有exporter可以直接使用，比如Varnish、Haproxy、Nginx、MySQL、Linux系统信息(包括磁盘、内存、CPU、网络等等)。</p>
+<p><b>Prometheus三大套件</b></p>
+<ul>
+<li>Server 主要负责数据采集和存储，提供PromQL查询语言的支持。</li>
+<li>Alertmanager 警告管理器，用来进行报警。</li>
+<li>Push Gateway 支持临时性Job主动推送指标的中间网关。</li>
+</ul>
+<h2 id="服务过程"><a href="#服务过程" class="headerlink" title="服务过程"></a>服务过程</h2><ul>
+<li>Prometheus Daemon负责定时去目标上抓取metrics(指标)数据，每个抓取目标需要暴露一个http服务的接口给它定时抓取。Prometheus支持通过配置文件、文本文件、Zookeeper、Consul、DNS SRV Lookup等方式指定抓取目标。Prometheus采用PULL的方式进行监控，即服务器可以直接通过目标PULL数据或者间接地通过中间网关来Push数据。</li>
+<li>Prometheus在本地存储抓取的所有数据，并通过一定规则进行清理和整理数据，并把得到的结果存储到新的时间序列中。</li>
+<li>Prometheus通过PromQL和其他API可视化地展示收集的数据。Prometheus支持很多方式的图表可视化，例如Grafana、自带的Promdash以及自身提供的模版引擎等等。Prometheus还提供HTTP API的查询方式，自定义所需要的输出。</li>
+<li>PushGateway支持Client主动推送metrics到PushGateway，而Prometheus只是定时去Gateway上抓取数据。</li>
+<li>Alertmanager是独立于Prometheus的一个组件，可以支持Prometheus的查询语句，提供十分灵活的报警方式。</li>
+</ul>
+<h1 id="kube-prometheus部署"><a href="#kube-prometheus部署" class="headerlink" title="kube-prometheus部署"></a>kube-prometheus部署</h1><p>kube-prometheus的GitHub地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/coreos/kube-prometheus/</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">本次我们选择release-0.2版本，而不是其他版本。</font></p>
+<h2 id="kube-prometheus下载与配置修改"><a href="#kube-prometheus下载与配置修改" class="headerlink" title="kube-prometheus下载与配置修改"></a>kube-prometheus下载与配置修改</h2><p>下载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master prometheus]# pwd</span><br><span class="line">/root/k8s_practice/prometheus</span><br><span class="line">[root@k8s-master prometheus]# </span><br><span class="line">[root@k8s-master prometheus]# wget https://github.com/coreos/kube-prometheus/archive/v0.2.0.tar.gz </span><br><span class="line">[root@k8s-master prometheus]# tar xf v0.2.0.tar.gz </span><br><span class="line">[root@k8s-master prometheus]# ll</span><br><span class="line">total 432</span><br><span class="line">drwxrwxr-x 10 root root   4096 Sep 13  2019 kube-prometheus-0.2.0</span><br><span class="line">-rw-r--r--  1 root root 200048 Jul 19 11:41 v0.2.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>配置修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"># 当前所在目录</span><br><span class="line">[root@k8s-master manifests]# pwd</span><br><span class="line">/root/k8s_practice/prometheus/kube-prometheus-0.2.0/manifests</span><br><span class="line">[root@k8s-master manifests]# </span><br><span class="line"># 配置修改1</span><br><span class="line">[root@k8s-master manifests]# vim grafana-service.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    app: grafana</span><br><span class="line">  name: grafana</span><br><span class="line">  namespace: monitoring</span><br><span class="line">spec:</span><br><span class="line">  type: NodePort   # 添加内容</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: 3000</span><br><span class="line">    targetPort: http</span><br><span class="line">    nodePort: 30100   # 添加内容</span><br><span class="line">  selector:</span><br><span class="line">    app: grafana</span><br><span class="line">[root@k8s-master manifests]# </span><br><span class="line"># 配置修改2 </span><br><span class="line">[root@k8s-master manifests]# vim prometheus-service.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    prometheus: k8s</span><br><span class="line">  name: prometheus-k8s</span><br><span class="line">  namespace: monitoring</span><br><span class="line">spec:</span><br><span class="line">  type: NodePort   # 添加内容</span><br><span class="line">  ports:</span><br><span class="line">  - name: web</span><br><span class="line">    port: 9090</span><br><span class="line">    targetPort: web</span><br><span class="line">    nodePort: 30200   # 添加内容</span><br><span class="line">  selector:</span><br><span class="line">    app: prometheus</span><br><span class="line">    prometheus: k8s</span><br><span class="line">  sessionAffinity: ClientIP</span><br><span class="line">[root@k8s-master manifests]#</span><br><span class="line"># 配置修改3</span><br><span class="line">[root@k8s-master manifests]# vim alertmanager-service.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    alertmanager: main</span><br><span class="line">  name: alertmanager-main</span><br><span class="line">  namespace: monitoring</span><br><span class="line">spec:</span><br><span class="line">  type: NodePort   # 添加内容</span><br><span class="line">  ports:</span><br><span class="line">  - name: web</span><br><span class="line">    port: 9093</span><br><span class="line">    targetPort: web</span><br><span class="line">    nodePort: 30300   # 添加内容</span><br><span class="line">  selector:</span><br><span class="line">    alertmanager: main</span><br><span class="line">    app: alertmanager</span><br><span class="line">  sessionAffinity: ClientIP</span><br><span class="line">[root@k8s-master manifests]#</span><br><span class="line"># 配置修改4</span><br><span class="line">[root@k8s-master manifests]# vim grafana-deployment.yaml </span><br><span class="line"># 将apps/v1beta2 改为 apps/v1</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    app: grafana</span><br><span class="line">  name: grafana</span><br><span class="line">  namespace: monitoring</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">………………</span><br></pre></td></tr></table></figure>
+
+<h2 id="kube-prometheus镜像版本查看与下载"><a href="#kube-prometheus镜像版本查看与下载" class="headerlink" title="kube-prometheus镜像版本查看与下载"></a>kube-prometheus镜像版本查看与下载</h2><p>由于镜像都在国外，因此经常会下载失败。为了快速下载镜像，这里我们下载国内的镜像，然后tag为配置文件中的国外镜像名即可。</p>
+<p>查看kube-prometheus的镜像信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"># 当前工作目录</span><br><span class="line">[root@k8s-master manifests]# pwd</span><br><span class="line">/root/k8s_practice/prometheus/kube-prometheus-0.2.0/manifests</span><br><span class="line">[root@k8s-master manifests]# </span><br><span class="line"># 所有镜像信息如下</span><br><span class="line">[root@k8s-master manifests]# grep -riE &apos;quay.io|k8s.gcr|grafana/&apos; *</span><br><span class="line">0prometheus-operator-deployment.yaml:        - --config-reloader-image=quay.io/coreos/configmap-reload:v0.0.1</span><br><span class="line">0prometheus-operator-deployment.yaml:        - --prometheus-config-reloader=quay.io/coreos/prometheus-config-reloader:v0.33.0</span><br><span class="line">0prometheus-operator-deployment.yaml:        image: quay.io/coreos/prometheus-operator:v0.33.0</span><br><span class="line">alertmanager-alertmanager.yaml:  baseImage: quay.io/prometheus/alertmanager</span><br><span class="line">grafana-deployment.yaml:      - image: grafana/grafana:6.2.2</span><br><span class="line">kube-state-metrics-deployment.yaml:        image: quay.io/coreos/kube-rbac-proxy:v0.4.1</span><br><span class="line">kube-state-metrics-deployment.yaml:        image: quay.io/coreos/kube-rbac-proxy:v0.4.1</span><br><span class="line">kube-state-metrics-deployment.yaml:        image: quay.io/coreos/kube-state-metrics:v1.7.2</span><br><span class="line">kube-state-metrics-deployment.yaml:        image: k8s.gcr.io/addon-resizer:1.8.4</span><br><span class="line">node-exporter-daemonset.yaml:        image: quay.io/prometheus/node-exporter:v0.18.1</span><br><span class="line">node-exporter-daemonset.yaml:        image: quay.io/coreos/kube-rbac-proxy:v0.4.1</span><br><span class="line">prometheus-adapter-deployment.yaml:        image: quay.io/coreos/k8s-prometheus-adapter-amd64:v0.4.1</span><br><span class="line">prometheus-prometheus.yaml:  baseImage: quay.io/prometheus/prometheus</span><br><span class="line">##### 由上可知alertmanager和prometheus的镜像版本未显示</span><br><span class="line">### 获取alertmanager镜像版本信息</span><br><span class="line">[root@k8s-master manifests]# cat alertmanager-alertmanager.yaml </span><br><span class="line">apiVersion: monitoring.coreos.com/v1</span><br><span class="line">kind: Alertmanager</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    alertmanager: main</span><br><span class="line">  name: main</span><br><span class="line">  namespace: monitoring</span><br><span class="line">spec:</span><br><span class="line">  baseImage: quay.io/prometheus/alertmanager</span><br><span class="line">  nodeSelector:</span><br><span class="line">    kubernetes.io/os: linux</span><br><span class="line">  replicas: 3</span><br><span class="line">  securityContext:</span><br><span class="line">    fsGroup: 2000</span><br><span class="line">    runAsNonRoot: true</span><br><span class="line">    runAsUser: 1000</span><br><span class="line">  serviceAccountName: alertmanager-main</span><br><span class="line">  version: v0.18.0</span><br><span class="line">##### 由上可见alertmanager的镜像版本为v0.18.0</span><br><span class="line">### 获取prometheus镜像版本信息</span><br><span class="line">[root@k8s-master manifests]# cat prometheus-prometheus.yaml</span><br><span class="line">apiVersion: monitoring.coreos.com/v1</span><br><span class="line">kind: Prometheus</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    prometheus: k8s</span><br><span class="line">  name: k8s</span><br><span class="line">  namespace: monitoring</span><br><span class="line">spec:</span><br><span class="line">  alerting:</span><br><span class="line">    alertmanagers:</span><br><span class="line">    - name: alertmanager-main</span><br><span class="line">      namespace: monitoring</span><br><span class="line">      port: web</span><br><span class="line">  baseImage: quay.io/prometheus/prometheus</span><br><span class="line">  nodeSelector:</span><br><span class="line">    kubernetes.io/os: linux</span><br><span class="line">  podMonitorSelector: &#123;&#125;</span><br><span class="line">  replicas: 2</span><br><span class="line">  resources:</span><br><span class="line">    requests:</span><br><span class="line">      memory: 400Mi</span><br><span class="line">  ruleSelector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      prometheus: k8s</span><br><span class="line">      role: alert-rules</span><br><span class="line">  securityContext:</span><br><span class="line">    fsGroup: 2000</span><br><span class="line">    runAsNonRoot: true</span><br><span class="line">    runAsUser: 1000</span><br><span class="line">  serviceAccountName: prometheus-k8s</span><br><span class="line">  serviceMonitorNamespaceSelector: &#123;&#125;</span><br><span class="line">  serviceMonitorSelector: &#123;&#125;</span><br><span class="line">  version: v2.11.0</span><br><span class="line">##### 由上可见prometheus的镜像版本为v2.11.0</span><br></pre></td></tr></table></figure>
+
+<p>执行脚本：镜像下载并重命名【集群所有机器执行】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master software]# vim download_prometheus_image.sh </span><br><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">##### 在 master 节点和 worker 节点都要执行 【所有机器执行】</span><br><span class="line"></span><br><span class="line"># 加载环境变量</span><br><span class="line">. /etc/profile</span><br><span class="line">. /etc/bashrc</span><br><span class="line"></span><br><span class="line">###############################################</span><br><span class="line"># 从国内下载 prometheus 所需镜像，并对镜像重命名  </span><br><span class="line">src_registry=&quot;registry.cn-beijing.aliyuncs.com/cloud_registry&quot;</span><br><span class="line"># 定义镜像集合数组 </span><br><span class="line">images=(</span><br><span class="line">    kube-rbac-proxy:v0.4.1</span><br><span class="line">    kube-state-metrics:v1.7.2</span><br><span class="line">    k8s-prometheus-adapter-amd64:v0.4.1</span><br><span class="line">    configmap-reload:v0.0.1</span><br><span class="line">    prometheus-config-reloader:v0.33.0</span><br><span class="line">    prometheus-operator:v0.33.0</span><br><span class="line">)</span><br><span class="line"># 循环从国内获取的Docker镜像</span><br><span class="line">for img in $&#123;images[@]&#125;;</span><br><span class="line">do</span><br><span class="line">    # 从国内源下载镜像</span><br><span class="line">    docker pull $&#123;src_registry&#125;/$img</span><br><span class="line">    # 改变镜像名称</span><br><span class="line">    docker tag  $&#123;src_registry&#125;/$img quay.io/coreos/$img</span><br><span class="line">    # 删除源始镜像</span><br><span class="line">    docker rmi  $&#123;src_registry&#125;/$img</span><br><span class="line">    # 打印分割线</span><br><span class="line">    echo &quot;======== $img download OK  ========&quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">##### 其他镜像下载</span><br><span class="line">image_name=&quot;alertmanager:v0.18.0&quot;</span><br><span class="line">docker pull $&#123;src_registry&#125;/$&#123;image_name&#125;  &amp;&amp; docker tag $&#123;src_registry&#125;/$&#123;image_name&#125;  quay.io/prometheus/$&#123;image_name&#125;  &amp;&amp; docker rmi $&#123;src_registry&#125;/$&#123;image_name&#125;</span><br><span class="line">echo &quot;======== $&#123;image_name&#125; download OK  ========&quot;</span><br><span class="line"></span><br><span class="line">image_name=&quot;node-exporter:v0.18.1&quot;</span><br><span class="line">docker pull $&#123;src_registry&#125;/$&#123;image_name&#125;  &amp;&amp; docker tag $&#123;src_registry&#125;/$&#123;image_name&#125;  quay.io/prometheus/$&#123;image_name&#125;  &amp;&amp; docker rmi $&#123;src_registry&#125;/$&#123;image_name&#125;</span><br><span class="line">echo &quot;======== $&#123;image_name&#125; download OK  ========&quot;</span><br><span class="line"></span><br><span class="line">image_name=&quot;prometheus:v2.11.0&quot;</span><br><span class="line">docker pull $&#123;src_registry&#125;/$&#123;image_name&#125;  &amp;&amp; docker tag $&#123;src_registry&#125;/$&#123;image_name&#125;  quay.io/prometheus/$&#123;image_name&#125;  &amp;&amp; docker rmi $&#123;src_registry&#125;/$&#123;image_name&#125;</span><br><span class="line">echo &quot;======== $&#123;image_name&#125; download OK  ========&quot;</span><br><span class="line"></span><br><span class="line">image_name=&quot;grafana:6.2.2&quot;</span><br><span class="line">docker pull $&#123;src_registry&#125;/$&#123;image_name&#125;  &amp;&amp; docker tag $&#123;src_registry&#125;/$&#123;image_name&#125;  grafana/$&#123;image_name&#125;             &amp;&amp; docker rmi $&#123;src_registry&#125;/$&#123;image_name&#125;</span><br><span class="line">echo &quot;======== $&#123;image_name&#125; download OK  ========&quot;</span><br><span class="line"></span><br><span class="line">image_name=&quot;addon-resizer:1.8.4&quot;</span><br><span class="line">docker pull $&#123;src_registry&#125;/$&#123;image_name&#125;  &amp;&amp; docker tag $&#123;src_registry&#125;/$&#123;image_name&#125;  k8s.gcr.io/$&#123;image_name&#125;          &amp;&amp; docker rmi $&#123;src_registry&#125;/$&#123;image_name&#125;</span><br><span class="line">echo &quot;======== $&#123;image_name&#125; download OK  ========&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;********** prometheus docker images OK! **********&quot;</span><br></pre></td></tr></table></figure>
+
+<p>执行脚本后得到如下镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master software]# docker images | grep &apos;quay.io/coreos&apos;</span><br><span class="line">quay.io/coreos/kube-rbac-proxy                             v0.4.1                           a9d1a87e4379        6 days ago          41.3MB</span><br><span class="line">quay.io/coreos/flannel                                     v0.12.0-amd64                    4e9f801d2217        4 months ago        52.8MB ## 之前已存在</span><br><span class="line">quay.io/coreos/kube-state-metrics                          v1.7.2                           3fd71b84d250        6 months ago        33.1MB</span><br><span class="line">quay.io/coreos/prometheus-config-reloader                  v0.33.0                          64751efb2200        8 months ago        17.6MB</span><br><span class="line">quay.io/coreos/prometheus-operator                         v0.33.0                          8f2f814d33e1        8 months ago        42.1MB</span><br><span class="line">quay.io/coreos/k8s-prometheus-adapter-amd64                v0.4.1                           5f0fc84e586c        15 months ago       60.7MB</span><br><span class="line">quay.io/coreos/configmap-reload                            v0.0.1                           3129a2ca29d7        3 years ago         4.79MB</span><br><span class="line">[root@k8s-master software]# </span><br><span class="line">[root@k8s-master software]# docker images | grep &apos;quay.io/prometheus&apos;</span><br><span class="line">quay.io/prometheus/node-exporter                           v0.18.1                          d7707e6f5e95        11 days ago         22.9MB</span><br><span class="line">quay.io/prometheus/prometheus                              v2.11.0                          de242295e225        2 months ago        126MB</span><br><span class="line">quay.io/prometheus/alertmanager                            v0.18.0                          30594e96cbe8        10 months ago       51.9MB</span><br><span class="line">[root@k8s-master software]# </span><br><span class="line">[root@k8s-master software]# docker images | grep &apos;grafana&apos;</span><br><span class="line">grafana/grafana                                            6.2.2                            a532fe3b344a        9 months ago        248MB</span><br><span class="line">[root@k8s-node01 software]# </span><br><span class="line">[root@k8s-node01 software]# docker images | grep &apos;addon-resizer&apos;</span><br><span class="line">k8s.gcr.io/addon-resizer                                   1.8.4                            5ec630648120        20 months ago       38.3MB</span><br></pre></td></tr></table></figure>
+
+<h2 id="kube-prometheus启动"><a href="#kube-prometheus启动" class="headerlink" title="kube-prometheus启动"></a>kube-prometheus启动</h2><p>启动prometheus</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master kube-prometheus-0.2.0]# pwd</span><br><span class="line">/root/k8s_practice/prometheus/kube-prometheus-0.2.0</span><br><span class="line">[root@k8s-master kube-prometheus-0.2.0]# </span><br><span class="line">### 如果出现异常，可以再重复执行一次或多次</span><br><span class="line">[root@k8s-master kube-prometheus-0.2.0]# kubectl apply -f manifests/</span><br></pre></td></tr></table></figure>
+
+<p>启动后svc与pod状态查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# kubectl top node</span><br><span class="line">NAME         CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   </span><br><span class="line">k8s-master   152m         7%     1311Mi          35%       </span><br><span class="line">k8s-node01   100m         5%     928Mi           54%       </span><br><span class="line">k8s-node02   93m          4%     979Mi           56%       </span><br><span class="line">[root@k8s-master ~]# </span><br><span class="line">[root@k8s-master ~]# kubectl get svc -n monitoring</span><br><span class="line">NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE</span><br><span class="line">alertmanager-main       NodePort    10.97.249.249    &lt;none&gt;        9093:30300/TCP               7m21s</span><br><span class="line">alertmanager-operated   ClusterIP   None             &lt;none&gt;        9093/TCP,9094/TCP,9094/UDP   7m13s</span><br><span class="line">grafana                 NodePort    10.101.183.103   &lt;none&gt;        3000:30100/TCP               7m20s</span><br><span class="line">kube-state-metrics      ClusterIP   None             &lt;none&gt;        8443/TCP,9443/TCP            7m20s</span><br><span class="line">node-exporter           ClusterIP   None             &lt;none&gt;        9100/TCP                     7m20s</span><br><span class="line">prometheus-adapter      ClusterIP   10.105.174.86    &lt;none&gt;        443/TCP                      7m19s</span><br><span class="line">prometheus-k8s          NodePort    10.109.179.233   &lt;none&gt;        9090:30200/TCP               7m19s</span><br><span class="line">prometheus-operated     ClusterIP   None             &lt;none&gt;        9090/TCP                     7m3s</span><br><span class="line">prometheus-operator     ClusterIP   None             &lt;none&gt;        8080/TCP                     7m21s</span><br><span class="line">[root@k8s-master ~]# </span><br><span class="line">[root@k8s-master ~]# kubectl get pod -n monitoring -o wide</span><br><span class="line">NAME                                  READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">alertmanager-main-0                   2/2     Running   0          2m11s   10.244.4.164   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">alertmanager-main-1                   2/2     Running   0          2m11s   10.244.2.225   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">alertmanager-main-2                   2/2     Running   0          2m11s   10.244.4.163   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">grafana-5cd56df4cd-6d75r              1/1     Running   0          29s     10.244.2.227   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">kube-state-metrics-7d4bb66d8d-gx7w4   4/4     Running   0          2m18s   10.244.2.223   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">node-exporter-pl47v                   2/2     Running   0          2m17s   172.16.1.110   k8s-master   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">node-exporter-tmmbw                   2/2     Running   0          2m17s   172.16.1.111   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">node-exporter-w8wd9                   2/2     Running   0          2m17s   172.16.1.112   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">prometheus-adapter-c676d8764-phj69    1/1     Running   0          2m17s   10.244.2.224   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">prometheus-k8s-0                      3/3     Running   1          2m1s    10.244.2.226   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">prometheus-k8s-1                      3/3     Running   0          2m1s    10.244.4.165   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">prometheus-operator-7559d67ff-lk86l   1/1     Running   0          2m18s   10.244.4.162   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="kube-prometheus访问"><a href="#kube-prometheus访问" class="headerlink" title="kube-prometheus访问"></a>kube-prometheus访问</h1><h2 id="prometheus-service访问"><a href="#prometheus-service访问" class="headerlink" title="prometheus-service访问"></a>prometheus-service访问</h2><p>访问地址如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://172.16.1.110:30200/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-29-02.png" alt="image"></p>
+<p>通过访问如下地址，可以看到prometheus已经成功连接上了k8s的apiserver。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://172.16.1.110:30200/targets</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-29-03.png" alt="image"></p>
+<p><img src="/uploads/kubernetes/k8s-29-04.png" alt="image"></p>
+<p>查看service-discovery</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://172.16.1.110:30200/service-discovery</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-29-05.png" alt="image"></p>
+<p>prometheus自己指标查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://172.16.1.110:30200/metrics</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/kubernetes/k8s-29-06.png" alt="image"></p>
+<p>prometheus的WEB界面上提供了基本的查询，例如查询K8S集群中每个POD的CPU使用情况，可以使用如下查询条件查询：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 直接使用 container_cpu_usage_seconds_total 可以看见有哪些字段信息</span><br><span class="line">sum(rate(container_cpu_usage_seconds_total&#123;image!=&quot;&quot;, pod!=&quot;&quot;&#125;[1m] )) by (pod)</span><br></pre></td></tr></table></figure>
+
+<p>列表页面</p>
+<p><img src="/uploads/kubernetes/k8s-29-07.png" alt="image"></p>
+<p>图形页面</p>
+<p><img src="/uploads/kubernetes/k8s-29-08.png" alt="image"></p>
+<h2 id="grafana-service访问"><a href="#grafana-service访问" class="headerlink" title="grafana-service访问"></a>grafana-service访问</h2><p>访问地址如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://172.16.1.110:30100/</span><br></pre></td></tr></table></figure>
+
+<p>首次登录时账号密码默认为：admin/admin</p>
+<p><img src="/uploads/kubernetes/k8s-29-09.png" alt="image"></p>
+<p><img src="/uploads/kubernetes/k8s-29-10.png" alt="image"></p>
+<p>添加数据来源</p>
+<p><img src="/uploads/kubernetes/k8s-29-11.png" alt="image"></p>
+<p>得到如下页面</p>
+<p><img src="/uploads/kubernetes/k8s-29-12.png" alt="image"></p>
+<p>如上，数据来源默认是已经添加好了的</p>
+<p>点击进入，拉到下面，再点击Test按钮，测验数据来源是否正常</p>
+<p><img src="/uploads/kubernetes/k8s-29-13.png" alt="image"></p>
+<p>之后可导入一些模板</p>
+<p><img src="/uploads/kubernetes/k8s-29-14.png" alt="image"></p>
+<p>数据信息图像化查看</p>
+<p><img src="/uploads/kubernetes/k8s-29-15.png" alt="image"></p>
+<p><img src="/uploads/kubernetes/k8s-29-16.png" alt="image"></p>
+<p><img src="/uploads/kubernetes/k8s-29-17.png" alt="image"></p>
+<h1 id="异常问题解决"><a href="#异常问题解决" class="headerlink" title="异常问题解决"></a>异常问题解决</h1><p>如果 <code>kubectl apply -f manifests/</code> 出现类似如下提示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">unable to recognize &quot;manifests/alertmanager-alertmanager.yaml&quot;: no matches for kind &quot;Alertmanager&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/alertmanager-serviceMonitor.yaml&quot;: no matches for kind &quot;ServiceMonitor&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/grafana-serviceMonitor.yaml&quot;: no matches for kind &quot;ServiceMonitor&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/kube-state-metrics-serviceMonitor.yaml&quot;: no matches for kind &quot;ServiceMonitor&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/node-exporter-serviceMonitor.yaml&quot;: no matches for kind &quot;ServiceMonitor&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/prometheus-operator-serviceMonitor.yaml&quot;: no matches for kind &quot;ServiceMonitor&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/prometheus-prometheus.yaml&quot;: no matches for kind &quot;Prometheus&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/prometheus-rules.yaml&quot;: no matches for kind &quot;PrometheusRule&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/prometheus-serviceMonitor.yaml&quot;: no matches for kind &quot;ServiceMonitor&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/prometheus-serviceMonitorApiserver.yaml&quot;: no matches for kind &quot;ServiceMonitor&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/prometheus-serviceMonitorCoreDNS.yaml&quot;: no matches for kind &quot;ServiceMonitor&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/prometheus-serviceMonitorKubeControllerManager.yaml&quot;: no matches for kind &quot;ServiceMonitor&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/prometheus-serviceMonitorKubeScheduler.yaml&quot;: no matches for kind &quot;ServiceMonitor&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br><span class="line">unable to recognize &quot;manifests/prometheus-serviceMonitorKubelet.yaml&quot;: no matches for kind &quot;ServiceMonitor&quot; in version &quot;monitoring.coreos.com/v1&quot;</span><br></pre></td></tr></table></figure>
+
+<p>那么再次 <code>kubectl apply -f manifests/</code> 即可；因为存在依赖。</p>
+<p><font color="red">但如果使用的是kube-prometheus：v0.3.0、v0.4.0、v0.5.0版本并出现了上面的提示【反复执行<code>kubectl apply -f manifests/</code>，但一直存在】，原因暂不清楚。</font></p>
+<p>完毕！</p>
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2021/01/10/kubernetes29/" title="Kubernetes K8S之kube-prometheus概述与部署">http://www.zhangblog.com/2021/01/10/kubernetes29/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/04/kubernetes28/" rel="next" title="Kubernetes K8S之CPU和内存资源限制详解">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S之CPU和内存资源限制详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机配置规划"><span class="nav-number">1.</span> <span class="nav-text">主机配置规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#prometheus概述"><span class="nav-number">2.</span> <span class="nav-text">prometheus概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Prometheus的关键特性"><span class="nav-number">2.1.</span> <span class="nav-text">Prometheus的关键特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构图"><span class="nav-number">2.2.</span> <span class="nav-text">架构图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本原理"><span class="nav-number">2.3.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务过程"><span class="nav-number">2.4.</span> <span class="nav-text">服务过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kube-prometheus部署"><span class="nav-number">3.</span> <span class="nav-text">kube-prometheus部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#kube-prometheus下载与配置修改"><span class="nav-number">3.1.</span> <span class="nav-text">kube-prometheus下载与配置修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kube-prometheus镜像版本查看与下载"><span class="nav-number">3.2.</span> <span class="nav-text">kube-prometheus镜像版本查看与下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kube-prometheus启动"><span class="nav-number">3.3.</span> <span class="nav-text">kube-prometheus启动</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kube-prometheus访问"><span class="nav-number">4.</span> <span class="nav-text">kube-prometheus访问</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#prometheus-service访问"><span class="nav-number">4.1.</span> <span class="nav-text">prometheus-service访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grafana-service访问"><span class="nav-number">4.2.</span> <span class="nav-text">grafana-service访问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常问题解决"><span class="nav-number">5.</span> <span class="nav-text">异常问题解决</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  <a href="https://beian.miit.gov.cn" target="_blank">蜀ICP备16019247号</a></span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">243.5k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
