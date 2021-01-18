@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="JERmkyk05pGfi59RiCz4QRbx-bFYYDu_YMtfEDuh_3o">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker,Kubernetes,K8S,CI/CD,DevOps,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="lightzhang博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Kubernetes K8S之Helm部署ELK日志分析系统；由于Logstash比较消耗资源，因此本次我们使用Fluentd实现日志收集（EFK）。  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 Cen">
+<meta name="keywords" content="Docker,Kubernetes,K8S,CI&#x2F;CD,DevOps">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes K8S之Helm部署ELK日志分析系统">
+<meta property="og:url" content="http://www.zhangblog.com/2021/01/18/kubernetes30/index.html">
+<meta property="og:site_name" content="lightzhang博客">
+<meta property="og:description" content="Kubernetes K8S之Helm部署ELK日志分析系统；由于Logstash比较消耗资源，因此本次我们使用Fluentd实现日志收集（EFK）。  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 Cen">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-30-01.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-30-02.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-30-03.png">
+<meta property="og:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-30-04.png">
+<meta property="og:updated_time" content="2021-01-18T11:13:12.277Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kubernetes K8S之Helm部署ELK日志分析系统">
+<meta name="twitter:description" content="Kubernetes K8S之Helm部署ELK日志分析系统；由于Logstash比较消耗资源，因此本次我们使用Fluentd实现日志收集（EFK）。  主机配置规划   服务器名称(hostname) 系统版本 配置 内网IP 外网IP(模拟)    k8s-master CentOS7.7 2C/4G/20G 172.16.1.110 10.0.0.110   k8s-node01 Cen">
+<meta name="twitter:image" content="http://www.zhangblog.com/uploads/kubernetes/k8s-00-00.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '5DO4LMNTV6',
+      apiKey: '',
+      indexName: 'zhangblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zhangblog.com/2021/01/18/kubernetes30/">
+
+
+
+
+
+  <title>Kubernetes K8S之Helm部署ELK日志分析系统 | lightzhang博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?983cb666f5aa79b42afd35cdbca303a2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lightzhang博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangblog.com/2021/01/18/kubernetes30/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lightzhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lightzhang博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kubernetes K8S之Helm部署ELK日志分析系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-18T19:11:22+08:00">
+                2021-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/K8S/" itemprop="url" rel="index">
+                    <span itemprop="name">K8S</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/01/18/kubernetes30/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2021/01/18/kubernetes30/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2021/01/18/kubernetes30/" class="leancloud_visitors" data-flag-title="Kubernetes K8S之Helm部署ELK日志分析系统">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/kubernetes/k8s-00-00.png" alt="image"></p>
+<blockquote>
+<p>Kubernetes K8S之Helm部署ELK日志分析系统；由于Logstash比较消耗资源，因此本次我们使用Fluentd实现日志收集（EFK）。</p>
+</blockquote>
+<h1 id="主机配置规划"><a href="#主机配置规划" class="headerlink" title="主机配置规划"></a>主机配置规划</h1><table>
+<thead>
+<tr>
+<th>服务器名称(hostname)</th>
+<th>系统版本</th>
+<th>配置</th>
+<th>内网IP</th>
+<th>外网IP(模拟)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.110</td>
+<td>10.0.0.110</td>
+</tr>
+<tr>
+<td>k8s-node01</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.111</td>
+<td>10.0.0.111</td>
+</tr>
+<tr>
+<td>k8s-node02</td>
+<td>CentOS7.7</td>
+<td>2C/4G/20G</td>
+<td>172.16.1.112</td>
+<td>10.0.0.112</td>
+</tr>
+</tbody></table>
+<p><font color="red">备注：由于EFK部署比较消耗内存；所以每台机器的内存最好大于等于4G。</font></p>
+<h1 id="ELK概述"><a href="#ELK概述" class="headerlink" title="ELK概述"></a>ELK概述</h1><p>ELK是Elasticsearch、Logstash、Kibana的简称，这三者是核心套件，但并非全部。</p>
+<p>Elasticsearch是实时全文搜索和分析引擎，提供搜集、分析、存储数据三大功能；是一套开放REST和JAVA API等接口，提供高效搜索功能，可扩展的分布式系统。它构建于Apache Lucene搜索引擎库之上。</p>
+<p>Logstash是一个用来搜集、分析、过滤日志的工具。它支持几乎任何类型的日志，包括系统日志、错误日志和自定义应用程序日志。它可以从许多来源接收日志，这些来源包括 syslog、消息传递（例如 RabbitMQ）和JMX，它能够以多种方式输出数据，包括电子邮件、websockets和Elasticsearch。</p>
+<p>Kibana是一个基于Web的图形界面，用于搜索、分析和可视化存储在 Elasticsearch指标中的日志数据。它利用Elasticsearch的REST接口来检索数据，不仅允许用户创建他们自己数据定制仪表板的视图，还允许他们以特殊的方式查询和过滤数据。</p>
+<p><font color="red">由于Logstash比较消耗资源，因此本次我们使用Fluentd实现日志收集（EFK）。</font></p>
+<h1 id="EFK镜像下载"><a href="#EFK镜像下载" class="headerlink" title="EFK镜像下载"></a>EFK镜像下载</h1><p>由于镜像都在国外，因此我们在国内下载镜像，然后tag为对应的镜像名称。执行如下脚本【集群所有机器都执行】：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-node02 software]# vim download_efk_image.sh </span><br><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">##### 在 master 节点和 worker 节点都要执行 【所有机器执行】</span><br><span class="line"></span><br><span class="line"># 加载环境变量</span><br><span class="line">. /etc/profile</span><br><span class="line">. /etc/bashrc</span><br><span class="line"></span><br><span class="line"># 变量设置</span><br><span class="line">elasticsearch_iamge=&quot;elasticsearch-oss:6.7.0&quot;</span><br><span class="line">busybox_image=&quot;busybox:latest&quot;</span><br><span class="line">bats_image=&quot;bats:0.4.0&quot;</span><br><span class="line">fluentd_image=&quot;fluentd-elasticsearch:v2.3.2&quot;</span><br><span class="line">kibana_image=&quot;kibana-oss:6.7.0&quot;</span><br><span class="line"></span><br><span class="line"># 集群所有机器执行</span><br><span class="line"># elasticsearch镜像下载</span><br><span class="line">docker pull registry.cn-beijing.aliyuncs.com/google_registry/$&#123;elasticsearch_iamge&#125;</span><br><span class="line">docker tag  registry.cn-beijing.aliyuncs.com/google_registry/$&#123;elasticsearch_iamge&#125; docker.elastic.co/elasticsearch/$&#123;elasticsearch_iamge&#125;</span><br><span class="line">docker rmi  registry.cn-beijing.aliyuncs.com/google_registry/$&#123;elasticsearch_iamge&#125;</span><br><span class="line"># busybox镜像下载</span><br><span class="line">docker pull registry.cn-beijing.aliyuncs.com/google_registry/$&#123;busybox_image&#125;</span><br><span class="line">docker tag  registry.cn-beijing.aliyuncs.com/google_registry/$&#123;busybox_image&#125; $&#123;busybox_image&#125;</span><br><span class="line">docker rmi  registry.cn-beijing.aliyuncs.com/google_registry/$&#123;busybox_image&#125;</span><br><span class="line"># bats镜像下载</span><br><span class="line">docker pull registry.cn-beijing.aliyuncs.com/google_registry/$&#123;bats_image&#125;</span><br><span class="line">docker tag  registry.cn-beijing.aliyuncs.com/google_registry/$&#123;bats_image&#125; dduportal/$&#123;bats_image&#125;</span><br><span class="line">docker rmi  registry.cn-beijing.aliyuncs.com/google_registry/$&#123;bats_image&#125;</span><br><span class="line"># fluentd-elasticsearch镜像下载</span><br><span class="line">docker pull registry.cn-beijing.aliyuncs.com/google_registry/$&#123;fluentd_image&#125;</span><br><span class="line">docker tag  registry.cn-beijing.aliyuncs.com/google_registry/$&#123;fluentd_image&#125; gcr.io/google-containers/$&#123;fluentd_image&#125;</span><br><span class="line">docker rmi  registry.cn-beijing.aliyuncs.com/google_registry/$&#123;fluentd_image&#125;</span><br><span class="line"># kibana-oss镜像下载</span><br><span class="line">docker pull registry.cn-beijing.aliyuncs.com/google_registry/$&#123;kibana_image&#125;</span><br><span class="line">docker tag  registry.cn-beijing.aliyuncs.com/google_registry/$&#123;kibana_image&#125; docker.elastic.co/kibana/$&#123;kibana_image&#125;</span><br><span class="line">docker rmi  registry.cn-beijing.aliyuncs.com/google_registry/$&#123;kibana_image&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Elasticsearch部署"><a href="#Elasticsearch部署" class="headerlink" title="Elasticsearch部署"></a>Elasticsearch部署</h1><p>本次部署EFK，创建一个efk名称空间。</p>
+<h2 id="chart下载与配置修改"><a href="#chart下载与配置修改" class="headerlink" title="chart下载与配置修改"></a>chart下载与配置修改</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"># 当前目录</span><br><span class="line">[root@k8s-master efk]# pwd</span><br><span class="line">/root/k8s_practice/efk</span><br><span class="line"># 创建 efk 名称空间</span><br><span class="line">[root@k8s-master efk]# kubectl create namespace efk</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line"># ES版本查看，本次我们部署chart 1.30.0版本，ES 6.7.0版本</span><br><span class="line">[root@k8s-master efk]# helm search stable/elasticsearch -l</span><br><span class="line">NAME                         	CHART VERSION	APP VERSION	DESCRIPTION                                                 </span><br><span class="line">stable/elasticsearch         	1.32.5       	6.8.6      	DEPRECATED Flexible and powerful open source, distributed...</span><br><span class="line">stable/elasticsearch         	1.32.4       	6.8.6      	Flexible and powerful open source, distributed real-time ...</span><br><span class="line">stable/elasticsearch         	1.32.3       	6.8.6      	Flexible and powerful open source, distributed real-time ...</span><br><span class="line">………………</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line">[root@k8s-master efk]# helm fetch stable/elasticsearch --version 1.30.0</span><br><span class="line">[root@k8s-master efk]# tar xf elasticsearch-1.30.0.tgz</span><br><span class="line"># 修改配置文件1</span><br><span class="line">[root@k8s-master efk]# vim elasticsearch/values.yaml</span><br><span class="line">initImage:</span><br><span class="line">  repository: &quot;busybox&quot;</span><br><span class="line">  tag: &quot;latest&quot;</span><br><span class="line">  pullPolicy: &quot;IfNotPresent&quot;  # 从Always 改为IfNotPresent</span><br><span class="line">………………</span><br><span class="line">client:</span><br><span class="line">  name: client</span><br><span class="line">  replicas: 1  # 从2改为1，因为是在自己PC机操作的，内存有限</span><br><span class="line">  serviceType: ClusterIP</span><br><span class="line">………………</span><br><span class="line">master:</span><br><span class="line">  name: master</span><br><span class="line">  exposeHttp: false</span><br><span class="line">  replicas: 3   # 不要修改</span><br><span class="line">  heapSize: &quot;512m&quot;</span><br><span class="line">  persistence:</span><br><span class="line">    enabled: false  # 没有多余的PVC，因此从true改为false</span><br><span class="line">    accessMode: ReadWriteOnce</span><br><span class="line">………………</span><br><span class="line">data:</span><br><span class="line">  name: data</span><br><span class="line">  exposeHttp: false</span><br><span class="line">  replicas: 1  # 从2改为1，因为是在自己PC机操作的，内存有限</span><br><span class="line">  heapSize: &quot;1024m&quot;  # 从1536m改为1024m，因为是在自己PC机操作的，内存有限</span><br><span class="line">  persistence:</span><br><span class="line">    enabled: false  # 没有多余的PVC，因此从true改为false</span><br><span class="line">    accessMode: ReadWriteOnce</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line"># 修改配置文件2</span><br><span class="line">[root@k8s-master efk]# vim elasticsearch/templates/client-deployment.yaml</span><br><span class="line">apiVersion: apps/v1  # 从 apps/v1beta1 改为 apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">………………</span><br><span class="line">spec:</span><br><span class="line">  replicas: &#123;&#123; .Values.client.replicas &#125;&#125;</span><br><span class="line">  # 添加信息 如下</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: &#123;&#123; template &quot;elasticsearch.name&quot; . &#125;&#125;</span><br><span class="line">      component: &quot;&#123;&#123; .Values.client.name &#125;&#125;&quot;</span><br><span class="line">      release: &#123;&#123; .Release.Name &#125;&#125;</span><br><span class="line">  # 添加信息 如上</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line"># 修改配置文件3</span><br><span class="line">[root@k8s-master efk]# vim elasticsearch/templates/data-statefulset.yaml</span><br><span class="line">apiVersion: apps/v1  # 从 apps/v1beta1 改为 apps/v1</span><br><span class="line">kind: StatefulSet</span><br><span class="line">………………</span><br><span class="line">spec:</span><br><span class="line">  serviceName: &#123;&#123; template &quot;elasticsearch.data.fullname&quot; . &#125;&#125;</span><br><span class="line">  replicas: &#123;&#123; .Values.data.replicas &#125;&#125;</span><br><span class="line">  # 添加信息 如下</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: &#123;&#123; template &quot;elasticsearch.name&quot; . &#125;&#125;</span><br><span class="line">      component: &quot;&#123;&#123; .Values.data.name &#125;&#125;&quot;</span><br><span class="line">      release: &#123;&#123; .Release.Name &#125;&#125;</span><br><span class="line">      role: data</span><br><span class="line">  # 添加信息 如上</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line"># 修改配置文件4</span><br><span class="line">[root@k8s-master efk]# vim elasticsearch/templates/master-statefulset.yaml </span><br><span class="line">apiVersion: apps/v1  # 从 apps/v1beta1 改为 apps/v1</span><br><span class="line">kind: StatefulSet</span><br><span class="line">………………</span><br><span class="line">spec:</span><br><span class="line">  serviceName: &#123;&#123; template &quot;elasticsearch.master.fullname&quot; . &#125;&#125;</span><br><span class="line">  replicas: &#123;&#123; .Values.master.replicas &#125;&#125;</span><br><span class="line">  # 添加信息 如下</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: &#123;&#123; template &quot;elasticsearch.name&quot; . &#125;&#125;</span><br><span class="line">      component: &quot;&#123;&#123; .Values.master.name &#125;&#125;&quot;</span><br><span class="line">      release: &#123;&#123; .Release.Name &#125;&#125;</span><br><span class="line">      role: master</span><br><span class="line">  # 添加信息 如上</span><br><span class="line">[root@k8s-master efk]#</span><br></pre></td></tr></table></figure>
+
+<h2 id="Elasticsearch部署-1"><a href="#Elasticsearch部署-1" class="headerlink" title="Elasticsearch部署"></a>Elasticsearch部署</h2><p>步骤如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># 当前目录</span><br><span class="line">[root@k8s-master efk]# pwd</span><br><span class="line">/root/k8s_practice/efk</span><br><span class="line"># 部署ES</span><br><span class="line">[root@k8s-master efk]# helm install --name es01 --namespace=efk elasticsearch/</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line"># 状态查看</span><br><span class="line">[root@k8s-master ~]# helm list</span><br><span class="line">NAME          	REVISION	UPDATED                 	STATUS  	CHART                	APP VERSION	NAMESPACE  </span><br><span class="line">es01          	1       	Sat Jul 25 12:18:50 2020	DEPLOYED	elasticsearch-1.30.0 	6.7.0      	efk </span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line"># 等待一会儿后【估计几分钟】，查看pod状态信息如下</span><br><span class="line">[root@k8s-master ~]# kubectl get deploy -n efk</span><br><span class="line">NAME                        READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">es01-elasticsearch-client   1/1     1            1           6m13s</span><br><span class="line">[root@k8s-master ~]# </span><br><span class="line">[root@k8s-master ~]# kubectl get pod -n efk</span><br><span class="line">NAME                                         READY   STATUS    RESTARTS   AGE</span><br><span class="line">es01-elasticsearch-client-646f8f866d-rt2wp   1/1     Running   0          6m21s</span><br><span class="line">es01-elasticsearch-data-0                    1/1     Running   0          6m21s</span><br><span class="line">es01-elasticsearch-master-0                  1/1     Running   0          6m21s</span><br><span class="line">es01-elasticsearch-master-1                  1/1     Running   0          5m30s</span><br><span class="line">es01-elasticsearch-master-2                  1/1     Running   0          5m3s</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line">[root@k8s-master efk]# kubectl get svc -n efk</span><br><span class="line">NAME                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE</span><br><span class="line">es01-elasticsearch-client      ClusterIP   10.100.237.152  &lt;none&gt;        9200/TCP   6m34s</span><br><span class="line">es01-elasticsearch-discovery   ClusterIP   None            &lt;none&gt;        9300/TCP   6m42s</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line">[root@k8s-master efk]# kubectl get sts -n efk</span><br><span class="line">NAME                        READY   AGE</span><br><span class="line">es01-elasticsearch-data     1/1     7m4s</span><br><span class="line">es01-elasticsearch-master   3/3     7m4s</span><br><span class="line">[root@k8s-master efk]#</span><br></pre></td></tr></table></figure>
+
+<h2 id="Elasticsearch访问"><a href="#Elasticsearch访问" class="headerlink" title="Elasticsearch访问"></a>Elasticsearch访问</h2><p><font color="red">其中IP来源于ES的svc。</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# curl 10.100.237.152:9200/</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot; : &quot;es01-elasticsearch-client-646f8f866d-rt2wp&quot;,</span><br><span class="line">  &quot;cluster_name&quot; : &quot;elasticsearch&quot;,</span><br><span class="line">  &quot;cluster_uuid&quot; : &quot;S4t_UDOuRye9mtK22VWxLw&quot;,</span><br><span class="line">  &quot;version&quot; : &#123;</span><br><span class="line">    &quot;number&quot; : &quot;6.7.0&quot;,</span><br><span class="line">    &quot;build_flavor&quot; : &quot;oss&quot;,</span><br><span class="line">    &quot;build_type&quot; : &quot;docker&quot;,</span><br><span class="line">    &quot;build_hash&quot; : &quot;8453f77&quot;,</span><br><span class="line">    &quot;build_date&quot; : &quot;2019-03-21T15:32:29.844721Z&quot;,</span><br><span class="line">    &quot;build_snapshot&quot; : false,</span><br><span class="line">    &quot;lucene_version&quot; : &quot;7.7.0&quot;,</span><br><span class="line">    &quot;minimum_wire_compatibility_version&quot; : &quot;5.6.0&quot;,</span><br><span class="line">    &quot;minimum_index_compatibility_version&quot; : &quot;5.0.0&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;tagline&quot; : &quot;You Know, for Search&quot;</span><br><span class="line">&#125;</span><br><span class="line">[root@k8s-master ~]# </span><br><span class="line">[root@k8s-master ~]# curl 10.100.237.152:9200/_cluster/health?pretty</span><br><span class="line">&#123;</span><br><span class="line">  &quot;cluster_name&quot; : &quot;elasticsearch&quot;,</span><br><span class="line">  &quot;status&quot; : &quot;green&quot;,   # 可见状态正常</span><br><span class="line">  &quot;timed_out&quot; : false,</span><br><span class="line">  &quot;number_of_nodes&quot; : 5,</span><br><span class="line">  &quot;number_of_data_nodes&quot; : 1,</span><br><span class="line">  &quot;active_primary_shards&quot; : 0,</span><br><span class="line">  &quot;active_shards&quot; : 0,</span><br><span class="line">  &quot;relocating_shards&quot; : 0,</span><br><span class="line">  &quot;initializing_shards&quot; : 0,</span><br><span class="line">  &quot;unassigned_shards&quot; : 0,</span><br><span class="line">  &quot;delayed_unassigned_shards&quot; : 0,</span><br><span class="line">  &quot;number_of_pending_tasks&quot; : 0,</span><br><span class="line">  &quot;number_of_in_flight_fetch&quot; : 0,</span><br><span class="line">  &quot;task_max_waiting_in_queue_millis&quot; : 0,</span><br><span class="line">  &quot;active_shards_percent_as_number&quot; : 100.0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此，elasticsearch部署完毕</p>
+<h2 id="elasticsearch-client域名获取"><a href="#elasticsearch-client域名获取" class="headerlink" title="elasticsearch-client域名获取"></a>elasticsearch-client域名获取</h2><p><font color="red">根据es01-elasticsearch-client的svc信息获取到es01-elasticsearch-client的域名；用于后面的fluentd 和kibana。</font></p>
+<p>启动一个pod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master test]# pwd</span><br><span class="line">/root/k8s_practice/test</span><br><span class="line">[root@k8s-master test]# cat myapp_demo.yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: myapp-demo</span><br><span class="line">  namespace: default</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: myapp</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: myapp</span><br><span class="line">    image: registry.cn-beijing.aliyuncs.com/google_registry/myapp:v1</span><br><span class="line">    imagePullPolicy: IfNotPresent</span><br><span class="line">    ports:</span><br><span class="line">    - name: httpd</span><br><span class="line">      containerPort: 80</span><br><span class="line">      protocol: TCP</span><br><span class="line">[root@k8s-master test]# </span><br><span class="line">[root@k8s-master test]# kubectl apply -f myapp_demo.yaml</span><br><span class="line">pod/myapp-demo created</span><br><span class="line">[root@k8s-master test]# </span><br><span class="line">[root@k8s-master test]# kubectl get pod -o wide</span><br><span class="line">NAME         READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">myapp-demo   1/1     Running   0          6s    10.244.2.84   k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>进入pod并得到elasticsearch-client域名信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 进入一个pod容器</span><br><span class="line">[root@k8s-master test]# kubectl exec -it myapp-demo sh </span><br><span class="line">##### 格式 nslookup svc-cluster-ip</span><br><span class="line">/ # nslookup 10.100.237.152</span><br><span class="line">nslookup: can&apos;t resolve &apos;(null)&apos;: Name does not resolve</span><br><span class="line"></span><br><span class="line">Name:      10.100.237.152</span><br><span class="line">Address 1: 10.100.237.152 es01-elasticsearch-client.efk.svc.cluster.local</span><br><span class="line">/ # </span><br><span class="line">/ # </span><br><span class="line">### 通过ping判断域名是否通畅</span><br><span class="line">/ # ping es01-elasticsearch-client.efk.svc.cluster.local</span><br><span class="line">PING es01-elasticsearch-client.efk.svc.cluster.local (10.100.237.152): 56 data bytes</span><br><span class="line">64 bytes from 10.100.237.152: seq=0 ttl=64 time=0.094 ms</span><br><span class="line">64 bytes from 10.100.237.152: seq=1 ttl=64 time=0.081 ms</span><br><span class="line">64 bytes from 10.100.237.152: seq=2 ttl=64 time=0.243 ms</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">由上可得，Service中es01-elasticsearch-client的域名为：<code>es01-elasticsearch-client.efk.svc.cluster.local</code></font></p>
+<p><font color="red">Service的域名格式为：<code>$(service name).$(namespace).svc.cluster.local</code>，其中 cluster.local 指定的集群的域名</font></p>
+<h1 id="Fluentd部署"><a href="#Fluentd部署" class="headerlink" title="Fluentd部署"></a>Fluentd部署</h1><h2 id="chart下载与配置修改-1"><a href="#chart下载与配置修改-1" class="headerlink" title="chart下载与配置修改"></a>chart下载与配置修改</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master efk]# pwd</span><br><span class="line">/root/k8s_practice/efk</span><br><span class="line">[root@k8s-master efk]#</span><br><span class="line"># fluentd版本信息查看</span><br><span class="line">[root@k8s-master efk]# helm search stable/fluentd-elasticsearch -l</span><br><span class="line">NAME                        	CHART VERSION	APP VERSION	DESCRIPTION                                                 </span><br><span class="line">stable/fluentd-elasticsearch	2.0.7        	2.3.2      	DEPRECATED! - A Fluentd Helm chart for Kubernetes with El...</span><br><span class="line">stable/fluentd-elasticsearch	2.0.6        	2.3.2      	A Fluentd Helm chart for Kubernetes with Elasticsearch ou...</span><br><span class="line">stable/fluentd-elasticsearch	2.0.5        	2.3.2      	A Fluentd Helm chart for Kubernetes with Elasticsearch ou...</span><br><span class="line">………………</span><br><span class="line"># 获取fluentd-elasticsearch 并解压</span><br><span class="line">[root@k8s-master efk]# helm fetch stable/fluentd-elasticsearch --version 2.0.7</span><br><span class="line">[root@k8s-master efk]# tar xf fluentd-elasticsearch-2.0.7.tgz</span><br><span class="line"># 配置修改</span><br><span class="line">[root@k8s-master efk]# vim fluentd-elasticsearch/values.yaml</span><br><span class="line">### 为什么使用域名而不是IP，因此每次重启ES的svc，对应IP都会改变。而域名是不变的</span><br><span class="line">elasticsearch:</span><br><span class="line">  host: &apos;es01-elasticsearch-client.efk.svc.cluster.local&apos;   # 修改处，域名获取参见上文</span><br><span class="line">  port: 9200</span><br><span class="line">  scheme: &apos;http&apos;</span><br><span class="line">[root@k8s-master efk]#</span><br></pre></td></tr></table></figure>
+
+<h2 id="fluentd-elasticsearch部署"><a href="#fluentd-elasticsearch部署" class="headerlink" title="fluentd-elasticsearch部署"></a>fluentd-elasticsearch部署</h2><p>步骤如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">################ 部署fluentd-elasticsearch</span><br><span class="line"># 当前目录</span><br><span class="line">[root@k8s-master efk]# pwd</span><br><span class="line">/root/k8s_practice/efk</span><br><span class="line"># 部署fluentd-elasticsearch</span><br><span class="line">[root@k8s-master efk]# helm install --name fluentd-es01 --namespace=efk fluentd-elasticsearch</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line"># 状态查看</span><br><span class="line">[root@k8s-master efk]#  helm list</span><br><span class="line">NAME          	REVISION	UPDATED                 	STATUS  	CHART                      	APP VERSION	NAMESPACE  </span><br><span class="line">es01          	1       	Sat Jul 25 12:18:50 2020	DEPLOYED	elasticsearch-1.30.0       	6.7.0      	efk        </span><br><span class="line">fluentd-es01  	1       	Sat Jul 25 12:36:01 2020	DEPLOYED	fluentd-elasticsearch-2.0.7	2.3.2      	efk</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line">#查看pod状态信息如下</span><br><span class="line">[root@k8s-master efk]# kubectl get ds -n efk</span><br><span class="line">NAME                                 DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE</span><br><span class="line">fluentd-es01-fluentd-elasticsearch   2         2         2       2            2           &lt;none&gt;          113s</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line">[root@k8s-master efk]# kubectl get pod -n efk -o wide</span><br><span class="line">NAME                                         READY   STATUS    RESTARTS   AGE   IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">es01-elasticsearch-client-646f8f866d-rt2wp   1/1     Running   0          17m   10.244.2.57    k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">es01-elasticsearch-data-0                    1/1     Running   0          17m   10.244.2.58    k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">es01-elasticsearch-master-0                  1/1     Running   0          17m   10.244.4.241   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">es01-elasticsearch-master-1                  1/1     Running   0          17m   10.244.2.59    k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">es01-elasticsearch-master-2                  1/1     Running   0          16m   10.244.4.242   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">fluentd-es01-fluentd-elasticsearch-qnmf9     1/1     Running   0          43s   10.244.4.243   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">fluentd-es01-fluentd-elasticsearch-xmw5f     1/1     Running   0          43s   10.244.2.60    k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Kibana部署"><a href="#Kibana部署" class="headerlink" title="Kibana部署"></a>Kibana部署</h1><p>kibana的主版本和大版本必须和elasticsearch（ES）一致，小版本可以不同；但两者版本最好一致，这样可以避免一些因版本不同导致的意外情况。</p>
+<p>由于elasticsearch（ES）使用的是6.7.0，因此kibana我们也是用该版本。</p>
+<h2 id="chart下载与配置修改-2"><a href="#chart下载与配置修改-2" class="headerlink" title="chart下载与配置修改"></a>chart下载与配置修改</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master efk]# pwd</span><br><span class="line">/root/k8s_practice/efk</span><br><span class="line"># 所有版本查看</span><br><span class="line">[root@k8s-master efk]# helm search stable/kibana -l</span><br><span class="line">NAME         	CHART VERSION	APP VERSION	DESCRIPTION                                                 </span><br><span class="line">stable/kibana	3.2.7        	6.7.0      	Kibana is an open source data visualization plugin for El...</span><br><span class="line">stable/kibana	3.2.6        	6.7.0      	Kibana is an open source data visualization plugin for El...</span><br><span class="line">………………</span><br><span class="line"># 获取kibana，并解压缩</span><br><span class="line">[root@k8s-master efk]# helm fetch stable/kibana --version 3.2.7 </span><br><span class="line">[root@k8s-master efk]# tar xf kibana-3.2.7.tgz</span><br><span class="line"># 配置修改1</span><br><span class="line">[root@k8s-master efk]# vim kibana/values.yaml</span><br><span class="line">### 为什么使用域名而不是IP，因此每次重启ES的svc，对应IP都会改变。而域名是不变的</span><br><span class="line">files:</span><br><span class="line">  kibana.yml:</span><br><span class="line">    ## Default Kibana configuration from kibana-docker.</span><br><span class="line">    server.name: kibana</span><br><span class="line">    server.host: &quot;0&quot;</span><br><span class="line">    elasticsearch.url: http://es01-elasticsearch-client.efk.svc.cluster.local:9200   # 修改处，域名获取参见上文</span><br><span class="line">………………</span><br><span class="line">service:</span><br><span class="line">  type: NodePort  # 修改内容  从ClusterIP改为NodePort</span><br><span class="line">  externalPort: 443</span><br><span class="line">  internalPort: 5601</span><br><span class="line">  nodePort: 30601  # 添加处，Service端口范围：30000-32767</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line"># 配置修改2</span><br><span class="line">[root@k8s-master efk]# vim kibana/templates/deployment.yaml </span><br><span class="line">apiVersion: apps/v1   # 从 apps/v1beta1 改为 apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">………………</span><br><span class="line">spec:</span><br><span class="line">  replicas: &#123;&#123; .Values.replicaCount &#125;&#125;</span><br><span class="line">  revisionHistoryLimit: &#123;&#123; .Values.revisionHistoryLimit &#125;&#125;</span><br><span class="line">  # 添加信息 如下</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: &#123;&#123; template &quot;kibana.name&quot; . &#125;&#125;</span><br><span class="line">      release: &quot;&#123;&#123; .Release.Name &#125;&#125;&quot;</span><br><span class="line">  # 添加信息 如上</span><br></pre></td></tr></table></figure>
+
+<h2 id="kibana部署"><a href="#kibana部署" class="headerlink" title="kibana部署"></a>kibana部署</h2><p>步骤如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">################ 部署kibana-oss</span><br><span class="line"># 当前目录</span><br><span class="line">[root@k8s-master efk]# pwd</span><br><span class="line">/root/k8s_practice/efk</span><br><span class="line"># 部署kibana-oss</span><br><span class="line">[root@k8s-master efk]# helm install --name kibana01 --namespace=efk kibana</span><br><span class="line">[root@k8s-master efk]#</span><br><span class="line"># 状态查看</span><br><span class="line">[root@k8s-master efk]# helm list</span><br><span class="line">NAME          	REVISION	UPDATED                 	STATUS  	CHART                      	APP VERSION	NAMESPACE  </span><br><span class="line">es01          	1       	Sat Jul 25 12:18:50 2020	DEPLOYED	elasticsearch-1.30.0       	6.7.0      	efk        </span><br><span class="line">fluentd-es01  	1       	Sat Jul 25 12:36:01 2020	DEPLOYED	fluentd-elasticsearch-2.0.7	2.3.2      	efk        </span><br><span class="line">kibana01      	1       	Sat Jul 25 12:38:18 2020	DEPLOYED	kibana-3.2.7               	6.7.0      	efk</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line">#查看pod状态信息如下</span><br><span class="line">[root@k8s-master efk]# kubectl get deploy -n efk</span><br><span class="line">NAME                        READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">es01-elasticsearch-client   1/1     1            1           19m</span><br><span class="line">kibana01                    1/1     1            1           27s</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line">[root@k8s-master efk]# kubectl get pod -n efk -o wide</span><br><span class="line">NAME                                         READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES</span><br><span class="line">es01-elasticsearch-client-646f8f866d-rt2wp   1/1     Running   0          20m     10.244.2.57    k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">es01-elasticsearch-data-0                    1/1     Running   0          20m     10.244.2.58    k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">es01-elasticsearch-master-0                  1/1     Running   0          20m     10.244.4.241   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">es01-elasticsearch-master-1                  1/1     Running   0          19m     10.244.2.59    k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">es01-elasticsearch-master-2                  1/1     Running   0          19m     10.244.4.242   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">fluentd-es01-fluentd-elasticsearch-qnmf9     1/1     Running   0          3m10s   10.244.4.243   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">fluentd-es01-fluentd-elasticsearch-xmw5f     1/1     Running   0          3m10s   10.244.2.60    k8s-node02   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">kibana01-bc479f8c7-kr2n2                     1/1     Running   0          53s     10.244.4.244   k8s-node01   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">[root@k8s-master efk]# </span><br><span class="line"># 查看svc信息</span><br><span class="line">[root@k8s-master efk]# kubectl get svc -n efk -o wide</span><br><span class="line">NAME                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE   SELECTOR</span><br><span class="line">es01-elasticsearch-client      ClusterIP   10.100.237.152  &lt;none&gt;        9200/TCP        20m   app=elasticsearch,component=client,release=es01</span><br><span class="line">es01-elasticsearch-discovery   ClusterIP   None            &lt;none&gt;        9300/TCP        20m   app=elasticsearch,component=master,release=es01</span><br><span class="line">kibana01                       NodePort    10.101.200.177  &lt;none&gt;        443:30601/TCP   71s   app=kibana,release=kibana01</span><br></pre></td></tr></table></figure>
+
+<h1 id="浏览器访问"><a href="#浏览器访问" class="headerlink" title="浏览器访问"></a>浏览器访问</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://172.16.1.110:30601/</span><br></pre></td></tr></table></figure>
+
+<p>页面访问</p>
+<p><img src="/uploads/kubernetes/k8s-30-01.png" alt="image"></p>
+<p>创建索引</p>
+<p><img src="/uploads/kubernetes/k8s-30-02.png" alt="image"></p>
+<p><img src="/uploads/kubernetes/k8s-30-03.png" alt="image"></p>
+<p>数据查看</p>
+<p><img src="/uploads/kubernetes/k8s-30-04.png" alt="image"></p>
+<h1 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h1><p>1、<a href="http://www.zhangblog.com/2020/12/14/kubernetes26/">Kubernetes K8S之Helm部署、使用与示例</a></p>
+<p>完毕！</p>
+<hr>
+
+      
+    </div>
+
+    <!-- 文章末尾统一添加“本文结束”标记 -->
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #555;font-size:24px;"><-------------the end-------------></-------------the></div>
+    
+</div>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <!-- <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="width: 200px; max-width: 100%;"/> -->
+    <img id="wechat_subscriber_qcode" src="/uploads/weixin_pulic_code.png" alt="lightzhang wechat" style="max-width: 100%;">
+    <div>欢迎扫一扫，订阅我的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创分享，你的支持就是我最大的动力！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/weixin_cash_code.png" alt="lightzhang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/alipay_cash_code.png" alt="lightzhang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    lightzhang
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.zhangblog.com/2021/01/18/kubernetes30/" title="Kubernetes K8S之Helm部署ELK日志分析系统">http://www.zhangblog.com/2021/01/18/kubernetes30/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/K8S/" rel="tag"># K8S</a>
+          
+            <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/10/kubernetes29/" rel="next" title="Kubernetes K8S之kube-prometheus概述与部署">
+                <i class="fa fa-chevron-left"></i> Kubernetes K8S之kube-prometheus概述与部署
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="lightzhang">
+            
+              <p class="site-author-name" itemprop="name">lightzhang</p>
+              <p class="site-description motion-element" itemprop="description">lightzhang博客，不止于技术，更记录人生点滴感悟。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglianghhh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhanglianghhh@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/lightzhang-23-69/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/woshizhangliang999" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-codiepie"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/zhanglianghhh/p/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-rss-square"></i>博客园</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主机配置规划"><span class="nav-number">1.</span> <span class="nav-text">主机配置规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ELK概述"><span class="nav-number">2.</span> <span class="nav-text">ELK概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EFK镜像下载"><span class="nav-number">3.</span> <span class="nav-text">EFK镜像下载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Elasticsearch部署"><span class="nav-number">4.</span> <span class="nav-text">Elasticsearch部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#chart下载与配置修改"><span class="nav-number">4.1.</span> <span class="nav-text">chart下载与配置修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elasticsearch部署-1"><span class="nav-number">4.2.</span> <span class="nav-text">Elasticsearch部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elasticsearch访问"><span class="nav-number">4.3.</span> <span class="nav-text">Elasticsearch访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elasticsearch-client域名获取"><span class="nav-number">4.4.</span> <span class="nav-text">elasticsearch-client域名获取</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fluentd部署"><span class="nav-number">5.</span> <span class="nav-text">Fluentd部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#chart下载与配置修改-1"><span class="nav-number">5.1.</span> <span class="nav-text">chart下载与配置修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fluentd-elasticsearch部署"><span class="nav-number">5.2.</span> <span class="nav-text">fluentd-elasticsearch部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kibana部署"><span class="nav-number">6.</span> <span class="nav-text">Kibana部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#chart下载与配置修改-2"><span class="nav-number">6.1.</span> <span class="nav-text">chart下载与配置修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kibana部署"><span class="nav-number">6.2.</span> <span class="nav-text">kibana部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#浏览器访问"><span class="nav-number">7.</span> <span class="nav-text">浏览器访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关阅读"><span class="nav-number">8.</span> <span class="nav-text">相关阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lightzhang  <a href="https://beian.miit.gov.cn" target="_blank">蜀ICP备16019247号</a></span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">本站总字数&#58;</span>
+    
+    <span title="本站总字数">247k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<!-- 百度SEO 自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360SEO 自动推送 -->
+<script>
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86":"https://jspassport.ssl.qhimg.com/11.0.1.js?85c763eb9329f36f448da6ca18f99c86";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz',
+        appKey: 'VhTGj57Qm5FhI51XBXT5gAAn',
+        placeholder: '来了，就撩两句呗！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("h7YmPSQqr53jIm44P0q2OTGs-gzGzoHsz", "VhTGj57Qm5FhI51XBXT5gAAn");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
